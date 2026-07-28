@@ -1,4 +1,4 @@
-const revealEls = document.querySelectorAll('.reveal');
+const revealEls = document.querySelectorAll('.reveal, .reveal-pop');
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{
       if(e.isIntersecting){ e.target.classList.add('is-visible'); io.unobserve(e.target); }
@@ -9,7 +9,7 @@ const revealEls = document.querySelectorAll('.reveal');
   // Safety net: if anything ever prevents the observer from firing
   // (slow scroll, odd viewport, etc.), reveal everything after a short delay anyway.
   setTimeout(()=>{
-    document.querySelectorAll('.reveal:not(.is-visible)').forEach(el=>el.classList.add('is-visible'));
+    document.querySelectorAll('.reveal:not(.is-visible), .reveal-pop:not(.is-visible)').forEach(el=>el.classList.add('is-visible'));
   }, 2500);
 
   const toggle = document.querySelector('.nav__toggle');
