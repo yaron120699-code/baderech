@@ -480,6 +480,36 @@
   details.faq-item[open] summary::after{ transform:rotate(45deg); }
   details.faq-item .faq-a{ padding:0 0 22px 0; color:var(--muted); font-size:15px; max-width:620px; }
 
+  /* ---------- REFLECT WIDGET ---------- */
+  .reflect h2{ font-size:clamp(26px,4.2vw,42px); max-width:700px; }
+  .reflect .lede{ max-width:600px; margin-top:18px; font-size:15.5px; color:var(--muted); }
+  .reflect__card{
+    margin-top:44px; max-width:640px;
+    background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    padding:38px 34px;
+  }
+  .reflect__progress{ display:flex; gap:8px; margin-bottom:26px; }
+  .reflect__dot{ width:7px; height:7px; border-radius:50%; background:var(--line); transition:background .3s; }
+  .reflect__dot.is-done{ background:var(--sage); }
+  .reflect__step{ display:none; }
+  .reflect__step.is-active{ display:block; animation:reflectIn .4s ease; }
+  @keyframes reflectIn{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+  .reflect__q{ font-family:var(--serif); font-size:19px; font-weight:500; margin-bottom:20px; }
+  .reflect__options{ display:flex; flex-direction:column; gap:10px; }
+  .reflect__option{
+    text-align:right; font-family:var(--sans); font-size:15px; color:var(--ink);
+    background:rgba(255,255,255,0.6); border:1px solid var(--line); border-radius:100px;
+    padding:13px 20px; cursor:pointer; transition:border-color .25s, background .25s;
+  }
+  .reflect__option:hover{ border-color:var(--sage-deep); background:rgba(255,255,255,0.9); }
+  .reflect__final .reflect__q{ margin-bottom:10px; }
+  .reflect__final p{ font-size:15px; color:var(--muted); margin:0 0 22px; max-width:520px; }
+  .reflect__skip{
+    display:block; text-align:center; margin-top:18px;
+    font-size:13px; color:var(--muted); text-decoration:underline; cursor:pointer;
+  }
+
   /* ---------- CONTACT ---------- */
   .contact{
     background: linear-gradient(180deg,#F3F1E9,#EAE7DB);

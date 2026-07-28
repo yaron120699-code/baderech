@@ -39,3 +39,35 @@ const revealEls = document.querySelectorAll('.reveal');
       }
     });
   }
+
+  // Reflect widget: a private step-through reflection, not a submitted form.
+  // Nothing here is sent or stored anywhere — it only moves the visitor
+  // from one quiet question to the next, ending in an invitation to talk.
+  const reflectCard = document.querySelector('.reflect__card');
+  if(reflectCard){
+    const steps = Array.from(reflectCard.querySelectorAll('.reflect__step'));
+    const dots = Array.from(reflectCard.querySelectorAll('.reflect__dot'));
+    const skip = document.getElementById('reflectSkip');
+    let current = 0;
+
+    function showStep(index){
+      steps.forEach(s=>s.classList.remove('is-active'));
+      steps[index].classList.add('is-active');
+      dots.forEach((d,i)=> d.classList.toggle('is-done', i < index));
+    }
+
+    reflectCard.querySelectorAll('.reflect__option').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        current = Math.min(current + 1, steps.length - 1);
+        showStep(current);
+      });
+    });
+
+    if(skip){
+      skip.addEventListener('click', ()=>{
+        current = steps.length - 1;
+        showStep(current);
+        steps[current].scrollIntoView({ behavior:'smooth', block:'center' });
+      });
+    }
+  }
