@@ -1,0 +1,246 @@
+diff --git a/fit/fit.css b/fit/fit.css
+index d04b404..cfe1cb6 100644
+--- a/fit/fit.css
++++ b/fit/fit.css
+@@ -161,6 +161,38 @@
+ }
+ .fit__btn-secondary:hover{ border-color:var(--sage-deep); color:var(--sage-deep); }
+ 
++/* ---- micro-affirmation toast ---- */
++.fit__toast{
++  position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(8px);
++  background:var(--ink); color:var(--bg);
++  font-family:var(--sans); font-size:13.5px;
++  padding:10px 20px; border-radius:100px;
++  opacity:0; pointer-events:none; z-index:50;
++  transition:opacity .45s var(--ease), transform .45s var(--ease);
++}
++.fit__toast.is-visible{ opacity:0.92; transform:translateX(-50%) translateY(0); }
++
++/* ---- matching / processing theater ---- */
++.fit__matching{ text-align:center; padding:40px 0 10px; }
++.fit__matching-dots{
++  display:flex; align-items:center; justify-content:center; gap:22px;
++  margin-bottom:26px;
++}
++.fit__matching-dots .moment-dot{ opacity:0.7; transform:scale(1); }
++.fit__matching-label{
++  font-family:var(--serif); font-style:italic; font-size:15.5px; color:var(--muted);
++  transition:opacity .35s ease;
++}
++
++/* ---- "skip straight to WhatsApp" secondary link on results A/B ---- */
++.fit__skip-link{
++  display:block; text-align:center; margin-top:22px;
++  font-family:var(--sans); font-size:13.5px; color:var(--muted);
++  text-decoration:underline; text-underline-offset:3px;
++}
++.fit__skip-link:hover{ color:var(--sage-deep); }
++.fit__result .fit__privacy-note{ margin-top:10px; }
++
+ /* ---- result screens ---- */
+ .fit__result{ text-align:center; }
+ .fit__result .fit__title{ margin-top:2px; }
+diff --git a/fit/fit.js b/fit/fit.js
+index 9266731..c225354 100644
+--- a/fit/fit.js
++++ b/fit/fit.js
+@@ -13,6 +13,17 @@
+   var progressWrap = document.querySelector('.fit__progress');
+   var progressFill = document.querySelector('.fit__progress-fill');
+   var progressLabel = document.querySelector('.fit__progress-label');
++  var toastEl = document.getElementById('fitToast');
++
++  var AFFIRMATIONS = ['הבנו.', 'רשמנו את זה.', 'תודה על הכנות.', 'ברור.', 'זה נשאר בינך לבינך, לעת עתה.'];
++  var toastTimer = null;
++  function showToast(){
++    if(!toastEl) return;
++    clearTimeout(toastTimer);
++    toastEl.textContent = AFFIRMATIONS[Math.floor(Math.random() * AFFIRMATIONS.length)];
++    toastEl.classList.add('is-visible');
++    toastTimer = setTimeout(function(){ toastEl.classList.remove('is-visible'); }, 1300);
++  }
+ 
+   // ---------- storage ----------
+   function loadAnswers(){
+@@ -43,6 +54,20 @@
+     window.scrollTo({ top: 0, behavior: 'smooth' });
+   }
+ 
++  // Milestone-based labels instead of an exact "X out of Y" count.
++  // An exact fraction invites the visitor to calculate whether finishing is
++  // "worth it" (this is what we saw hurting completion on long questionnaires
++  // like BetterHelp's). Qualitative milestones keep the reassurance without
++  // the arithmetic.
++  function progressCaption(qIndex, total){
++    var pct = (qIndex + 1) / total;
++    if(qIndex === 0) return 'מתחילים';
++    if(pct <= 0.4) return 'בתנועה';
++    if(pct <= 0.75) return 'בערך באמצע';
++    if(qIndex < total - 1) return 'כמעט שם';
++    return 'שאלה אחרונה';
++  }
++
+   function updateProgress(){
+     var name = stepNames[current];
+     var qIndex = QUESTION_STEPS.indexOf(name);
+@@ -52,7 +77,7 @@
+       progressWrap.style.display = '';
+       var pct = ((qIndex + 1) / QUESTION_STEPS.length) * 100;
+       progressFill.style.width = pct + '%';
+-      progressLabel.textContent = (qIndex + 1) + ' מתוך ' + QUESTION_STEPS.length;
++      progressLabel.textContent = progressCaption(qIndex, QUESTION_STEPS.length);
+     }
+   }
+ 
+@@ -195,6 +220,8 @@
+         if(continueBtn.dataset.action === 'finish'){
+           finishQuiz();
+         } else {
++          var wasQuestion = QUESTION_STEPS.indexOf(stepNames[current]) !== -1;
++          if(wasQuestion) showToast();
+           showStep(current + 1);
+           validateCurrentStep();
+         }
+@@ -303,16 +330,55 @@
+   }
+ 
+   // ---------- finish ----------
++  var MATCHING_MESSAGES = ['מחברים את מה שענית', 'מסתכלים על זה כמכלול', 'כמעט מוכן'];
++  var WA_BRIDGE_KEY = 'baderech_wa_prefill';
++
+   function finishQuiz(){
+     persistCurrentStep();
+     var score = computeScore();
+     var bucket = resultBucket(score);
+     prepareWhatsAppLinks();
+-    showStep(stepNames.indexOf(bucket));
+-    // Privacy: once the result is computed and shown, the answers no longer
+-    // need to live in this browser session.
+-    clearAnswers();
+-    answers = {};
++
++    // Results A and B now continue onto the landing page before WhatsApp
++    // (the "skip straight to WhatsApp" link is the only direct WA exit left
++    // on this page). So that a personal touch isn't lost for someone who
++    // reads the landing page and then clicks its own WhatsApp button, we
++    // hand the composed message forward through sessionStorage. The landing
++    // page (js/script.js) picks this up once and clears it immediately —
++    // it is not the raw answers, only the human-readable summary, and it
++    // never outlives the current browser tab.
++    if(bucket === 'result-a' || bucket === 'result-b'){
++      try{ sessionStorage.setItem(WA_BRIDGE_KEY, buildWhatsAppMessage()); }catch(e){}
++    }
++
++    // Brief processing moment before the result, instead of an instant jump.
++    // This is not decorative delay: it is what makes the result that follows
++    // feel considered rather than a static lookup table (same idea used by
++    // Noom's "building your plan" screen between quiz and result).
++    var matchingIndex = stepNames.indexOf('matching');
++    var labelEl = document.getElementById('fitMatchingLabel');
++    showStep(matchingIndex);
++
++    var mi = 0;
++    if(labelEl) labelEl.textContent = MATCHING_MESSAGES[0];
++    var msgInterval = setInterval(function(){
++      mi = (mi + 1) % MATCHING_MESSAGES.length;
++      if(!labelEl) return;
++      labelEl.style.opacity = 0;
++      setTimeout(function(){
++        labelEl.textContent = MATCHING_MESSAGES[mi];
++        labelEl.style.opacity = 1;
++      }, 250);
++    }, 900);
++
++    setTimeout(function(){
++      clearInterval(msgInterval);
++      showStep(stepNames.indexOf(bucket));
++      // Privacy: once the result is computed and shown, the answers no longer
++      // need to live in this browser session.
++      clearAnswers();
++      answers = {};
++    }, 2400);
+   }
+ 
+   // ---------- restart ----------
+diff --git a/fit/index.html b/fit/index.html
+index 6c53c33..5a9c431 100644
+--- a/fit/index.html
++++ b/fit/index.html
+@@ -36,6 +36,7 @@
+       <div class="fit__progress-track"><div class="fit__progress-fill" style="width:0%"></div></div>
+       <div class="fit__progress-label"></div>
+     </div>
++    <div class="fit__toast" id="fitToast" aria-live="polite"></div>
+ 
+     <!-- INTRO -->
+     <section class="fit__step is-active" data-step="intro">
+@@ -187,15 +188,26 @@
+       </div>
+     </section>
+ 
++    <!-- MATCHING (processing theater) -->
++    <section class="fit__step fit__matching" data-step="matching">
++      <div class="fit__matching-dots" aria-hidden="true">
++        <span class="moment-dot"></span>
++        <span class="moment-dot"></span>
++        <span class="moment-dot"></span>
++      </div>
++      <p class="fit__matching-label" id="fitMatchingLabel">מחברים את מה שענית</p>
++    </section>
++
+     <!-- RESULT A -->
+     <section class="fit__step fit__result" data-step="result-a">
+       <div class="eyebrow">התוצאה שלך</div>
+       <h2 class="fit__title">נראה שיש כאן בסיס לשיחה.</h2>
+       <p class="fit__lede">התשובות שלך לא אומרות שהתהליך בהכרח מתאים. הן כן אומרות שיש כאן רצון, נכונות ומקום ששווה להסתכל עליו יחד.</p>
+-      <p class="fit__privacy-note">רק בלחיצה על הכפתור ייפתח WhatsApp עם סיכום התשובות. שום דבר לא נשלח אוטומטית.</p>
+       <div class="fit__nav fit__nav--result">
+-        <a href="#" class="fit__btn-continue fit__whatsapp-link" data-result="a" target="_blank" rel="noopener">לשלוח לירון ולבדוק התאמה</a>
++        <a href="/#story" class="fit__btn-continue">להמשיך אל הדרך</a>
+       </div>
++      <a href="#" class="fit__skip-link fit__whatsapp-link" data-result="a" target="_blank" rel="noopener">אני מעדיף לדלג ישר לוואטסאפ</a>
++      <p class="fit__privacy-note">לחיצה על "לדלג" תפתח WhatsApp עם סיכום התשובות שלך. שום דבר לא נשלח אוטומטית.</p>
+       <button type="button" class="fit__restart-link">למחוק את התשובות ולהתחיל מחדש</button>
+     </section>
+ 
+@@ -204,10 +216,11 @@
+       <div class="eyebrow">התוצאה שלך</div>
+       <h2 class="fit__title">יש כאן משהו ששווה לדייק.</h2>
+       <p class="fit__lede">יכול להיות שהתהליך מתאים, ויכול להיות שאתה עדיין מנסה להבין מה אתה צריך. לא חייבים לדעת הכול לפני שמדברים.</p>
+-      <p class="fit__privacy-note">רק בלחיצה על הכפתור ייפתח WhatsApp עם סיכום התשובות. שום דבר לא נשלח אוטומטית.</p>
+       <div class="fit__nav fit__nav--result">
+-        <a href="#" class="fit__btn-continue fit__whatsapp-link" data-result="b" target="_blank" rel="noopener">לשתף את ירון ולדבר</a>
++        <a href="/#story" class="fit__btn-continue">להמשיך אל הדרך</a>
+       </div>
++      <a href="#" class="fit__skip-link fit__whatsapp-link" data-result="b" target="_blank" rel="noopener">אני מעדיף לדלג ישר לוואטסאפ</a>
++      <p class="fit__privacy-note">לחיצה על "לדלג" תפתח WhatsApp עם סיכום התשובות שלך. שום דבר לא נשלח אוטומטית.</p>
+       <button type="button" class="fit__restart-link">למחוק את התשובות ולהתחיל מחדש</button>
+     </section>
+ 
+diff --git a/js/script.js b/js/script.js
+index a288d24..fd9afa9 100644
+--- a/js/script.js
++++ b/js/script.js
+@@ -1,3 +1,21 @@
++// Personalized WhatsApp bridge from the fit quiz.
++// If the visitor just came from /fit with a result of "high match" or
++// "turning point", a one-time composed summary is waiting in sessionStorage
++// (see WA_BRIDGE_KEY in fit/fit.js). We apply it to every WhatsApp link on
++// this page and then remove it immediately, so it is used exactly once and
++// a later, unrelated visit falls back to the page's normal default message.
++(function(){
++  try{
++    var KEY = 'baderech_wa_prefill';
++    var prefill = sessionStorage.getItem(KEY);
++    if(!prefill) return;
++    document.querySelectorAll('a[href^="https://wa.me/972505494326"]').forEach(function(a){
++      a.setAttribute('href', 'https://wa.me/972505494326?text=' + encodeURIComponent(prefill));
++    });
++    sessionStorage.removeItem(KEY);
++  }catch(e){}
++})();
++
+ const revealEls = document.querySelectorAll('.reveal, .reveal-pop');
+   const io = new IntersectionObserver((entries)=>{
+     entries.forEach(e=>{
