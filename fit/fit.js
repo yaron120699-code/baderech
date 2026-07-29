@@ -13,6 +13,78 @@
   var progressWrap = document.querySelector('.fit__progress');
   var progressFill = document.querySelector('.fit__progress-fill');
   var progressLabel = document.querySelector('.fit__progress-label');
+  var toastEl = document.getElementById('fitToast');
+
+  // Micro-insights: a short, specific reaction to the answer just given —
+  // not a generic "thanks for submitting", and not invented statistics.
+  // Phrasing stays in the same register the founder asked for: "this is a
+  // choice few people make", "this takes honesty" — never a fabricated
+  // number, always something that could plausibly be said by a person who
+  // was actually listening.
+  var INSIGHTS = {
+    q1: function(val){
+      var picked = Array.isArray(val) ? val : [];
+      if(picked.length === 1 && picked[0] === 'q1_5') return 'סקרנות היא נקודת פתיחה לגיטימית, בדיוק כמו כל דבר אחר.';
+      return 'זה לא תמיד קל להודות בזה. תודה שכתבת את זה.';
+    },
+    q2: {
+      q2_1: 'המרחק בין לדעת ללפעול הוא בדיוק המקום שרוב האנשים נתקעים בו.',
+      q2_2: 'המחשבה יכולה להיות מקום בטוח, עד שהיא הופכת למלכודת.',
+      q2_3: 'זו הודאה שדורשת הרבה כנות.',
+      q2_4: 'לזהות דפוס חוזר זו כבר תחילת היציאה ממנו.',
+      q2_5: 'גם "אני לא יודע להגדיר" זו תשובה כנה.'
+    },
+    q4: {
+      q4_1: 'זו בחירה שדורשת יותר אומץ מרוב האפשרויות האחרות כאן.',
+      q4_2: 'תרגול אמיתי לוקח יותר זמן מטיפים, אבל הוא זה שנשאר.',
+      q4_3: 'זה לגיטימי לרצות מישהו שינחה. חשוב רק לשים לב לזה מראש.',
+      q4_4: 'לפעמים באמת מספיק פתרון נקודתי — וגם את זה טוב לדעת על עצמך.',
+      q4_5: 'אי-ודאות היא נקודת התחלה טובה בדיוק כמו כל אחרת.'
+    },
+    q5: function(val){
+      var n = parseInt(val, 10);
+      if(n >= 4) return 'זו רמת מוכנות שלא כולם מגיעים איתה.';
+      if(n === 3) return 'זה מקום כן להיות בו, בלי לזייף יותר.';
+      return 'לדעת שעוד לא הגעת לשם — זו כבר בגרות מסוימת.';
+    },
+    q6: {
+      q6_1: 'זה, בדרך כלל, בדיוק השלב שבו מתחיל שינוי אמיתי.',
+      q6_2: 'לחלוק את האחריות זו עמדה בוגרת.',
+      q6_3: 'לא מעט אנשים מגיעים לכאן מתוך התחושה הזו בדיוק.',
+      q6_4: 'גם חוסר ודאות הוא תשובה כנה.'
+    },
+    q7: {
+      q7_1: 'זה אומר הרבה על כמה שזה רציני עבורך.',
+      q7_2: 'פתיחות מותנית היא בהחלט מקום הגיוני להתחיל ממנו.',
+      q7_3: 'חשוב לדעת את זה על עצמך מראש — זה יעזור לנו להתאים נכון.'
+    },
+    q8: {
+      q8_1: 'זו בדיוק ההשקעה שהתהליך הזה דורש.',
+      q8_2: 'לרצות להבין לפני שמתחייבים — זה הגיוני לגמרי.',
+      q8_3: 'תודה על הכנות. עדיף לדעת את זה עכשיו מאשר באמצע.'
+    }
+  };
+  var INSIGHT_FALLBACK = {
+    q3: 'תודה שכתבת את זה במילים שלך, לא רק סימנת תשובה.',
+    q9: 'זה נשאר בינך לבינך, עד שתבחר לשלוח.'
+  };
+
+  function getInsight(stepName){
+    var val = answers[stepName];
+    var rule = INSIGHTS[stepName];
+    if(typeof rule === 'function') return rule(val);
+    if(rule && val !== undefined && rule[val] !== undefined) return rule[val];
+    return INSIGHT_FALLBACK[stepName] || 'תודה על הכנות.';
+  }
+
+  var toastTimer = null;
+  function showInsight(stepName){
+    if(!toastEl) return;
+    clearTimeout(toastTimer);
+    toastEl.textContent = getInsight(stepName);
+    toastEl.classList.add('is-visible');
+    toastTimer = setTimeout(function(){ toastEl.classList.remove('is-visible'); }, 1800);
+  }
 
   // ---------- storage ----------
   function loadAnswers(){
@@ -31,16 +103,32 @@
   var answers = loadAnswers();
 
   // ---------- navigation ----------
+  var stepEnteredAt = 0;
   function showStep(index){
     steps.forEach(function(s){ s.classList.remove('is-active'); });
     steps[index].classList.add('is-active');
     current = index;
+    stepEnteredAt = Date.now();
     updateProgress();
     var heading = steps[index].querySelector('h1, h2');
     if(heading){
       heading.focus({ preventScroll: true });
     }
     window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // Milestone-based labels instead of an exact "X out of Y" count.
+  // An exact fraction invites the visitor to calculate whether finishing is
+  // "worth it" (this is what we saw hurting completion on long questionnaires
+  // like BetterHelp's). Qualitative milestones keep the reassurance without
+  // the arithmetic.
+  function progressCaption(qIndex, total){
+    var pct = (qIndex + 1) / total;
+    if(qIndex === 0) return 'מתחילים';
+    if(pct <= 0.4) return 'בתנועה';
+    if(pct <= 0.75) return 'בערך באמצע';
+    if(qIndex < total - 1) return 'כמעט שם';
+    return 'שאלה אחרונה';
   }
 
   function updateProgress(){
@@ -52,7 +140,7 @@
       progressWrap.style.display = '';
       var pct = ((qIndex + 1) / QUESTION_STEPS.length) * 100;
       progressFill.style.width = pct + '%';
-      progressLabel.textContent = (qIndex + 1) + ' מתוך ' + QUESTION_STEPS.length;
+      progressLabel.textContent = progressCaption(qIndex, QUESTION_STEPS.length);
     }
   }
 
@@ -171,6 +259,11 @@
   }
 
   function firstUnansweredQuestionIndex(){
+    var hasAnyAnswer = Object.keys(answers).length > 0;
+    if(!hasAnyAnswer){
+      var reflectIdx = stepNames.indexOf('reflect-1');
+      if(reflectIdx > -1) return reflectIdx;
+    }
     for(var i = 0; i < QUESTION_STEPS.length; i++){
       var step = steps[stepNames.indexOf(QUESTION_STEPS[i])];
       if(!validateStep(step)) return stepNames.indexOf(QUESTION_STEPS[i]);
@@ -195,6 +288,8 @@
         if(continueBtn.dataset.action === 'finish'){
           finishQuiz();
         } else {
+          var wasQuestion = QUESTION_STEPS.indexOf(stepNames[current]) !== -1;
+          if(wasQuestion) showInsight(stepNames[current]);
           showStep(current + 1);
           validateCurrentStep();
         }
@@ -207,6 +302,29 @@
         validateCurrentStep();
       });
     }
+  });
+
+  // ---------- passthrough screens (reflection / pause: no input, tap anywhere) ----------
+  document.querySelectorAll('.fit__step[data-passthrough="true"]').forEach(function(step){
+    function advance(){
+      if(!step.classList.contains('is-active')) return;
+      if(Date.now() - stepEnteredAt < 450) return;
+      showStep(current + 1);
+      validateCurrentStep();
+    }
+    function goBack(){
+      if(!step.classList.contains('is-active')) return;
+      showStep(Math.max(0, current - 1));
+      validateCurrentStep();
+    }
+    step.addEventListener('click', function(e){
+      if(e.target.closest('.fit__reflect-back')){ goBack(); return; }
+      advance();
+    });
+    step.addEventListener('keydown', function(e){
+      if(e.target.closest('.fit__reflect-back')) return;
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); advance(); }
+    });
   });
 
   // ---------- scoring ----------
@@ -303,16 +421,55 @@
   }
 
   // ---------- finish ----------
+  var MATCHING_MESSAGES = ['מחברים את מה שענית', 'מסתכלים על זה כמכלול', 'כמעט מוכן'];
+  var WA_BRIDGE_KEY = 'baderech_wa_prefill';
+
   function finishQuiz(){
     persistCurrentStep();
     var score = computeScore();
     var bucket = resultBucket(score);
     prepareWhatsAppLinks();
-    showStep(stepNames.indexOf(bucket));
-    // Privacy: once the result is computed and shown, the answers no longer
-    // need to live in this browser session.
-    clearAnswers();
-    answers = {};
+
+    // Results A and B now continue onto the landing page before WhatsApp
+    // (the "skip straight to WhatsApp" link is the only direct WA exit left
+    // on this page). So that a personal touch isn't lost for someone who
+    // reads the landing page and then clicks its own WhatsApp button, we
+    // hand the composed message forward through sessionStorage. The landing
+    // page (js/script.js) picks this up once and clears it immediately —
+    // it is not the raw answers, only the human-readable summary, and it
+    // never outlives the current browser tab.
+    if(bucket === 'result-a' || bucket === 'result-b'){
+      try{ sessionStorage.setItem(WA_BRIDGE_KEY, buildWhatsAppMessage()); }catch(e){}
+    }
+
+    // Brief processing moment before the result, instead of an instant jump.
+    // This is not decorative delay: it is what makes the result that follows
+    // feel considered rather than a static lookup table (same idea used by
+    // Noom's "building your plan" screen between quiz and result).
+    var matchingIndex = stepNames.indexOf('matching');
+    var labelEl = document.getElementById('fitMatchingLabel');
+    showStep(matchingIndex);
+
+    var mi = 0;
+    if(labelEl) labelEl.textContent = MATCHING_MESSAGES[0];
+    var msgInterval = setInterval(function(){
+      mi = (mi + 1) % MATCHING_MESSAGES.length;
+      if(!labelEl) return;
+      labelEl.style.opacity = 0;
+      setTimeout(function(){
+        labelEl.textContent = MATCHING_MESSAGES[mi];
+        labelEl.style.opacity = 1;
+      }, 250);
+    }, 900);
+
+    setTimeout(function(){
+      clearInterval(msgInterval);
+      showStep(stepNames.indexOf(bucket));
+      // Privacy: once the result is computed and shown, the answers no longer
+      // need to live in this browser session.
+      clearAnswers();
+      answers = {};
+    }, 2400);
   }
 
   // ---------- restart ----------

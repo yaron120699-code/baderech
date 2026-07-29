@@ -161,6 +161,87 @@
 }
 .fit__btn-secondary:hover{ border-color:var(--sage-deep); color:var(--sage-deep); }
 
+/* ---- reflection screens (no input, just a thought) ---- */
+.fit__reflect-screen{
+  min-height:280px;
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  text-align:center; cursor:pointer;
+  padding:20px 0;
+}
+.fit__reflect-line{
+  font-family:var(--serif); font-style:italic; font-weight:400;
+  font-size:clamp(19px,3.2vw,24px); line-height:1.55;
+  color:var(--ink); max-width:460px;
+  margin:0 0 14px;
+}
+.fit__reflect-line--soft{ color:var(--muted); font-size:clamp(17px,2.8vw,21px); margin-bottom:0; }
+.fit__reflect-tap{
+  margin-top:40px; font-family:var(--sans); font-size:13px; color:var(--muted-2);
+  text-decoration:underline; text-underline-offset:4px;
+  opacity:0.7; transition:opacity .3s ease;
+}
+.fit__reflect-screen:hover .fit__reflect-tap{ opacity:1; }
+.fit__reflect-back{
+  position:absolute; top:14px; right:18px;
+  appearance:none; background:none; border:none; cursor:pointer;
+  font-family:var(--sans); font-size:13px; color:var(--muted);
+  padding:8px; opacity:0.55; transition:opacity .25s;
+}
+.fit__reflect-back:hover{ opacity:1; }
+.fit__reflect-screen, .fit__pause-screen{ position:relative; }
+
+/* ---- pause screen (deliberately near-empty; a beat, not a question) ---- */
+.fit__pause-screen{ min-height:300px; }
+.fit__pause-dots{
+  display:flex; align-items:center; justify-content:center; gap:26px;
+  margin-bottom:30px;
+}
+.fit__pause-dots .moment-dot{ opacity:0.6; }
+.fit__reflect-tap--delayed{
+  opacity:0; pointer-events:none;
+  animation: fitPauseReveal 1s ease forwards 1.8s;
+}
+@keyframes fitPauseReveal{
+  0%{ opacity:0; }
+  99%{ opacity:0; pointer-events:none; }
+  100%{ opacity:0.7; pointer-events:auto; }
+}
+@media (prefers-reduced-motion: reduce){
+  .fit__reflect-tap--delayed{ animation:none; opacity:0.7; pointer-events:auto; }
+}
+
+/* ---- micro-affirmation toast ---- */
+.fit__toast{
+  position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(8px);
+  background:var(--ink); color:var(--bg);
+  font-family:var(--sans); font-size:13.5px;
+  padding:10px 20px; border-radius:100px;
+  opacity:0; pointer-events:none; z-index:50;
+  transition:opacity .45s var(--ease), transform .45s var(--ease);
+}
+.fit__toast.is-visible{ opacity:0.92; transform:translateX(-50%) translateY(0); }
+
+/* ---- matching / processing theater ---- */
+.fit__matching{ text-align:center; padding:40px 0 10px; }
+.fit__matching-dots{
+  display:flex; align-items:center; justify-content:center; gap:22px;
+  margin-bottom:26px;
+}
+.fit__matching-dots .moment-dot{ opacity:0.7; transform:scale(1); }
+.fit__matching-label{
+  font-family:var(--serif); font-style:italic; font-size:15.5px; color:var(--muted);
+  transition:opacity .35s ease;
+}
+
+/* ---- "skip straight to WhatsApp" secondary link on results A/B ---- */
+.fit__skip-link{
+  display:block; text-align:center; margin-top:22px;
+  font-family:var(--sans); font-size:13.5px; color:var(--muted);
+  text-decoration:underline; text-underline-offset:3px;
+}
+.fit__skip-link:hover{ color:var(--sage-deep); }
+.fit__result .fit__privacy-note{ margin-top:10px; }
+
 /* ---- result screens ---- */
 .fit__result{ text-align:center; }
 .fit__result .fit__title{ margin-top:2px; }

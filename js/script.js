@@ -1,3 +1,21 @@
+// Personalized WhatsApp bridge from the fit quiz.
+// If the visitor just came from /fit with a result of "high match" or
+// "turning point", a one-time composed summary is waiting in sessionStorage
+// (see WA_BRIDGE_KEY in fit/fit.js). We apply it to every WhatsApp link on
+// this page and then remove it immediately, so it is used exactly once and
+// a later, unrelated visit falls back to the page's normal default message.
+(function(){
+  try{
+    var KEY = 'baderech_wa_prefill';
+    var prefill = sessionStorage.getItem(KEY);
+    if(!prefill) return;
+    document.querySelectorAll('a[href^="https://wa.me/972505494326"]').forEach(function(a){
+      a.setAttribute('href', 'https://wa.me/972505494326?text=' + encodeURIComponent(prefill));
+    });
+    sessionStorage.removeItem(KEY);
+  }catch(e){}
+})();
+
 const revealEls = document.querySelectorAll('.reveal, .reveal-pop');
   const io = new IntersectionObserver((entries)=>{
     entries.forEach(e=>{

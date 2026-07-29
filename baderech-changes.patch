@@ -1,11 +1,60 @@
 diff --git a/fit/fit.css b/fit/fit.css
-index d04b404..cfe1cb6 100644
+index d04b404..5ade20f 100644
 --- a/fit/fit.css
 +++ b/fit/fit.css
-@@ -161,6 +161,38 @@
+@@ -161,6 +161,87 @@
  }
  .fit__btn-secondary:hover{ border-color:var(--sage-deep); color:var(--sage-deep); }
  
++/* ---- reflection screens (no input, just a thought) ---- */
++.fit__reflect-screen{
++  min-height:280px;
++  display:flex; flex-direction:column; align-items:center; justify-content:center;
++  text-align:center; cursor:pointer;
++  padding:20px 0;
++}
++.fit__reflect-line{
++  font-family:var(--serif); font-style:italic; font-weight:400;
++  font-size:clamp(19px,3.2vw,24px); line-height:1.55;
++  color:var(--ink); max-width:460px;
++  margin:0 0 14px;
++}
++.fit__reflect-line--soft{ color:var(--muted); font-size:clamp(17px,2.8vw,21px); margin-bottom:0; }
++.fit__reflect-tap{
++  margin-top:40px; font-family:var(--sans); font-size:13px; color:var(--muted-2);
++  text-decoration:underline; text-underline-offset:4px;
++  opacity:0.7; transition:opacity .3s ease;
++}
++.fit__reflect-screen:hover .fit__reflect-tap{ opacity:1; }
++.fit__reflect-back{
++  position:absolute; top:14px; right:18px;
++  appearance:none; background:none; border:none; cursor:pointer;
++  font-family:var(--sans); font-size:13px; color:var(--muted);
++  padding:8px; opacity:0.55; transition:opacity .25s;
++}
++.fit__reflect-back:hover{ opacity:1; }
++.fit__reflect-screen, .fit__pause-screen{ position:relative; }
++
++/* ---- pause screen (deliberately near-empty; a beat, not a question) ---- */
++.fit__pause-screen{ min-height:300px; }
++.fit__pause-dots{
++  display:flex; align-items:center; justify-content:center; gap:26px;
++  margin-bottom:30px;
++}
++.fit__pause-dots .moment-dot{ opacity:0.6; }
++.fit__reflect-tap--delayed{
++  opacity:0; pointer-events:none;
++  animation: fitPauseReveal 1s ease forwards 1.8s;
++}
++@keyframes fitPauseReveal{
++  0%{ opacity:0; }
++  99%{ opacity:0; pointer-events:none; }
++  100%{ opacity:0.7; pointer-events:auto; }
++}
++@media (prefers-reduced-motion: reduce){
++  .fit__reflect-tap--delayed{ animation:none; opacity:0.7; pointer-events:auto; }
++}
++
 +/* ---- micro-affirmation toast ---- */
 +.fit__toast{
 +  position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(8px);
@@ -42,28 +91,102 @@ index d04b404..cfe1cb6 100644
  .fit__result{ text-align:center; }
  .fit__result .fit__title{ margin-top:2px; }
 diff --git a/fit/fit.js b/fit/fit.js
-index 9266731..c225354 100644
+index 9266731..b6b8f16 100644
 --- a/fit/fit.js
 +++ b/fit/fit.js
-@@ -13,6 +13,17 @@
+@@ -13,6 +13,78 @@
    var progressWrap = document.querySelector('.fit__progress');
    var progressFill = document.querySelector('.fit__progress-fill');
    var progressLabel = document.querySelector('.fit__progress-label');
 +  var toastEl = document.getElementById('fitToast');
 +
-+  var AFFIRMATIONS = ['הבנו.', 'רשמנו את זה.', 'תודה על הכנות.', 'ברור.', 'זה נשאר בינך לבינך, לעת עתה.'];
++  // Micro-insights: a short, specific reaction to the answer just given —
++  // not a generic "thanks for submitting", and not invented statistics.
++  // Phrasing stays in the same register the founder asked for: "this is a
++  // choice few people make", "this takes honesty" — never a fabricated
++  // number, always something that could plausibly be said by a person who
++  // was actually listening.
++  var INSIGHTS = {
++    q1: function(val){
++      var picked = Array.isArray(val) ? val : [];
++      if(picked.length === 1 && picked[0] === 'q1_5') return 'סקרנות היא נקודת פתיחה לגיטימית, בדיוק כמו כל דבר אחר.';
++      return 'זה לא תמיד קל להודות בזה. תודה שכתבת את זה.';
++    },
++    q2: {
++      q2_1: 'המרחק בין לדעת ללפעול הוא בדיוק המקום שרוב האנשים נתקעים בו.',
++      q2_2: 'המחשבה יכולה להיות מקום בטוח, עד שהיא הופכת למלכודת.',
++      q2_3: 'זו הודאה שדורשת הרבה כנות.',
++      q2_4: 'לזהות דפוס חוזר זו כבר תחילת היציאה ממנו.',
++      q2_5: 'גם "אני לא יודע להגדיר" זו תשובה כנה.'
++    },
++    q4: {
++      q4_1: 'זו בחירה שדורשת יותר אומץ מרוב האפשרויות האחרות כאן.',
++      q4_2: 'תרגול אמיתי לוקח יותר זמן מטיפים, אבל הוא זה שנשאר.',
++      q4_3: 'זה לגיטימי לרצות מישהו שינחה. חשוב רק לשים לב לזה מראש.',
++      q4_4: 'לפעמים באמת מספיק פתרון נקודתי — וגם את זה טוב לדעת על עצמך.',
++      q4_5: 'אי-ודאות היא נקודת התחלה טובה בדיוק כמו כל אחרת.'
++    },
++    q5: function(val){
++      var n = parseInt(val, 10);
++      if(n >= 4) return 'זו רמת מוכנות שלא כולם מגיעים איתה.';
++      if(n === 3) return 'זה מקום כן להיות בו, בלי לזייף יותר.';
++      return 'לדעת שעוד לא הגעת לשם — זו כבר בגרות מסוימת.';
++    },
++    q6: {
++      q6_1: 'זה, בדרך כלל, בדיוק השלב שבו מתחיל שינוי אמיתי.',
++      q6_2: 'לחלוק את האחריות זו עמדה בוגרת.',
++      q6_3: 'לא מעט אנשים מגיעים לכאן מתוך התחושה הזו בדיוק.',
++      q6_4: 'גם חוסר ודאות הוא תשובה כנה.'
++    },
++    q7: {
++      q7_1: 'זה אומר הרבה על כמה שזה רציני עבורך.',
++      q7_2: 'פתיחות מותנית היא בהחלט מקום הגיוני להתחיל ממנו.',
++      q7_3: 'חשוב לדעת את זה על עצמך מראש — זה יעזור לנו להתאים נכון.'
++    },
++    q8: {
++      q8_1: 'זו בדיוק ההשקעה שהתהליך הזה דורש.',
++      q8_2: 'לרצות להבין לפני שמתחייבים — זה הגיוני לגמרי.',
++      q8_3: 'תודה על הכנות. עדיף לדעת את זה עכשיו מאשר באמצע.'
++    }
++  };
++  var INSIGHT_FALLBACK = {
++    q3: 'תודה שכתבת את זה במילים שלך, לא רק סימנת תשובה.',
++    q9: 'זה נשאר בינך לבינך, עד שתבחר לשלוח.'
++  };
++
++  function getInsight(stepName){
++    var val = answers[stepName];
++    var rule = INSIGHTS[stepName];
++    if(typeof rule === 'function') return rule(val);
++    if(rule && val !== undefined && rule[val] !== undefined) return rule[val];
++    return INSIGHT_FALLBACK[stepName] || 'תודה על הכנות.';
++  }
++
 +  var toastTimer = null;
-+  function showToast(){
++  function showInsight(stepName){
 +    if(!toastEl) return;
 +    clearTimeout(toastTimer);
-+    toastEl.textContent = AFFIRMATIONS[Math.floor(Math.random() * AFFIRMATIONS.length)];
++    toastEl.textContent = getInsight(stepName);
 +    toastEl.classList.add('is-visible');
-+    toastTimer = setTimeout(function(){ toastEl.classList.remove('is-visible'); }, 1300);
++    toastTimer = setTimeout(function(){ toastEl.classList.remove('is-visible'); }, 1800);
 +  }
  
    // ---------- storage ----------
    function loadAnswers(){
-@@ -43,6 +54,20 @@
+@@ -31,10 +103,12 @@
+   var answers = loadAnswers();
+ 
+   // ---------- navigation ----------
++  var stepEnteredAt = 0;
+   function showStep(index){
+     steps.forEach(function(s){ s.classList.remove('is-active'); });
+     steps[index].classList.add('is-active');
+     current = index;
++    stepEnteredAt = Date.now();
+     updateProgress();
+     var heading = steps[index].querySelector('h1, h2');
+     if(heading){
+@@ -43,6 +117,20 @@
      window.scrollTo({ top: 0, behavior: 'smooth' });
    }
  
@@ -84,7 +207,7 @@ index 9266731..c225354 100644
    function updateProgress(){
      var name = stepNames[current];
      var qIndex = QUESTION_STEPS.indexOf(name);
-@@ -52,7 +77,7 @@
+@@ -52,7 +140,7 @@
        progressWrap.style.display = '';
        var pct = ((qIndex + 1) / QUESTION_STEPS.length) * 100;
        progressFill.style.width = pct + '%';
@@ -93,16 +216,58 @@ index 9266731..c225354 100644
      }
    }
  
-@@ -195,6 +220,8 @@
+@@ -171,6 +259,11 @@
+   }
+ 
+   function firstUnansweredQuestionIndex(){
++    var hasAnyAnswer = Object.keys(answers).length > 0;
++    if(!hasAnyAnswer){
++      var reflectIdx = stepNames.indexOf('reflect-1');
++      if(reflectIdx > -1) return reflectIdx;
++    }
+     for(var i = 0; i < QUESTION_STEPS.length; i++){
+       var step = steps[stepNames.indexOf(QUESTION_STEPS[i])];
+       if(!validateStep(step)) return stepNames.indexOf(QUESTION_STEPS[i]);
+@@ -195,6 +288,8 @@
          if(continueBtn.dataset.action === 'finish'){
            finishQuiz();
          } else {
 +          var wasQuestion = QUESTION_STEPS.indexOf(stepNames[current]) !== -1;
-+          if(wasQuestion) showToast();
++          if(wasQuestion) showInsight(stepNames[current]);
            showStep(current + 1);
            validateCurrentStep();
          }
-@@ -303,16 +330,55 @@
+@@ -209,6 +304,29 @@
+     }
+   });
+ 
++  // ---------- passthrough screens (reflection / pause: no input, tap anywhere) ----------
++  document.querySelectorAll('.fit__step[data-passthrough="true"]').forEach(function(step){
++    function advance(){
++      if(!step.classList.contains('is-active')) return;
++      if(Date.now() - stepEnteredAt < 450) return;
++      showStep(current + 1);
++      validateCurrentStep();
++    }
++    function goBack(){
++      if(!step.classList.contains('is-active')) return;
++      showStep(Math.max(0, current - 1));
++      validateCurrentStep();
++    }
++    step.addEventListener('click', function(e){
++      if(e.target.closest('.fit__reflect-back')){ goBack(); return; }
++      advance();
++    });
++    step.addEventListener('keydown', function(e){
++      if(e.target.closest('.fit__reflect-back')) return;
++      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); advance(); }
++    });
++  });
++
+   // ---------- scoring ----------
+   var SCORES = {
+     q4: { q4_1: 2, q4_2: 2, q4_3: -1, q4_4: -2, q4_5: 0 },
+@@ -303,16 +421,55 @@
    }
  
    // ---------- finish ----------
@@ -164,7 +329,7 @@ index 9266731..c225354 100644
  
    // ---------- restart ----------
 diff --git a/fit/index.html b/fit/index.html
-index 6c53c33..5a9c431 100644
+index 6c53c33..8f2cf4d 100644
 --- a/fit/index.html
 +++ b/fit/index.html
 @@ -36,6 +36,7 @@
@@ -175,7 +340,71 @@ index 6c53c33..5a9c431 100644
  
      <!-- INTRO -->
      <section class="fit__step is-active" data-step="intro">
-@@ -187,15 +188,26 @@
+@@ -48,6 +49,14 @@
+       <p class="fit__microhint">כשתי דקות · אפשר לעצור בכל שלב</p>
+     </section>
+ 
++    <!-- REFLECT 1 -->
++    <section class="fit__step fit__reflect-screen" data-step="reflect-1" data-passthrough="true" tabindex="0">
++      <p class="fit__reflect-line">רוב האנשים שמגיעים לכאן<br>חושבים שהם מחפשים ביטחון.</p>
++      <p class="fit__reflect-line fit__reflect-line--soft">אבל הרבה פעמים...<br>הם פשוט עייפים מלהיות במלחמה עם עצמם.</p>
++      <div class="fit__reflect-tap">להמשיך</div>
++          <button type="button" class="fit__reflect-back">חזרה</button>
++    </section>
++
+     <!-- Q1 -->
+     <section class="fit__step" data-step="q1" data-required="true">
+       <h2 class="fit__q" tabindex="-1">מה הביא אותך לכאן עכשיו?</h2>
+@@ -81,6 +90,14 @@
+       </div>
+     </section>
+ 
++    <!-- REFLECT 2 -->
++    <section class="fit__step fit__reflect-screen" data-step="reflect-2" data-passthrough="true" tabindex="0">
++      <p class="fit__reflect-line">אין כאן תשובות נכונות.</p>
++      <p class="fit__reflect-line fit__reflect-line--soft">רק מקום להבין איפה אתה נמצא, ממש עכשיו.</p>
++      <div class="fit__reflect-tap">להמשיך</div>
++          <button type="button" class="fit__reflect-back">חזרה</button>
++    </section>
++
+     <!-- Q3 -->
+     <section class="fit__step" data-step="q3" data-required="true">
+       <h2 class="fit__q" tabindex="-1">אם בעוד חודש וחצי משהו אמיתי ישתנה — מה היית רוצה שייראה אחרת?</h2>
+@@ -110,6 +127,18 @@
+       </div>
+     </section>
+ 
++    <!-- PAUSE 1 -->
++    <section class="fit__step fit__pause-screen" data-step="pause-1" data-passthrough="true" tabindex="0">
++      <div class="fit__pause-dots" aria-hidden="true">
++        <span class="moment-dot"></span>
++        <span class="moment-dot"></span>
++        <span class="moment-dot"></span>
++      </div>
++      <p class="fit__reflect-line fit__reflect-line--soft">רגע.</p>
++      <div class="fit__reflect-tap fit__reflect-tap--delayed">להמשיך כשתהיה מוכן</div>
++          <button type="button" class="fit__reflect-back">חזרה</button>
++    </section>
++
+     <!-- Q5 -->
+     <section class="fit__step" data-step="q5" data-required="true">
+       <h2 class="fit__q" tabindex="-1">עד כמה אתה מוכן לנסות, לטעות ולנסות שוב?</h2>
+@@ -147,6 +176,14 @@
+       </div>
+     </section>
+ 
++    <!-- REFLECT 3 -->
++    <section class="fit__step fit__reflect-screen" data-step="reflect-3" data-passthrough="true" tabindex="0">
++      <p class="fit__reflect-line">כמעט סיימת.</p>
++      <p class="fit__reflect-line fit__reflect-line--soft">מה שנשאר הוא לא עוד מבחן — רק עוד קצת כנות.</p>
++      <div class="fit__reflect-tap">להמשיך</div>
++          <button type="button" class="fit__reflect-back">חזרה</button>
++    </section>
++
+     <!-- Q7 -->
+     <section class="fit__step" data-step="q7" data-required="true">
+       <h2 class="fit__q" tabindex="-1">המפגשים ב&quot;בדרך&quot; מתקיימים פנים מול פנים. איך זה מרגיש לך?</h2>
+@@ -187,35 +224,47 @@
        </div>
      </section>
  
@@ -191,10 +420,13 @@ index 6c53c33..5a9c431 100644
 +
      <!-- RESULT A -->
      <section class="fit__step fit__result" data-step="result-a">
-       <div class="eyebrow">התוצאה שלך</div>
-       <h2 class="fit__title">נראה שיש כאן בסיס לשיחה.</h2>
-       <p class="fit__lede">התשובות שלך לא אומרות שהתהליך בהכרח מתאים. הן כן אומרות שיש כאן רצון, נכונות ומקום ששווה להסתכל עליו יחד.</p>
+-      <div class="eyebrow">התוצאה שלך</div>
+-      <h2 class="fit__title">נראה שיש כאן בסיס לשיחה.</h2>
+-      <p class="fit__lede">התשובות שלך לא אומרות שהתהליך בהכרח מתאים. הן כן אומרות שיש כאן רצון, נכונות ומקום ששווה להסתכל עליו יחד.</p>
 -      <p class="fit__privacy-note">רק בלחיצה על הכפתור ייפתח WhatsApp עם סיכום התשובות. שום דבר לא נשלח אוטומטית.</p>
++      <div class="eyebrow">מה שעלה מתוך התשובות שלך</div>
++      <h2 class="fit__title">נראה שיש כאן בסיס אמיתי לשיחה.</h2>
++      <p class="fit__lede">זה לא אבחנה ולא ציון. זה פשוט מה שהצטבר מהתשובות שלך — רצון, נכונות, ומקום ששווה להסתכל עליו יחד.</p>
        <div class="fit__nav fit__nav--result">
 -        <a href="#" class="fit__btn-continue fit__whatsapp-link" data-result="a" target="_blank" rel="noopener">לשלוח לירון ולבדוק התאמה</a>
 +        <a href="/#story" class="fit__btn-continue">להמשיך אל הדרך</a>
@@ -204,11 +436,15 @@ index 6c53c33..5a9c431 100644
        <button type="button" class="fit__restart-link">למחוק את התשובות ולהתחיל מחדש</button>
      </section>
  
-@@ -204,10 +216,11 @@
-       <div class="eyebrow">התוצאה שלך</div>
-       <h2 class="fit__title">יש כאן משהו ששווה לדייק.</h2>
-       <p class="fit__lede">יכול להיות שהתהליך מתאים, ויכול להיות שאתה עדיין מנסה להבין מה אתה צריך. לא חייבים לדעת הכול לפני שמדברים.</p>
+     <!-- RESULT B -->
+     <section class="fit__step fit__result" data-step="result-b">
+-      <div class="eyebrow">התוצאה שלך</div>
+-      <h2 class="fit__title">יש כאן משהו ששווה לדייק.</h2>
+-      <p class="fit__lede">יכול להיות שהתהליך מתאים, ויכול להיות שאתה עדיין מנסה להבין מה אתה צריך. לא חייבים לדעת הכול לפני שמדברים.</p>
 -      <p class="fit__privacy-note">רק בלחיצה על הכפתור ייפתח WhatsApp עם סיכום התשובות. שום דבר לא נשלח אוטומטית.</p>
++      <div class="eyebrow">מה שעלה מתוך התשובות שלך</div>
++      <h2 class="fit__title">נראה שאתה בדיוק באמצע — ויש כאן משהו ששווה לדייק.</h2>
++      <p class="fit__lede">יכול להיות שהתהליך מתאים, ויכול להיות שאתה עדיין מבין מה אתה צריך. שני המקומות האלה לגיטימיים באותה מידה.</p>
        <div class="fit__nav fit__nav--result">
 -        <a href="#" class="fit__btn-continue fit__whatsapp-link" data-result="b" target="_blank" rel="noopener">לשתף את ירון ולדבר</a>
 +        <a href="/#story" class="fit__btn-continue">להמשיך אל הדרך</a>
@@ -218,6 +454,17 @@ index 6c53c33..5a9c431 100644
        <button type="button" class="fit__restart-link">למחוק את התשובות ולהתחיל מחדש</button>
      </section>
  
+     <!-- RESULT C -->
+     <section class="fit__step fit__result" data-step="result-c">
+-      <div class="eyebrow">התוצאה שלך</div>
+-      <h2 class="fit__title">יכול להיות שזה לא הזמן או הפורמט המדויק.</h2>
+-      <p class="fit__lede">&quot;בדרך.&quot; דורש נוכחות, עבודה והתנסות גם בין המפגשים. אם כרגע אתה מחפש פתרון נקודתי או תהליך אונליין בלבד, יכול להיות שזה פשוט לא הדבר הנכון כרגע — וזה בסדר.</p>
++      <div class="eyebrow">מה שעלה מתוך התשובות שלך</div>
++      <h2 class="fit__title">יכול להיות שזה לא הזמן או הפורמט המדויק — וזה בסדר גמור.</h2>
++      <p class="fit__lede">&quot;בדרך.&quot; דורש נוכחות, עבודה והתנסות גם בין המפגשים. אם כרגע אתה מחפש פתרון נקודתי או תהליך אונליין בלבד, יכול להיות שזה פשוט לא הדבר הנכון כרגע.</p>
+       <p class="fit__privacy-note">רק בלחיצה על הכפתור ייפתח WhatsApp עם סיכום התשובות. שום דבר לא נשלח אוטומטית.</p>
+       <div class="fit__nav fit__nav--result">
+         <a href="#" class="fit__btn-secondary fit__whatsapp-link" data-result="c" target="_blank" rel="noopener">בכל זאת, אני רוצה לשאול משהו</a>
 diff --git a/js/script.js b/js/script.js
 index a288d24..fd9afa9 100644
 --- a/js/script.js
