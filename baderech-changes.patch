@@ -1,0 +1,1415 @@
+diff --git a/README.md b/README.md
+index d0fb31f..1cf825a 100644
+--- a/README.md
++++ b/README.md
+@@ -1,42 +1,80 @@
+-# בדרך. — דף נחיתה
++# בדרך. — אתר + בדיקת התאמה
+ 
+-דף נחיתה אישי לליווי ולהתפתחות אישית. עברית מלאה, RTL, ללא framework — HTML/CSS/JS פשוטים.
++אתר סטטי טהור (HTML/CSS/JS פשוטים, בלי framework ובלי build step) לתהליך הליווי האישי "בדרך.". עברית מלאה, RTL.
++
++## המסע של המשתמש
++
++```
++סריקת QR
++   ↓
++דף הבית — מסך קבלת פנים קצר (תמונה + חתימה), ואז האתר עצמו
++   ↓
++בדיקת התאמה קצרה (/fit) — 6 שאלות + מסך רפלקציה אחד
++   ↓
++תוצאה מיידית (בלי מסך "מעבד...")
++   ↓
++המשך לאתר, או וואטסאפ/קלנדלי ישירות
++```
++
++השינויים בפועל בכל שלב, כולל הנימוקים, מתועדים ב-**`DECISIONS.md`** — זה יומן ההחלטות המלא של הפרויקט, שווה לקרוא לפני שמשנים משהו.
+ 
+ ## מבנה הפרויקט
+ 
+ ```
+ .
+-├── index.html          # המבנה והתוכן של הדף
++├── index.html              # דף הבית — כולל את מסך קבלת הפנים (#greeting) ואת שאר האתר
+ ├── css/
+-│   └── style.css       # כל העיצוב (משתני צבע, טיפוגרפיה, אנימציות)
++│   └── style.css           # כל העיצוב של דף הבית (משתני צבע, טיפוגרפיה, אנימציות)
+ ├── js/
+-│   └── script.js       # אנימציות גלילה + תפריט מובייל
+-└── images/
+-    ├── az.jpg           # תמונת "אז"
+-    └── hayom.jpg         # תמונת "היום"
++│   └── script.js           # אנימציות גלילה, תפריט מובייל, מסך קבלת הפנים, גשר הוואטסאפ מהפאנל
++│
++├── fit/
++│   ├── index.html          # בדיקת ההתאמה — 6 שאלות, מסך רפלקציה, 3 תוצאות
++│   ├── fit.js               # לוגיקת השאלון: ניקוד, שמירת מצב, בניית הודעת הוואטסאפ
++│   └── fit.css              # עיצוב ייעודי לבדיקת ההתאמה (בנוי מעל אותם משתנים מ-css/style.css)
++│
++├── images/
++│   ├── yaron-hero.jpg       # התמונה במסך קבלת הפנים
++│   ├── az.jpg / hayom.jpg   # תמונות "אז/היום" בסיפור האישי
++│   └── og-image.png         # תמונת שיתוף לרשתות חברתיות
++│
++├── qr/
++│   ├── baderech-fit-qr.png / .svg     # קובץ ה-QR הגולמי (מפנה לדף הבית)
++│   └── card-a6-*.png, card-business-*.png   # עיצובי כרטיסים מוכנים להדפסה
++│
++├── icons/                   # פאביקונים בגדלים שונים
++├── DECISIONS.md             # יומן החלטות מלא — מה השתנה, למה, ועל בסיס מה
++└── README.md
+ ```
+ 
+-## איך מריצים מקומית
++## חשוב לדעת לפני שמריצים מקומית
+ 
+-אין תלות בשום כלי build. אפשר פשוט לפתוח את `index.html` בדפדפן, או להריץ שרת סטטי מקומי:
++הקבצים ב-`fit/` טוענים CSS/JS דרך **נתיבים מוחלטים** (`/css/style.css`, `/fit/fit.css` וכו'), כדי שזה יעבוד נכון בפריסה האמיתית. המשמעות: **פתיחת `fit/index.html` ישירות כקובץ בדפדפן (`file://`) לא תעבוד** — ה-CSS וה-JS פשוט לא ייטענו. צריך שרת מקומי:
+ 
+ ```bash
+ python3 -m http.server 8000
+-# ואז לגלוש ל- http://localhost:8000
++# ואז לגלוש ל- http://localhost:8000  (דף הבית)
++# ול-        http://localhost:8000/fit/  (בדיקת ההתאמה)
+ ```
+ 
++`index.html` הראשי (דף הבית) כן טוען עם נתיבים יחסיים, ולכן אפשר לפתוח אותו ישירות כקובץ — אבל עדיף להתרגל לשרת המקומי כדי לבדוק את שני הדפים באותה שיטה.
++
+ ## איך מפרסמים (Deploy)
+ 
+-מכיוון שזה אתר סטטי טהור (בלי שרת/בקאנד), אפשר לפרסם בחינם ובלי צורך ב-Java/Node/כל שרת, למשל:
++האתר רץ כרגע על **Vercel**, מחובר לריפו הזה — כל push ל-`main` אמור להפעיל deploy אוטומטי. אין תלות בשום build tool.
++
++## הברקוד (QR)
+ 
+-- **GitHub Pages** — Settings → Pages → Deploy from branch → `main` / root.
+-- **Netlify** / **Vercel** — גרירת התיקייה, או חיבור לריפו וזהו.
++ה-QR ב-`qr/baderech-fit-qr.png`/`.svg` מקודד את `https://baderech.vercel.app/?src=qr-card` — **מפנה לדף הבית**, לא ישר לבדיקת ההתאמה. אם משנים את זה בעתיד, חשוב לבדוק אם כרטיסי ההדפסה (`card-a6-*`, `card-business-*`) כבר הודפסו וחולקו לפני שמעדכנים את הקובץ בפועל.
+ 
+ ## גופנים
+ 
+-הגופנים (Frank Ruhl Libre, Heebo) נטענים מ-Google Fonts דרך `<link>` בתוך `index.html`. אם רוצים לוודא טעינה גם בלי אינטרנט, אפשר להוריד אותם ולשרת מקומית מתוך `/fonts`.
++Frank Ruhl Libre (serif) ו-Heebo (sans) נטענים מ-Google Fonts דרך `<link>` בראש כל דף.
+ 
+-## הערות
++## הערות טכניות
+ 
+-- כל אלמנט עם קלאס `.reveal` מוסתר (`opacity:0`) ומופיע בגלילה. יש `<noscript>` fallback שמראה הכול מיד אם JavaScript לא רץ.
+-- טופס יצירת הקשר כרגע `mailto:` — אם בעתיד רוצים טופס אמיתי שמגיע לאימייל/CRM, זה כבר דורש שירות צד-שלישי (Formspree/Netlify Forms) או בקאנד קטן — לא Java, ברוב המקרים Node.js קטן מספיק לגמרי.
++- כל אלמנט עם קלאס `.reveal` / `.reveal-pop` מוסתר בהתחלה ומופיע בגלילה (IntersectionObserver ב-`js/script.js`). יש `<noscript>` fallback שמראה הכול מיד אם JavaScript לא רץ.
++- מסך קבלת הפנים (`#greeting`) מופיע פעם אחת בלבד לכל session (נשמר ב-`sessionStorage`).
++- תשובות בדיקת ההתאמה נשמרות זמנית ב-`sessionStorage` בזמן המילוי, ונמחקות ברגע שמוצגת התוצאה.
++- כשמישהו מסיים את בדיקת ההתאמה, סיכום התשובות מועבר פעם אחת ל-`sessionStorage` כדי שגם כפתורי הוואטסאפ הרגילים בדף הבית יישאו אותו (לא רק הכפתור בתוך הפאנל עצמו) — הלוגיקה נמצאת גם ב-`fit/fit.js` וגם ב-`js/script.js`.
++- אין טופס יצירת קשר באתר כרגע — הפנייה היא תמיד דרך קישורי WhatsApp/Calendly ישירים.
+diff --git a/baderech-fit-qr.png b/baderech-fit-qr.png
+index 2094d1d..64b1c92 100644
+Binary files a/baderech-fit-qr.png and b/baderech-fit-qr.png differ
+diff --git a/css/style.css b/css/style.css
+index e494025..79146d3 100644
+--- a/css/style.css
++++ b/css/style.css
+@@ -1,3 +1,16 @@
++/* ============================================================
++   שליטה על גודל הטקסט בכל האתר — במספר אחד.
++   כל font-size בקובץ הזה (ובקובץ fit/fit.css) נכתב ביחידות rem,
++   שהן תמיד יחסיות לגודל הטקסט שמוגדר כאן ב-html. שינוי המספר
++   הבא הוא היחיד שצריך — הוא יגדיל/יקטין את כל הטקסט באתר יחד,
++   באופן יחסי (כותרות, גוף טקסט, כפתורים — הכל, בלי לשבור יחסים).
++   ברירת מחדל של הדפדפן היא 16px (=1rem). לדוגמה: 17px ≈ הגדלה
++   של 6%, 18px ≈ הגדלה של 12%.
++   ============================================================ */
++html{
++  font-size: 16px; /* ← שנה רק את המספר הזה כדי להגדיל/להקטין את כל הטקסט באתר */
++}
++
+ :root{
+     --bg: #F7F6F1;
+     --bg-alt: #EFEDE4;
+@@ -38,21 +51,13 @@
+ 
+   .eyebrow{
+     font-family:var(--sans);
+-    font-size:13px;
++    font-size:0.875rem;
+     font-weight:600;
+     letter-spacing:0.04em;
+-    display:inline-flex;
+-    align-items:center;
+-    gap:10px;
++    display:inline-block;
+     margin-bottom:24px;
+     color:var(--sage-deep);
+   }
+-  .eyebrow::before{
+-    content:"";
+-    width:26px; height:1px;
+-    background:currentColor;
+-    opacity:0.55;
+-  }
+ 
+   a{ color:inherit; }
+ 
+@@ -84,6 +89,64 @@
+   .reveal-pop.is-visible{ opacity:1; transform:scale(1) translateY(0); }
+   .reveal-pop--delay{ transition-delay:.15s; }
+ 
++  /* ---------- GREETING (before the site itself) ---------- */
++  html.greeting-active, html.greeting-active body{ overflow:hidden; height:100%; }
++
++  .greeting{
++    position:fixed; inset:0; z-index:300;
++    background:var(--bg);
++    display:flex; flex-direction:column; align-items:center; justify-content:center;
++    cursor:pointer;
++    padding:6vh 24px;
++  }
++  .greeting__lead{
++    font-family:var(--serif); font-style:italic; font-weight:400;
++    font-size:1.1875rem; color:var(--muted); margin-bottom:32px;
++    opacity:0;
++    transform:translateY(8px);
++    animation:greetIn 1.1s var(--ease) forwards 0.2s;
++  }
++  .greeting__photo{
++    width:min(340px, 56vw);
++    aspect-ratio:4/5;
++    border-radius:12px;
++    overflow:hidden;
++    box-shadow:0 1px 3px rgba(30,31,28,0.08);
++    opacity:0;
++    transform:translateY(12px);
++    animation:greetIn 1.4s var(--ease) forwards 0.9s;
++  }
++  .greeting__photo img{
++    width:100%; height:100%; object-fit:cover; display:block;
++    filter:saturate(0.94);
++  }
++  .greeting__sig{
++    margin-top:26px;
++    font-family:var(--serif); font-style:italic; font-weight:400;
++    font-size:1.0938rem; color:var(--ink);
++    opacity:0;
++    transform:translateY(8px);
++    animation:greetIn 1.2s var(--ease) forwards 1.7s;
++  }
++  .greeting__hint{
++    margin-top:54px;
++    font-family:var(--sans); font-size:0.9375rem; color:var(--muted-2);
++    opacity:0;
++    animation:greetHintIn 1s var(--ease) forwards 3.1s;
++  }
++  @keyframes greetIn{ to{ opacity:1; transform:translateY(0); } }
++  @keyframes greetHintIn{ to{ opacity:0.8; } }
++
++  .greeting.is-leaving{
++    opacity:0;
++    transition:opacity .6s var(--ease);
++    pointer-events:none;
++  }
++
++  @media (prefers-reduced-motion: reduce){
++    .greeting__lead, .greeting__photo, .greeting__sig, .greeting__hint{ animation:none; opacity:1; transform:none; }
++  }
++
+   /* ---------- SKIP LINK ---------- */
+   .skip-link{
+     position:absolute; right:-999px; top:0;
+@@ -115,7 +178,7 @@
+     50%{ box-shadow:0 0 10px 3px rgba(110,124,93,0.28); }
+   }
+   .moments-caption{
+-    text-align:center; font-family:var(--serif); font-style:italic; font-size:15px;
++    text-align:center; font-family:var(--serif); font-style:italic; font-size:1rem;
+     color:var(--muted); margin-top:-30px; opacity:0;
+     transition:opacity 1.2s var(--ease) .4s;
+   }
+@@ -133,12 +196,12 @@
+   }
+   .nav__brand{
+     font-family:var(--serif);
+-    font-size:19px;
++    font-size:1.2812rem;
+     font-weight:500;
+   }
+   .nav__brand span{ color:var(--sage-deep); }
+   .nav__links{
+-    display:flex; gap:30px; font-size:14.5px;
++    display:flex; gap:30px; font-size:0.9688rem;
+     list-style:none; margin:0; padding:0;
+   }
+   .nav__links a{
+@@ -147,14 +210,14 @@
+   }
+   .nav__links a:hover{ opacity:1; }
+   .nav__cta{
+-    font-size:13.5px; font-weight:500;
++    font-size:0.9062rem; font-weight:500;
+     padding:10px 20px; border-radius:100px;
+     border:1px solid var(--ink);
+     text-decoration:none;
+     transition:background .3s, color .3s;
+   }
+   .nav__cta:hover{ background:var(--ink); color:var(--bg); }
+-  .nav__toggle{ display:none; background:none; border:none; color:var(--ink); font-size:22px; cursor:pointer; z-index:95; }
++  .nav__toggle{ display:none; background:none; border:none; color:var(--ink); font-size:1.5rem; cursor:pointer; z-index:95; }
+   .nav__links.is-open{
+     display:flex !important;
+     position:fixed; top:64px; right:0; left:0; z-index:90;
+@@ -172,7 +235,7 @@
+ 
+   /* ---------- LINKS / BUTTONS ---------- */
+   .textlink{
+-    display:inline-block; text-decoration:none; font-size:15px; font-weight:500;
++    display:inline-block; text-decoration:none; font-size:1rem; font-weight:500;
+     padding-bottom:4px; border-bottom:1px solid var(--muted-2);
+     transition:border-color .3s, opacity .3s;
+   }
+@@ -180,7 +243,7 @@
+   .btn{
+     display:inline-flex; align-items:center; gap:10px;
+     padding:17px 34px; border-radius:100px;
+-    font-weight:600; font-size:15.5px; text-decoration:none;
++    font-weight:600; font-size:1.0312rem; text-decoration:none;
+     background:var(--ink); color:var(--bg);
+     transition:transform .35s var(--ease), background .35s;
+   }
+@@ -197,41 +260,42 @@
+   }
+   .hero__inner{ max-width:820px; }
+   .hero h1{
+-    font-size:clamp(34px,6.2vw,72px);
++    font-size:clamp(2.2812rem,6.7vw,4.875rem);
+     font-weight:500;
+   }
+   .hero p.lede{
+     margin-top:24px;
+-    font-size:clamp(17px,2vw,21px);
++    font-size:clamp(1.1562rem,2.2vw,1.4062rem);
+     max-width:520px;
+     color:var(--muted);
+   }
+   .hero__actions{ display:flex; gap:30px; margin-top:46px; flex-wrap:wrap; align-items:center; }
++
+   .hero__scroll{
+     position:absolute; bottom:34px; right:0; left:0;
+     display:flex; justify-content:center;
+-    font-size:12.5px; letter-spacing:0.04em;
++    font-size:0.8438rem; letter-spacing:0.04em;
+     color:var(--muted);
+     animation:floaty 3s ease-in-out infinite;
+   }
+   @keyframes floaty{ 0%,100%{ transform:translateY(0); opacity:.55;} 50%{ transform:translateY(7px); opacity:.95;} }
+ 
+   /* ---------- IDENTIFICATION SECTION ---------- */
+-  .id h2{ font-size:clamp(28px,4.2vw,46px); max-width:680px; }
++  .id h2{ font-size:clamp(1.875rem,4.5vw,3.0938rem); max-width:680px; }
+   .id__lines{ margin-top:50px; display:flex; flex-direction:column; gap:20px; max-width:600px; }
+   .id__line{
+     font-family:var(--serif); font-style:italic; font-weight:400;
+-    font-size:clamp(18px,2.4vw,24px);
++    font-size:clamp(1.2188rem,2.6vw,1.625rem);
+     color:var(--muted-2);
+   }
+   .id__close{
+-    margin-top:46px; font-size:19px; font-weight:500;
+-    padding-top:34px; border-top:1px solid var(--line); max-width:600px;
++    margin-top:46px; font-size:1.2812rem; font-weight:500;
++    max-width:600px;
+   }
+ 
+   /* ---------- STORY ---------- */
+-  .story h2{ font-size:clamp(28px,4.2vw,46px); max-width:680px; }
+-  .story .lede{ max-width:600px; margin-top:22px; font-size:16.5px; color:var(--muted); }
++  .story h2{ font-size:clamp(1.875rem,4.5vw,3.0938rem); max-width:680px; }
++  .story .lede{ max-width:600px; margin-top:22px; font-size:1.125rem; color:var(--muted); }
+ 
+   .frames{
+     margin-top:70px;
+@@ -255,7 +319,7 @@
+   .frame:nth-child(3) .frame__img{ background: repeating-linear-gradient(25deg, rgba(110,124,93,0.07) 0 2px, transparent 2px 16px), linear-gradient(140deg,#E3E0D3,#F7F6F1); }
+   .frame:nth-child(4) .frame__img{ background: repeating-linear-gradient(155deg, rgba(110,124,93,0.07) 0 2px, transparent 2px 16px), linear-gradient(220deg,#E8E5D9,#F7F6F1); }
+   .frame__cap{
+-    font-family:var(--serif); font-style:italic; font-size:14px;
++    font-family:var(--serif); font-style:italic; font-size:0.9375rem;
+     color:var(--muted); line-height:1.6;
+   }
+ 
+@@ -264,8 +328,8 @@
+   }
+ 
+   /* ---------- REAL PHOTOS: PAST / PRESENT ---------- */
+-  .real h2{ font-size:clamp(26px,4vw,42px); max-width:640px; }
+-  .real .lede{ max-width:560px; margin-top:18px; font-size:15.5px; color:var(--muted); }
++  .real h2{ font-size:clamp(1.75rem,4.3vw,2.8438rem); max-width:640px; }
++  .real .lede{ max-width:560px; margin-top:18px; font-size:1.0312rem; color:var(--muted); }
+   .real__row{
+     display:grid; grid-template-columns:1fr auto 1fr; gap:38px; align-items:center;
+     margin-top:56px; max-width:820px; margin-left:auto; margin-right:auto;
+@@ -276,14 +340,13 @@
+     background:
+       repeating-linear-gradient(120deg, rgba(110,124,93,0.07) 0 2px, transparent 2px 16px),
+       linear-gradient(160deg,#E6E3D8,#F7F6F1);
+-    border:1px solid var(--line);
+     position:relative;
+   }
+   .real__photo img{ width:100%; height:100%; object-fit:cover; }
+   .real__photo img[src*="az.jpg"]{ transform: scale(1.7) translateY(-20px); transform-origin: top center; }
+   .real__photo .tag{
+     position:absolute; top:16px; right:16px;
+-    font-size:12px; font-weight:600; letter-spacing:0.03em;
++    font-size:0.8125rem; font-weight:600; letter-spacing:0.03em;
+     color:var(--sage-deep); background:rgba(247,246,241,0.85);
+     padding:5px 12px; border-radius:100px;
+     z-index:2;  
+@@ -291,12 +354,12 @@
+   .real__photo .hint{
+     position:absolute; inset:0; display:flex; align-items:center; justify-content:center;
+     text-align:center; padding:0 24px;
+-    font-family:var(--serif); font-style:italic; font-size:14.5px; color:rgba(30,31,28,0.4);
++    font-family:var(--serif); font-style:italic; font-size:0.9688rem; color:rgba(30,31,28,0.4);
+   }
+-  .real__cap{ font-family:var(--serif); font-style:italic; font-size:14.5px; color:var(--muted); line-height:1.6; }
+-  .real__arrow{ font-size:22px; color:var(--sage-deep); }
++  .real__cap{ font-family:var(--serif); font-style:italic; font-size:0.9688rem; color:var(--muted); line-height:1.6; }
++  .real__arrow{ font-size:1.5rem; color:var(--sage-deep); }
+   .real__reflection{
+-    margin-top:44px; max-width:660px; font-size:17px; color:var(--ink);
++    margin-top:44px; max-width:660px; font-size:1.1562rem; color:var(--ink);
+     line-height:1.85;
+   }
+   .real__reflection strong{ color:var(--sage-deep); font-weight:600; }
+@@ -317,25 +380,25 @@
+     padding:0;
+   }
+   .pause__inner{ padding: 0 clamp(22px,5vw,60px) 44px; color:#F7F6F1; }
+-  .pause h3{ font-size:clamp(22px,3.4vw,34px); font-weight:400; max-width:600px; }
+-  .pause p{ margin-top:12px; font-size:14px; opacity:0.75; }
++  .pause h3{ font-size:clamp(1.5rem,3.7vw,2.2812rem); font-weight:400; max-width:600px; }
++  .pause p{ margin-top:12px; font-size:0.9375rem; opacity:0.75; }
+ 
+   /* ---------- PHILOSOPHY (truth) ---------- */
+-  .phil h2{ font-size:clamp(28px,4.4vw,48px); max-width:700px; }
++  .phil h2{ font-size:clamp(1.875rem,4.8vw,3.25rem); max-width:700px; }
+   .phil__lines{ margin-top:46px; display:flex; flex-direction:column; gap:2px; max-width:640px; }
+   .phil__line{
+     font-family:var(--serif); font-style:italic; font-weight:400;
+-    font-size:clamp(18px,2.4vw,25px);
++    font-size:clamp(1.2188rem,2.6vw,1.6875rem);
+     padding:15px 0; border-bottom:1px solid var(--line);
+     color:var(--muted-2);
+   }
+   .phil__line:last-of-type{ border-bottom:none; }
+-  .phil__close{ margin-top:38px; max-width:600px; font-size:17px; }
++  .phil__close{ margin-top:38px; max-width:600px; font-size:1.1562rem; }
+   .phil__close strong{ color:var(--sage-deep); font-weight:600; }
+ 
+   /* ---------- BUILD / COMPASS ---------- */
+-  .build h2{ font-size:clamp(28px,4.2vw,46px); max-width:680px; }
+-  .build .lede{ max-width:600px; margin-top:20px; font-size:16px; color:var(--muted); }
++  .build h2{ font-size:clamp(1.875rem,4.5vw,3.0938rem); max-width:680px; }
++  .build .lede{ max-width:600px; margin-top:20px; font-size:1.0938rem; color:var(--muted); }
+   .build__grid{
+     display:grid; grid-template-columns:1fr 400px; gap:60px; align-items:center;
+     margin-top:60px;
+@@ -351,7 +414,7 @@
+   }
+   .compass-center{
+     position:absolute; inset:34%; display:flex; align-items:center; justify-content:center;
+-    text-align:center; font-family:var(--serif); font-style:italic; font-size:15px;
++    text-align:center; font-family:var(--serif); font-style:italic; font-size:1rem;
+     color:var(--sage-deep); line-height:1.4; z-index:2;
+   }
+   .compass-node{
+@@ -361,7 +424,7 @@
+   .compass-label{
+     position:absolute; width:120px; text-align:center;
+     transform:translate(-50%,-50%);
+-    font-size:13.5px; font-weight:500; color:var(--ink);
++    font-size:0.9062rem; font-weight:500; color:var(--ink);
+   }
+ 
+   @media (max-width:900px){
+@@ -370,46 +433,43 @@
+   }
+ 
+   /* ---------- ORIGIN STORY ---------- */
+-  .origin h2{ font-size:clamp(26px,4vw,42px); max-width:700px; }
+-  .origin__body{ margin-top:26px; max-width:640px; font-size:16px; color:var(--muted); }
++  .origin h2{ font-size:clamp(1.75rem,4.3vw,2.8438rem); max-width:700px; }
++  .origin__body{ margin-top:26px; max-width:640px; font-size:1.0938rem; color:var(--muted); }
+   .origin__body + .origin__body{ margin-top:18px; }
+-  .origin__close{ margin-top:26px; max-width:600px; font-size:17px; }
++  .origin__close{ margin-top:26px; max-width:600px; font-size:1.1562rem; }
+   .origin__close strong{ color:var(--sage-deep); font-weight:600; }
+ 
+   /* ---------- AREAS OF THE WALK ---------- */
+-  .areas h2{ font-size:clamp(26px,4.2vw,44px); max-width:720px; }
+-  .areas .lede{ max-width:620px; margin-top:20px; font-size:16px; color:var(--muted); }
++  .areas h2{ font-size:clamp(1.75rem,4.5vw,2.9688rem); max-width:720px; }
++  .areas .lede{ max-width:620px; margin-top:20px; font-size:1.0938rem; color:var(--muted); }
+   .areas__list{ margin-top:44px; }
+   .areas__close{
+-    margin-top:40px; max-width:640px; font-size:19px; font-weight:500;
++    margin-top:40px; max-width:640px; font-size:1.2812rem; font-weight:500;
+     padding-top:32px; border-top:1px solid var(--line);
+   }
+   .areas__close strong{ color:var(--sage-deep); }
+ 
+   /* ---------- HOW IT'S DIFFERENT ---------- */
+-  .different h2{ font-size:clamp(28px,4.4vw,48px); max-width:720px; }
+-  .different__lines{ margin-top:44px; display:flex; flex-direction:column; gap:2px; max-width:600px; }
++  .different h2{ font-size:clamp(1.875rem,4.8vw,3.25rem); max-width:720px; }
++  .different__lines{ margin-top:44px; display:flex; flex-direction:column; gap:20px; max-width:600px; }
+   .different__line{
+     font-family:var(--serif); font-style:italic; font-weight:400;
+-    font-size:clamp(18px,2.3vw,24px);
+-    padding:13px 0; border-bottom:1px solid var(--line);
++    font-size:clamp(1.2188rem,2.5vw,1.625rem);
+     color:var(--muted-2);
+   }
+-  .different__line:last-of-type{ border-bottom:none; }
+-  .different__close{ margin-top:36px; max-width:620px; font-size:16.5px; color:var(--muted); }
++  .different__close{ margin-top:36px; max-width:620px; font-size:1.125rem; color:var(--muted); }
+   .different__close strong{ color:var(--sage-deep); font-weight:600; }
+ 
+   /* ---------- PROCESS ---------- */
+-  .process h2{ font-size:clamp(28px,4.2vw,46px); max-width:680px; }
+-  .process__list{ margin-top:56px; display:flex; flex-direction:column; }
++  .process h2{ font-size:clamp(1.875rem,4.5vw,3.0938rem); max-width:680px; }
++  .process__list{ margin-top:56px; display:flex; flex-direction:column; gap:14px; }
+   .process__item{
+     display:grid; grid-template-columns:70px 1fr; gap:26px;
+-    padding:32px 0; border-top:1px solid var(--line);
++    padding:22px 0;
+   }
+-  .process__item:last-child{ border-bottom:1px solid var(--line); }
+-  .process__num{ font-family:var(--serif); font-size:22px; color:var(--sage-deep); padding-top:2px; }
+-  .process__title{ font-weight:600; font-size:17px; margin-bottom:8px; }
+-  .process__body{ color:var(--muted); font-size:15.5px; max-width:600px; }
++  .process__num{ font-family:var(--serif); font-size:1.5rem; color:var(--sage-deep); padding-top:2px; }
++  .process__title{ font-weight:600; font-size:1.1562rem; margin-bottom:8px; }
++  .process__body{ color:var(--muted); font-size:1.0312rem; max-width:600px; }
+ 
+   @media (max-width:600px){ .process__item{ grid-template-columns:1fr; gap:6px; } }
+ 
+@@ -417,15 +477,15 @@
+   .goal{ text-align:center; }
+   .goal__inner{ max-width:680px; margin:0 auto; }
+   .goal h2{
+-    font-size:clamp(24px,3.6vw,34px); font-weight:400; color:var(--muted-2);
++    font-size:clamp(1.625rem,3.9vw,2.2812rem); font-weight:400; color:var(--muted-2);
+   }
+   .goal h2 em{
+     display:block; font-style:italic; font-weight:500; color:var(--ink);
+-    font-size:clamp(30px,5vw,50px); margin-top:14px;
++    font-size:clamp(2.0312rem,5.4vw,3.375rem); margin-top:14px;
+   }
+-  .goal p{ margin-top:30px; font-size:16.5px; color:var(--muted); max-width:560px; margin-left:auto; margin-right:auto; }
++  .goal p{ margin-top:30px; font-size:1.125rem; color:var(--muted); max-width:560px; margin-left:auto; margin-right:auto; }
+   .goal__close{
+-    margin-top:34px; font-size:18px; font-weight:500;
++    margin-top:34px; font-size:1.2188rem; font-weight:500;
+     padding-top:30px; border-top:1px solid var(--line);
+     max-width:520px; margin-left:auto; margin-right:auto;
+   }
+@@ -437,21 +497,21 @@
+   .pride__lines{ display:flex; flex-direction:column; gap:6px; }
+   .pride__line{
+     font-family:var(--serif); font-style:italic; font-weight:400;
+-    font-size:clamp(17px,2.1vw,21px); color:var(--muted-2);
++    font-size:clamp(1.1562rem,2.3vw,1.4062rem); color:var(--muted-2);
+   }
+-  .pride__setup{ margin-top:34px; font-size:16px; color:var(--muted); }
++  .pride__setup{ margin-top:34px; font-size:1.0938rem; color:var(--muted); }
+   .pride__quote{
+     font-family:var(--serif); font-style:italic; font-weight:500;
+-    font-size:clamp(28px,5.2vw,46px); line-height:1.32;
++    font-size:clamp(1.875rem,5.6vw,3.0938rem); line-height:1.32;
+     color:var(--sage-deep); margin:26px 0; position:relative;
+   }
+-  .pride__close{ margin-top:30px; font-size:15.5px; color:var(--muted); }
++  .pride__close{ margin-top:30px; font-size:1.0312rem; color:var(--muted); }
+ 
+   /* ---------- WHO / BOUNDARIES ---------- */
+-  .who h2{ font-size:clamp(28px,4.2vw,46px); max-width:680px; }
++  .who h2{ font-size:clamp(1.875rem,4.5vw,3.0938rem); max-width:680px; }
+   .who__grid{ display:grid; grid-template-columns:1fr 1fr; gap:56px; margin-top:56px; align-items:start; }
+   .who__fit{ display:grid; gap:16px; }
+-  .who__fit li{ list-style:none; display:flex; gap:12px; font-size:15.5px; color:var(--muted-2); }
++  .who__fit li{ list-style:none; display:flex; gap:12px; font-size:1.0312rem; color:var(--muted-2); }
+   .who__fit li::before{ content:"←"; color:var(--sage-deep); flex-shrink:0; }
+   .who__fit ul{ margin:0; padding:0; display:grid; gap:16px; }
+ 
+@@ -462,14 +522,14 @@
+     border-radius:var(--radius);
+     padding:32px 30px;
+   }
+-  .boundaries h3{ font-size:16px; font-weight:600; font-family:var(--sans); margin-bottom:16px; color:var(--sage-deep); }
+-  .boundaries p{ font-size:14.5px; color:var(--muted); margin:0 0 14px; }
++  .boundaries h3{ font-size:1.0938rem; font-weight:600; font-family:var(--sans); margin-bottom:16px; color:var(--sage-deep); }
++  .boundaries p{ font-size:0.9688rem; color:var(--muted); margin:0 0 14px; }
+   .boundaries p:last-child{ margin-bottom:0; }
+ 
+   @media (max-width:800px){ .who__grid{ grid-template-columns:1fr; } }
+ 
+   /* ---------- FAQ ---------- */
+-  .faq h2{ font-size:clamp(28px,4.2vw,46px); max-width:680px; }
++  .faq h2{ font-size:clamp(1.875rem,4.5vw,3.0938rem); max-width:680px; }
+   .faq__list{ margin-top:50px; display:grid; gap:14px; max-width:760px; }
+   details.faq-item{
+     border-radius:14px; background:var(--card);
+@@ -479,20 +539,20 @@
+   }
+   details.faq-item summary{
+     cursor:pointer; list-style:none; padding:19px 0;
+-    font-family:var(--serif); font-size:17.5px; font-weight:500;
++    font-family:var(--serif); font-size:1.1875rem; font-weight:500;
+     display:flex; justify-content:space-between; align-items:center; gap:20px;
+   }
+   details.faq-item summary::-webkit-details-marker{ display:none; }
+   details.faq-item summary::after{
+-    content:"+"; font-family:var(--sans); font-size:22px; color:var(--sage-deep);
++    content:"+"; font-family:var(--sans); font-size:1.5rem; color:var(--sage-deep);
+     transition:transform .3s var(--ease); flex-shrink:0;
+   }
+   details.faq-item[open] summary::after{ transform:rotate(45deg); }
+-  details.faq-item .faq-a{ padding:0 0 22px 0; color:var(--muted); font-size:15px; max-width:620px; }
++  details.faq-item .faq-a{ padding:0 0 22px 0; color:var(--muted); font-size:1rem; max-width:620px; }
+ 
+   /* ---------- REFLECT WIDGET ---------- */
+-  .reflect h2{ font-size:clamp(26px,4.2vw,42px); max-width:700px; }
+-  .reflect .lede{ max-width:600px; margin-top:18px; font-size:15.5px; color:var(--muted); }
++  .reflect h2{ font-size:clamp(1.75rem,4.5vw,2.8438rem); max-width:700px; }
++  .reflect .lede{ max-width:600px; margin-top:18px; font-size:1.0312rem; color:var(--muted); }
+   .reflect__card{
+     margin-top:44px; max-width:640px;
+     background:var(--card); border:1px solid var(--line); border-radius:var(--radius);
+@@ -505,19 +565,19 @@
+   .reflect__step{ display:none; }
+   .reflect__step.is-active{ display:block; animation:reflectIn .4s ease; }
+   @keyframes reflectIn{ from{ opacity:0; transform:translateY(6px); } to{ opacity:1; transform:none; } }
+-  .reflect__q{ font-family:var(--serif); font-size:19px; font-weight:500; margin-bottom:20px; }
++  .reflect__q{ font-family:var(--serif); font-size:1.2812rem; font-weight:500; margin-bottom:20px; }
+   .reflect__options{ display:flex; flex-direction:column; gap:10px; }
+   .reflect__option{
+-    text-align:right; font-family:var(--sans); font-size:15px; color:var(--ink);
++    text-align:right; font-family:var(--sans); font-size:1rem; color:var(--ink);
+     background:rgba(255,255,255,0.6); border:1px solid var(--line); border-radius:100px;
+     padding:13px 20px; cursor:pointer; transition:border-color .25s, background .25s;
+   }
+   .reflect__option:hover{ border-color:var(--sage-deep); background:rgba(255,255,255,0.9); }
+   .reflect__final .reflect__q{ margin-bottom:10px; }
+-  .reflect__final p{ font-size:15px; color:var(--muted); margin:0 0 22px; max-width:520px; }
++  .reflect__final p{ font-size:1rem; color:var(--muted); margin:0 0 22px; max-width:520px; }
+   .reflect__skip{
+     display:block; text-align:center; margin-top:18px;
+-    font-size:13px; color:var(--muted); text-decoration:underline; cursor:pointer;
++    font-size:0.875rem; color:var(--muted); text-decoration:underline; cursor:pointer;
+   }
+ 
+   /* ---------- CONTACT ---------- */
+@@ -525,18 +585,18 @@
+     background: linear-gradient(180deg,#F3F1E9,#EAE7DB);
+     text-align:center;
+   }
+-  .contact h2{ font-size:clamp(30px,5.4vw,58px); max-width:780px; margin:0 auto; }
+-  .contact p{ max-width:520px; margin:20px auto 0; color:var(--muted); font-size:16.5px; }
++  .contact h2{ font-size:clamp(2.0312rem,5.8vw,3.9062rem); max-width:780px; margin:0 auto; }
++  .contact p{ max-width:520px; margin:20px auto 0; color:var(--muted); font-size:1.125rem; }
+   .contact__actions{ margin-top:40px; display:flex; justify-content:center; }
+   .contact__links{ margin-top:22px; display:flex; justify-content:center; gap:26px; flex-wrap:wrap; }
+-  .contact__links a{ text-decoration:none; font-size:14.5px; font-weight:500; color:var(--sage-deep); border-bottom:1px solid transparent; transition:border-color .25s; }
++  .contact__links a{ text-decoration:none; font-size:0.9688rem; font-weight:500; color:var(--sage-deep); border-bottom:1px solid transparent; transition:border-color .25s; }
+   .contact__links a:hover{ border-color:var(--sage-deep); }
+-  .contact__micro{ margin-top:20px; font-size:13px; color:var(--muted); letter-spacing:0.02em; }
++  .contact__micro{ margin-top:20px; font-size:0.875rem; color:var(--muted); letter-spacing:0.02em; }
+ 
+   /* ---------- FOOTER ---------- */
+-  footer{ background:var(--ink); color:rgba(247,246,241,0.65); padding:50px 0; font-size:13px; }
++  footer{ background:var(--ink); color:rgba(247,246,241,0.65); padding:50px 0; font-size:0.875rem; }
+   .footer__row{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:16px; }
+-  .footer__brand{ font-family:var(--serif); color:#F7F6F1; font-size:16px; }
++  .footer__brand{ font-family:var(--serif); color:#F7F6F1; font-size:1.0938rem; }
+   .footer__brand span{ color:var(--sage); }
+ 
+   @media (prefers-reduced-motion: reduce){
+diff --git a/fit/fit.css b/fit/fit.css
+index d04b404..f5ab37b 100644
+--- a/fit/fit.css
++++ b/fit/fit.css
+@@ -7,7 +7,7 @@
+   padding: 22px clamp(22px,5vw,60px);
+ }
+ .fit__brand{
+-  font-family:var(--serif); font-size:18px; font-weight:500;
++  font-family:var(--serif); font-size:1.2188rem; font-weight:500;
+   text-decoration:none; color:var(--ink); opacity:0.85;
+ }
+ .fit__brand span{ color:var(--sage-deep); }
+@@ -36,7 +36,7 @@
+   height:100%; background:var(--sage); transition:width .45s var(--ease);
+ }
+ .fit__progress-label{
+-  margin-top:10px; font-size:12.5px; color:var(--muted); letter-spacing:0.02em;
++  margin-top:10px; font-size:0.8438rem; color:var(--muted); letter-spacing:0.02em;
+ }
+ 
+ /* ---- steps ---- */
+@@ -47,17 +47,16 @@
+ @keyframes fitStepIn{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:none; } }
+ 
+ .fit__title{
+-  font-family:var(--serif); font-weight:500; font-size:clamp(24px,4vw,32px);
++  font-family:var(--serif); font-weight:500; font-size:clamp(1.625rem,4.3vw,2.1562rem);
+   line-height:1.35; margin:0 0 18px;
+ }
+ .fit__q{
+-  font-family:var(--serif); font-weight:500; font-size:clamp(19px,3vw,23px);
++  font-family:var(--serif); font-weight:500; font-size:clamp(1.2812rem,3.2vw,1.5625rem);
+   line-height:1.4; margin:0 0 8px; outline:none;
+ }
+ .fit__q:focus-visible{ outline:2px solid var(--sage-deep); outline-offset:6px; border-radius:4px; }
+-.fit__qhint{ font-size:13.5px; color:var(--muted); margin:0 0 22px; }
+-.fit__lede{ font-size:16px; color:var(--muted); margin:0 0 28px; max-width:520px; }
+-.fit__microhint{ margin-top:18px; font-size:13px; color:var(--muted); text-align:center; }
++.fit__qhint{ font-size:0.9062rem; color:var(--muted); margin:0 0 22px; }
++.fit__lede{ font-size:1.0938rem; color:var(--muted); margin:0 0 28px; max-width:520px; }
+ 
+ /* ---- option cards (radio / checkbox) ---- */
+ .fit__options{ display:flex; flex-direction:column; gap:10px; margin-top:22px; }
+@@ -67,7 +66,7 @@
+   padding:15px 18px; cursor:pointer;
+   background:rgba(255,255,255,0.5);
+   transition:border-color .25s, background .25s;
+-  font-size:15px; line-height:1.5;
++  font-size:1rem; line-height:1.5;
+ }
+ .fit__option:hover{ border-color:var(--sage); }
+ .fit__option input{
+@@ -90,38 +89,19 @@
+ .fit__option.is-selected span::before{
+   background:var(--sage-deep); border-color:var(--sage-deep);
+ }
+-.fit__option.is-disabled{ opacity:0.4; cursor:not-allowed; }
+ 
+ /* ---- text fields ---- */
+ .fit__field{ margin-top:6px; }
+ .fit__field textarea{
+   width:100%; resize:vertical; min-height:110px;
+-  font-family:var(--sans); font-size:15px; color:var(--ink);
++  font-family:var(--sans); font-size:1rem; color:var(--ink);
+   background:rgba(255,255,255,0.6); border:1px solid var(--line); border-radius:14px;
+   padding:16px 18px; line-height:1.6;
+   transition:border-color .25s;
+ }
+ .fit__field textarea:focus{ outline:none; border-color:var(--sage-deep); }
+ .fit__field textarea::placeholder{ color:var(--muted-2); }
+-.fit__counter{ margin-top:8px; font-size:12px; color:var(--muted); text-align:left; }
+-
+-/* ---- scale (1-5) ---- */
+-.fit__scale{ margin-top:22px; }
+-.fit__scale-row{ display:flex; gap:10px; justify-content:space-between; }
+-.fit__scale-opt{
+-  flex:1; text-align:center; cursor:pointer;
+-  border:1px solid var(--line); border-radius:12px; padding:16px 0;
+-  background:rgba(255,255,255,0.5); font-family:var(--serif); font-size:18px;
+-  transition:border-color .25s, background .25s;
+-  position:relative;
+-}
+-.fit__scale-opt input{ position:absolute; opacity:0; width:1px; height:1px; overflow:hidden; }
+-.fit__scale-opt:hover{ border-color:var(--sage); }
+-.fit__scale-opt.is-selected{ border-color:var(--sage-deep); background:rgba(220,225,211,0.5); color:var(--sage-deep); }
+-.fit__scale-labels{
+-  display:flex; justify-content:space-between; margin-top:10px;
+-  font-size:12px; color:var(--muted);
+-}
++.fit__counter{ margin-top:8px; font-size:0.8125rem; color:var(--muted); text-align:left; }
+ 
+ /* ---- nav (back / continue) ---- */
+ .fit__nav{
+@@ -135,7 +115,7 @@
+   appearance:none; border:none; cursor:pointer;
+   display:inline-flex; align-items:center; justify-content:center; gap:10px;
+   padding:15px 30px; border-radius:100px;
+-  font-family:var(--sans); font-weight:600; font-size:15px; text-decoration:none;
++  font-family:var(--sans); font-weight:600; font-size:1rem; text-decoration:none;
+   background:var(--ink); color:var(--bg);
+   transition:transform .3s var(--ease), background .3s, opacity .3s;
+ }
+@@ -147,30 +127,74 @@
+ }
+ .fit__btn-back{
+   appearance:none; background:none; border:none; cursor:pointer;
+-  font-family:var(--sans); font-size:14.5px; color:var(--muted);
++  font-family:var(--sans); font-size:0.9688rem; color:var(--muted);
+   padding:10px 6px; transition:color .25s;
+ }
+ .fit__btn-back:hover{ color:var(--ink); }
+ 
+ .fit__btn-secondary{
+   display:inline-flex; align-items:center; justify-content:center;
+-  padding:13px 26px; border-radius:100px;
++  padding:0.8125rem 1.625rem; border-radius:100px;
+   border:1px solid var(--line); text-decoration:none;
+-  font-size:14px; color:var(--muted); background:transparent;
++  font-size:0.875rem; color:var(--muted); background:transparent;
+   transition:border-color .25s, color .25s;
+ }
+ .fit__btn-secondary:hover{ border-color:var(--sage-deep); color:var(--sage-deep); }
+ 
++/* ---- the single reflection screen (no input, just a thought) ---- */
++.fit__reflect-screen{
++  position:relative;
++  min-height:260px;
++  display:flex; flex-direction:column; align-items:center; justify-content:center;
++  text-align:center; cursor:pointer;
++  padding:20px 0;
++}
++.fit__reflect-line{
++  font-family:var(--serif); font-style:italic; font-weight:400;
++  font-size:clamp(1.2812rem,3.5vw,1.625rem); line-height:1.55;
++  color:var(--ink); max-width:460px;
++  margin:0 0 14px;
++}
++.fit__reflect-line--soft{ color:var(--muted); font-size:clamp(1.1562rem,3.0vw,1.4062rem); margin-bottom:0; }
++.fit__reflect-tap{
++  margin-top:40px; font-family:var(--sans); font-size:0.875rem; color:var(--muted-2);
++  text-decoration:underline; text-underline-offset:4px;
++  opacity:0.7; transition:opacity .3s ease;
++}
++.fit__reflect-screen:hover .fit__reflect-tap{ opacity:1; }
++.fit__reflect-back{
++  position:absolute; top:14px; right:18px;
++  appearance:none; background:none; border:none; cursor:pointer;
++  font-family:var(--sans); font-size:0.875rem; color:var(--muted);
++  padding:8px; opacity:0.55; transition:opacity .25s;
++}
++.fit__reflect-back:hover{ opacity:1; }
++
++/* ---- secondary "message on WhatsApp directly" link on results ---- */
++.fit__skip-link{
++  display:block; text-align:center; margin-top:22px;
++  font-family:var(--sans); font-size:0.9062rem; color:var(--muted);
++  text-decoration:underline; text-underline-offset:3px;
++}
++.fit__skip-link:hover{ color:var(--sage-deep); }
++
+ /* ---- result screens ---- */
+ .fit__result{ text-align:center; }
+ .fit__result .fit__title{ margin-top:2px; }
+ .fit__result .fit__lede{ margin-left:auto; margin-right:auto; }
+-.fit__privacy-note{
+-  font-size:13px; color:var(--muted); max-width:420px; margin:0 auto;
++
++.fit__tips{
++  margin:32px auto 0; max-width:460px;
++  display:flex; flex-direction:column; gap:18px;
++  text-align:right;
++}
++.fit__tips-item{
++  font-family:var(--serif); font-style:italic; font-size:1.0312rem;
++  line-height:1.65; color:var(--muted-2);
+ }
+ .fit__restart-link{
+   display:block; appearance:none; background:none; border:none; cursor:pointer;
+-  margin:22px auto 0; font-size:12.5px; color:var(--muted);
++  margin:22px auto 0; font-size:0.8438rem; color:var(--muted);
+   text-decoration:underline; text-underline-offset:3px;
+ }
+ .fit__restart-link:hover{ color:var(--ink); }
+@@ -183,7 +207,5 @@
+ /* ---- mobile ---- */
+ @media (max-width:480px){
+   .fit__card{ padding:26px 18px; border-radius:16px; }
+-  .fit__scale-row{ gap:6px; }
+-  .fit__scale-opt{ padding:13px 0; font-size:16px; }
+   .fit__nav{ flex-wrap:wrap; }
+ }
+diff --git a/fit/fit.js b/fit/fit.js
+index 9266731..fed453d 100644
+--- a/fit/fit.js
++++ b/fit/fit.js
+@@ -2,9 +2,10 @@
+   "use strict";
+ 
+   var STORAGE_KEY = 'baderech_fit_v1';
+-  var WHATSAPP_NUMBER = '972505494326'; // taken from the existing site (wa.me link in index.html)
++  var WHATSAPP_NUMBER = '972505494326';
++  var WA_BRIDGE_KEY = 'baderech_wa_prefill';
+ 
+-  var QUESTION_STEPS = ['q1','q2','q3','q4','q5','q6','q7','q8','q9'];
++  var QUESTION_STEPS = ['q1','q2','q3','q4','q5','q6'];
+ 
+   var steps = Array.prototype.slice.call(document.querySelectorAll('.fit__step'));
+   var stepNames = steps.map(function(s){ return s.dataset.step; });
+@@ -31,18 +32,28 @@
+   var answers = loadAnswers();
+ 
+   // ---------- navigation ----------
++  var stepEnteredAt = 0;
+   function showStep(index){
+     steps.forEach(function(s){ s.classList.remove('is-active'); });
+     steps[index].classList.add('is-active');
+     current = index;
++    stepEnteredAt = Date.now();
+     updateProgress();
+     var heading = steps[index].querySelector('h1, h2');
+-    if(heading){
+-      heading.focus({ preventScroll: true });
+-    }
++    if(heading){ heading.focus({ preventScroll: true }); }
+     window.scrollTo({ top: 0, behavior: 'smooth' });
+   }
+ 
++  // Qualitative progress instead of an exact "X out of Y" count, so the
++  // visitor isn't invited to calculate whether finishing is "worth it".
++  function progressCaption(qIndex, total){
++    var pct = (qIndex + 1) / total;
++    if(qIndex === 0) return 'מתחילים';
++    if(pct <= 0.5) return 'בתנועה';
++    if(qIndex < total - 1) return 'כמעט שם';
++    return 'שאלה אחרונה';
++  }
++
+   function updateProgress(){
+     var name = stepNames[current];
+     var qIndex = QUESTION_STEPS.indexOf(name);
+@@ -52,14 +63,14 @@
+       progressWrap.style.display = '';
+       var pct = ((qIndex + 1) / QUESTION_STEPS.length) * 100;
+       progressFill.style.width = pct + '%';
+-      progressLabel.textContent = (qIndex + 1) + ' מתוך ' + QUESTION_STEPS.length;
++      progressLabel.textContent = progressCaption(qIndex, QUESTION_STEPS.length);
+     }
+   }
+ 
+   // ---------- option styling / selection ----------
+   function refreshOptionStyles(name){
+     document.querySelectorAll('input[name="' + name + '"]').forEach(function(inp){
+-      var card = inp.closest('.fit__option') || inp.closest('.fit__scale-opt');
++      var card = inp.closest('.fit__option');
+       if(card){ card.classList.toggle('is-selected', inp.checked); }
+     });
+   }
+@@ -73,9 +84,7 @@
+     group.addEventListener('change', function(e){
+       if(e.target.type === 'checkbox'){
+         var checked = Array.prototype.slice.call(group.querySelectorAll('input:checked'));
+-        if(checked.length > max){
+-          e.target.checked = false;
+-        }
++        if(checked.length > max){ e.target.checked = false; }
+       }
+       refreshOptionStyles(name);
+       persistCurrentStep();
+@@ -83,17 +92,6 @@
+     });
+   });
+ 
+-  document.querySelectorAll('.fit__scale').forEach(function(group){
+-    var firstInput = group.querySelector('input');
+-    if(!firstInput) return;
+-    var name = firstInput.name;
+-    group.addEventListener('change', function(){
+-      refreshOptionStyles(name);
+-      persistCurrentStep();
+-      validateCurrentStep();
+-    });
+-  });
+-
+   document.querySelectorAll('textarea').forEach(function(ta){
+     ta.addEventListener('input', function(){
+       persistCurrentStep();
+@@ -171,6 +169,8 @@
+   }
+ 
+   function firstUnansweredQuestionIndex(){
++    var hasAnyAnswer = Object.keys(answers).length > 0;
++    if(!hasAnyAnswer) return stepNames.indexOf('q1');
+     for(var i = 0; i < QUESTION_STEPS.length; i++){
+       var step = steps[stepNames.indexOf(QUESTION_STEPS[i])];
+       if(!validateStep(step)) return stepNames.indexOf(QUESTION_STEPS[i]);
+@@ -181,8 +181,7 @@
+   // ---------- nav buttons ----------
+   document.querySelectorAll('.fit__btn-continue[data-action="start"]').forEach(function(btn){
+     btn.addEventListener('click', function(){
+-      var resumeIndex = firstUnansweredQuestionIndex();
+-      showStep(resumeIndex);
++      showStep(firstUnansweredQuestionIndex());
+       validateCurrentStep();
+     });
+   });
+@@ -209,18 +208,43 @@
+     }
+   });
+ 
++  // ---------- passthrough screen (the single reflection screen: tap anywhere) ----------
++  document.querySelectorAll('.fit__step[data-passthrough="true"]').forEach(function(step){
++    function advance(){
++      if(!step.classList.contains('is-active')) return;
++      if(Date.now() - stepEnteredAt < 350) return;
++      showStep(current + 1);
++      validateCurrentStep();
++    }
++    function goBack(){
++      if(!step.classList.contains('is-active')) return;
++      showStep(Math.max(0, current - 1));
++      validateCurrentStep();
++    }
++    step.addEventListener('click', function(e){
++      if(e.target.closest('.fit__reflect-back')){ goBack(); return; }
++      advance();
++    });
++    step.addEventListener('keydown', function(e){
++      if(e.target.closest('.fit__reflect-back')) return;
++      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); advance(); }
++    });
++  });
++
+   // ---------- scoring ----------
++  // Kept intentionally small: only the three questions that actually
++  // distinguish fit (real process vs. quick fix, in-person openness,
++  // willingness to invest). The other questions inform the WhatsApp
++  // message but don't need to move the score.
+   var SCORES = {
+     q4: { q4_1: 2, q4_2: 2, q4_3: -1, q4_4: -2, q4_5: 0 },
+-    q5: { '1': -2, '2': -1, '3': 0, '4': 1, '5': 2 },
+-    q6: { q6_1: 2, q6_2: 1, q6_3: -2, q6_4: 0 },
+-    q7: { q7_1: 2, q7_2: 1, q7_3: -3 },
+-    q8: { q8_1: 2, q8_2: 0, q8_3: -2 }
++    q5: { q5_1: 2, q5_2: 1, q5_3: -3 },
++    q6: { q6_1: 2, q6_2: 0, q6_3: -2 }
+   };
+ 
+   function computeScore(){
+     var total = 0;
+-    ['q4','q5','q6','q7','q8'].forEach(function(q){
++    ['q4','q5','q6'].forEach(function(q){
+       var val = answers[q];
+       if(val !== undefined && SCORES[q][val] !== undefined){
+         total += SCORES[q][val];
+@@ -230,8 +254,8 @@
+   }
+ 
+   function resultBucket(score){
+-    if(score >= 6) return 'result-a';
+-    if(score >= 2) return 'result-b';
++    if(score >= 4) return 'result-a';
++    if(score >= 0) return 'result-b';
+     return 'result-c';
+   }
+ 
+@@ -258,10 +282,15 @@
+       q4_4: 'פתרון מהיר או כמה טיפים',
+       q4_5: 'עדיין לא בטוח'
+     },
+-    q7: {
+-      q7_1: 'זה אפילו חשוב לי',
+-      q7_2: 'מתאים לי, אם ארגיש שיש התאמה',
+-      q7_3: 'אני מעדיף תהליך אונליין בלבד'
++    q5: {
++      q5_1: 'זה אפילו חשוב לי',
++      q5_2: 'מתאים לי, אם ארגיש שיש התאמה',
++      q5_3: 'אני מעדיף תהליך אונליין בלבד'
++    },
++    q6: {
++      q6_1: 'כן, אם אבין שזה מדויק לי',
++      q6_2: 'אולי, אני צריך לשמוע ולהבין יותר',
++      q6_3: 'כרגע אני מחפש משהו חינמי או נקודתי'
+     }
+   };
+ 
+@@ -275,19 +304,16 @@
+       ? answers.q1.map(function(v){ return label('q1', v); }).join('; ')
+       : '—';
+     var q3text = (answers.q3 && answers.q3.trim()) ? answers.q3.trim() : '—';
+-    var q5text = answers.q5 ? (answers.q5 + ' מתוך 5') : '—';
+-    var q9text = (answers.q9 && answers.q9.trim()) ? answers.q9.trim() : 'לא צויין';
+ 
+     var lines = [
+       'היי ירון, הגעתי דרך בדיקת ההתאמה של בדרך.',
+       '',
+       'מה הביא אותי לכאן: ' + q1text,
+-      'הפער המרכזי שאני מרגיש: ' + label('q2', answers.q2),
+-      'מה הייתי רוצה שייראה אחרת בעוד חודש וחצי: ' + q3text,
++      'איפה אני מרגיש הכי תקוע: ' + label('q2', answers.q2),
++      'מה הייתי רוצה שישתנה: ' + q3text,
+       'מה אני מחפש: ' + label('q4', answers.q4),
+-      'מידת המוכנות שלי להתנסות: ' + q5text,
+-      'התאמה למפגשים פנים מול פנים: ' + label('q7', answers.q7),
+-      'מה חשוב לדעת לפני שנדבר: ' + q9text,
++      'התאמה למפגשים פנים מול פנים: ' + label('q5', answers.q5),
++      'מוכנות להשקיע בתהליך: ' + label('q6', answers.q6),
+       '',
+       'אשמח לבדוק איתך אם יש התאמה לשיחה.'
+     ];
+@@ -300,17 +326,22 @@
+     document.querySelectorAll('.fit__whatsapp-link').forEach(function(a){
+       a.setAttribute('href', url);
+     });
++    // Hand the same message forward for the landing page's own WhatsApp
++    // buttons, in case the visitor reads the page first (the primary path)
++    // and only messages from there. One-time use: js/script.js reads this
++    // once on load and removes it immediately.
++    try{ sessionStorage.setItem(WA_BRIDGE_KEY, message); }catch(e){}
+   }
+ 
+   // ---------- finish ----------
++  // No processing screen: the result appears right after the last answer.
++  // Pretending to "analyze" the answers for a few seconds is exactly the
++  // algorithmic feeling we want to avoid here.
+   function finishQuiz(){
+     persistCurrentStep();
+-    var score = computeScore();
+-    var bucket = resultBucket(score);
++    var bucket = resultBucket(computeScore());
+     prepareWhatsAppLinks();
+     showStep(stepNames.indexOf(bucket));
+-    // Privacy: once the result is computed and shown, the answers no longer
+-    // need to live in this browser session.
+     clearAnswers();
+     answers = {};
+   }
+@@ -325,7 +356,7 @@
+       var counter = t.parentElement.querySelector('.fit__counter');
+       if(counter && t.maxLength > 0){ counter.textContent = '0 / ' + t.maxLength; }
+     });
+-    document.querySelectorAll('.fit__option, .fit__scale-opt').forEach(function(c){ c.classList.remove('is-selected'); });
++    document.querySelectorAll('.fit__option').forEach(function(c){ c.classList.remove('is-selected'); });
+     document.querySelectorAll('.fit__btn-continue:not([data-action])').forEach(function(btn){
+       btn.disabled = true;
+       btn.setAttribute('aria-disabled', 'true');
+@@ -340,11 +371,6 @@
+   // ---------- init ----------
+   restoreInputs();
+   showStep(0);
+-  QUESTION_STEPS.forEach(function(name){
+-    var idx = stepNames.indexOf(name);
+-    if(idx > -1) validateStep(steps[idx]);
+-  });
+-  // Set initial disabled state for every continue button based on restored answers
+   steps.forEach(function(step){
+     var btn = step.querySelector('.fit__btn-continue');
+     if(btn && btn.dataset.action !== 'start'){
+diff --git a/fit/index.html b/fit/index.html
+index 6c53c33..b4e318d 100644
+--- a/fit/index.html
++++ b/fit/index.html
+@@ -4,7 +4,7 @@
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+ <title>בדיקת התאמה — בדרך.</title>
+-<meta name="description" content="כמה שאלות שקטות וקצרות, לבדוק אם התהליך האישי &quot;בדרך.&quot; מדויק בשבילך — לפני שפונים.">
++<meta name="description" content="כמה שאלות קצרות, לבדוק אם התהליך האישי &quot;בדרך.&quot; מדויק בשבילך — לפני שפונים.">
+ <meta name="robots" content="noindex">
+ <meta name="theme-color" content="#F7F6F1">
+ 
+@@ -41,11 +41,10 @@
+     <section class="fit__step is-active" data-step="intro">
+       <div class="eyebrow">לפני שממשיכים</div>
+       <h1 class="fit__title">לפני שמדברים, בוא נבדוק אם זה בכלל מדויק.</h1>
+-      <p class="fit__lede">כמה שאלות קצרות. בלי ציונים, בלי אבחנות ובלי התחייבות. התשובות נשארות במכשיר שלך ולא נשלחות אליי עד שתבחר לשלוח אותן בעצמך.</p>
++      <p class="fit__lede">כמה שאלות קצרות. בלי ציונים ובלי התחייבות.</p>
+       <div class="fit__nav fit__nav--start">
+-        <button type="button" class="fit__btn-continue" data-action="start">אפשר להתחיל</button>
++        <button type="button" class="fit__btn-continue" data-action="start">מתחילים</button>
+       </div>
+-      <p class="fit__microhint">כשתי דקות · אפשר לעצור בכל שלב</p>
+     </section>
+ 
+     <!-- Q1 -->
+@@ -67,7 +66,7 @@
+ 
+     <!-- Q2 -->
+     <section class="fit__step" data-step="q2" data-required="true">
+-      <h2 class="fit__q" tabindex="-1">איפה אתה מרגיש את הפער הגדול ביותר?</h2>
++      <h2 class="fit__q" tabindex="-1">איפה אתה מרגיש הכי תקוע?</h2>
+       <div class="fit__options" data-max="1">
+         <label class="fit__option"><input type="radio" name="q2" value="q2_1"><span>אני יודע מה לעשות, אבל לא מצליח לפעול</span></label>
+         <label class="fit__option"><input type="radio" name="q2" value="q2_2"><span>אני חושב יותר מדי ומאבד את הרגע</span></label>
+@@ -81,9 +80,17 @@
+       </div>
+     </section>
+ 
++    <!-- REFLECT (single transition screen) -->
++    <section class="fit__step fit__reflect-screen" data-step="reflect-1" data-passthrough="true" tabindex="0">
++      <p class="fit__reflect-line">אין כאן תשובה נכונה.</p>
++      <p class="fit__reflect-line fit__reflect-line--soft">רק ניסיון להבין אם זה מדויק לך עכשיו.</p>
++      <div class="fit__reflect-tap">להמשיך</div>
++      <button type="button" class="fit__reflect-back">חזרה</button>
++    </section>
++
+     <!-- Q3 -->
+     <section class="fit__step" data-step="q3" data-required="true">
+-      <h2 class="fit__q" tabindex="-1">אם בעוד חודש וחצי משהו אמיתי ישתנה — מה היית רוצה שייראה אחרת?</h2>
++      <h2 class="fit__q" tabindex="-1">אם משהו אחד היה משתנה — מה היית רוצה שייראה אחרת?</h2>
+       <div class="fit__field">
+         <textarea name="q3" maxlength="400" rows="4" placeholder="לא צריך לנסח מושלם. כתוב את הדבר הראשון שעולה לך."></textarea>
+         <div class="fit__counter">0 / 400</div>
+@@ -112,48 +119,11 @@
+ 
+     <!-- Q5 -->
+     <section class="fit__step" data-step="q5" data-required="true">
+-      <h2 class="fit__q" tabindex="-1">עד כמה אתה מוכן לנסות, לטעות ולנסות שוב?</h2>
+-      <div class="fit__scale" data-max="1">
+-        <div class="fit__scale-row">
+-          <label class="fit__scale-opt"><input type="radio" name="q5" value="1"><span>1</span></label>
+-          <label class="fit__scale-opt"><input type="radio" name="q5" value="2"><span>2</span></label>
+-          <label class="fit__scale-opt"><input type="radio" name="q5" value="3"><span>3</span></label>
+-          <label class="fit__scale-opt"><input type="radio" name="q5" value="4"><span>4</span></label>
+-          <label class="fit__scale-opt"><input type="radio" name="q5" value="5"><span>5</span></label>
+-        </div>
+-        <div class="fit__scale-labels">
+-          <span>עדיין לא שם</span>
+-          <span>מוכן לעבוד באמת</span>
+-        </div>
+-      </div>
+-      <div class="fit__nav">
+-        <button type="button" class="fit__btn-back">חזרה</button>
+-        <button type="button" class="fit__btn-continue">המשך</button>
+-      </div>
+-    </section>
+-
+-    <!-- Q6 -->
+-    <section class="fit__step" data-step="q6" data-required="true">
+-      <h2 class="fit__q" tabindex="-1">כשמשהו לא עובד, מי לדעתך אחראי לייצר את השינוי?</h2>
+-      <div class="fit__options" data-max="1">
+-        <label class="fit__option"><input type="radio" name="q6" value="q6_1"><span>בעיקר אני, בעזרת הכוונה ומבט חיצוני</span></label>
+-        <label class="fit__option"><input type="radio" name="q6" value="q6_2"><span>האחריות משותפת</span></label>
+-        <label class="fit__option"><input type="radio" name="q6" value="q6_3"><span>אני צריך שמישהו יוציא אותי מזה</span></label>
+-        <label class="fit__option"><input type="radio" name="q6" value="q6_4"><span>אני עדיין לא יודע</span></label>
+-      </div>
+-      <div class="fit__nav">
+-        <button type="button" class="fit__btn-back">חזרה</button>
+-        <button type="button" class="fit__btn-continue">המשך</button>
+-      </div>
+-    </section>
+-
+-    <!-- Q7 -->
+-    <section class="fit__step" data-step="q7" data-required="true">
+       <h2 class="fit__q" tabindex="-1">המפגשים ב&quot;בדרך&quot; מתקיימים פנים מול פנים. איך זה מרגיש לך?</h2>
+       <div class="fit__options" data-max="1">
+-        <label class="fit__option"><input type="radio" name="q7" value="q7_1"><span>זה אפילו חשוב לי</span></label>
+-        <label class="fit__option"><input type="radio" name="q7" value="q7_2"><span>מתאים לי, אם ארגיש שיש התאמה</span></label>
+-        <label class="fit__option"><input type="radio" name="q7" value="q7_3"><span>אני מעדיף תהליך אונליין בלבד</span></label>
++        <label class="fit__option"><input type="radio" name="q5" value="q5_1"><span>זה אפילו חשוב לי</span></label>
++        <label class="fit__option"><input type="radio" name="q5" value="q5_2"><span>מתאים לי, אם ארגיש שיש התאמה</span></label>
++        <label class="fit__option"><input type="radio" name="q5" value="q5_3"><span>אני מעדיף תהליך אונליין בלבד</span></label>
+       </div>
+       <div class="fit__nav">
+         <button type="button" class="fit__btn-back">חזרה</button>
+@@ -161,25 +131,13 @@
+       </div>
+     </section>
+ 
+-    <!-- Q8 -->
+-    <section class="fit__step" data-step="q8" data-required="true">
++    <!-- Q6 -->
++    <section class="fit__step" data-step="q6" data-required="true">
+       <h2 class="fit__q" tabindex="-1">האם אתה מוכן להשקיע בתהליך משמעותי זמן, נוכחות ומשאבים?</h2>
+       <div class="fit__options" data-max="1">
+-        <label class="fit__option"><input type="radio" name="q8" value="q8_1"><span>כן, אם אבין שזה מדויק לי</span></label>
+-        <label class="fit__option"><input type="radio" name="q8" value="q8_2"><span>אולי, אני צריך לשמוע ולהבין יותר</span></label>
+-        <label class="fit__option"><input type="radio" name="q8" value="q8_3"><span>כרגע אני מחפש משהו חינמי או נקודתי</span></label>
+-      </div>
+-      <div class="fit__nav">
+-        <button type="button" class="fit__btn-back">חזרה</button>
+-        <button type="button" class="fit__btn-continue">המשך</button>
+-      </div>
+-    </section>
+-
+-    <!-- Q9 -->
+-    <section class="fit__step" data-step="q9" data-required="false">
+-      <h2 class="fit__q" tabindex="-1">מה חשוב שאדע עליך לפני שנדבר?</h2>
+-      <div class="fit__field">
+-        <textarea name="q9" maxlength="600" rows="4" placeholder="אפשר להשאיר ריק. אין צורך לחשוף כאן משהו שאינך רוצה."></textarea>
++        <label class="fit__option"><input type="radio" name="q6" value="q6_1"><span>כן, אם אבין שזה מדויק לי</span></label>
++        <label class="fit__option"><input type="radio" name="q6" value="q6_2"><span>אולי, אני צריך לשמוע ולהבין יותר</span></label>
++        <label class="fit__option"><input type="radio" name="q6" value="q6_3"><span>כרגע אני מחפש משהו חינמי או נקודתי</span></label>
+       </div>
+       <div class="fit__nav">
+         <button type="button" class="fit__btn-back">חזרה</button>
+@@ -189,34 +147,38 @@
+ 
+     <!-- RESULT A -->
+     <section class="fit__step fit__result" data-step="result-a">
+-      <div class="eyebrow">התוצאה שלך</div>
+-      <h2 class="fit__title">נראה שיש כאן בסיס לשיחה.</h2>
+-      <p class="fit__lede">התשובות שלך לא אומרות שהתהליך בהכרח מתאים. הן כן אומרות שיש כאן רצון, נכונות ומקום ששווה להסתכל עליו יחד.</p>
+-      <p class="fit__privacy-note">רק בלחיצה על הכפתור ייפתח WhatsApp עם סיכום התשובות. שום דבר לא נשלח אוטומטית.</p>
++      <div class="eyebrow">התוצאה</div>
++      <h2 class="fit__title">תוצאה מתאימה</h2>
++      <p class="fit__lede">נראה שיש בסיס טוב לשיחה. מהתשובות שלך עולה שאתה לא מחפש רק טיפ נקודתי, אלא שינוי שדורש עבודה אמיתית.</p>
+       <div class="fit__nav fit__nav--result">
+         <a href="#" class="fit__btn-continue fit__whatsapp-link" data-result="a" target="_blank" rel="noopener">לשלוח לירון ולבדוק התאמה</a>
+       </div>
++      <a href="https://calendly.com/baderech" target="_blank" rel="noopener" class="fit__skip-link">או לקבוע שיחת התאמה ישירות</a>
+       <button type="button" class="fit__restart-link">למחוק את התשובות ולהתחיל מחדש</button>
+     </section>
+ 
+     <!-- RESULT B -->
+     <section class="fit__step fit__result" data-step="result-b">
+-      <div class="eyebrow">התוצאה שלך</div>
+-      <h2 class="fit__title">יש כאן משהו ששווה לדייק.</h2>
+-      <p class="fit__lede">יכול להיות שהתהליך מתאים, ויכול להיות שאתה עדיין מנסה להבין מה אתה צריך. לא חייבים לדעת הכול לפני שמדברים.</p>
+-      <p class="fit__privacy-note">רק בלחיצה על הכפתור ייפתח WhatsApp עם סיכום התשובות. שום דבר לא נשלח אוטומטית.</p>
++      <div class="eyebrow">התוצאה</div>
++      <h2 class="fit__title">תוצאה לא ודאית</h2>
++      <p class="fit__lede">יכול להיות שיש כאן התאמה, אבל כדאי קודם לדבר ולהבין יותר.</p>
+       <div class="fit__nav fit__nav--result">
+-        <a href="#" class="fit__btn-continue fit__whatsapp-link" data-result="b" target="_blank" rel="noopener">לשתף את ירון ולדבר</a>
++        <a href="#" class="fit__btn-continue fit__whatsapp-link" data-result="b" target="_blank" rel="noopener">לשלוח לירון ולבדוק התאמה</a>
+       </div>
++      <a href="https://calendly.com/baderech" target="_blank" rel="noopener" class="fit__skip-link">או לקבוע שיחת התאמה ישירות</a>
+       <button type="button" class="fit__restart-link">למחוק את התשובות ולהתחיל מחדש</button>
+     </section>
+ 
+     <!-- RESULT C -->
+     <section class="fit__step fit__result" data-step="result-c">
+-      <div class="eyebrow">התוצאה שלך</div>
+-      <h2 class="fit__title">יכול להיות שזה לא הזמן או הפורמט המדויק.</h2>
+-      <p class="fit__lede">&quot;בדרך.&quot; דורש נוכחות, עבודה והתנסות גם בין המפגשים. אם כרגע אתה מחפש פתרון נקודתי או תהליך אונליין בלבד, יכול להיות שזה פשוט לא הדבר הנכון כרגע — וזה בסדר.</p>
+-      <p class="fit__privacy-note">רק בלחיצה על הכפתור ייפתח WhatsApp עם סיכום התשובות. שום דבר לא נשלח אוטומטית.</p>
++      <div class="eyebrow">התוצאה</div>
++      <h2 class="fit__title">תוצאה לא מתאימה כרגע</h2>
++      <p class="fit__lede">יכול להיות שזה לא הפורמט הנכון עבורך כרגע — וזה בסדר. אבל בא לי להשאיר לך משהו, לא רק ללכת.</p>
++      <div class="fit__tips">
++        <p class="fit__tips-item">כשאתה מהסס לפני שאתה ניגש למשהו חדש — תן לעצמך ספירה של חמש, ותזוז לפני שהמוח מספיק לשכנע אותך שלא.</p>
++        <p class="fit__tips-item">בפעם הבאה שאתה נמנע מלהגיד משהו — תגיד אותו, גם לא מנוסח מושלם. ביטחון בונים מתוך חזרה, לא מתוך ניסוח.</p>
++        <p class="fit__tips-item">במקום לשאול את עצמך "מה אני צריך לשנות" — שאל "מה אני כבר עושה שעובד, וכדאי לעשות ממנו יותר."</p>
++      </div>
+       <div class="fit__nav fit__nav--result">
+         <a href="#" class="fit__btn-secondary fit__whatsapp-link" data-result="c" target="_blank" rel="noopener">בכל זאת, אני רוצה לשאול משהו</a>
+       </div>
+diff --git a/index.html b/index.html
+index 7c9d453..95fc52b 100644
+--- a/index.html
++++ b/index.html
+@@ -43,6 +43,31 @@
+ </head>
+ <body>
+ 
++<!-- GREETING — a single quiet moment before the site itself. Not a page,
++     not a step: the door opening before the room. Shown once per browser
++     session; a tap anywhere continues to the site underneath. -->
++<div id="greeting" class="greeting" role="button" tabindex="0" aria-label="להמשיך אל בדרך.">
++  <p class="greeting__lead">לפני שמתחילים, זה אני.</p>
++  <div class="greeting__photo">
++    <img src="images/yaron-hero.jpg" alt="ירון כורע ליד הכלבה שלו על מרפסת, בשעת בין-ערביים">
++  </div>
++  <p class="greeting__sig">ירון פסי</p>
++  <p class="greeting__hint" aria-hidden="true">להמשיך</p>
++</div>
++<script>
++  // Runs immediately (before paint) so a returning visitor within the same
++  // session never sees a flash of the greeting before it's hidden again.
++  (function(){
++    try{
++      if(sessionStorage.getItem('baderech_greeted')){
++        document.getElementById('greeting').style.display = 'none';
++      } else {
++        document.documentElement.classList.add('greeting-active');
++      }
++    }catch(e){}
++  })();
++</script>
++
+ <a class="skip-link" href="#main">דלג לתוכן</a>
+ 
+ <nav class="nav">
+@@ -64,11 +89,6 @@
+       <div class="eyebrow">תהליך אישי אחד על אחד</div>
+       <h1>לא צריך להיות מושלמים<br>כדי להתחיל להשתנות.</h1>
+       <p class="lede">צריך רק להיות מוכנים לעצור, להקשיב — ולבחור בעצמכם.</p>
+-      <div class="hero__actions">
+-        <a href="https://calendly.com/baderech" target="_blank" rel="noopener" class="textlink">לבדוק אם נכון לנו לצאת לדרך</a>
+-        <a href="https://wa.me/972505494326?text=%D7%94%D7%99%D7%99%20%D7%99%D7%A8%D7%95%D7%9F%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8" target="_blank" rel="noopener" class="textlink">לשלוח הודעה בוואטסאפ</a>
+-        <a href="/fit" class="textlink">בדיקת התאמה אישית — כשתי דקות</a>
+-      </div>
+     </div>
+     <div class="hero__scroll">לגלול הלאה</div>
+   </section>
+@@ -214,6 +234,7 @@
+             <li>איבד כיוון או עומד מול החלטה משמעותית</li>
+             <li>מוכן לפעול ולא רק לדבר על שינוי</li>
+             <li>מחפש תהליך אישי, לא פתרון קסם</li>
++            <li>מבין שזה תהליך שדורש השקעה משמעותית — בזמן, בנוכחות, ולפעמים גם במשאבים</li>
+           </ul>
+         </div>
+ 
+@@ -262,13 +283,15 @@
+   <!-- 8. CLOSING & CONTACT -->
+   <section class="contact" id="contact">
+     <div class="wrap">
+-      <div class="eyebrow reveal" style="justify-content:center;">מה אני באמת רוצה שתקבל מהתהליך</div>
++      <div class="eyebrow reveal">מה אני באמת רוצה שתקבל מהתהליך</div>
+       <h2 class="reveal">שיגיע יום שבו תעצור, תסתכל אחורה ותגיד:<br>“אני גאה באדם שהפכתי להיות.”</h2>
+       <p class="reveal">לא צריך לדעת בדיוק לאן זה הולך. הצעד הראשון הוא רק לבדוק אם נכון לנו לצאת לדרך יחד.</p>
+       <div class="contact__actions reveal">
+-        <a href="https://calendly.com/baderech" target="_blank" rel="noopener" class="btn">לקביעת שיחת התאמה</a>
++        <a href="/fit" class="btn">בדיקת התאמה קצרה — הצעד הבא</a>
+       </div>
++      <p class="contact__micro reveal">כשתי דקות, בלי התחייבות.</p>
+       <div class="contact__links reveal">
++        <a href="https://calendly.com/baderech" target="_blank" rel="noopener">לקביעת שיחת התאמה ישירות</a>
+         <a href="https://wa.me/972505494326?text=%D7%94%D7%99%D7%99%20%D7%99%D7%A8%D7%95%D7%9F%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8" target="_blank" rel="noopener">וואטסאפ — 050-5494326</a>
+         <a href="https://instagram.com/its.pessi" target="_blank" rel="noopener">אינסטגרם — its.pessi</a>
+       </div>
+diff --git a/js/script.js b/js/script.js
+index a288d24..08f576a 100644
+--- a/js/script.js
++++ b/js/script.js
+@@ -1,3 +1,40 @@
++// Greeting: a single tap anywhere continues to the site, once per session.
++(function(){
++  var greeting = document.getElementById('greeting');
++  if(!greeting || greeting.style.display === 'none') return;
++
++  function dismiss(){
++    greeting.classList.add('is-leaving');
++    document.documentElement.classList.remove('greeting-active');
++    setTimeout(function(){
++      greeting.style.display = 'none';
++      try{ sessionStorage.setItem('baderech_greeted', '1'); }catch(e){}
++    }, 650);
++  }
++  greeting.addEventListener('click', dismiss);
++  greeting.addEventListener('keydown', function(e){
++    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); dismiss(); }
++  });
++})();
++
++// Personalized WhatsApp bridge from the fit quiz.
++// If the visitor just came from /fit with a result of "high match" or
++// "turning point", a one-time composed summary is waiting in sessionStorage
++// (see WA_BRIDGE_KEY in fit/fit.js). We apply it to every WhatsApp link on
++// this page and then remove it immediately, so it is used exactly once and
++// a later, unrelated visit falls back to the page's normal default message.
++(function(){
++  try{
++    var KEY = 'baderech_wa_prefill';
++    var prefill = sessionStorage.getItem(KEY);
++    if(!prefill) return;
++    document.querySelectorAll('a[href^="https://wa.me/972505494326"]').forEach(function(a){
++      a.setAttribute('href', 'https://wa.me/972505494326?text=' + encodeURIComponent(prefill));
++    });
++    sessionStorage.removeItem(KEY);
++  }catch(e){}
++})();
++
+ const revealEls = document.querySelectorAll('.reveal, .reveal-pop');
+   const io = new IntersectionObserver((entries)=>{
+     entries.forEach(e=>{
+diff --git a/qr/baderech-fit-qr.png b/qr/baderech-fit-qr.png
+index 2094d1d..64b1c92 100644
+Binary files a/qr/baderech-fit-qr.png and b/qr/baderech-fit-qr.png differ
+diff --git a/qr/baderech-fit-qr.svg b/qr/baderech-fit-qr.svg
+index ec6cf44..6d271d6 100644
+--- a/qr/baderech-fit-qr.svg
++++ b/qr/baderech-fit-qr.svg
+@@ -1,2 +1,2 @@
+ <?xml version='1.0' encoding='UTF-8'?>
+-<svg width="41mm" height="41mm" version="1.1" viewBox="0 0 41 41" xmlns="http://www.w3.org/2000/svg"><path d="M4,4H5V5H4zM5,4H6V5H5zM6,4H7V5H6zM7,4H8V5H7zM8,4H9V5H8zM9,4H10V5H9zM10,4H11V5H10zM14,4H15V5H14zM16,4H17V5H16zM17,4H18V5H17zM18,4H19V5H18zM21,4H22V5H21zM22,4H23V5H22zM25,4H26V5H25zM26,4H27V5H26zM30,4H31V5H30zM31,4H32V5H31zM32,4H33V5H32zM33,4H34V5H33zM34,4H35V5H34zM35,4H36V5H35zM36,4H37V5H36zM4,5H5V6H4zM10,5H11V6H10zM12,5H13V6H12zM13,5H14V6H13zM15,5H16V6H15zM16,5H17V6H16zM22,5H23V6H22zM24,5H25V6H24zM28,5H29V6H28zM30,5H31V6H30zM36,5H37V6H36zM4,6H5V7H4zM6,6H7V7H6zM7,6H8V7H7zM8,6H9V7H8zM10,6H11V7H10zM12,6H13V7H12zM15,6H16V7H15zM16,6H17V7H16zM18,6H19V7H18zM20,6H21V7H20zM23,6H24V7H23zM25,6H26V7H25zM26,6H27V7H26zM27,6H28V7H27zM28,6H29V7H28zM30,6H31V7H30zM32,6H33V7H32zM33,6H34V7H33zM34,6H35V7H34zM36,6H37V7H36zM4,7H5V8H4zM6,7H7V8H6zM7,7H8V8H7zM8,7H9V8H8zM10,7H11V8H10zM12,7H13V8H12zM13,7H14V8H13zM15,7H16V8H15zM16,7H17V8H16zM18,7H19V8H18zM20,7H21V8H20zM22,7H23V8H22zM24,7H25V8H24zM26,7H27V8H26zM28,7H29V8H28zM30,7H31V8H30zM32,7H33V8H32zM33,7H34V8H33zM34,7H35V8H34zM36,7H37V8H36zM4,8H5V9H4zM6,8H7V9H6zM7,8H8V9H7zM8,8H9V9H8zM10,8H11V9H10zM16,8H17V9H16zM17,8H18V9H17zM18,8H19V9H18zM19,8H20V9H19zM20,8H21V9H20zM24,8H25V9H24zM25,8H26V9H25zM26,8H27V9H26zM30,8H31V9H30zM32,8H33V9H32zM33,8H34V9H33zM34,8H35V9H34zM36,8H37V9H36zM4,9H5V10H4zM10,9H11V10H10zM14,9H15V10H14zM15,9H16V10H15zM16,9H17V10H16zM19,9H20V10H19zM23,9H24V10H23zM26,9H27V10H26zM27,9H28V10H27zM28,9H29V10H28zM30,9H31V10H30zM36,9H37V10H36zM4,10H5V11H4zM5,10H6V11H5zM6,10H7V11H6zM7,10H8V11H7zM8,10H9V11H8zM9,10H10V11H9zM10,10H11V11H10zM12,10H13V11H12zM14,10H15V11H14zM16,10H17V11H16zM18,10H19V11H18zM20,10H21V11H20zM22,10H23V11H22zM24,10H25V11H24zM26,10H27V11H26zM28,10H29V11H28zM30,10H31V11H30zM31,10H32V11H31zM32,10H33V11H32zM33,10H34V11H33zM34,10H35V11H34zM35,10H36V11H35zM36,10H37V11H36zM12,11H13V12H12zM13,11H14V12H13zM14,11H15V12H14zM15,11H16V12H15zM18,11H19V12H18zM19,11H20V12H19zM20,11H21V12H20zM23,11H24V12H23zM24,11H25V12H24zM26,11H27V12H26zM27,11H28V12H27zM4,12H5V13H4zM10,12H11V13H10zM12,12H13V13H12zM14,12H15V13H14zM16,12H17V13H16zM17,12H18V13H17zM18,12H19V13H18zM21,12H22V13H21zM23,12H24V13H23zM26,12H27V13H26zM27,12H28V13H27zM29,12H30V13H29zM30,12H31V13H30zM33,12H34V13H33zM34,12H35V13H34zM35,12H36V13H35zM8,13H9V14H8zM9,13H10V14H9zM12,13H13V14H12zM13,13H14V14H13zM17,13H18V14H17zM19,13H20V14H19zM21,13H22V14H21zM22,13H23V14H22zM23,13H24V14H23zM25,13H26V14H25zM26,13H27V14H26zM27,13H28V14H27zM32,13H33V14H32zM33,13H34V14H33zM34,13H35V14H34zM35,13H36V14H35zM5,14H6V15H5zM7,14H8V15H7zM9,14H10V15H9zM10,14H11V15H10zM14,14H15V15H14zM17,14H18V15H17zM18,14H19V15H18zM19,14H20V15H19zM20,14H21V15H20zM21,14H22V15H21zM26,14H27V15H26zM29,14H30V15H29zM30,14H31V15H30zM32,14H33V15H32zM34,14H35V15H34zM35,14H36V15H35zM8,15H9V16H8zM9,15H10V16H9zM11,15H12V16H11zM14,15H15V16H14zM15,15H16V16H15zM17,15H18V16H17zM19,15H20V16H19zM20,15H21V16H20zM21,15H22V16H21zM22,15H23V16H22zM23,15H24V16H23zM25,15H26V16H25zM29,15H30V16H29zM31,15H32V16H31zM32,15H33V16H32zM33,15H34V16H33zM34,15H35V16H34zM35,15H36V16H35zM36,15H37V16H36zM8,16H9V17H8zM9,16H10V17H9zM10,16H11V17H10zM11,16H12V17H11zM14,16H15V17H14zM15,16H16V17H15zM16,16H17V17H16zM17,16H18V17H17zM21,16H22V17H21zM23,16H24V17H23zM25,16H26V17H25zM27,16H28V17H27zM28,16H29V17H28zM30,16H31V17H30zM31,16H32V17H31zM35,16H36V17H35zM36,16H37V17H36zM4,17H5V18H4zM5,17H6V18H5zM7,17H8V18H7zM12,17H13V18H12zM16,17H17V18H16zM21,17H22V18H21zM22,17H23V18H22zM28,17H29V18H28zM30,17H31V18H30zM34,17H35V18H34zM35,17H36V18H35zM36,17H37V18H36zM4,18H5V19H4zM7,18H8V19H7zM8,18H9V19H8zM10,18H11V19H10zM11,18H12V19H11zM13,18H14V19H13zM14,18H15V19H14zM15,18H16V19H15zM17,18H18V19H17zM18,18H19V19H18zM19,18H20V19H19zM20,18H21V19H20zM24,18H25V19H24zM28,18H29V19H28zM29,18H30V19H29zM30,18H31V19H30zM31,18H32V19H31zM32,18H33V19H32zM35,18H36V19H35zM4,19H5V20H4zM5,19H6V20H5zM12,19H13V20H12zM17,19H18V20H17zM20,19H21V20H20zM22,19H23V20H22zM24,19H25V20H24zM29,19H30V20H29zM32,19H33V20H32zM33,19H34V20H33zM34,19H35V20H34zM36,19H37V20H36zM5,20H6V21H5zM8,20H9V21H8zM10,20H11V21H10zM11,20H12V21H11zM12,20H13V21H12zM13,20H14V21H13zM15,20H16V21H15zM16,20H17V21H16zM17,20H18V21H17zM19,20H20V21H19zM21,20H22V21H21zM22,20H23V21H22zM24,20H25V21H24zM26,20H27V21H26zM28,20H29V21H28zM29,20H30V21H29zM31,20H32V21H31zM32,20H33V21H32zM36,20H37V21H36zM4,21H5V22H4zM5,21H6V22H5zM11,21H12V22H11zM12,21H13V22H12zM18,21H19V22H18zM19,21H20V22H19zM22,21H23V22H22zM23,21H24V22H23zM24,21H25V22H24zM27,21H28V22H27zM30,21H31V22H30zM33,21H34V22H33zM34,21H35V22H34zM35,21H36V22H35zM36,21H37V22H36zM5,22H6V23H5zM9,22H10V23H9zM10,22H11V23H10zM14,22H15V23H14zM16,22H17V23H16zM17,22H18V23H17zM19,22H20V23H19zM20,22H21V23H20zM21,22H22V23H21zM22,22H23V23H22zM23,22H24V23H23zM25,22H26V23H25zM26,22H27V23H26zM27,22H28V23H27zM28,22H29V23H28zM29,22H30V23H29zM30,22H31V23H30zM31,22H32V23H31zM33,22H34V23H33zM34,22H35V23H34zM36,22H37V23H36zM5,23H6V24H5zM6,23H7V24H6zM7,23H8V24H7zM8,23H9V24H8zM17,23H18V24H17zM18,23H19V24H18zM24,23H25V24H24zM26,23H27V24H26zM29,23H30V24H29zM30,23H31V24H30zM32,23H33V24H32zM33,23H34V24H33zM34,23H35V24H34zM35,23H36V24H35zM36,23H37V24H36zM7,24H8V25H7zM10,24H11V25H10zM11,24H12V25H11zM12,24H13V25H12zM17,24H18V25H17zM19,24H20V25H19zM22,24H23V25H22zM25,24H26V25H25zM28,24H29V25H28zM29,24H30V25H29zM32,24H33V25H32zM33,24H34V25H33zM35,24H36V25H35zM36,24H37V25H36zM4,25H5V26H4zM6,25H7V26H6zM8,25H9V26H8zM11,25H12V26H11zM18,25H19V26H18zM21,25H22V26H21zM25,25H26V26H25zM27,25H28V26H27zM31,25H32V26H31zM32,25H33V26H32zM34,25H35V26H34zM4,26H5V27H4zM6,26H7V27H6zM9,26H10V27H9zM10,26H11V27H10zM12,26H13V27H12zM15,26H16V27H15zM21,26H22V27H21zM23,26H24V27H23zM25,26H26V27H25zM28,26H29V27H28zM33,26H34V27H33zM35,26H36V27H35zM4,27H5V28H4zM6,27H7V28H6zM8,27H9V28H8zM11,27H12V28H11zM12,27H13V28H12zM17,27H18V28H17zM19,27H20V28H19zM20,27H21V28H20zM22,27H23V28H22zM23,27H24V28H23zM24,27H25V28H24zM27,27H28V28H27zM28,27H29V28H28zM30,27H31V28H30zM34,27H35V28H34zM35,27H36V28H35zM36,27H37V28H36zM4,28H5V29H4zM5,28H6V29H5zM7,28H8V29H7zM10,28H11V29H10zM11,28H12V29H11zM12,28H13V29H12zM13,28H14V29H13zM14,28H15V29H14zM15,28H16V29H15zM16,28H17V29H16zM24,28H25V29H24zM26,28H27V29H26zM27,28H28V29H27zM28,28H29V29H28zM29,28H30V29H29zM30,28H31V29H30zM31,28H32V29H31zM32,28H33V29H32zM35,28H36V29H35zM12,29H13V30H12zM14,29H15V30H14zM17,29H18V30H17zM19,29H20V30H19zM20,29H21V30H20zM21,29H22V30H21zM22,29H23V30H22zM23,29H24V30H23zM24,29H25V30H24zM25,29H26V30H25zM28,29H29V30H28zM32,29H33V30H32zM34,29H35V30H34zM35,29H36V30H35zM36,29H37V30H36zM4,30H5V31H4zM5,30H6V31H5zM6,30H7V31H6zM7,30H8V31H7zM8,30H9V31H8zM9,30H10V31H9zM10,30H11V31H10zM13,30H14V31H13zM14,30H15V31H14zM16,30H17V31H16zM17,30H18V31H17zM18,30H19V31H18zM19,30H20V31H19zM21,30H22V31H21zM26,30H27V31H26zM27,30H28V31H27zM28,30H29V31H28zM30,30H31V31H30zM32,30H33V31H32zM34,30H35V31H34zM4,31H5V32H4zM10,31H11V32H10zM14,31H15V32H14zM15,31H16V32H15zM18,31H19V32H18zM20,31H21V32H20zM21,31H22V32H21zM22,31H23V32H22zM23,31H24V32H23zM25,31H26V32H25zM26,31H27V32H26zM27,31H28V32H27zM28,31H29V32H28zM32,31H33V32H32zM33,31H34V32H33zM34,31H35V32H34zM36,31H37V32H36zM4,32H5V33H4zM6,32H7V33H6zM7,32H8V33H7zM8,32H9V33H8zM10,32H11V33H10zM18,32H19V33H18zM19,32H20V33H19zM20,32H21V33H20zM24,32H25V33H24zM25,32H26V33H25zM26,32H27V33H26zM28,32H29V33H28zM29,32H30V33H29zM30,32H31V33H30zM31,32H32V33H31zM32,32H33V33H32zM33,32H34V33H33zM35,32H36V33H35zM4,33H5V34H4zM6,33H7V34H6zM7,33H8V34H7zM8,33H9V34H8zM10,33H11V34H10zM13,33H14V34H13zM16,33H17V34H16zM18,33H19V34H18zM22,33H23V34H22zM25,33H26V34H25zM27,33H28V34H27zM28,33H29V34H28zM29,33H30V34H29zM31,33H32V34H31zM32,33H33V34H32zM33,33H34V34H33zM36,33H37V34H36zM4,34H5V35H4zM6,34H7V35H6zM7,34H8V35H7zM8,34H9V35H8zM10,34H11V35H10zM13,34H14V35H13zM19,34H20V35H19zM21,34H22V35H21zM22,34H23V35H22zM23,34H24V35H23zM27,34H28V35H27zM28,34H29V35H28zM29,34H30V35H29zM31,34H32V35H31zM32,34H33V35H32zM34,34H35V35H34zM35,34H36V35H35zM36,34H37V35H36zM4,35H5V36H4zM10,35H11V36H10zM14,35H15V36H14zM17,35H18V36H17zM27,35H28V36H27zM31,35H32V36H31zM32,35H33V36H32zM33,35H34V36H33zM34,35H35V36H34zM4,36H5V37H4zM5,36H6V37H5zM6,36H7V37H6zM7,36H8V37H7zM8,36H9V37H8zM9,36H10V37H9zM10,36H11V37H10zM12,36H13V37H12zM13,36H14V37H13zM16,36H17V37H16zM17,36H18V37H17zM18,36H19V37H18zM19,36H20V37H19zM20,36H21V37H20zM21,36H22V37H21zM24,36H25V37H24zM26,36H27V37H26zM27,36H28V37H27zM28,36H29V37H28zM29,36H30V37H29zM31,36H32V37H31zM33,36H34V37H33zM35,36H36V37H35z" id="qr-path" fill="#000000" fill-opacity="1" fill-rule="nonzero" stroke="none"/></svg>
+\ No newline at end of file
++<svg width="74mm" height="74mm" version="1.1" xmlns="http://www.w3.org/2000/svg"><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="10mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="18mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="42mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="46mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="54mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="62mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="8mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="10mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="10mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="10mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="10mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="10mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="10mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="10mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="42mm" y="10mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="10mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="10mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="10mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="46mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="12mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="28mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="42mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="14mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="28mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="38mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="46mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="16mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="18mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="18mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="28mm" y="18mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="18mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="18mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="18mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="18mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="42mm" y="18mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="18mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="46mm" y="18mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="18mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="18mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="18mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="10mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="18mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="28mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="54mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="62mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="20mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="22mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="28mm" y="22mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="22mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="38mm" y="22mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="42mm" y="22mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="46mm" y="22mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="22mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="18mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="22mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="42mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="46mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="62mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="24mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="26mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="26mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="18mm" y="26mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="26mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="26mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="26mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="26mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="26mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="46mm" y="26mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="26mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="26mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="54mm" y="26mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="26mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="26mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="10mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="18mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="22mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="28mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="42mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="62mm" y="28mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="30mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="30mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="30mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="30mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="28mm" y="30mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="30mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="30mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="30mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="30mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="54mm" y="30mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="30mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="10mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="18mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="22mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="38mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="42mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="32mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="10mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="18mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="28mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="38mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="42mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="46mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="62mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="34mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="10mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="18mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="46mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="50mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="62mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="36mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="38mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="38mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="22mm" y="38mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="38mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="38mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="28mm" y="38mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="38mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="38mm" y="38mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="38mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="38mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="38mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="54mm" y="38mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="38mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="62mm" y="38mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="10mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="18mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="22mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="28mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="38mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="50mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="54mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="62mm" y="40mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="10mm" y="42mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="18mm" y="42mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="42mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="42mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="38mm" y="42mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="42mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="42mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="42mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="54mm" y="42mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="42mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="42mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="62mm" y="42mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="18mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="22mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="38mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="50mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="54mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="44mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="46mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="46mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="46mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="46mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="46mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="38mm" y="46mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="42mm" y="46mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="46mm" y="46mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="50mm" y="46mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="46mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="54mm" y="46mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="46mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="10mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="18mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="42mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="46mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="50mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="54mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="48mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="50mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="50mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="42mm" y="50mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="50mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="46mm" y="50mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="50mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="50mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="50mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="50mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="62mm" y="50mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="50mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="10mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="18mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="46mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="62mm" y="52mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="54mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="54mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="54mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="54mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="54mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="54mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="54mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="38mm" y="54mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="54mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="54mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="54mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="54mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="54mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="54mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="28mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="38mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="42mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="50mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="54mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="62mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="56mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="28mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="38mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="50mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="54mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="56mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="58mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="28mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="42mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="54mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="60mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="64mm" y="60mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="62mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="62mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="28mm" y="62mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="62mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="32mm" y="62mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="62mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="62mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="62mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="50mm" y="62mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="52mm" y="62mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="58mm" y="62mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="62mm" y="62mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="8mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="10mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="12mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="14mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="16mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="18mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="20mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="24mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="26mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="30mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="34mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="36mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="40mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="44mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="48mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="54mm" y="64mm" width="2mm" height="2mm"/><svg:rect xmlns:svg="http://www.w3.org/2000/svg" x="62mm" y="64mm" width="2mm" height="2mm"/></svg>
+\ No newline at end of file
