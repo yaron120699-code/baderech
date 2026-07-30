@@ -2,9 +2,10 @@
   "use strict";
 
   var STORAGE_KEY = 'baderech_fit_v1';
-  var WHATSAPP_NUMBER = '972505494326'; // taken from the existing site (wa.me link in index.html)
+  var WHATSAPP_NUMBER = '972505494326';
+  var WA_BRIDGE_KEY = 'baderech_wa_prefill';
 
-  var QUESTION_STEPS = ['q1','q2','q3','q4','q5','q6','q7','q8','q9'];
+  var QUESTION_STEPS = ['q1','q2','q3','q4','q5','q6'];
 
   var steps = Array.prototype.slice.call(document.querySelectorAll('.fit__step'));
   var stepNames = steps.map(function(s){ return s.dataset.step; });
@@ -13,78 +14,6 @@
   var progressWrap = document.querySelector('.fit__progress');
   var progressFill = document.querySelector('.fit__progress-fill');
   var progressLabel = document.querySelector('.fit__progress-label');
-  var toastEl = document.getElementById('fitToast');
-
-  // Micro-insights: a short, specific reaction to the answer just given —
-  // not a generic "thanks for submitting", and not invented statistics.
-  // Phrasing stays in the same register the founder asked for: "this is a
-  // choice few people make", "this takes honesty" — never a fabricated
-  // number, always something that could plausibly be said by a person who
-  // was actually listening.
-  var INSIGHTS = {
-    q1: function(val){
-      var picked = Array.isArray(val) ? val : [];
-      if(picked.length === 1 && picked[0] === 'q1_5') return 'סקרנות היא נקודת פתיחה לגיטימית, בדיוק כמו כל דבר אחר.';
-      return 'זה לא תמיד קל להודות בזה. תודה שכתבת את זה.';
-    },
-    q2: {
-      q2_1: 'המרחק בין לדעת ללפעול הוא בדיוק המקום שרוב האנשים נתקעים בו.',
-      q2_2: 'המחשבה יכולה להיות מקום בטוח, עד שהיא הופכת למלכודת.',
-      q2_3: 'זו הודאה שדורשת הרבה כנות.',
-      q2_4: 'לזהות דפוס חוזר זו כבר תחילת היציאה ממנו.',
-      q2_5: 'גם "אני לא יודע להגדיר" זו תשובה כנה.'
-    },
-    q4: {
-      q4_1: 'זו בחירה שדורשת יותר אומץ מרוב האפשרויות האחרות כאן.',
-      q4_2: 'תרגול אמיתי לוקח יותר זמן מטיפים, אבל הוא זה שנשאר.',
-      q4_3: 'זה לגיטימי לרצות מישהו שינחה. חשוב רק לשים לב לזה מראש.',
-      q4_4: 'לפעמים באמת מספיק פתרון נקודתי — וגם את זה טוב לדעת על עצמך.',
-      q4_5: 'אי-ודאות היא נקודת התחלה טובה בדיוק כמו כל אחרת.'
-    },
-    q5: function(val){
-      var n = parseInt(val, 10);
-      if(n >= 4) return 'זו רמת מוכנות שלא כולם מגיעים איתה.';
-      if(n === 3) return 'זה מקום כן להיות בו, בלי לזייף יותר.';
-      return 'לדעת שעוד לא הגעת לשם — זו כבר בגרות מסוימת.';
-    },
-    q6: {
-      q6_1: 'זה, בדרך כלל, בדיוק השלב שבו מתחיל שינוי אמיתי.',
-      q6_2: 'לחלוק את האחריות זו עמדה בוגרת.',
-      q6_3: 'לא מעט אנשים מגיעים לכאן מתוך התחושה הזו בדיוק.',
-      q6_4: 'גם חוסר ודאות הוא תשובה כנה.'
-    },
-    q7: {
-      q7_1: 'זה אומר הרבה על כמה שזה רציני עבורך.',
-      q7_2: 'פתיחות מותנית היא בהחלט מקום הגיוני להתחיל ממנו.',
-      q7_3: 'חשוב לדעת את זה על עצמך מראש — זה יעזור לנו להתאים נכון.'
-    },
-    q8: {
-      q8_1: 'זו בדיוק ההשקעה שהתהליך הזה דורש.',
-      q8_2: 'לרצות להבין לפני שמתחייבים — זה הגיוני לגמרי.',
-      q8_3: 'תודה על הכנות. עדיף לדעת את זה עכשיו מאשר באמצע.'
-    }
-  };
-  var INSIGHT_FALLBACK = {
-    q3: 'תודה שכתבת את זה במילים שלך, לא רק סימנת תשובה.',
-    q9: 'זה נשאר בינך לבינך, עד שתבחר לשלוח.'
-  };
-
-  function getInsight(stepName){
-    var val = answers[stepName];
-    var rule = INSIGHTS[stepName];
-    if(typeof rule === 'function') return rule(val);
-    if(rule && val !== undefined && rule[val] !== undefined) return rule[val];
-    return INSIGHT_FALLBACK[stepName] || 'תודה על הכנות.';
-  }
-
-  var toastTimer = null;
-  function showInsight(stepName){
-    if(!toastEl) return;
-    clearTimeout(toastTimer);
-    toastEl.textContent = getInsight(stepName);
-    toastEl.classList.add('is-visible');
-    toastTimer = setTimeout(function(){ toastEl.classList.remove('is-visible'); }, 1800);
-  }
 
   // ---------- storage ----------
   function loadAnswers(){
@@ -111,22 +40,16 @@
     stepEnteredAt = Date.now();
     updateProgress();
     var heading = steps[index].querySelector('h1, h2');
-    if(heading){
-      heading.focus({ preventScroll: true });
-    }
+    if(heading){ heading.focus({ preventScroll: true }); }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  // Milestone-based labels instead of an exact "X out of Y" count.
-  // An exact fraction invites the visitor to calculate whether finishing is
-  // "worth it" (this is what we saw hurting completion on long questionnaires
-  // like BetterHelp's). Qualitative milestones keep the reassurance without
-  // the arithmetic.
+  // Qualitative progress instead of an exact "X out of Y" count, so the
+  // visitor isn't invited to calculate whether finishing is "worth it".
   function progressCaption(qIndex, total){
     var pct = (qIndex + 1) / total;
     if(qIndex === 0) return 'מתחילים';
-    if(pct <= 0.4) return 'בתנועה';
-    if(pct <= 0.75) return 'בערך באמצע';
+    if(pct <= 0.5) return 'בתנועה';
     if(qIndex < total - 1) return 'כמעט שם';
     return 'שאלה אחרונה';
   }
@@ -147,7 +70,7 @@
   // ---------- option styling / selection ----------
   function refreshOptionStyles(name){
     document.querySelectorAll('input[name="' + name + '"]').forEach(function(inp){
-      var card = inp.closest('.fit__option') || inp.closest('.fit__scale-opt');
+      var card = inp.closest('.fit__option');
       if(card){ card.classList.toggle('is-selected', inp.checked); }
     });
   }
@@ -161,21 +84,8 @@
     group.addEventListener('change', function(e){
       if(e.target.type === 'checkbox'){
         var checked = Array.prototype.slice.call(group.querySelectorAll('input:checked'));
-        if(checked.length > max){
-          e.target.checked = false;
-        }
+        if(checked.length > max){ e.target.checked = false; }
       }
-      refreshOptionStyles(name);
-      persistCurrentStep();
-      validateCurrentStep();
-    });
-  });
-
-  document.querySelectorAll('.fit__scale').forEach(function(group){
-    var firstInput = group.querySelector('input');
-    if(!firstInput) return;
-    var name = firstInput.name;
-    group.addEventListener('change', function(){
       refreshOptionStyles(name);
       persistCurrentStep();
       validateCurrentStep();
@@ -260,10 +170,7 @@
 
   function firstUnansweredQuestionIndex(){
     var hasAnyAnswer = Object.keys(answers).length > 0;
-    if(!hasAnyAnswer){
-      var reflectIdx = stepNames.indexOf('reflect-1');
-      if(reflectIdx > -1) return reflectIdx;
-    }
+    if(!hasAnyAnswer) return stepNames.indexOf('q1');
     for(var i = 0; i < QUESTION_STEPS.length; i++){
       var step = steps[stepNames.indexOf(QUESTION_STEPS[i])];
       if(!validateStep(step)) return stepNames.indexOf(QUESTION_STEPS[i]);
@@ -274,8 +181,7 @@
   // ---------- nav buttons ----------
   document.querySelectorAll('.fit__btn-continue[data-action="start"]').forEach(function(btn){
     btn.addEventListener('click', function(){
-      var resumeIndex = firstUnansweredQuestionIndex();
-      showStep(resumeIndex);
+      showStep(firstUnansweredQuestionIndex());
       validateCurrentStep();
     });
   });
@@ -288,8 +194,6 @@
         if(continueBtn.dataset.action === 'finish'){
           finishQuiz();
         } else {
-          var wasQuestion = QUESTION_STEPS.indexOf(stepNames[current]) !== -1;
-          if(wasQuestion) showInsight(stepNames[current]);
           showStep(current + 1);
           validateCurrentStep();
         }
@@ -304,11 +208,11 @@
     }
   });
 
-  // ---------- passthrough screens (reflection / pause: no input, tap anywhere) ----------
+  // ---------- passthrough screen (the single reflection screen: tap anywhere) ----------
   document.querySelectorAll('.fit__step[data-passthrough="true"]').forEach(function(step){
     function advance(){
       if(!step.classList.contains('is-active')) return;
-      if(Date.now() - stepEnteredAt < 450) return;
+      if(Date.now() - stepEnteredAt < 350) return;
       showStep(current + 1);
       validateCurrentStep();
     }
@@ -328,17 +232,19 @@
   });
 
   // ---------- scoring ----------
+  // Kept intentionally small: only the three questions that actually
+  // distinguish fit (real process vs. quick fix, in-person openness,
+  // willingness to invest). The other questions inform the WhatsApp
+  // message but don't need to move the score.
   var SCORES = {
     q4: { q4_1: 2, q4_2: 2, q4_3: -1, q4_4: -2, q4_5: 0 },
-    q5: { '1': -2, '2': -1, '3': 0, '4': 1, '5': 2 },
-    q6: { q6_1: 2, q6_2: 1, q6_3: -2, q6_4: 0 },
-    q7: { q7_1: 2, q7_2: 1, q7_3: -3 },
-    q8: { q8_1: 2, q8_2: 0, q8_3: -2 }
+    q5: { q5_1: 2, q5_2: 1, q5_3: -3 },
+    q6: { q6_1: 2, q6_2: 0, q6_3: -2 }
   };
 
   function computeScore(){
     var total = 0;
-    ['q4','q5','q6','q7','q8'].forEach(function(q){
+    ['q4','q5','q6'].forEach(function(q){
       var val = answers[q];
       if(val !== undefined && SCORES[q][val] !== undefined){
         total += SCORES[q][val];
@@ -348,8 +254,8 @@
   }
 
   function resultBucket(score){
-    if(score >= 6) return 'result-a';
-    if(score >= 2) return 'result-b';
+    if(score >= 4) return 'result-a';
+    if(score >= 0) return 'result-b';
     return 'result-c';
   }
 
@@ -376,10 +282,15 @@
       q4_4: 'פתרון מהיר או כמה טיפים',
       q4_5: 'עדיין לא בטוח'
     },
-    q7: {
-      q7_1: 'זה אפילו חשוב לי',
-      q7_2: 'מתאים לי, אם ארגיש שיש התאמה',
-      q7_3: 'אני מעדיף תהליך אונליין בלבד'
+    q5: {
+      q5_1: 'זה אפילו חשוב לי',
+      q5_2: 'מתאים לי, אם ארגיש שיש התאמה',
+      q5_3: 'אני מעדיף תהליך אונליין בלבד'
+    },
+    q6: {
+      q6_1: 'כן, אם אבין שזה מדויק לי',
+      q6_2: 'אולי, אני צריך לשמוע ולהבין יותר',
+      q6_3: 'כרגע אני מחפש משהו חינמי או נקודתי'
     }
   };
 
@@ -393,19 +304,16 @@
       ? answers.q1.map(function(v){ return label('q1', v); }).join('; ')
       : '—';
     var q3text = (answers.q3 && answers.q3.trim()) ? answers.q3.trim() : '—';
-    var q5text = answers.q5 ? (answers.q5 + ' מתוך 5') : '—';
-    var q9text = (answers.q9 && answers.q9.trim()) ? answers.q9.trim() : 'לא צויין';
 
     var lines = [
       'היי ירון, הגעתי דרך בדיקת ההתאמה של בדרך.',
       '',
       'מה הביא אותי לכאן: ' + q1text,
-      'הפער המרכזי שאני מרגיש: ' + label('q2', answers.q2),
-      'מה הייתי רוצה שייראה אחרת בעוד חודש וחצי: ' + q3text,
+      'איפה אני מרגיש הכי תקוע: ' + label('q2', answers.q2),
+      'מה הייתי רוצה שישתנה: ' + q3text,
       'מה אני מחפש: ' + label('q4', answers.q4),
-      'מידת המוכנות שלי להתנסות: ' + q5text,
-      'התאמה למפגשים פנים מול פנים: ' + label('q7', answers.q7),
-      'מה חשוב לדעת לפני שנדבר: ' + q9text,
+      'התאמה למפגשים פנים מול פנים: ' + label('q5', answers.q5),
+      'מוכנות להשקיע בתהליך: ' + label('q6', answers.q6),
       '',
       'אשמח לבדוק איתך אם יש התאמה לשיחה.'
     ];
@@ -418,58 +326,24 @@
     document.querySelectorAll('.fit__whatsapp-link').forEach(function(a){
       a.setAttribute('href', url);
     });
+    // Hand the same message forward for the landing page's own WhatsApp
+    // buttons, in case the visitor reads the page first (the primary path)
+    // and only messages from there. One-time use: js/script.js reads this
+    // once on load and removes it immediately.
+    try{ sessionStorage.setItem(WA_BRIDGE_KEY, message); }catch(e){}
   }
 
   // ---------- finish ----------
-  var MATCHING_MESSAGES = ['מחברים את מה שענית', 'מסתכלים על זה כמכלול', 'כמעט מוכן'];
-  var WA_BRIDGE_KEY = 'baderech_wa_prefill';
-
+  // No processing screen: the result appears right after the last answer.
+  // Pretending to "analyze" the answers for a few seconds is exactly the
+  // algorithmic feeling we want to avoid here.
   function finishQuiz(){
     persistCurrentStep();
-    var score = computeScore();
-    var bucket = resultBucket(score);
+    var bucket = resultBucket(computeScore());
     prepareWhatsAppLinks();
-
-    // Results A and B now continue onto the landing page before WhatsApp
-    // (the "skip straight to WhatsApp" link is the only direct WA exit left
-    // on this page). So that a personal touch isn't lost for someone who
-    // reads the landing page and then clicks its own WhatsApp button, we
-    // hand the composed message forward through sessionStorage. The landing
-    // page (js/script.js) picks this up once and clears it immediately —
-    // it is not the raw answers, only the human-readable summary, and it
-    // never outlives the current browser tab.
-    if(bucket === 'result-a' || bucket === 'result-b'){
-      try{ sessionStorage.setItem(WA_BRIDGE_KEY, buildWhatsAppMessage()); }catch(e){}
-    }
-
-    // Brief processing moment before the result, instead of an instant jump.
-    // This is not decorative delay: it is what makes the result that follows
-    // feel considered rather than a static lookup table (same idea used by
-    // Noom's "building your plan" screen between quiz and result).
-    var matchingIndex = stepNames.indexOf('matching');
-    var labelEl = document.getElementById('fitMatchingLabel');
-    showStep(matchingIndex);
-
-    var mi = 0;
-    if(labelEl) labelEl.textContent = MATCHING_MESSAGES[0];
-    var msgInterval = setInterval(function(){
-      mi = (mi + 1) % MATCHING_MESSAGES.length;
-      if(!labelEl) return;
-      labelEl.style.opacity = 0;
-      setTimeout(function(){
-        labelEl.textContent = MATCHING_MESSAGES[mi];
-        labelEl.style.opacity = 1;
-      }, 250);
-    }, 900);
-
-    setTimeout(function(){
-      clearInterval(msgInterval);
-      showStep(stepNames.indexOf(bucket));
-      // Privacy: once the result is computed and shown, the answers no longer
-      // need to live in this browser session.
-      clearAnswers();
-      answers = {};
-    }, 2400);
+    showStep(stepNames.indexOf(bucket));
+    clearAnswers();
+    answers = {};
   }
 
   // ---------- restart ----------
@@ -482,7 +356,7 @@
       var counter = t.parentElement.querySelector('.fit__counter');
       if(counter && t.maxLength > 0){ counter.textContent = '0 / ' + t.maxLength; }
     });
-    document.querySelectorAll('.fit__option, .fit__scale-opt').forEach(function(c){ c.classList.remove('is-selected'); });
+    document.querySelectorAll('.fit__option').forEach(function(c){ c.classList.remove('is-selected'); });
     document.querySelectorAll('.fit__btn-continue:not([data-action])').forEach(function(btn){
       btn.disabled = true;
       btn.setAttribute('aria-disabled', 'true');
@@ -497,11 +371,6 @@
   // ---------- init ----------
   restoreInputs();
   showStep(0);
-  QUESTION_STEPS.forEach(function(name){
-    var idx = stepNames.indexOf(name);
-    if(idx > -1) validateStep(steps[idx]);
-  });
-  // Set initial disabled state for every continue button based on restored answers
   steps.forEach(function(step){
     var btn = step.querySelector('.fit__btn-continue');
     if(btn && btn.dataset.action !== 'start'){
