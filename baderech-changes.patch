@@ -634,7 +634,7 @@ index e494025..79146d3 100644
  
    @media (prefers-reduced-motion: reduce){
 diff --git a/fit/fit.css b/fit/fit.css
-index d04b404..f5ab37b 100644
+index d04b404..f7b4032 100644
 --- a/fit/fit.css
 +++ b/fit/fit.css
 @@ -7,7 +7,7 @@
@@ -686,24 +686,23 @@ index d04b404..f5ab37b 100644
  }
  .fit__option:hover{ border-color:var(--sage); }
  .fit__option input{
-@@ -90,38 +89,19 @@
+@@ -90,38 +89,6 @@
  .fit__option.is-selected span::before{
    background:var(--sage-deep); border-color:var(--sage-deep);
  }
 -.fit__option.is-disabled{ opacity:0.4; cursor:not-allowed; }
- 
- /* ---- text fields ---- */
- .fit__field{ margin-top:6px; }
- .fit__field textarea{
-   width:100%; resize:vertical; min-height:110px;
+-
+-/* ---- text fields ---- */
+-.fit__field{ margin-top:6px; }
+-.fit__field textarea{
+-  width:100%; resize:vertical; min-height:110px;
 -  font-family:var(--sans); font-size:15px; color:var(--ink);
-+  font-family:var(--sans); font-size:1rem; color:var(--ink);
-   background:rgba(255,255,255,0.6); border:1px solid var(--line); border-radius:14px;
-   padding:16px 18px; line-height:1.6;
-   transition:border-color .25s;
- }
- .fit__field textarea:focus{ outline:none; border-color:var(--sage-deep); }
- .fit__field textarea::placeholder{ color:var(--muted-2); }
+-  background:rgba(255,255,255,0.6); border:1px solid var(--line); border-radius:14px;
+-  padding:16px 18px; line-height:1.6;
+-  transition:border-color .25s;
+-}
+-.fit__field textarea:focus{ outline:none; border-color:var(--sage-deep); }
+-.fit__field textarea::placeholder{ color:var(--muted-2); }
 -.fit__counter{ margin-top:8px; font-size:12px; color:var(--muted); text-align:left; }
 -
 -/* ---- scale (1-5) ---- */
@@ -723,11 +722,10 @@ index d04b404..f5ab37b 100644
 -  display:flex; justify-content:space-between; margin-top:10px;
 -  font-size:12px; color:var(--muted);
 -}
-+.fit__counter{ margin-top:8px; font-size:0.8125rem; color:var(--muted); text-align:left; }
  
  /* ---- nav (back / continue) ---- */
  .fit__nav{
-@@ -135,7 +115,7 @@
+@@ -135,7 +102,7 @@
    appearance:none; border:none; cursor:pointer;
    display:inline-flex; align-items:center; justify-content:center; gap:10px;
    padding:15px 30px; border-radius:100px;
@@ -736,7 +734,7 @@ index d04b404..f5ab37b 100644
    background:var(--ink); color:var(--bg);
    transition:transform .3s var(--ease), background .3s, opacity .3s;
  }
-@@ -147,30 +127,74 @@
+@@ -147,30 +114,85 @@
  }
  .fit__btn-back{
    appearance:none; background:none; border:none; cursor:pointer;
@@ -802,14 +800,25 @@ index d04b404..f5ab37b 100644
 -  font-size:13px; color:var(--muted); max-width:420px; margin:0 auto;
 +
 +.fit__tips{
-+  margin:32px auto 0; max-width:460px;
-+  display:flex; flex-direction:column; gap:18px;
++  margin:36px auto 0; max-width:480px;
++  display:flex; flex-direction:column; gap:26px;
 +  text-align:right;
 +}
-+.fit__tips-item{
++.fit__tips-title{
++  font-family:var(--serif); font-weight:500; font-size:1.1875rem;
++  color:var(--ink); line-height:1.45;
++  margin-bottom:6px;
++}
++.fit__tips-item{ display:flex; flex-direction:column; gap:6px; }
++.fit__tips-insight{
 +  font-family:var(--serif); font-style:italic; font-size:1.0312rem;
 +  line-height:1.65; color:var(--muted-2);
++}
++.fit__tips-action{
++  font-family:var(--sans); font-size:0.9375rem;
++  line-height:1.6; color:var(--sage-deep);
  }
++.fit__tips-action strong{ font-weight:600; }
  .fit__restart-link{
    display:block; appearance:none; background:none; border:none; cursor:pointer;
 -  margin:22px auto 0; font-size:12.5px; color:var(--muted);
@@ -817,7 +826,7 @@ index d04b404..f5ab37b 100644
    text-decoration:underline; text-underline-offset:3px;
  }
  .fit__restart-link:hover{ color:var(--ink); }
-@@ -183,7 +207,5 @@
+@@ -183,7 +205,5 @@
  /* ---- mobile ---- */
  @media (max-width:480px){
    .fit__card{ padding:26px 18px; border-radius:16px; }
@@ -826,7 +835,7 @@ index d04b404..f5ab37b 100644
    .fit__nav{ flex-wrap:wrap; }
  }
 diff --git a/fit/fit.js b/fit/fit.js
-index 9266731..fed453d 100644
+index 9266731..09abc21 100644
 --- a/fit/fit.js
 +++ b/fit/fit.js
 @@ -2,9 +2,10 @@
@@ -999,7 +1008,21 @@ index 9266731..fed453d 100644
      return 'result-c';
    }
  
-@@ -258,10 +282,15 @@
+@@ -251,6 +275,13 @@
+       q2_4: 'אני חוזר שוב ושוב לאותם דפוסים',
+       q2_5: 'אני עדיין לא יודע להגדיר'
+     },
++    q3: {
++      q3_1: 'הביטחון העצמי שלי במצבים חברתיים',
++      q3_2: 'איך אני מתנהל בזוגיות או בדייטינג',
++      q3_3: 'היכולת שלי לפעול, לא רק לחשוב',
++      q3_4: 'התחושה הכללית שיש לי כלפי עצמי',
++      q3_5: 'קשה לי לבחור אחת — זה קצת מהכול'
++    },
+     q4: {
+       q4_1: 'תהליך אישי שדורש ממני להשתתף ולעבוד',
+       q4_2: 'כלים פרקטיים ותרגול במציאות',
+@@ -258,10 +289,15 @@
        q4_4: 'פתרון מהיר או כמה טיפים',
        q4_5: 'עדיין לא בטוח'
      },
@@ -1019,10 +1042,11 @@ index 9266731..fed453d 100644
      }
    };
  
-@@ -275,19 +304,16 @@
+@@ -274,20 +310,16 @@
+     var q1text = Array.isArray(answers.q1) && answers.q1.length
        ? answers.q1.map(function(v){ return label('q1', v); }).join('; ')
        : '—';
-     var q3text = (answers.q3 && answers.q3.trim()) ? answers.q3.trim() : '—';
+-    var q3text = (answers.q3 && answers.q3.trim()) ? answers.q3.trim() : '—';
 -    var q5text = answers.q5 ? (answers.q5 + ' מתוך 5') : '—';
 -    var q9text = (answers.q9 && answers.q9.trim()) ? answers.q9.trim() : 'לא צויין';
  
@@ -1033,7 +1057,7 @@ index 9266731..fed453d 100644
 -      'הפער המרכזי שאני מרגיש: ' + label('q2', answers.q2),
 -      'מה הייתי רוצה שייראה אחרת בעוד חודש וחצי: ' + q3text,
 +      'איפה אני מרגיש הכי תקוע: ' + label('q2', answers.q2),
-+      'מה הייתי רוצה שישתנה: ' + q3text,
++      'מה הייתי רוצה שישתנה: ' + label('q3', answers.q3),
        'מה אני מחפש: ' + label('q4', answers.q4),
 -      'מידת המוכנות שלי להתנסות: ' + q5text,
 -      'התאמה למפגשים פנים מול פנים: ' + label('q7', answers.q7),
@@ -1043,7 +1067,7 @@ index 9266731..fed453d 100644
        '',
        'אשמח לבדוק איתך אם יש התאמה לשיחה.'
      ];
-@@ -300,17 +326,22 @@
+@@ -300,17 +332,22 @@
      document.querySelectorAll('.fit__whatsapp-link').forEach(function(a){
        a.setAttribute('href', url);
      });
@@ -1070,7 +1094,7 @@ index 9266731..fed453d 100644
      clearAnswers();
      answers = {};
    }
-@@ -325,7 +356,7 @@
+@@ -325,7 +362,7 @@
        var counter = t.parentElement.querySelector('.fit__counter');
        if(counter && t.maxLength > 0){ counter.textContent = '0 / ' + t.maxLength; }
      });
@@ -1079,7 +1103,7 @@ index 9266731..fed453d 100644
      document.querySelectorAll('.fit__btn-continue:not([data-action])').forEach(function(btn){
        btn.disabled = true;
        btn.setAttribute('aria-disabled', 'true');
-@@ -340,11 +371,6 @@
+@@ -340,11 +377,6 @@
    // ---------- init ----------
    restoreInputs();
    showStep(0);
@@ -1092,7 +1116,7 @@ index 9266731..fed453d 100644
      var btn = step.querySelector('.fit__btn-continue');
      if(btn && btn.dataset.action !== 'start'){
 diff --git a/fit/index.html b/fit/index.html
-index 6c53c33..b4e318d 100644
+index 6c53c33..aadf8ba 100644
 --- a/fit/index.html
 +++ b/fit/index.html
 @@ -4,7 +4,7 @@
@@ -1127,7 +1151,7 @@ index 6c53c33..b4e318d 100644
        <div class="fit__options" data-max="1">
          <label class="fit__option"><input type="radio" name="q2" value="q2_1"><span>אני יודע מה לעשות, אבל לא מצליח לפעול</span></label>
          <label class="fit__option"><input type="radio" name="q2" value="q2_2"><span>אני חושב יותר מדי ומאבד את הרגע</span></label>
-@@ -81,9 +80,17 @@
+@@ -81,12 +80,23 @@
        </div>
      </section>
  
@@ -1142,11 +1166,20 @@ index 6c53c33..b4e318d 100644
      <!-- Q3 -->
      <section class="fit__step" data-step="q3" data-required="true">
 -      <h2 class="fit__q" tabindex="-1">אם בעוד חודש וחצי משהו אמיתי ישתנה — מה היית רוצה שייראה אחרת?</h2>
+-      <div class="fit__field">
+-        <textarea name="q3" maxlength="400" rows="4" placeholder="לא צריך לנסח מושלם. כתוב את הדבר הראשון שעולה לך."></textarea>
+-        <div class="fit__counter">0 / 400</div>
 +      <h2 class="fit__q" tabindex="-1">אם משהו אחד היה משתנה — מה היית רוצה שייראה אחרת?</h2>
-       <div class="fit__field">
-         <textarea name="q3" maxlength="400" rows="4" placeholder="לא צריך לנסח מושלם. כתוב את הדבר הראשון שעולה לך."></textarea>
-         <div class="fit__counter">0 / 400</div>
-@@ -112,48 +119,11 @@
++      <div class="fit__options" data-max="1">
++        <label class="fit__option"><input type="radio" name="q3" value="q3_1"><span>הביטחון העצמי שלי במצבים חברתיים</span></label>
++        <label class="fit__option"><input type="radio" name="q3" value="q3_2"><span>איך אני מתנהל בזוגיות או בדייטינג</span></label>
++        <label class="fit__option"><input type="radio" name="q3" value="q3_3"><span>היכולת שלי לפעול, לא רק לחשוב</span></label>
++        <label class="fit__option"><input type="radio" name="q3" value="q3_4"><span>התחושה הכללית שיש לי כלפי עצמי</span></label>
++        <label class="fit__option"><input type="radio" name="q3" value="q3_5"><span>קשה לי לבחור אחת — זה קצת מהכול</span></label>
+       </div>
+       <div class="fit__nav">
+         <button type="button" class="fit__btn-back">חזרה</button>
+@@ -112,48 +122,11 @@
  
      <!-- Q5 -->
      <section class="fit__step" data-step="q5" data-required="true">
@@ -1198,7 +1231,7 @@ index 6c53c33..b4e318d 100644
        </div>
        <div class="fit__nav">
          <button type="button" class="fit__btn-back">חזרה</button>
-@@ -161,25 +131,13 @@
+@@ -161,25 +134,13 @@
        </div>
      </section>
  
@@ -1229,7 +1262,7 @@ index 6c53c33..b4e318d 100644
        </div>
        <div class="fit__nav">
          <button type="button" class="fit__btn-back">חזרה</button>
-@@ -189,34 +147,38 @@
+@@ -189,34 +150,51 @@
  
      <!-- RESULT A -->
      <section class="fit__step fit__result" data-step="result-a">
@@ -1272,11 +1305,24 @@ index 6c53c33..b4e318d 100644
 -      <p class="fit__privacy-note">רק בלחיצה על הכפתור ייפתח WhatsApp עם סיכום התשובות. שום דבר לא נשלח אוטומטית.</p>
 +      <div class="eyebrow">התוצאה</div>
 +      <h2 class="fit__title">תוצאה לא מתאימה כרגע</h2>
-+      <p class="fit__lede">יכול להיות שזה לא הפורמט הנכון עבורך כרגע — וזה בסדר. אבל בא לי להשאיר לך משהו, לא רק ללכת.</p>
++      <p class="fit__lede">יכול להיות שזה לא הפורמט הנכון עבורך כרגע — וזה בסדר.</p>
 +      <div class="fit__tips">
-+        <p class="fit__tips-item">כשאתה מהסס לפני שאתה ניגש למשהו חדש — תן לעצמך ספירה של חמש, ותזוז לפני שהמוח מספיק לשכנע אותך שלא.</p>
-+        <p class="fit__tips-item">בפעם הבאה שאתה נמנע מלהגיד משהו — תגיד אותו, גם לא מנוסח מושלם. ביטחון בונים מתוך חזרה, לא מתוך ניסוח.</p>
-+        <p class="fit__tips-item">במקום לשאול את עצמך "מה אני צריך לשנות" — שאל "מה אני כבר עושה שעובד, וכדאי לעשות ממנו יותר."</p>
++        <p class="fit__tips-title">שלושה דברים שכולם יודעים — אבל לא תמיד באמת עושים.</p>
++
++        <div class="fit__tips-item">
++          <p class="fit__tips-insight">אותו משפט יכול להישמע כמו ביטחון — או כמו בקשה לאישור. לפעמים ההבדל נמצא רק בקצב, בטון וביכולת לא להתנצל על כל מילה.</p>
++          <p class="fit__tips-action"><strong>בפעם הבאה:</strong> אמור את מה שאתה חושב מעט לאט יותר, בלי להסביר אותו שלוש פעמים.</p>
++        </div>
++
++        <div class="fit__tips-item">
++          <p class="fit__tips-insight">קשר עין הוא א׳-ב׳. אבל לא מדובר בתחרות מבטים. המטרה היא לא לבהות. המטרה היא לא לברוח ברגע שנהיה מעט לא נוח.</p>
++          <p class="fit__tips-action"><strong>בפעם הבאה:</strong> כשמישהו מדבר, הישאר איתו במבט עוד רגע אחד לפני שאתה מסיט אותו.</p>
++        </div>
++
++        <div class="fit__tips-item">
++          <p class="fit__tips-insight">אל תחפש שאלה טובה. תקשיב לתשובה. אנשים מרגישים מיד אם אתה באמת מתעניין או רק מחכה לתורך לדבר. השאלה הבאה נמצאת בדרך כלל בתוך הדבר האחרון שהם אמרו.</p>
++          <p class="fit__tips-action"><strong>בפעם הבאה:</strong> קח מילה אחת ממה שהאדם אמר ושאל עליה עוד.</p>
++        </div>
 +      </div>
        <div class="fit__nav fit__nav--result">
          <a href="#" class="fit__btn-secondary fit__whatsapp-link" data-result="c" target="_blank" rel="noopener">בכל זאת, אני רוצה לשאול משהו</a>

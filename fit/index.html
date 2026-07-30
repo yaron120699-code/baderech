@@ -91,9 +91,12 @@
     <!-- Q3 -->
     <section class="fit__step" data-step="q3" data-required="true">
       <h2 class="fit__q" tabindex="-1">אם משהו אחד היה משתנה — מה היית רוצה שייראה אחרת?</h2>
-      <div class="fit__field">
-        <textarea name="q3" maxlength="400" rows="4" placeholder="לא צריך לנסח מושלם. כתוב את הדבר הראשון שעולה לך."></textarea>
-        <div class="fit__counter">0 / 400</div>
+      <div class="fit__options" data-max="1">
+        <label class="fit__option"><input type="radio" name="q3" value="q3_1"><span>הביטחון העצמי שלי במצבים חברתיים</span></label>
+        <label class="fit__option"><input type="radio" name="q3" value="q3_2"><span>איך אני מתנהל בזוגיות או בדייטינג</span></label>
+        <label class="fit__option"><input type="radio" name="q3" value="q3_3"><span>היכולת שלי לפעול, לא רק לחשוב</span></label>
+        <label class="fit__option"><input type="radio" name="q3" value="q3_4"><span>התחושה הכללית שיש לי כלפי עצמי</span></label>
+        <label class="fit__option"><input type="radio" name="q3" value="q3_5"><span>קשה לי לבחור אחת — זה קצת מהכול</span></label>
       </div>
       <div class="fit__nav">
         <button type="button" class="fit__btn-back">חזרה</button>
@@ -173,11 +176,24 @@
     <section class="fit__step fit__result" data-step="result-c">
       <div class="eyebrow">התוצאה</div>
       <h2 class="fit__title">תוצאה לא מתאימה כרגע</h2>
-      <p class="fit__lede">יכול להיות שזה לא הפורמט הנכון עבורך כרגע — וזה בסדר. אבל בא לי להשאיר לך משהו, לא רק ללכת.</p>
+      <p class="fit__lede">יכול להיות שזה לא הפורמט הנכון עבורך כרגע — וזה בסדר.</p>
       <div class="fit__tips">
-        <p class="fit__tips-item">כשאתה מהסס לפני שאתה ניגש למשהו חדש — תן לעצמך ספירה של חמש, ותזוז לפני שהמוח מספיק לשכנע אותך שלא.</p>
-        <p class="fit__tips-item">בפעם הבאה שאתה נמנע מלהגיד משהו — תגיד אותו, גם לא מנוסח מושלם. ביטחון בונים מתוך חזרה, לא מתוך ניסוח.</p>
-        <p class="fit__tips-item">במקום לשאול את עצמך "מה אני צריך לשנות" — שאל "מה אני כבר עושה שעובד, וכדאי לעשות ממנו יותר."</p>
+        <p class="fit__tips-title">שלושה דברים שכולם יודעים — אבל לא תמיד באמת עושים.</p>
+
+        <div class="fit__tips-item">
+          <p class="fit__tips-insight">אותו משפט יכול להישמע כמו ביטחון — או כמו בקשה לאישור. לפעמים ההבדל נמצא רק בקצב, בטון וביכולת לא להתנצל על כל מילה.</p>
+          <p class="fit__tips-action"><strong>בפעם הבאה:</strong> אמור את מה שאתה חושב מעט לאט יותר, בלי להסביר אותו שלוש פעמים.</p>
+        </div>
+
+        <div class="fit__tips-item">
+          <p class="fit__tips-insight">קשר עין הוא א׳-ב׳. אבל לא מדובר בתחרות מבטים. המטרה היא לא לבהות. המטרה היא לא לברוח ברגע שנהיה מעט לא נוח.</p>
+          <p class="fit__tips-action"><strong>בפעם הבאה:</strong> כשמישהו מדבר, הישאר איתו במבט עוד רגע אחד לפני שאתה מסיט אותו.</p>
+        </div>
+
+        <div class="fit__tips-item">
+          <p class="fit__tips-insight">אל תחפש שאלה טובה. תקשיב לתשובה. אנשים מרגישים מיד אם אתה באמת מתעניין או רק מחכה לתורך לדבר. השאלה הבאה נמצאת בדרך כלל בתוך הדבר האחרון שהם אמרו.</p>
+          <p class="fit__tips-action"><strong>בפעם הבאה:</strong> קח מילה אחת ממה שהאדם אמר ושאל עליה עוד.</p>
+        </div>
       </div>
       <div class="fit__nav fit__nav--result">
         <a href="#" class="fit__btn-secondary fit__whatsapp-link" data-result="c" target="_blank" rel="noopener">בכל זאת, אני רוצה לשאול משהו</a>
