@@ -175,6 +175,11 @@
   display:flex; flex-direction:column; gap:26px;
   text-align:right;
 }
+.fit__tips-label{
+  font-family:var(--sans); font-size:0.8125rem; font-weight:600;
+  letter-spacing:0.02em; color:var(--sage-deep);
+  margin-bottom:2px;
+}
 .fit__tips-title{
   font-family:var(--serif); font-weight:500; font-size:1.1875rem;
   color:var(--ink); line-height:1.45;

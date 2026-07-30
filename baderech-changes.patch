@@ -634,7 +634,7 @@ index e494025..79146d3 100644
  
    @media (prefers-reduced-motion: reduce){
 diff --git a/fit/fit.css b/fit/fit.css
-index d04b404..f7b4032 100644
+index d04b404..17acaa2 100644
 --- a/fit/fit.css
 +++ b/fit/fit.css
 @@ -7,7 +7,7 @@
@@ -734,7 +734,7 @@ index d04b404..f7b4032 100644
    background:var(--ink); color:var(--bg);
    transition:transform .3s var(--ease), background .3s, opacity .3s;
  }
-@@ -147,30 +114,85 @@
+@@ -147,30 +114,90 @@
  }
  .fit__btn-back{
    appearance:none; background:none; border:none; cursor:pointer;
@@ -804,6 +804,11 @@ index d04b404..f7b4032 100644
 +  display:flex; flex-direction:column; gap:26px;
 +  text-align:right;
 +}
++.fit__tips-label{
++  font-family:var(--sans); font-size:0.8125rem; font-weight:600;
++  letter-spacing:0.02em; color:var(--sage-deep);
++  margin-bottom:2px;
++}
 +.fit__tips-title{
 +  font-family:var(--serif); font-weight:500; font-size:1.1875rem;
 +  color:var(--ink); line-height:1.45;
@@ -826,7 +831,7 @@ index d04b404..f7b4032 100644
    text-decoration:underline; text-underline-offset:3px;
  }
  .fit__restart-link:hover{ color:var(--ink); }
-@@ -183,7 +205,5 @@
+@@ -183,7 +210,5 @@
  /* ---- mobile ---- */
  @media (max-width:480px){
    .fit__card{ padding:26px 18px; border-radius:16px; }
@@ -1116,7 +1121,7 @@ index 9266731..09abc21 100644
      var btn = step.querySelector('.fit__btn-continue');
      if(btn && btn.dataset.action !== 'start'){
 diff --git a/fit/index.html b/fit/index.html
-index 6c53c33..aadf8ba 100644
+index 6c53c33..5205072 100644
 --- a/fit/index.html
 +++ b/fit/index.html
 @@ -4,7 +4,7 @@
@@ -1262,7 +1267,7 @@ index 6c53c33..aadf8ba 100644
        </div>
        <div class="fit__nav">
          <button type="button" class="fit__btn-back">חזרה</button>
-@@ -189,34 +150,51 @@
+@@ -189,34 +150,52 @@
  
      <!-- RESULT A -->
      <section class="fit__step fit__result" data-step="result-a">
@@ -1307,6 +1312,7 @@ index 6c53c33..aadf8ba 100644
 +      <h2 class="fit__title">תוצאה לא מתאימה כרגע</h2>
 +      <p class="fit__lede">יכול להיות שזה לא הפורמט הנכון עבורך כרגע — וזה בסדר.</p>
 +      <div class="fit__tips">
++        <p class="fit__tips-label">צידה לדרך, ממני אליך</p>
 +        <p class="fit__tips-title">שלושה דברים שכולם יודעים — אבל לא תמיד באמת עושים.</p>
 +
 +        <div class="fit__tips-item">
