@@ -57,7 +57,6 @@
 .fit__q:focus-visible{ outline:2px solid var(--sage-deep); outline-offset:6px; border-radius:4px; }
 .fit__qhint{ font-size:13.5px; color:var(--muted); margin:0 0 22px; }
 .fit__lede{ font-size:16px; color:var(--muted); margin:0 0 28px; max-width:520px; }
-.fit__microhint{ margin-top:18px; font-size:13px; color:var(--muted); text-align:center; }
 
 /* ---- option cards (radio / checkbox) ---- */
 .fit__options{ display:flex; flex-direction:column; gap:10px; margin-top:22px; }
@@ -90,7 +89,6 @@
 .fit__option.is-selected span::before{
   background:var(--sage-deep); border-color:var(--sage-deep);
 }
-.fit__option.is-disabled{ opacity:0.4; cursor:not-allowed; }
 
 /* ---- text fields ---- */
 .fit__field{ margin-top:6px; }
@@ -104,24 +102,6 @@
 .fit__field textarea:focus{ outline:none; border-color:var(--sage-deep); }
 .fit__field textarea::placeholder{ color:var(--muted-2); }
 .fit__counter{ margin-top:8px; font-size:12px; color:var(--muted); text-align:left; }
-
-/* ---- scale (1-5) ---- */
-.fit__scale{ margin-top:22px; }
-.fit__scale-row{ display:flex; gap:10px; justify-content:space-between; }
-.fit__scale-opt{
-  flex:1; text-align:center; cursor:pointer;
-  border:1px solid var(--line); border-radius:12px; padding:16px 0;
-  background:rgba(255,255,255,0.5); font-family:var(--serif); font-size:18px;
-  transition:border-color .25s, background .25s;
-  position:relative;
-}
-.fit__scale-opt input{ position:absolute; opacity:0; width:1px; height:1px; overflow:hidden; }
-.fit__scale-opt:hover{ border-color:var(--sage); }
-.fit__scale-opt.is-selected{ border-color:var(--sage-deep); background:rgba(220,225,211,0.5); color:var(--sage-deep); }
-.fit__scale-labels{
-  display:flex; justify-content:space-between; margin-top:10px;
-  font-size:12px; color:var(--muted);
-}
 
 /* ---- nav (back / continue) ---- */
 .fit__nav{
@@ -152,18 +132,10 @@
 }
 .fit__btn-back:hover{ color:var(--ink); }
 
-.fit__btn-secondary{
-  display:inline-flex; align-items:center; justify-content:center;
-  padding:13px 26px; border-radius:100px;
-  border:1px solid var(--line); text-decoration:none;
-  font-size:14px; color:var(--muted); background:transparent;
-  transition:border-color .25s, color .25s;
-}
-.fit__btn-secondary:hover{ border-color:var(--sage-deep); color:var(--sage-deep); }
-
-/* ---- reflection screens (no input, just a thought) ---- */
+/* ---- the single reflection screen (no input, just a thought) ---- */
 .fit__reflect-screen{
-  min-height:280px;
+  position:relative;
+  min-height:260px;
   display:flex; flex-direction:column; align-items:center; justify-content:center;
   text-align:center; cursor:pointer;
   padding:20px 0;
@@ -188,67 +160,19 @@
   padding:8px; opacity:0.55; transition:opacity .25s;
 }
 .fit__reflect-back:hover{ opacity:1; }
-.fit__reflect-screen, .fit__pause-screen{ position:relative; }
 
-/* ---- pause screen (deliberately near-empty; a beat, not a question) ---- */
-.fit__pause-screen{ min-height:300px; }
-.fit__pause-dots{
-  display:flex; align-items:center; justify-content:center; gap:26px;
-  margin-bottom:30px;
-}
-.fit__pause-dots .moment-dot{ opacity:0.6; }
-.fit__reflect-tap--delayed{
-  opacity:0; pointer-events:none;
-  animation: fitPauseReveal 1s ease forwards 1.8s;
-}
-@keyframes fitPauseReveal{
-  0%{ opacity:0; }
-  99%{ opacity:0; pointer-events:none; }
-  100%{ opacity:0.7; pointer-events:auto; }
-}
-@media (prefers-reduced-motion: reduce){
-  .fit__reflect-tap--delayed{ animation:none; opacity:0.7; pointer-events:auto; }
-}
-
-/* ---- micro-affirmation toast ---- */
-.fit__toast{
-  position:fixed; bottom:26px; left:50%; transform:translateX(-50%) translateY(8px);
-  background:var(--ink); color:var(--bg);
-  font-family:var(--sans); font-size:13.5px;
-  padding:10px 20px; border-radius:100px;
-  opacity:0; pointer-events:none; z-index:50;
-  transition:opacity .45s var(--ease), transform .45s var(--ease);
-}
-.fit__toast.is-visible{ opacity:0.92; transform:translateX(-50%) translateY(0); }
-
-/* ---- matching / processing theater ---- */
-.fit__matching{ text-align:center; padding:40px 0 10px; }
-.fit__matching-dots{
-  display:flex; align-items:center; justify-content:center; gap:22px;
-  margin-bottom:26px;
-}
-.fit__matching-dots .moment-dot{ opacity:0.7; transform:scale(1); }
-.fit__matching-label{
-  font-family:var(--serif); font-style:italic; font-size:15.5px; color:var(--muted);
-  transition:opacity .35s ease;
-}
-
-/* ---- "skip straight to WhatsApp" secondary link on results A/B ---- */
+/* ---- secondary "message on WhatsApp directly" link on results ---- */
 .fit__skip-link{
   display:block; text-align:center; margin-top:22px;
   font-family:var(--sans); font-size:13.5px; color:var(--muted);
   text-decoration:underline; text-underline-offset:3px;
 }
 .fit__skip-link:hover{ color:var(--sage-deep); }
-.fit__result .fit__privacy-note{ margin-top:10px; }
 
 /* ---- result screens ---- */
 .fit__result{ text-align:center; }
 .fit__result .fit__title{ margin-top:2px; }
 .fit__result .fit__lede{ margin-left:auto; margin-right:auto; }
-.fit__privacy-note{
-  font-size:13px; color:var(--muted); max-width:420px; margin:0 auto;
-}
 .fit__restart-link{
   display:block; appearance:none; background:none; border:none; cursor:pointer;
   margin:22px auto 0; font-size:12.5px; color:var(--muted);
@@ -264,7 +188,5 @@
 /* ---- mobile ---- */
 @media (max-width:480px){
   .fit__card{ padding:26px 18px; border-radius:16px; }
-  .fit__scale-row{ gap:6px; }
-  .fit__scale-opt{ padding:13px 0; font-size:16px; }
   .fit__nav{ flex-wrap:wrap; }
 }
