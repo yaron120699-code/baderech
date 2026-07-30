@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>בדיקת התאמה — בדרך.</title>
-<meta name="description" content="כמה שאלות שקטות וקצרות, לבדוק אם התהליך האישי &quot;בדרך.&quot; מדויק בשבילך — לפני שפונים.">
+<meta name="description" content="כמה שאלות קצרות, לבדוק אם התהליך האישי &quot;בדרך.&quot; מדויק בשבילך — לפני שפונים.">
 <meta name="robots" content="noindex">
 <meta name="theme-color" content="#F7F6F1">
 
@@ -36,25 +36,15 @@
       <div class="fit__progress-track"><div class="fit__progress-fill" style="width:0%"></div></div>
       <div class="fit__progress-label"></div>
     </div>
-    <div class="fit__toast" id="fitToast" aria-live="polite"></div>
 
     <!-- INTRO -->
     <section class="fit__step is-active" data-step="intro">
       <div class="eyebrow">לפני שממשיכים</div>
       <h1 class="fit__title">לפני שמדברים, בוא נבדוק אם זה בכלל מדויק.</h1>
-      <p class="fit__lede">כמה שאלות קצרות. בלי ציונים, בלי אבחנות ובלי התחייבות. התשובות נשארות במכשיר שלך ולא נשלחות אליי עד שתבחר לשלוח אותן בעצמך.</p>
+      <p class="fit__lede">כמה שאלות קצרות. בלי ציונים ובלי התחייבות.</p>
       <div class="fit__nav fit__nav--start">
-        <button type="button" class="fit__btn-continue" data-action="start">אפשר להתחיל</button>
+        <button type="button" class="fit__btn-continue" data-action="start">מתחילים</button>
       </div>
-      <p class="fit__microhint">כשתי דקות · אפשר לעצור בכל שלב</p>
-    </section>
-
-    <!-- REFLECT 1 -->
-    <section class="fit__step fit__reflect-screen" data-step="reflect-1" data-passthrough="true" tabindex="0">
-      <p class="fit__reflect-line">רוב האנשים שמגיעים לכאן<br>חושבים שהם מחפשים ביטחון.</p>
-      <p class="fit__reflect-line fit__reflect-line--soft">אבל הרבה פעמים...<br>הם פשוט עייפים מלהיות במלחמה עם עצמם.</p>
-      <div class="fit__reflect-tap">להמשיך</div>
-          <button type="button" class="fit__reflect-back">חזרה</button>
     </section>
 
     <!-- Q1 -->
@@ -76,7 +66,7 @@
 
     <!-- Q2 -->
     <section class="fit__step" data-step="q2" data-required="true">
-      <h2 class="fit__q" tabindex="-1">איפה אתה מרגיש את הפער הגדול ביותר?</h2>
+      <h2 class="fit__q" tabindex="-1">איפה אתה מרגיש הכי תקוע?</h2>
       <div class="fit__options" data-max="1">
         <label class="fit__option"><input type="radio" name="q2" value="q2_1"><span>אני יודע מה לעשות, אבל לא מצליח לפעול</span></label>
         <label class="fit__option"><input type="radio" name="q2" value="q2_2"><span>אני חושב יותר מדי ומאבד את הרגע</span></label>
@@ -90,17 +80,17 @@
       </div>
     </section>
 
-    <!-- REFLECT 2 -->
-    <section class="fit__step fit__reflect-screen" data-step="reflect-2" data-passthrough="true" tabindex="0">
-      <p class="fit__reflect-line">אין כאן תשובות נכונות.</p>
-      <p class="fit__reflect-line fit__reflect-line--soft">רק מקום להבין איפה אתה נמצא, ממש עכשיו.</p>
+    <!-- REFLECT (single transition screen) -->
+    <section class="fit__step fit__reflect-screen" data-step="reflect-1" data-passthrough="true" tabindex="0">
+      <p class="fit__reflect-line">אין כאן תשובה נכונה.</p>
+      <p class="fit__reflect-line fit__reflect-line--soft">רק ניסיון להבין אם זה מדויק לך עכשיו.</p>
       <div class="fit__reflect-tap">להמשיך</div>
-          <button type="button" class="fit__reflect-back">חזרה</button>
+      <button type="button" class="fit__reflect-back">חזרה</button>
     </section>
 
     <!-- Q3 -->
     <section class="fit__step" data-step="q3" data-required="true">
-      <h2 class="fit__q" tabindex="-1">אם בעוד חודש וחצי משהו אמיתי ישתנה — מה היית רוצה שייראה אחרת?</h2>
+      <h2 class="fit__q" tabindex="-1">אם משהו אחד היה משתנה — מה היית רוצה שייראה אחרת?</h2>
       <div class="fit__field">
         <textarea name="q3" maxlength="400" rows="4" placeholder="לא צריך לנסח מושלם. כתוב את הדבר הראשון שעולה לך."></textarea>
         <div class="fit__counter">0 / 400</div>
@@ -127,33 +117,13 @@
       </div>
     </section>
 
-    <!-- PAUSE 1 -->
-    <section class="fit__step fit__pause-screen" data-step="pause-1" data-passthrough="true" tabindex="0">
-      <div class="fit__pause-dots" aria-hidden="true">
-        <span class="moment-dot"></span>
-        <span class="moment-dot"></span>
-        <span class="moment-dot"></span>
-      </div>
-      <p class="fit__reflect-line fit__reflect-line--soft">רגע.</p>
-      <div class="fit__reflect-tap fit__reflect-tap--delayed">להמשיך כשתהיה מוכן</div>
-          <button type="button" class="fit__reflect-back">חזרה</button>
-    </section>
-
     <!-- Q5 -->
     <section class="fit__step" data-step="q5" data-required="true">
-      <h2 class="fit__q" tabindex="-1">עד כמה אתה מוכן לנסות, לטעות ולנסות שוב?</h2>
-      <div class="fit__scale" data-max="1">
-        <div class="fit__scale-row">
-          <label class="fit__scale-opt"><input type="radio" name="q5" value="1"><span>1</span></label>
-          <label class="fit__scale-opt"><input type="radio" name="q5" value="2"><span>2</span></label>
-          <label class="fit__scale-opt"><input type="radio" name="q5" value="3"><span>3</span></label>
-          <label class="fit__scale-opt"><input type="radio" name="q5" value="4"><span>4</span></label>
-          <label class="fit__scale-opt"><input type="radio" name="q5" value="5"><span>5</span></label>
-        </div>
-        <div class="fit__scale-labels">
-          <span>עדיין לא שם</span>
-          <span>מוכן לעבוד באמת</span>
-        </div>
+      <h2 class="fit__q" tabindex="-1">המפגשים ב&quot;בדרך&quot; מתקיימים פנים מול פנים. איך זה מרגיש לך?</h2>
+      <div class="fit__options" data-max="1">
+        <label class="fit__option"><input type="radio" name="q5" value="q5_1"><span>זה אפילו חשוב לי</span></label>
+        <label class="fit__option"><input type="radio" name="q5" value="q5_2"><span>מתאים לי, אם ארגיש שיש התאמה</span></label>
+        <label class="fit__option"><input type="radio" name="q5" value="q5_3"><span>אני מעדיף תהליך אונליין בלבד</span></label>
       </div>
       <div class="fit__nav">
         <button type="button" class="fit__btn-back">חזרה</button>
@@ -163,60 +133,11 @@
 
     <!-- Q6 -->
     <section class="fit__step" data-step="q6" data-required="true">
-      <h2 class="fit__q" tabindex="-1">כשמשהו לא עובד, מי לדעתך אחראי לייצר את השינוי?</h2>
-      <div class="fit__options" data-max="1">
-        <label class="fit__option"><input type="radio" name="q6" value="q6_1"><span>בעיקר אני, בעזרת הכוונה ומבט חיצוני</span></label>
-        <label class="fit__option"><input type="radio" name="q6" value="q6_2"><span>האחריות משותפת</span></label>
-        <label class="fit__option"><input type="radio" name="q6" value="q6_3"><span>אני צריך שמישהו יוציא אותי מזה</span></label>
-        <label class="fit__option"><input type="radio" name="q6" value="q6_4"><span>אני עדיין לא יודע</span></label>
-      </div>
-      <div class="fit__nav">
-        <button type="button" class="fit__btn-back">חזרה</button>
-        <button type="button" class="fit__btn-continue">המשך</button>
-      </div>
-    </section>
-
-    <!-- REFLECT 3 -->
-    <section class="fit__step fit__reflect-screen" data-step="reflect-3" data-passthrough="true" tabindex="0">
-      <p class="fit__reflect-line">כמעט סיימת.</p>
-      <p class="fit__reflect-line fit__reflect-line--soft">מה שנשאר הוא לא עוד מבחן — רק עוד קצת כנות.</p>
-      <div class="fit__reflect-tap">להמשיך</div>
-          <button type="button" class="fit__reflect-back">חזרה</button>
-    </section>
-
-    <!-- Q7 -->
-    <section class="fit__step" data-step="q7" data-required="true">
-      <h2 class="fit__q" tabindex="-1">המפגשים ב&quot;בדרך&quot; מתקיימים פנים מול פנים. איך זה מרגיש לך?</h2>
-      <div class="fit__options" data-max="1">
-        <label class="fit__option"><input type="radio" name="q7" value="q7_1"><span>זה אפילו חשוב לי</span></label>
-        <label class="fit__option"><input type="radio" name="q7" value="q7_2"><span>מתאים לי, אם ארגיש שיש התאמה</span></label>
-        <label class="fit__option"><input type="radio" name="q7" value="q7_3"><span>אני מעדיף תהליך אונליין בלבד</span></label>
-      </div>
-      <div class="fit__nav">
-        <button type="button" class="fit__btn-back">חזרה</button>
-        <button type="button" class="fit__btn-continue">המשך</button>
-      </div>
-    </section>
-
-    <!-- Q8 -->
-    <section class="fit__step" data-step="q8" data-required="true">
       <h2 class="fit__q" tabindex="-1">האם אתה מוכן להשקיע בתהליך משמעותי זמן, נוכחות ומשאבים?</h2>
       <div class="fit__options" data-max="1">
-        <label class="fit__option"><input type="radio" name="q8" value="q8_1"><span>כן, אם אבין שזה מדויק לי</span></label>
-        <label class="fit__option"><input type="radio" name="q8" value="q8_2"><span>אולי, אני צריך לשמוע ולהבין יותר</span></label>
-        <label class="fit__option"><input type="radio" name="q8" value="q8_3"><span>כרגע אני מחפש משהו חינמי או נקודתי</span></label>
-      </div>
-      <div class="fit__nav">
-        <button type="button" class="fit__btn-back">חזרה</button>
-        <button type="button" class="fit__btn-continue">המשך</button>
-      </div>
-    </section>
-
-    <!-- Q9 -->
-    <section class="fit__step" data-step="q9" data-required="false">
-      <h2 class="fit__q" tabindex="-1">מה חשוב שאדע עליך לפני שנדבר?</h2>
-      <div class="fit__field">
-        <textarea name="q9" maxlength="600" rows="4" placeholder="אפשר להשאיר ריק. אין צורך לחשוף כאן משהו שאינך רוצה."></textarea>
+        <label class="fit__option"><input type="radio" name="q6" value="q6_1"><span>כן, אם אבין שזה מדויק לי</span></label>
+        <label class="fit__option"><input type="radio" name="q6" value="q6_2"><span>אולי, אני צריך לשמוע ולהבין יותר</span></label>
+        <label class="fit__option"><input type="radio" name="q6" value="q6_3"><span>כרגע אני מחפש משהו חינמי או נקודתי</span></label>
       </div>
       <div class="fit__nav">
         <button type="button" class="fit__btn-back">חזרה</button>
@@ -224,51 +145,39 @@
       </div>
     </section>
 
-    <!-- MATCHING (processing theater) -->
-    <section class="fit__step fit__matching" data-step="matching">
-      <div class="fit__matching-dots" aria-hidden="true">
-        <span class="moment-dot"></span>
-        <span class="moment-dot"></span>
-        <span class="moment-dot"></span>
-      </div>
-      <p class="fit__matching-label" id="fitMatchingLabel">מחברים את מה שענית</p>
-    </section>
-
     <!-- RESULT A -->
     <section class="fit__step fit__result" data-step="result-a">
-      <div class="eyebrow">מה שעלה מתוך התשובות שלך</div>
-      <h2 class="fit__title">נראה שיש כאן בסיס אמיתי לשיחה.</h2>
-      <p class="fit__lede">זה לא אבחנה ולא ציון. זה פשוט מה שהצטבר מהתשובות שלך — רצון, נכונות, ומקום ששווה להסתכל עליו יחד.</p>
+      <div class="eyebrow">התוצאה</div>
+      <h2 class="fit__title">תוצאה מתאימה</h2>
+      <p class="fit__lede">נראה שיש בסיס טוב לשיחה. מהתשובות שלך עולה שאתה לא מחפש רק טיפ נקודתי, אלא שינוי שדורש עבודה אמיתית.</p>
       <div class="fit__nav fit__nav--result">
-        <a href="/#story" class="fit__btn-continue">להמשיך אל הדרך</a>
+        <a href="/" class="fit__btn-continue">להמשיך ולהכיר את הדרך</a>
       </div>
-      <a href="#" class="fit__skip-link fit__whatsapp-link" data-result="a" target="_blank" rel="noopener">אני מעדיף לדלג ישר לוואטסאפ</a>
-      <p class="fit__privacy-note">לחיצה על "לדלג" תפתח WhatsApp עם סיכום התשובות שלך. שום דבר לא נשלח אוטומטית.</p>
+      <a href="#" class="fit__skip-link fit__whatsapp-link" data-result="a" target="_blank" rel="noopener">או לשלוח הודעה בוואטסאפ ישירות</a>
       <button type="button" class="fit__restart-link">למחוק את התשובות ולהתחיל מחדש</button>
     </section>
 
     <!-- RESULT B -->
     <section class="fit__step fit__result" data-step="result-b">
-      <div class="eyebrow">מה שעלה מתוך התשובות שלך</div>
-      <h2 class="fit__title">נראה שאתה בדיוק באמצע — ויש כאן משהו ששווה לדייק.</h2>
-      <p class="fit__lede">יכול להיות שהתהליך מתאים, ויכול להיות שאתה עדיין מבין מה אתה צריך. שני המקומות האלה לגיטימיים באותה מידה.</p>
+      <div class="eyebrow">התוצאה</div>
+      <h2 class="fit__title">תוצאה לא ודאית</h2>
+      <p class="fit__lede">יכול להיות שיש כאן התאמה, אבל כדאי קודם לדבר ולהבין יותר.</p>
       <div class="fit__nav fit__nav--result">
-        <a href="/#story" class="fit__btn-continue">להמשיך אל הדרך</a>
+        <a href="/" class="fit__btn-continue">להמשיך ולהכיר את הדרך</a>
       </div>
-      <a href="#" class="fit__skip-link fit__whatsapp-link" data-result="b" target="_blank" rel="noopener">אני מעדיף לדלג ישר לוואטסאפ</a>
-      <p class="fit__privacy-note">לחיצה על "לדלג" תפתח WhatsApp עם סיכום התשובות שלך. שום דבר לא נשלח אוטומטית.</p>
+      <a href="#" class="fit__skip-link fit__whatsapp-link" data-result="b" target="_blank" rel="noopener">או לשלוח הודעה בוואטסאפ ישירות</a>
       <button type="button" class="fit__restart-link">למחוק את התשובות ולהתחיל מחדש</button>
     </section>
 
     <!-- RESULT C -->
     <section class="fit__step fit__result" data-step="result-c">
-      <div class="eyebrow">מה שעלה מתוך התשובות שלך</div>
-      <h2 class="fit__title">יכול להיות שזה לא הזמן או הפורמט המדויק — וזה בסדר גמור.</h2>
-      <p class="fit__lede">&quot;בדרך.&quot; דורש נוכחות, עבודה והתנסות גם בין המפגשים. אם כרגע אתה מחפש פתרון נקודתי או תהליך אונליין בלבד, יכול להיות שזה פשוט לא הדבר הנכון כרגע.</p>
-      <p class="fit__privacy-note">רק בלחיצה על הכפתור ייפתח WhatsApp עם סיכום התשובות. שום דבר לא נשלח אוטומטית.</p>
+      <div class="eyebrow">התוצאה</div>
+      <h2 class="fit__title">תוצאה לא מתאימה כרגע</h2>
+      <p class="fit__lede">יכול להיות שזה לא הפורמט הנכון עבורך כרגע — וזה בסדר.</p>
       <div class="fit__nav fit__nav--result">
-        <a href="#" class="fit__btn-secondary fit__whatsapp-link" data-result="c" target="_blank" rel="noopener">בכל זאת, אני רוצה לשאול משהו</a>
+        <a href="/" class="fit__btn-continue">להמשיך ולהכיר את הדרך</a>
       </div>
+      <a href="#" class="fit__skip-link fit__whatsapp-link" data-result="c" target="_blank" rel="noopener">או לשלוח הודעה בוואטסאפ ישירות</a>
       <button type="button" class="fit__restart-link">למחוק את התשובות ולהתחיל מחדש</button>
     </section>
 
