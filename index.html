@@ -3,187 +3,290 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>בדיקת התאמה — בדרך.</title>
-<meta name="description" content="כמה שאלות קצרות, לבדוק אם התהליך האישי &quot;בדרך.&quot; מדויק בשבילך — לפני שפונים.">
-<meta name="robots" content="noindex">
+<title>בדרך. — לא צריך להיות מושלמים כדי להתחיל להשתנות</title>
+<meta name="description" content="תהליך אישי אחד על אחד למי שמרגיש שהגיע הזמן לעצור, להכיר את עצמו ולבחור מחדש.">
 <meta name="theme-color" content="#F7F6F1">
 
+<!-- Favicon -->
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 
+<!-- Open Graph / social preview -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://baderech.vercel.app/">
+<meta property="og:locale" content="he_IL">
+<meta property="og:title" content="בדרך. — לא צריך להיות מושלמים כדי להתחיל להשתנות">
+<meta property="og:description" content="תהליך אישי אחד על אחד למי שמרגיש שהגיע הזמן לעצור, להכיר את עצמו ולבחור מחדש.">
+<meta property="og:image" content="https://baderech.vercel.app/images/og-image.png?v=2">
+<meta property="og:image:secure_url" content="https://baderech.vercel.app/images/og-image.png?v=2">
+<meta property="og:image:type" content="image/png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="בדרך. — לא צריך להיות מושלמים כדי להתחיל להשתנות">
+<meta name="twitter:description" content="תהליך אישי אחד על אחד למי שמרגיש שהגיע הזמן לעצור, להכיר את עצמו ולבחור מחדש.">
+<meta name="twitter:image" content="https://baderech.vercel.app/images/og-image.png?v=2">
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<noscript>
+  <style>
+    .reveal, .reveal-pop{ opacity:1 !important; transform:none !important; }
+  </style>
+</noscript>
 
-<link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/fit/fit.css">
+<link rel="stylesheet" href="css/style.css">
 </head>
-<body class="fit-page">
+<body>
 
-<a class="skip-link" href="#fitMain">דלג לתוכן</a>
+<a class="skip-link" href="#main">דלג לתוכן</a>
 
-<header class="fit__topbar">
-  <a href="/" class="fit__brand">בדרך<span>.</span></a>
-</header>
+<nav class="nav">
+  <div class="nav__brand">בדרך<span>.</span></div>
+  <ul class="nav__links">
+    <li><a href="#story">הסיפור שלי</a></li>
+    <li><a href="#process">איך זה עובד</a></li>
+    <li><a href="#faq">שאלות נפוצות</a></li>
+  </ul>
+  <a href="#contact" class="nav__cta">לבדוק התאמה</a>
+  <button class="nav__toggle" aria-label="פתיחת תפריט" aria-expanded="false">☰</button>
+</nav>
 
-<main id="fitMain" class="fit__shell">
-  <div class="fit__card" id="fitCard">
+<main id="main">
 
-    <div class="fit__progress" aria-hidden="false">
-      <div class="fit__progress-track"><div class="fit__progress-fill" style="width:0%"></div></div>
-      <div class="fit__progress-label"></div>
+  <!-- 1. HERO -->
+  <section class="hero" id="hero">
+    <div class="wrap hero__inner">
+      <div class="eyebrow">תהליך אישי אחד על אחד</div>
+      <h1>לא צריך להיות מושלמים<br>כדי להתחיל להשתנות.</h1>
+      <p class="lede">צריך רק להיות מוכנים לעצור, להקשיב — ולבחור בעצמכם.</p>
+      <div class="hero__actions">
+        <a href="https://calendly.com/baderech" target="_blank" rel="noopener" class="textlink">לבדוק אם נכון לנו לצאת לדרך</a>
+        <a href="https://wa.me/972505494326?text=%D7%94%D7%99%D7%99%20%D7%99%D7%A8%D7%95%D7%9F%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8" target="_blank" rel="noopener" class="textlink">לשלוח הודעה בוואטסאפ</a>
+        <a href="fit/index.html" class="textlink">בדיקת התאמה אישית — כשתי דקות</a>
+      </div>
     </div>
+    <div class="hero__scroll">לגלול הלאה</div>
+  </section>
 
-    <!-- INTRO -->
-    <section class="fit__step is-active" data-step="intro">
-      <div class="eyebrow">לפני שממשיכים</div>
-      <h1 class="fit__title">לפני שמדברים, בוא נבדוק אם זה בכלל מדויק.</h1>
-      <p class="fit__lede">כמה שאלות קצרות. בלי ציונים ובלי התחייבות.</p>
-      <div class="fit__nav fit__nav--start">
-        <button type="button" class="fit__btn-continue" data-action="start">מתחילים</button>
+  <!-- 2. IDENTIFICATION -->
+  <section class="id" id="identify">
+    <div class="wrap wrap-narrow">
+      <div class="reveal">
+        <div class="eyebrow">אולי הגעת לכאן מסיבה</div>
+        <h2>מבחוץ הכול נראה בסדר. ובפנים משהו כבר לא מרגיש מדויק.</h2>
       </div>
-    </section>
+      <div class="id__lines reveal">
+        <div class="id__line">אולי איבדת כיוון בדרך.</div>
+        <div class="id__line">אולי יש בך הרבה יותר ממה שאתה מצליח להוציא החוצה.</div>
+        <div class="id__line">אולי הגיע הזמן להפסיק לפעול רק מתוך פחד.</div>
+      </div>
+      <p class="id__close reveal">לא חייבים לדעת עדיין לאן הולכים. אפשר להתחיל מלהבין איפה אתה נמצא.</p>
+    </div>
+  </section>
 
-    <!-- Q1 -->
-    <section class="fit__step" data-step="q1" data-required="true">
-      <h2 class="fit__q" tabindex="-1">מה הביא אותך לכאן עכשיו?</h2>
-      <p class="fit__qhint">אפשר לבחור עד שתי תשובות.</p>
-      <div class="fit__options" data-max="2">
-        <label class="fit__option"><input type="checkbox" name="q1" value="q1_1"><span>אני מרגיש תקוע למרות שאני יודע שיש בי יותר</span></label>
-        <label class="fit__option"><input type="checkbox" name="q1" value="q1_2"><span>חסר לי ביטחון מול אנשים או בדייטינג</span></label>
-        <label class="fit__option"><input type="checkbox" name="q1" value="q1_3"><span>קשה לי ליזום, להוביל או לבטא עניין</span></label>
-        <label class="fit__option"><input type="checkbox" name="q1" value="q1_4"><span>אני רוצה שינוי רחב יותר בדרך שבה אני מחזיק את עצמי</span></label>
-        <label class="fit__option"><input type="checkbox" name="q1" value="q1_5"><span>בעיקר סקרנות</span></label>
+  <!-- 3. STORY -->
+  <section class="story on-alt" id="story">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="eyebrow">הסיפור שלי</div>
+        <h2>אני לא גורו. אני מישהו שממשיך ללכת.</h2>
+        <p class="lede">לא תמיד הייתי האדם שאני היום. חיפשתי אישורים מבחוץ, עברתי טעויות, ביקורת עצמית וחוסר כיוון. היו תקופות שבהן הרגשתי שאני מתרחק מהאדם שרציתי להיות.</p>
+        <p class="lede" style="margin-top:20px;">בהמשך עבדתי בחברה שליוותה גברים בביטחון עצמי ובהיכרות עם נשים. ראיתי כלים כמו שפת גוף ותקשורת באמת עובדים — אבל גם הבנתי שלפעמים, כשהסיטואציה נגמרת, משהו בפנים עדיין נשאר לא שלם.</p>
+        <p class="lede" style="margin-top:20px;"><strong>טכניקה יכולה לפתוח דלת, אבל היא לא בונה את מי שעומד מאחוריה.</strong> מתוך החיבור בין הניסיון הזה לבין המסע האישי שלי נולדה “בדרך.” — לא עוד שיטה, אלא ליווי שמחבר בין מי שאתה לבין הדרך שבה אתה חי.</p>
       </div>
-      <div class="fit__nav">
-        <button type="button" class="fit__btn-back">חזרה</button>
-        <button type="button" class="fit__btn-continue">המשך</button>
-      </div>
-    </section>
 
-    <!-- Q2 -->
-    <section class="fit__step" data-step="q2" data-required="true">
-      <h2 class="fit__q" tabindex="-1">איפה אתה מרגיש הכי תקוע?</h2>
-      <div class="fit__options" data-max="1">
-        <label class="fit__option"><input type="radio" name="q2" value="q2_1"><span>אני יודע מה לעשות, אבל לא מצליח לפעול</span></label>
-        <label class="fit__option"><input type="radio" name="q2" value="q2_2"><span>אני חושב יותר מדי ומאבד את הרגע</span></label>
-        <label class="fit__option"><input type="radio" name="q2" value="q2_3"><span>אני תלוי באישור מאחרים</span></label>
-        <label class="fit__option"><input type="radio" name="q2" value="q2_4"><span>אני חוזר שוב ושוב לאותם דפוסים</span></label>
-        <label class="fit__option"><input type="radio" name="q2" value="q2_5"><span>אני עדיין לא יודע להגדיר</span></label>
+      <div class="real__row">
+        <div class="real__frame reveal-pop">
+          <div class="real__photo">
+            <span class="tag">אז</span>
+            <img src="images/az.jpg" alt="ירון בתקופה מוקדמת יותר בחייו">
+          </div>
+        </div>
+        <div class="real__arrow" aria-hidden="true">←</div>
+        <div class="real__frame reveal-pop reveal-pop--delay">
+          <div class="real__photo">
+            <span class="tag">היום</span>
+            <img src="images/hayom.jpg" alt="ירון היום">
+          </div>
+        </div>
       </div>
-      <div class="fit__nav">
-        <button type="button" class="fit__btn-back">חזרה</button>
-        <button type="button" class="fit__btn-continue">המשך</button>
-      </div>
-    </section>
+      <p class="real__reflection reveal">בין שתי התמונות האלה לא השתנה רק איך אני נראה — השתנתה הדרך שבה אני רואה את עצמי ואת העולם. לא ברגע אחד גדול, אלא דרך בחירות קטנות, טעויות, נפילות ותנועה קדימה.</p>
+    </div>
+  </section>
 
-    <!-- REFLECT (single transition screen) -->
-    <section class="fit__step fit__reflect-screen" data-step="reflect-1" data-passthrough="true" tabindex="0">
-      <p class="fit__reflect-line">אין כאן תשובה נכונה.</p>
-      <p class="fit__reflect-line fit__reflect-line--soft">רק ניסיון להבין אם זה מדויק לך עכשיו.</p>
-      <div class="fit__reflect-tap">להמשיך</div>
-      <button type="button" class="fit__reflect-back">חזרה</button>
-    </section>
+  <!-- 4. DIFFERENCE -->
+  <section class="different" id="different">
+    <div class="wrap wrap-narrow">
+      <div class="reveal">
+        <div class="eyebrow">לא קורס. תהליך אישי.</div>
+        <h2>אני לא שולח אותך להתמודד לבד. אני יוצא איתך לעולם.</h2>
+      </div>
+      <div class="different__lines reveal">
+        <div class="different__line">אין כאן תוכנית מדף שמתאימה לכולם.</div>
+        <div class="different__line">אין משפטי קסם או הבטחות לתוצאה מהירה.</div>
+        <div class="different__line">יש פגישות אישיות, כנות ועבודה בתוך החיים עצמם.</div>
+        <div class="different__line">יש תהליך שנבנה לפי מי שאתה ומה שאתה באמת צריך.</div>
+      </div>
+      <p class="different__close reveal">לפעמים נשב ונדבר, לפעמים נצא החוצה — נתרגל, ניכשל, נבין וננסה שוב. המטרה היא לא שתפעל כמו מישהו אחר, אלא שתרגיש יותר בנוח להיות אתה.</p>
+      <p class="different__close reveal" style="margin-top:22px;">אני עובד עם מספר מצומצם של אנשים בכל תקופה, כדי שאוכל להיות נוכח באמת בכל תהליך. <strong>לא להוביל אותך. ללכת לצידך.</strong></p>
+    </div>
+  </section>
 
-    <!-- Q3 -->
-    <section class="fit__step" data-step="q3" data-required="true">
-      <h2 class="fit__q" tabindex="-1">אם משהו אחד היה משתנה — מה היית רוצה שייראה אחרת?</h2>
-      <div class="fit__field">
-        <textarea name="q3" maxlength="400" rows="4" placeholder="לא צריך לנסח מושלם. כתוב את הדבר הראשון שעולה לך."></textarea>
-        <div class="fit__counter">0 / 400</div>
+  <!-- 5. PROCESS -->
+  <section class="process on-alt" id="process">
+    <div class="wrap wrap-narrow">
+      <div class="reveal">
+        <div class="eyebrow">איך זה נראה בפועל</div>
+        <h2>דרך אישית, עם כיוון ברור.</h2>
+        <p class="lede" style="margin-top:16px;">המסגרת והתדירות נקבעות יחד בהתאם לאדם ולמטרה. בתוך הדרך יש ארבע תנועות מרכזיות:</p>
       </div>
-      <div class="fit__nav">
-        <button type="button" class="fit__btn-back">חזרה</button>
-        <button type="button" class="fit__btn-continue">המשך</button>
-      </div>
-    </section>
 
-    <!-- Q4 -->
-    <section class="fit__step" data-step="q4" data-required="true">
-      <h2 class="fit__q" tabindex="-1">מה אתה מחפש כרגע?</h2>
-      <div class="fit__options" data-max="1">
-        <label class="fit__option"><input type="radio" name="q4" value="q4_1"><span>תהליך אישי שדורש ממני להשתתף ולעבוד</span></label>
-        <label class="fit__option"><input type="radio" name="q4" value="q4_2"><span>כלים פרקטיים ותרגול במציאות</span></label>
-        <label class="fit__option"><input type="radio" name="q4" value="q4_3"><span>מישהו שיגיד לי בדיוק מה לעשות בכל מצב</span></label>
-        <label class="fit__option"><input type="radio" name="q4" value="q4_4"><span>פתרון מהיר או כמה טיפים</span></label>
-        <label class="fit__option"><input type="radio" name="q4" value="q4_5"><span>עדיין לא בטוח</span></label>
+      <div class="process__list reveal">
+        <div class="process__item">
+          <div class="process__num">01</div>
+          <div>
+            <div class="process__title">היכרות ומיפוי</div>
+            <p class="process__body">מבינים מי אתה היום, מה חשוב לך, מה אתה רוצה ומה מחזיק אותך במקום.</p>
+          </div>
+        </div>
+        <div class="process__item">
+          <div class="process__num">02</div>
+          <div>
+            <div class="process__title">בניית כיוון אישי</div>
+            <p class="process__body">מגדירים כיוון שמתאים לך — לא למה שאנשים אחרים מצפים ממך.</p>
+          </div>
+        </div>
+        <div class="process__item">
+          <div class="process__num">03</div>
+          <div>
+            <div class="process__title">עבודה והתנסות</div>
+            <p class="process__body">שיחות עומק, משימות, תקשורת, שפת גוף, התמודדות עם פחד ולעיתים יציאה לתרגול בעולם האמיתי.</p>
+          </div>
+        </div>
+        <div class="process__item">
+          <div class="process__num">04</div>
+          <div>
+            <div class="process__title">משוב והתאמת הדרך</div>
+            <p class="process__body">עוצרים, בודקים מה עובד, לומדים ממה שלא — ומתאימים את התהליך למי שאתה הופך להיות.</p>
+          </div>
+        </div>
       </div>
-      <div class="fit__nav">
-        <button type="button" class="fit__btn-back">חזרה</button>
-        <button type="button" class="fit__btn-continue">המשך</button>
-      </div>
-    </section>
 
-    <!-- Q5 -->
-    <section class="fit__step" data-step="q5" data-required="true">
-      <h2 class="fit__q" tabindex="-1">המפגשים ב&quot;בדרך&quot; מתקיימים פנים מול פנים. איך זה מרגיש לך?</h2>
-      <div class="fit__options" data-max="1">
-        <label class="fit__option"><input type="radio" name="q5" value="q5_1"><span>זה אפילו חשוב לי</span></label>
-        <label class="fit__option"><input type="radio" name="q5" value="q5_2"><span>מתאים לי, אם ארגיש שיש התאמה</span></label>
-        <label class="fit__option"><input type="radio" name="q5" value="q5_3"><span>אני מעדיף תהליך אונליין בלבד</span></label>
+      <div class="faq__list areas__list reveal" style="margin-top:42px;">
+        <details class="faq-item">
+          <summary>שיחות אישיות</summary>
+          <div class="faq-a">מרחב אחד על אחד להסתכל בכנות על זהות, ערכים, החלטות, זוגיות, ביטחון עצמי והחיים עצמם.</div>
+        </details>
+        <details class="faq-item">
+          <summary>התנסות בעולם האמיתי</summary>
+          <div class="faq-a">כשזה מתאים לתהליך, יוצאים לסביבה אמיתית כדי לתרגל נוכחות, תקשורת והתמודדות עם פחד — לא רק לדבר עליהם.</div>
+        </details>
+        <details class="faq-item">
+          <summary>משימות ומשוב</summary>
+          <div class="faq-a">צעדים מעשיים בין המפגשים, הסתכלות על מה שקרה ולמידה שמתחברת לחיים שלך.</div>
+        </details>
+        <details class="faq-item">
+          <summary>ליווי בין המפגשים</summary>
+          <div class="faq-a">במסגרת שנגדיר יחד, אפשר להתייעץ ולשתף גם בין המפגשים כדי שהתהליך לא יישאר רק בתוך החדר.</div>
+        </details>
       </div>
-      <div class="fit__nav">
-        <button type="button" class="fit__btn-back">חזרה</button>
-        <button type="button" class="fit__btn-continue">המשך</button>
-      </div>
-    </section>
+    </div>
+  </section>
 
-    <!-- Q6 -->
-    <section class="fit__step" data-step="q6" data-required="true">
-      <h2 class="fit__q" tabindex="-1">האם אתה מוכן להשקיע בתהליך משמעותי זמן, נוכחות ומשאבים?</h2>
-      <div class="fit__options" data-max="1">
-        <label class="fit__option"><input type="radio" name="q6" value="q6_1"><span>כן, אם אבין שזה מדויק לי</span></label>
-        <label class="fit__option"><input type="radio" name="q6" value="q6_2"><span>אולי, אני צריך לשמוע ולהבין יותר</span></label>
-        <label class="fit__option"><input type="radio" name="q6" value="q6_3"><span>כרגע אני מחפש משהו חינמי או נקודתי</span></label>
+  <!-- 6. FIT & BOUNDARIES -->
+  <section class="who" id="who">
+    <div class="wrap">
+      <div class="reveal">
+        <div class="eyebrow">למי זה מתאים</div>
+        <h2>כנות, לפני שממשיכים.</h2>
+        <p class="lede" style="margin-top:20px;">אני לא מחפש לעבוד עם כמה שיותר אנשים. אני מחפש אנשים שמוכנים להיות כנים עם עצמם, לקחת אחריות ולעשות דרך.</p>
       </div>
-      <div class="fit__nav">
-        <button type="button" class="fit__btn-back">חזרה</button>
-        <button type="button" class="fit__btn-continue" data-action="finish">לסיום</button>
-      </div>
-    </section>
 
-    <!-- RESULT A -->
-    <section class="fit__step fit__result" data-step="result-a">
-      <div class="eyebrow">התוצאה</div>
-      <h2 class="fit__title">תוצאה מתאימה</h2>
-      <p class="fit__lede">נראה שיש בסיס טוב לשיחה. מהתשובות שלך עולה שאתה לא מחפש רק טיפ נקודתי, אלא שינוי שדורש עבודה אמיתית.</p>
-      <div class="fit__nav fit__nav--result">
-        <a href="/" class="fit__btn-continue">להמשיך ולהכיר את הדרך</a>
-      </div>
-      <a href="#" class="fit__skip-link fit__whatsapp-link" data-result="a" target="_blank" rel="noopener">או לשלוח הודעה בוואטסאפ ישירות</a>
-      <button type="button" class="fit__restart-link">למחוק את התשובות ולהתחיל מחדש</button>
-    </section>
+      <div class="who__grid reveal">
+        <div class="who__fit">
+          <ul>
+            <li>מרגיש שיש בו יותר ממה שהוא מצליח להביא לחיים שלו</li>
+            <li>איבד כיוון או עומד מול החלטה משמעותית</li>
+            <li>מוכן לפעול ולא רק לדבר על שינוי</li>
+            <li>מחפש תהליך אישי, לא פתרון קסם</li>
+          </ul>
+        </div>
 
-    <!-- RESULT B -->
-    <section class="fit__step fit__result" data-step="result-b">
-      <div class="eyebrow">התוצאה</div>
-      <h2 class="fit__title">תוצאה לא ודאית</h2>
-      <p class="fit__lede">יכול להיות שיש כאן התאמה, אבל כדאי קודם לדבר ולהבין יותר.</p>
-      <div class="fit__nav fit__nav--result">
-        <a href="/" class="fit__btn-continue">להמשיך ולהכיר את הדרך</a>
+        <div class="boundaries">
+          <h3>חשוב לדעת</h3>
+          <p>הליווי אינו טיפול נפשי, פסיכולוגי או רפואי.</p>
+          <p>אני לא מטפל, לא פסיכולוג ולא פסיכיאטר. אני לא מאבחן ולא מבטיח לרפא כאב, חרדה או טראומה.</p>
+          <p>אם המצב דורש טיפול מקצועי, האחריות שלי היא לומר את זה בכנות ולעזור לכוון לכתובת המתאימה.</p>
+        </div>
       </div>
-      <a href="#" class="fit__skip-link fit__whatsapp-link" data-result="b" target="_blank" rel="noopener">או לשלוח הודעה בוואטסאפ ישירות</a>
-      <button type="button" class="fit__restart-link">למחוק את התשובות ולהתחיל מחדש</button>
-    </section>
+    </div>
+  </section>
 
-    <!-- RESULT C -->
-    <section class="fit__step fit__result" data-step="result-c">
-      <div class="eyebrow">התוצאה</div>
-      <h2 class="fit__title">תוצאה לא מתאימה כרגע</h2>
-      <p class="fit__lede">יכול להיות שזה לא הפורמט הנכון עבורך כרגע — וזה בסדר.</p>
-      <div class="fit__nav fit__nav--result">
-        <a href="/" class="fit__btn-continue">להמשיך ולהכיר את הדרך</a>
+  <!-- 7. FAQ -->
+  <section class="faq on-alt" id="faq">
+    <div class="wrap wrap-narrow">
+      <div class="reveal">
+        <div class="eyebrow">שאלות נפוצות</div>
+        <h2>לפני שיוצאים לדרך.</h2>
       </div>
-      <a href="#" class="fit__skip-link fit__whatsapp-link" data-result="c" target="_blank" rel="noopener">או לשלוח הודעה בוואטסאפ ישירות</a>
-      <button type="button" class="fit__restart-link">למחוק את התשובות ולהתחיל מחדש</button>
-    </section>
+      <div class="faq__list reveal">
+        <details class="faq-item">
+          <summary>זה טיפול פסיכולוגי?</summary>
+          <div class="faq-a">לא. זה ליווי אישי שמחבר בין שיחה, כלים, אחריות והתנסות. כשנדרש טיפול מקצועי, אפנה לגורם המתאים.</div>
+        </details>
+        <details class="faq-item">
+          <summary>איך נראים המפגשים?</summary>
+          <div class="faq-a">המפגשים הם אחד על אחד. חלקם שיחות עומק, חלקם עבודה מעשית ולעיתים גם יציאה לתרגול בעולם האמיתי — בהתאם למה שנכון לתהליך.</div>
+        </details>
+        <details class="faq-item">
+          <summary>כמה זמן נמשך תהליך?</summary>
+          <div class="faq-a">כמה שצריך — זה לא ספרינט, זו דרך, ואין זמן מוגדר מראש שמתאים לכולם. אחרי שיחת ההיכרות נגדיר יחד מסגרת משמעותית, ברורה ומותאמת למטרה שלך.</div>
+        </details>
+        <details class="faq-item">
+          <summary>מה קורה אחרי שאני פונה?</summary>
+          <div class="faq-a">נקיים שיחת היכרות קצרה כדי להבין מה הביא אותך, מה אתה מחפש והאם יש התאמה אמיתית משני הצדדים. בלי לחץ ובלי מכירה אגרסיבית.</div>
+        </details>
+        <details class="faq-item">
+          <summary>מה אם אני לא יודע מה אני רוצה?</summary>
+          <div class="faq-a">זו לא בעיה — זו יכולה להיות נקודת ההתחלה. לא חייבים להגיע עם תשובה; צריך רק נכונות להסתכל בכנות.</div>
+        </details>
+      </div>
+    </div>
+  </section>
 
-  </div>
+  <!-- 8. CLOSING & CONTACT -->
+  <section class="contact" id="contact">
+    <div class="wrap">
+      <div class="eyebrow reveal" style="justify-content:center;">מה אני באמת רוצה שתקבל מהתהליך</div>
+      <h2 class="reveal">שיגיע יום שבו תעצור, תסתכל אחורה ותגיד:<br>“אני גאה באדם שהפכתי להיות.”</h2>
+      <p class="reveal">לא צריך לדעת בדיוק לאן זה הולך. הצעד הראשון הוא רק לבדוק אם נכון לנו לצאת לדרך יחד.</p>
+      <div class="contact__actions reveal">
+        <a href="https://calendly.com/baderech" target="_blank" rel="noopener" class="btn">לקביעת שיחת התאמה</a>
+      </div>
+      <div class="contact__links reveal">
+        <a href="https://wa.me/972505494326?text=%D7%94%D7%99%D7%99%20%D7%99%D7%A8%D7%95%D7%9F%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8" target="_blank" rel="noopener">וואטסאפ — 050-5494326</a>
+        <a href="https://instagram.com/its.pessi" target="_blank" rel="noopener">אינסטגרם — its.pessi</a>
+      </div>
+      <div class="contact__micro reveal">בלי מכירה · בלי לחץ · רק שיחה כנה</div>
+    </div>
+  </section>
+
 </main>
 
-<script src="/fit/fit.js" defer></script>
+<footer>
+  <div class="wrap footer__row">
+    <div class="footer__brand">בדרך<span>.</span></div>
+    <div>הולכים ביחד, לא לפני ולא מאחורי.</div>
+    <div><a href="https://instagram.com/its.pessi" target="_blank" rel="noopener" style="color:inherit;">אינסטגרם</a> · <a href="https://wa.me/972505494326" target="_blank" rel="noopener" style="color:inherit;">וואטסאפ</a></div>
+    <div>© 2026 — עדיין בדרך</div>
+  </div>
+</footer>
+
+<script src="js/script.js" defer></script>
 </body>
 </html>
