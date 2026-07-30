@@ -1,3 +1,22 @@
+// Greeting: a single tap anywhere continues to the site, once per session.
+(function(){
+  var greeting = document.getElementById('greeting');
+  if(!greeting || greeting.style.display === 'none') return;
+
+  function dismiss(){
+    greeting.classList.add('is-leaving');
+    document.documentElement.classList.remove('greeting-active');
+    setTimeout(function(){
+      greeting.style.display = 'none';
+      try{ sessionStorage.setItem('baderech_greeted', '1'); }catch(e){}
+    }, 650);
+  }
+  greeting.addEventListener('click', dismiss);
+  greeting.addEventListener('keydown', function(e){
+    if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); dismiss(); }
+  });
+})();
+
 // Personalized WhatsApp bridge from the fit quiz.
 // If the visitor just came from /fit with a result of "high match" or
 // "turning point", a one-time composed summary is waiting in sessionStorage

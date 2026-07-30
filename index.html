@@ -43,6 +43,30 @@
 </head>
 <body>
 
+<!-- GREETING — a single quiet moment before the site itself. Not a page,
+     not a step: the door opening before the room. Shown once per browser
+     session; a tap anywhere continues to the site underneath. -->
+<div id="greeting" class="greeting" role="button" tabindex="0" aria-label="להמשיך אל בדרך.">
+  <div class="greeting__photo">
+    <img src="images/yaron-hero.jpg" alt="ירון כורע ליד הכלבה שלו על מרפסת, בשעת בין-ערביים">
+  </div>
+  <p class="greeting__sig">— ירון פסי</p>
+  <p class="greeting__hint" aria-hidden="true">להמשיך</p>
+</div>
+<script>
+  // Runs immediately (before paint) so a returning visitor within the same
+  // session never sees a flash of the greeting before it's hidden again.
+  (function(){
+    try{
+      if(sessionStorage.getItem('baderech_greeted')){
+        document.getElementById('greeting').style.display = 'none';
+      } else {
+        document.documentElement.classList.add('greeting-active');
+      }
+    }catch(e){}
+  })();
+</script>
+
 <a class="skip-link" href="#main">דלג לתוכן</a>
 
 <nav class="nav">
@@ -67,7 +91,6 @@
       <div class="hero__actions">
         <a href="https://calendly.com/baderech" target="_blank" rel="noopener" class="textlink">לבדוק אם נכון לנו לצאת לדרך</a>
         <a href="https://wa.me/972505494326?text=%D7%94%D7%99%D7%99%20%D7%99%D7%A8%D7%95%D7%9F%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8" target="_blank" rel="noopener" class="textlink">לשלוח הודעה בוואטסאפ</a>
-        <a href="fit/index.html" class="textlink">בדיקת התאמה אישית — כשתי דקות</a>
       </div>
     </div>
     <div class="hero__scroll">לגלול הלאה</div>
@@ -262,13 +285,15 @@
   <!-- 8. CLOSING & CONTACT -->
   <section class="contact" id="contact">
     <div class="wrap">
-      <div class="eyebrow reveal" style="justify-content:center;">מה אני באמת רוצה שתקבל מהתהליך</div>
+      <div class="eyebrow reveal">מה אני באמת רוצה שתקבל מהתהליך</div>
       <h2 class="reveal">שיגיע יום שבו תעצור, תסתכל אחורה ותגיד:<br>“אני גאה באדם שהפכתי להיות.”</h2>
       <p class="reveal">לא צריך לדעת בדיוק לאן זה הולך. הצעד הראשון הוא רק לבדוק אם נכון לנו לצאת לדרך יחד.</p>
       <div class="contact__actions reveal">
-        <a href="https://calendly.com/baderech" target="_blank" rel="noopener" class="btn">לקביעת שיחת התאמה</a>
+        <a href="/fit" class="btn">בדיקת התאמה קצרה — הצעד הבא</a>
       </div>
+      <p class="contact__micro reveal">כשתי דקות, בלי התחייבות.</p>
       <div class="contact__links reveal">
+        <a href="https://calendly.com/baderech" target="_blank" rel="noopener">לקביעת שיחת התאמה ישירות</a>
         <a href="https://wa.me/972505494326?text=%D7%94%D7%99%D7%99%20%D7%99%D7%A8%D7%95%D7%9F%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8" target="_blank" rel="noopener">וואטסאפ — 050-5494326</a>
         <a href="https://instagram.com/its.pessi" target="_blank" rel="noopener">אינסטגרם — its.pessi</a>
       </div>

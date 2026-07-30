@@ -132,6 +132,15 @@
 }
 .fit__btn-back:hover{ color:var(--ink); }
 
+.fit__btn-secondary{
+  display:inline-flex; align-items:center; justify-content:center;
+  padding:0.8125rem 1.625rem; border-radius:100px;
+  border:1px solid var(--line); text-decoration:none;
+  font-size:0.875rem; color:var(--muted); background:transparent;
+  transition:border-color .25s, color .25s;
+}
+.fit__btn-secondary:hover{ border-color:var(--sage-deep); color:var(--sage-deep); }
+
 /* ---- the single reflection screen (no input, just a thought) ---- */
 .fit__reflect-screen{
   position:relative;
