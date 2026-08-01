@@ -1,0 +1,135 @@
+/* ============================================================
+   research.css — רכיבים חדשים בלבד, בנויים מעל אותם משתני עיצוב
+   מ-css/style.css ואותם רכיבי בסיס מ-fit/fit.css (fit__card,
+   fit__option, fit__nav, fit__btn-continue וכו').
+   ============================================================ */
+
+/* ---------- rating scale (Q2) ---------- */
+.research__scale{ margin-top:24px; }
+
+.research__scale-row{
+  display:flex;
+  gap:10px;
+  justify-content:space-between;
+}
+
+.research__scale-btn{
+  flex:1;
+  aspect-ratio:1;
+  max-width:64px;
+  border:1px solid var(--line);
+  border-radius:14px;
+  background:var(--card);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:1.0625rem;
+  font-weight:500;
+  cursor:pointer;
+  transition:border-color .2s var(--ease), background .2s var(--ease), transform .15s var(--ease);
+}
+
+.research__scale-btn:hover{ border-color:var(--sage); }
+
+.research__scale-btn:focus-visible{
+  outline:2px solid var(--sage-deep);
+  outline-offset:3px;
+}
+
+.research__scale-btn.is-selected{
+  background:var(--sage-deep);
+  border-color:var(--sage-deep);
+  color:#fff;
+  transform:translateY(-2px);
+}
+
+.research__scale-labels{
+  display:flex;
+  justify-content:space-between;
+  margin-top:10px;
+  font-size:0.8125rem;
+  color:var(--muted);
+}
+
+/* ---------- open text (Q3) ---------- */
+.research__textarea-wrap{ margin-top:22px; }
+
+.research__textarea-wrap textarea{
+  width:100%;
+  resize:vertical;
+  min-height:120px;
+  padding:16px 18px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--card);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:1rem;
+  font-weight:300;
+  line-height:1.6;
+}
+
+.research__textarea-wrap textarea:focus-visible{
+  outline:2px solid var(--sage-deep);
+  outline-offset:2px;
+  border-color:var(--sage);
+}
+
+.research__counter{
+  text-align:left;
+  font-size:0.8125rem;
+  color:var(--muted);
+  margin-top:8px;
+}
+
+/* ---------- optional opt-in panel (closing step) ---------- */
+.research__optin{
+  margin-top:30px;
+  padding:20px;
+  border:1px solid var(--line);
+  border-radius:var(--radius);
+  background:var(--bg-alt);
+}
+
+.research__optin-label{
+  font-size:0.9375rem;
+  color:var(--muted);
+  margin:0 0 14px;
+  line-height:1.6;
+}
+
+.research__optin-fields{
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+}
+
+.research__optin-fields input{
+  width:100%;
+  padding:13px 16px;
+  border:1px solid var(--line);
+  border-radius:12px;
+  background:var(--card);
+  color:var(--ink);
+  font-family:var(--sans);
+  font-size:0.9375rem;
+  font-weight:300;
+}
+
+.research__optin-fields input:focus-visible{
+  outline:2px solid var(--sage-deep);
+  outline-offset:2px;
+  border-color:var(--sage);
+}
+
+.research__privacy-note{
+  margin-top:18px;
+  text-align:center;
+  font-size:0.8125rem;
+  color:var(--muted-2);
+}
+
+/* submit button visual "sending" state */
+.fit__btn-continue.is-sending{
+  opacity:0.7;
+  pointer-events:none;
+}
