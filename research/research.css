@@ -128,6 +128,18 @@
   color:var(--muted-2);
 }
 
+/* reassurance message that fades in only if sending takes a couple of seconds */
+.research__sending-hint{
+  margin-top:16px;
+  text-align:center;
+  font-size:0.875rem;
+  color:var(--sage-deep);
+  opacity:0;
+  transition:opacity .4s var(--ease);
+  min-height:1.2em;
+}
+.research__sending-hint.is-visible{ opacity:1; }
+
 /* submit button visual "sending" state */
 .fit__btn-continue.is-sending{
   opacity:0.7;

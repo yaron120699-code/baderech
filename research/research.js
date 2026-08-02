@@ -275,6 +275,41 @@
     }
   }
 
+  // ---------- human-readable labels (so the sheet shows real text, not internal codes) ----------
+  var LABELS = {
+    q1: {
+      q1_single: 'רווק, לא בזוגיות כרגע',
+      q1_recent_breakup: 'יצא לאחרונה מזוגיות ארוכה או מגירושין',
+      q1_relationship: 'בזוגיות, אבל יש דברים שהיה רוצה לשנות בעצמו',
+      q1_transition: 'עובר תקופת שינוי משמעותית',
+      q1_other: 'אחר'
+    },
+    q4: {
+      q4_fitness: 'כושר או בריאות גופנית',
+      q4_therapy: "טיפול פסיכולוגי או קואצ'ינג",
+      q4_style: 'סטייל, לבוש או תדמית',
+      q4_learning: 'קורסים, ספרים או תוכן בנושא',
+      q4_nothing: 'שום דבר עדיין',
+      q4_other: 'משהו אחר'
+    },
+    q5: {
+      q5_none: 'אין פער גדול — די תואם',
+      q5_small: 'יש פער קטן',
+      q5_big: 'יש פער גדול',
+      q5_unsure: 'לא ממש חשב על זה ככה עד עכשיו'
+    }
+  };
+
+  function label(q, val){
+    if(!val) return '';
+    return (LABELS[q] && LABELS[q][val]) || val;
+  }
+
+  function labelList(q, vals){
+    if(!Array.isArray(vals) || !vals.length) return '';
+    return vals.map(function(v){ return label(q, v); }).join('; ');
+  }
+
   // ---------- submission ----------
   function queueLocally(payload){
     try{
@@ -309,11 +344,11 @@
     var payload = {
       id: anonId(),
       submitted_at: new Date().toISOString(),
-      q1: answers.q1 || '',
+      q1: label('q1', answers.q1),
       q2_rating: answers.q2 || '',
       q3_open_text: answers.q3 || '',
-      q4: Array.isArray(answers.q4) ? answers.q4.join('; ') : '',
-      q5: answers.q5 || '',
+      q4: labelList('q4', answers.q4),
+      q5: label('q5', answers.q5),
       optin_name: name,
       optin_contact: contact,
       source: (new URLSearchParams(window.location.search)).get('src') || ''
@@ -323,7 +358,15 @@
     submitBtn.classList.add('is-sending');
     submitBtn.disabled = true;
 
+    var hint = document.getElementById('sendingHint');
+    var hintTimer = setTimeout(function(){
+      hint.textContent = 'עוד רגע, כמעט סיימנו...';
+      hint.classList.add('is-visible');
+    }, 2200);
+
     submitPayload(payload).then(function(){
+      clearTimeout(hintTimer);
+      hint.classList.remove('is-visible');
       clearAnswers();
       answers = {};
       var thanksMsg = document.getElementById('thanksMessage');
