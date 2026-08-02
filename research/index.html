@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>כמה שאלות קצרות — בדרך.</title>
+<meta name="description" content="מחקר קצר ואנונימי. שלוש דקות, בלי מכירה ובלי התחייבות.">
+<meta name="robots" content="noindex">
+<meta name="theme-color" content="#F7F6F1">
+
+<link rel="icon" href="/favicon.ico" sizes="any">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
+<link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- שימוש חוזר במערכת העיצוב הקיימת של fit — אותם משתנים, אותם רכיבי בסיס -->
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/fit/fit.css">
+<link rel="stylesheet" href="/research/research.css">
+</head>
+<body class="fit-page">
+
+<a class="skip-link" href="#researchMain">דלג לתוכן</a>
+
+<header class="fit__topbar">
+  <a href="/" class="fit__brand">בדרך<span>.</span></a>
+</header>
+
+<main id="researchMain" class="fit__shell">
+  <div class="fit__card" id="researchCard">
+
+    <div class="fit__progress" aria-hidden="false">
+      <div class="fit__progress-track"><div class="fit__progress-fill" style="width:0%"></div></div>
+      <div class="fit__progress-label"></div>
+    </div>
+
+    <!-- INTRO -->
+    <section class="fit__step is-active" data-step="intro">
+      <div class="eyebrow">לפני שממשיכים</div>
+      <h1 class="fit__title">כמה שאלות קצרות, בלי לזהות אותך.</h1>
+      <p class="fit__lede">זה לא שאלון התאמה ואנחנו לא מנסים למכור לך כלום. פשוט מנסים להבין מה באמת מעסיק גברים היום — כדי לבנות משהו מדויק יותר. שלוש דקות, אנונימי לגמרי.</p>
+      <div class="fit__nav fit__nav--start">
+        <button type="button" class="fit__btn-continue" data-action="start">מתחילים</button>
+      </div>
+    </section>
+
+    <!-- Q1 -->
+    <section class="fit__step" data-step="q1" data-required="true">
+      <h2 class="fit__q" tabindex="-1">באיזה שלב חיים אתה נמצא כרגע?</h2>
+      <div class="fit__options" data-max="1">
+        <label class="fit__option"><input type="radio" name="q1" value="q1_single"><span>רווק, לא בזוגיות כרגע</span></label>
+        <label class="fit__option"><input type="radio" name="q1" value="q1_recent_breakup"><span>יצאתי לאחרונה מזוגיות ארוכה או מגירושין</span></label>
+        <label class="fit__option"><input type="radio" name="q1" value="q1_relationship"><span>בזוגיות, אבל יש דברים שהייתי רוצה לשנות בעצמי</span></label>
+        <label class="fit__option"><input type="radio" name="q1" value="q1_transition"><span>עובר תקופת שינוי משמעותית (עבודה, מקום מגורים, סגנון חיים)</span></label>
+        <label class="fit__option"><input type="radio" name="q1" value="q1_other"><span>אחר</span></label>
+      </div>
+      <div class="fit__nav">
+        <button type="button" class="fit__btn-back">חזרה</button>
+        <button type="button" class="fit__btn-continue">המשך</button>
+      </div>
+    </section>
+
+    <!-- Q2: rating scale -->
+    <section class="fit__step" data-step="q2" data-required="true">
+      <h2 class="fit__q" tabindex="-1">עד כמה אתה מרגיש שאתה חי את החיים החברתיים והזוגיים שאתה באמת רוצה?</h2>
+      <p class="fit__qhint">אין תשובה נכונה — רק תחושה כנה.</p>
+      <div class="research__scale" data-name="q2" role="radiogroup" aria-label="דירוג מ-1 עד 5">
+        <div class="research__scale-row">
+          <button type="button" class="research__scale-btn" data-value="1">1</button>
+          <button type="button" class="research__scale-btn" data-value="2">2</button>
+          <button type="button" class="research__scale-btn" data-value="3">3</button>
+          <button type="button" class="research__scale-btn" data-value="4">4</button>
+          <button type="button" class="research__scale-btn" data-value="5">5</button>
+        </div>
+        <div class="research__scale-labels">
+          <span>בכלל לא</span>
+          <span>לגמרי</span>
+        </div>
+      </div>
+      <div class="fit__nav">
+        <button type="button" class="fit__btn-back">חזרה</button>
+        <button type="button" class="fit__btn-continue">המשך</button>
+      </div>
+    </section>
+
+    <!-- REFLECT -->
+    <section class="fit__step fit__reflect-screen" data-step="reflect-1" data-passthrough="true" tabindex="0">
+      <p class="fit__reflect-line">אין כאן תשובה נכונה.</p>
+      <p class="fit__reflect-line fit__reflect-line--soft">רק רוצים להבין נכון יותר מה עובר על גברים היום.</p>
+      <div class="fit__reflect-tap">להמשיך</div>
+      <button type="button" class="fit__reflect-back">חזרה</button>
+    </section>
+
+    <!-- Q3: open text -->
+    <section class="fit__step" data-step="q3" data-required="true">
+      <h2 class="fit__q" tabindex="-1">אם דבר אחד היה יכול להשתנות — בביטחון שלך, בנוכחות שלך, או בקשרים שלך — מה זה היה?</h2>
+      <p class="fit__qhint">בכמה מילים שלך. אין תשובה קצרה או ארוכה מדי.</p>
+      <div class="research__textarea-wrap">
+        <textarea name="q3" maxlength="500" rows="5" placeholder="כתוב כאן..."></textarea>
+        <div class="fit__counter research__counter">0 / 500</div>
+      </div>
+      <div class="fit__nav">
+        <button type="button" class="fit__btn-back">חזרה</button>
+        <button type="button" class="fit__btn-continue">המשך</button>
+      </div>
+    </section>
+
+    <!-- Q4: multi choice -->
+    <section class="fit__step" data-step="q4" data-required="true">
+      <h2 class="fit__q" tabindex="-1">על מה אתה כבר משקיע כסף או זמן, כדי להרגיש יותר טוב עם עצמך?</h2>
+      <p class="fit__qhint">אפשר לבחור עד שתי תשובות.</p>
+      <div class="fit__options" data-max="2">
+        <label class="fit__option"><input type="checkbox" name="q4" value="q4_fitness"><span>כושר או בריאות גופנית</span></label>
+        <label class="fit__option"><input type="checkbox" name="q4" value="q4_therapy"><span>טיפול פסיכולוגי או קואצ'ינג</span></label>
+        <label class="fit__option"><input type="checkbox" name="q4" value="q4_style"><span>סטייל, לבוש או תדמית</span></label>
+        <label class="fit__option"><input type="checkbox" name="q4" value="q4_learning"><span>קורסים, ספרים או תוכן בנושא</span></label>
+        <label class="fit__option"><input type="checkbox" name="q4" value="q4_nothing"><span>שום דבר עדיין — עוד לא התחלתי</span></label>
+        <label class="fit__option"><input type="checkbox" name="q4" value="q4_other"><span>משהו אחר</span></label>
+      </div>
+      <div class="fit__nav">
+        <button type="button" class="fit__btn-back">חזרה</button>
+        <button type="button" class="fit__btn-continue">המשך</button>
+      </div>
+    </section>
+
+    <!-- Q5 -->
+    <section class="fit__step" data-step="q5" data-required="true">
+      <h2 class="fit__q" tabindex="-1">איך היית מתאר את הפער בין איך שאתה נראה כלפי חוץ לבין איך שאתה מרגיש בפנים?</h2>
+      <div class="fit__options" data-max="1">
+        <label class="fit__option"><input type="radio" name="q5" value="q5_none"><span>אין פער גדול — די תואם</span></label>
+        <label class="fit__option"><input type="radio" name="q5" value="q5_small"><span>יש פער קטן</span></label>
+        <label class="fit__option"><input type="radio" name="q5" value="q5_big"><span>יש פער גדול</span></label>
+        <label class="fit__option"><input type="radio" name="q5" value="q5_unsure"><span>לא ממש חשבתי על זה ככה עד עכשיו</span></label>
+      </div>
+      <div class="fit__nav">
+        <button type="button" class="fit__btn-back">חזרה</button>
+        <button type="button" class="fit__btn-continue" data-action="finish">לסיום</button>
+      </div>
+    </section>
+
+    <!-- CLOSING: reflection + optional soft opt-in -->
+    <section class="fit__step" data-step="closing">
+      <div class="eyebrow">תודה</div>
+      <h2 class="fit__title">תודה שחלקת.</h2>
+      <p class="fit__lede" id="closingReflection">הרבה גברים שעונים כאן מתארים בדיוק את אותה תחושה — שהם "נראים בסדר" כלפי חוץ, אבל מרגישים שיש עוד. את זה בדיוק אני מנסה להבין לעומק.</p>
+
+      <div class="research__optin">
+        <p class="research__optin-label">אם בשלב כלשהו תרצה שנדבר על זה — בלי מכירה, סתם שיחה — אפשר להשאיר דרך ליצור קשר. לגמרי אופציונלי.</p>
+        <div class="research__optin-fields">
+          <input type="text" id="optinName" placeholder="שם (אופציונלי)" autocomplete="name">
+          <input type="text" id="optinContact" placeholder="טלפון או אימייל (אופציונלי)" autocomplete="tel">
+        </div>
+      </div>
+
+      <div class="fit__nav fit__nav--result">
+        <button type="button" class="fit__btn-continue" id="submitResearch">לסיום ושליחה</button>
+      </div>
+      <p class="research__privacy-note">התשובות נשמרות באופן אנונימי, ולא משויכות אליך אלא אם תבחר להשאיר פרטי קשר.</p>
+    </section>
+
+    <!-- THANKS -->
+    <section class="fit__step fit__result" data-step="thanks">
+      <div class="eyebrow">זהו</div>
+      <h2 class="fit__title">נשלח. תודה שלקחת חלק.</h2>
+      <p class="fit__lede" id="thanksMessage">אם השארת פרטים — אחזור אליך אישית, בלי לחץ ובלי מכירה.</p>
+      <div class="fit__nav fit__nav--result">
+        <a href="/" class="fit__btn-continue">לחזרה לדף הבית</a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<script src="/research/research.js" defer></script>
+</body>
+</html>
