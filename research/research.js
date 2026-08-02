@@ -9,7 +9,7 @@
      יישמרו רק מקומית (localStorage) כגיבוי, ולא יאבדו — אבל גם
      לא יגיעו אליך.
      ============================================================ */
-  var SUBMIT_ENDPOINT = 'https://script.google.com/macros/s/AKfycbztRAUalK6gcxivCBbPFzGOHvkt7RziRSPjHgxtXGMpl_ZvpRFQ16k3HNrO9ojSGOXz/exec';
+  var SUBMIT_ENDPOINT = https://script.google.com/macros/s/AKfycbxUD-hCW7uz_E2x5xx_E9TetLvUUJUKOz9MjZCM_uilDU96KihyvS0_tC3ZkT_KF25Y7Q/exec
 
   var STORAGE_KEY = 'baderech_research_v1';
   var QUEUE_KEY = 'baderech_research_queue'; // גיבוי מקומי לתשובות שלא נשלחו בהצלחה
