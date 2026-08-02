@@ -9,7 +9,7 @@
      יישמרו רק מקומית (localStorage) כגיבוי, ולא יאבדו — אבל גם
      לא יגיעו אליך.
      ============================================================ */
-  var SUBMIT_ENDPOINT = ''; // <-- הדבק כאן את ה-Web App URL מ-Google Apps Script
+  var SUBMIT_ENDPOINT = ''; //https://script.google.com/macros/s/AKfycbztRAUalK6gcxivCBbPFzGOHvkt7RziRSPjHgxtXGMpl_ZvpRFQ16k3HNrO9ojSGOXz/exec <-- הדבק כאן את ה-Web App URL מ-Google Apps Script
 
   var STORAGE_KEY = 'baderech_research_v1';
   var QUEUE_KEY = 'baderech_research_queue'; // גיבוי מקומי לתשובות שלא נשלחו בהצלחה
