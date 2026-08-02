@@ -121,6 +121,10 @@
   border-color:var(--sage);
 }
 
+.research__optin-fields input[dir="ltr"]{
+  text-align:right; /* keeps it visually anchored with the RTL layout, while typing stays LTR */
+}
+
 .research__privacy-note{
   margin-top:18px;
   text-align:center;

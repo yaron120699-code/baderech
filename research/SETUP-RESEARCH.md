@@ -23,7 +23,8 @@ function doPost(e) {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
   var data = JSON.parse(e.postData.contents);
 
-  sheet.appendRow([
+  var row = sheet.getLastRow() + 1;
+  var values = [
     data.id || '',
     data.submitted_at || '',
     data.q1 || '',
@@ -34,7 +35,12 @@ function doPost(e) {
     data.optin_name || '',
     data.optin_contact || '',
     data.source || ''
-  ]);
+  ];
+
+  // עמודה I (optin_contact) — מוגדרת כטקסט רגיל *לפני* הכתיבה, כדי שמספרי
+  // טלפון עם 0 מוביל לא יומרו למספר ויאבדו את ה-0 (התנהגות ברירת מחדל של Sheets).
+  sheet.getRange(row, 9, 1, 1).setNumberFormat('@');
+  sheet.getRange(row, 1, 1, values.length).setValues([values]);
 
   return ContentService
     .createTextOutput(JSON.stringify({ status: 'ok' }))
