@@ -141,17 +141,84 @@ body{ background:var(--bg); }
 .pb-milestone--empty{ border-style:dashed; background:transparent; }
 .pb-milestone--empty p{ color:var(--muted); }
 
-/* ---------- toolbox ---------- */
-.pb-toolbox{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
-.pb-tool{
-  border:1px solid var(--line); border-radius:var(--radius); padding:22px;
-  background:var(--card);
+/* ---------- domain accordion (toolbox v2) ---------- */
+.pb-legend{
+  display:flex; flex-wrap:wrap; gap:10px 18px;
+  font-family:var(--sans); font-size:0.8125rem; color:var(--muted);
+  margin-bottom:28px; padding:14px 18px;
+  border:1px solid var(--line); border-radius:12px; background:var(--bg-alt);
 }
-.pb-tool h3{ font-family:var(--serif); font-size:1.0625rem; font-weight:400; margin:0 0 6px; color:var(--ink); }
-.pb-tool-status{ font-family:var(--sans); font-size:0.75rem; color:var(--sage-deep); margin:0 0 12px; }
-.pb-tool p{ font-size:0.875rem; color:var(--ink); margin:0 0 8px; line-height:1.55; }
-.pb-tool--empty{ border-style:dashed; }
-.pb-tool--empty .pb-tool-status{ color:var(--muted); }
+.pb-legend b{ color:var(--ink); }
+
+.pb-domain{
+  border:1px solid var(--line); border-radius:var(--radius);
+  background:var(--card); margin-bottom:14px; overflow:hidden;
+}
+.pb-domain[open]{ background:var(--bg-alt); }
+.pb-domain-summary{
+  list-style:none; cursor:pointer;
+  display:flex; align-items:center; justify-content:space-between; gap:12px;
+  padding:20px 26px;
+  font-family:var(--serif); font-size:1.1875rem; color:var(--ink);
+}
+.pb-domain-summary::-webkit-details-marker{ display:none; }
+.pb-domain-summary::after{
+  content:"+"; font-family:var(--sans); font-size:1.25rem; color:var(--sage-deep);
+  transition:transform .25s var(--ease);
+}
+.pb-domain[open] .pb-domain-summary::after{ content:"–"; }
+.pb-domain-summary-meta{ display:flex; align-items:center; gap:10px; }
+.pb-domain-pill{
+  font-family:var(--sans); font-size:0.6875rem; font-weight:700; letter-spacing:0.03em;
+  color:var(--sage-deep); background:var(--sage-pale); padding:3px 10px; border-radius:20px;
+}
+.pb-domain-body{ padding:0 26px 30px; }
+
+.pb-domain-realbox{
+  border-right:3px solid var(--sage-deep); border-radius:0 12px 12px 0;
+  background:var(--card); padding:16px 20px; margin-bottom:26px;
+}
+.pb-domain-realbox-label{ font-family:var(--sans); font-size:0.75rem; font-weight:700; color:var(--sage-deep); margin:0 0 8px; }
+
+.pb-domain-part{ margin-bottom:20px; }
+.pb-domain-part-num{ font-family:var(--sans); font-size:0.75rem; font-weight:700; color:var(--sage-deep); margin:0 0 4px; }
+.pb-domain-part p{ font-size:0.9375rem; color:var(--ink); line-height:1.7; margin:0; }
+.pb-domain-part ul{ margin:6px 0 0; padding-right:20px; }
+.pb-domain-part li{ font-size:0.9375rem; color:var(--ink); line-height:1.65; margin-bottom:4px; }
+
+.pb-tag{
+  display:inline-block; font-family:var(--sans); font-size:0.6875rem; font-weight:700;
+  padding:1px 8px; border-radius:10px; margin:0 3px; white-space:nowrap;
+}
+.pb-tag--research{ background:var(--sage-pale); color:var(--sage-deep); }
+.pb-tag--consensus{ background:var(--bg-alt); color:var(--muted); border:1px solid var(--line); }
+.pb-tag--anecdote{ background:transparent; color:var(--muted); border:1px dashed var(--line); }
+
+.pb-diff{
+  background:var(--bg-alt); border-radius:12px; padding:18px 22px; margin-top:22px;
+}
+.pb-diff-title{ font-family:var(--sans); font-size:0.8125rem; font-weight:700; color:var(--sage-deep); margin:0 0 12px; }
+.pb-diff-row{ font-size:0.9375rem; color:var(--ink); line-height:1.6; margin-bottom:8px; }
+.pb-diff-row:last-child{ margin-bottom:0; }
+
+.pb-experiment{
+  border:1px dashed var(--sage); border-radius:12px; padding:18px 22px; margin-top:16px;
+}
+.pb-experiment-title{ font-family:var(--sans); font-size:0.8125rem; font-weight:700; color:var(--sage-deep); margin:0 0 8px; }
+.pb-experiment p{ font-size:0.9375rem; color:var(--ink); line-height:1.65; margin:0; }
+
+.pb-methodnote{
+  border:1px solid var(--line); border-radius:var(--radius); padding:26px 28px; margin-top:8px;
+}
+.pb-methodnote h3{ font-family:var(--serif); font-size:1.0625rem; font-weight:400; margin:0 0 10px; color:var(--ink); }
+.pb-methodnote p{ font-size:0.875rem; color:var(--muted); line-height:1.65; margin:0 0 14px; }
+.pb-methodnote p:last-child{ margin-bottom:0; }
+
+@media (max-width: 760px){
+  .pb-domain-summary{ padding:16px 18px; font-size:1.0625rem; }
+  .pb-domain-body{ padding:0 18px 24px; }
+}
+
 
 /* ---------- case studies ---------- */
 .pb-case{
