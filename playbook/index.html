@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Playbook — בדרך.</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F7F6F1">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="/css/style.css">
+<link rel="stylesheet" href="/playbook/playbook.css">
+</head>
+<body>
+
+<!--
+  ============================================================
+  איך לערוך את המסמך הזה עם הזמן — תזכורת לעצמך
+  ============================================================
+  זה לא מסמך שנועד להיראות "גמור". הוא נועד להשתנות אחרי כל
+  לקוח, כל תובנה, כל טעות. כמה כללי אצבע:
+
+  1. ספר התובנות (פרק 8, בתחתית): כל תובנה חדשה = עוד <div class="pb-insight">
+     חדש, מודבק לפני הסגירה של pb-insights-list. אין צורך למחוק ישנות.
+
+  2. Case Studies (פרק 6): לכל לקוח חדש — תעתיק את ה-<article class="pb-case">
+     כולו (מ-<article עד </article>), תדביק אחריו, תמלא מחדש.
+
+  3. המתודולוגיה (פרק 2) והבלופרינט לפגישה (פרק 3) הם הכי "יציבים",
+     אבל גם הם לא קדושים — אם לקוח מלמד אותך שסדר השלבים לא נכון,
+     תשנה את הסדר. המסמך הזה משרת אותך, לא להפך.
+
+  4. אחרי כל מפגש אמיתי, שווה לעדכן את ה-Progress Tracker (פרק 7)
+     של הלקוח הרלוונטי — זה מה שהופך את זה מיומן לכלי חיזוי.
+  ============================================================
+-->
+
+<header class="pb-topbar">
+  <a href="/" class="pb-brand">בדרך<span>.</span></a>
+  <span class="pb-topbar-label">Playbook — גרסה 1.0 · מסמך חי</span>
+</header>
+
+<nav class="pb-toc" aria-label="תוכן עניינים">
+  <a href="#philosophy">01 · פילוסופיה</a>
+  <a href="#methodology">02 · מתודולוגיה</a>
+  <a href="#blueprint">03 · בלופרינט לפגישה</a>
+  <a href="#milestones">04 · אבני דרך</a>
+  <a href="#toolbox">05 · Toolbox</a>
+  <a href="#cases">06 · Case Studies</a>
+  <a href="#tracker">07 · Progress Tracker</a>
+  <a href="#insights">08 · ספר התובנות</a>
+</nav>
+
+<main class="pb-main">
+
+  <!-- ============================================================ -->
+  <!-- 01 · PHILOSOPHY -->
+  <!-- ============================================================ -->
+  <section id="philosophy" class="pb-chapter">
+    <div class="pb-chapter-num">01</div>
+    <h1 class="pb-chapter-title">פילוסופיית "בדרך."</h1>
+    <p class="pb-chapter-lede">למה זה בכלל קיים, לפני כל שאלה טכנית אחרת.</p>
+
+    <div class="pb-block">
+      <h2 class="pb-h2">למה "בדרך." קיים</h2>
+      <p class="pb-p">כי הפער הכי כואב הוא לא בין מי שאתה לבין מי שאתה רוצה להיות — הוא בין מי שאתה <em>באמת</em> לבין מה שאתה מראה. רוב האנשים שמגיעים "נראים בסדר". זה בדיוק הבעיה.</p>
+    </div>
+
+    <div class="pb-block">
+      <h2 class="pb-h2">במה אני מאמין</h2>
+      <ul class="pb-principles">
+        <li>אין אשמים — יש רק מה שקורה עכשיו, ומה אפשר לעשות איתו.</li>
+        <li>סקרנות לפני ביטחון. ביטחון שמגיע לפני סקרנות הוא זיוף.</li>
+        <li>העולם הוא המעבדה. חדר, בר, קפה — אני לא מדמה, אני מזמין חיים אמיתיים לקרות.</li>
+        <li>כל אינטראקציה היא מידע — גם זו שנכשלה, גם זו שהייתה מקרית.</li>
+        <li>אם זה לא מגיע ממנו, זה לא יקרה. אני לא בונה עבורו — אני בונה תנאים שבהם הוא בונה בעצמו.</li>
+        <li>חוויות לפני תוצאות. תוצאה בלי חוויה שמזינה אותה היא מזל, לא שינוי.</li>
+        <li>אחריות לפני כלים. כלי ביד מישהו שלא לוקח אחריות הוא עוד תירוץ.</li>
+      </ul>
+      <p class="pb-note">↳ הרשימה הזו לא סגורה. כל עיקרון חדש שמוכיח את עצמו שוב ושוב עם לקוחות שונים — מקומו כאן.</p>
+    </div>
+
+    <div class="pb-block pb-block--split">
+      <div>
+        <h2 class="pb-h2">מה לעולם לא נעשה</h2>
+        <ul class="pb-list">
+          <li>לא מוותרים על מיפוי אמיתי לטובת מהירות.</li>
+          <li>לא מחליפים "הנה מה שעבד אצלי" בהוראה גנרית וריקה.</li>
+          <li>לא נותנים ל"הוא סומך עליי" להחליף את "זה עובד גם בלעדיי" כמדד הצלחה.</li>
+          <li>לא מחליפים חשיפה אמיתית ולא-נשלטת בתרגול מבוים לגמרי.</li>
+        </ul>
+      </div>
+      <div>
+        <h2 class="pb-h2">מה תמיד נעשה</h2>
+        <ul class="pb-list">
+          <li>תמיד מיפוי אמיתי לפני כל דבר אחר, גם אם זה לוקח זמן.</li>
+          <li>כשמופשט פוגש קיר — תמיד עוברים לעדות מוחשית, לא לעוד הסבר.</li>
+          <li>תמיד מבדילים בקול רם בין מה שבשליטתו לבין מזל.</li>
+          <li>תמיד בונים במכוון לקראת זה שהוא לא יצטרך אותי.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 02 · METHODOLOGY -->
+  <!-- ============================================================ -->
+  <section id="methodology" class="pb-chapter">
+    <div class="pb-chapter-num">02</div>
+    <h1 class="pb-chapter-title">המתודולוגיה</h1>
+    <p class="pb-chapter-lede">לא לפי פגישות — לפי מה שבאמת קורה באדם. גרסה נוכחית, מבוססת על לקוחות אמיתיים, לא תיאוריה. הסדר הזה נגזר ממה שכבר קרה בפועל — לא הונח מראש, ולכן הוא יכול וצריך להשתנות כשלקוח הבא מלמד אותי משהו אחר.</p>
+
+    <div class="pb-stages">
+      <div class="pb-stage">
+        <div class="pb-stage-num">1</div>
+        <h3>מיפוי</h3>
+        <p>להבין מי האדם ומה חסר לו, לפני כל בנייה. השלב הכי קל לדלג עליו, והכי יקר לדלג עליו.</p>
+      </div>
+      <div class="pb-stage">
+        <div class="pb-stage-num">2</div>
+        <h3>זהות</h3>
+        <p>ליישר את החוץ עם הפנים. לא תדמית — הופעה שמרגישה שלו.</p>
+      </div>
+      <div class="pb-stage">
+        <div class="pb-stage-num">3</div>
+        <h3>נוכחות</h3>
+        <p>איך הוא תופס מקום בעולם. קרקע, טון, שפה בלי התנצלות.</p>
+      </div>
+      <div class="pb-stage">
+        <div class="pb-stage-num">4</div>
+        <h3>התנסות</h3>
+        <p>העולם האמיתי, לא תרגיל. כאן נבדק אם מה שנבנה מחזיק מחוץ לחדר.</p>
+      </div>
+      <div class="pb-stage">
+        <div class="pb-stage-num">5</div>
+        <h3>עצמאות</h3>
+        <p>המטרה המוצהרת מהיום הראשון: זה עובד גם בלעדיי.</p>
+      </div>
+    </div>
+
+    <div class="pb-block">
+      <h2 class="pb-h2">חוק העבודה שחוזר בכל שלב</h2>
+      <ol class="pb-loop">
+        <li><strong>ראה לפני שאתה בונה.</strong> אל תקבל תשובה כללית — חכה למשהו אמיתי.</li>
+        <li><strong>כשמופשט פוגש קיר, תהיה העדות.</strong> תרגיל, או סיפור אמיתי שלך. לא עוד הסבר.</li>
+        <li><strong>תן לזמן לעבוד.</strong> לא כל שינוי קורה מולך. הפער בין מפגשים הוא חלק מהתהליך.</li>
+        <li><strong>חפש עדות אמיתית מהעולם, ותמיד תעבד אותה אחרי.</strong> ותמיד תבדיל בין שליטה למזל.</li>
+        <li><strong>כל החלטה נבדקת מול שאלה אחת:</strong> זה בונה משהו שמחזיק בלעדיי?</li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 03 · SESSION BLUEPRINT TEMPLATE -->
+  <!-- ============================================================ -->
+  <section id="blueprint" class="pb-chapter">
+    <div class="pb-chapter-num">03</div>
+    <h1 class="pb-chapter-title">בלופרינט קבוע לכל פגישה</h1>
+    <p class="pb-chapter-lede">למלא לפני כל מפגש, לכל לקוח. תעתיק את הבלוק הזה כמו שהוא לכל פגישה חדשה.</p>
+
+    <article class="pb-template">
+      <div class="pb-template-row"><label>לקוח / תאריך</label><div class="pb-fill">_______________</div></div>
+      <div class="pb-template-row"><label>מטרת הפגישה</label><div class="pb-fill">_______________</div></div>
+      <div class="pb-template-row"><label>העיקרון המרכזי</label><div class="pb-fill">_______________</div></div>
+      <div class="pb-template-row"><label>מה אני רוצה שישתנה</label><div class="pb-fill">_______________</div></div>
+      <div class="pb-template-row"><label>מה אני רוצה שהוא יבין</label><div class="pb-fill">_______________</div></div>
+      <div class="pb-template-row"><label>שאלות שאני חייב לשאול</label><div class="pb-fill">_______________</div></div>
+      <div class="pb-template-row"><label>סיפורים שאפשר להשתמש בהם</label><div class="pb-fill">_______________</div></div>
+      <div class="pb-template-row"><label>תרגילים</label><div class="pb-fill">_______________</div></div>
+      <div class="pb-template-row"><label>משימת השבוע</label><div class="pb-fill">_______________</div></div>
+      <div class="pb-template-row"><label>KPI לפגישה הזו</label><div class="pb-fill">_______________</div></div>
+      <div class="pb-template-row pb-template-row--reflect"><label>Reflection (אחרי)</label><div class="pb-fill">_______________</div></div>
+    </article>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 04 · MILESTONES (6-8 SESSIONS) -->
+  <!-- ============================================================ -->
+  <section id="milestones" class="pb-chapter">
+    <div class="pb-chapter-num">04</div>
+    <h1 class="pb-chapter-title">אבני דרך לאורך תהליך</h1>
+    <p class="pb-chapter-lede">לא רשימת נושאים — אבני דרך. טיוטה ראשונה, מבוססת על 3 המפגשים הראשונים עם עידן. מפגשים 4-8 עדיין לא קרו בפועל — מסומנים ככה בכוונה, לא ממולאים בניחוש.</p>
+
+    <div class="pb-milestones">
+      <article class="pb-milestone pb-milestone--validated">
+        <div class="pb-milestone-head"><span class="pb-milestone-tag">מאומת</span><h3>מפגש 1 — מיפוי ואמון</h3></div>
+        <p><strong>למה היא קיימת:</strong> להבין מי האדם באמת, לפני כל בנייה.</p>
+        <p><strong>מה חייב לקרות:</strong> מעבר מסקפטיות לריכוז ואמון. שאלות בסיסיות ("מה אתה רוצה", "מה החסרונות שלך") מקבלות תשובה אמיתית, גם אם זה לוקח זמן.</p>
+        <p><strong>מה אסור שיקרה:</strong> קבלת תשובה כללית כ"מספיק טוב" רק כדי להתקדם.</p>
+        <p><strong>איך יודעים שאפשר להתקדם:</strong> יש תשובה אמיתית אחת לפחות, לא רק כלליות.</p>
+      </article>
+
+      <article class="pb-milestone pb-milestone--validated">
+        <div class="pb-milestone-head"><span class="pb-milestone-tag">מאומת</span><h3>מפגש 2 — זהות ונוכחות</h3></div>
+        <p><strong>למה היא קיימת:</strong> ליישר את החוץ עם הפנים; להתחיל לבנות נוכחות פיזית.</p>
+        <p><strong>מה חייב לקרות:</strong> הופעה שמרגישה שלו. אם רעיון מופשט ("להביא את עצמך מחדש") לא נקלט — מעבר מיידי לדוגמה אישית קונקרטית.</p>
+        <p><strong>מה אסור שיקרה:</strong> להתעקש על ההסבר המופשט אחרי שהוא כבר לא עובד.</p>
+        <p><strong>איך יודעים שאפשר להתקדם:</strong> שינוי מורגש באנרגיה/קרקע, לא רק במראה החיצוני.</p>
+      </article>
+
+      <article class="pb-milestone pb-milestone--validated">
+        <div class="pb-milestone-head"><span class="pb-milestone-tag">מאומת</span><h3>מפגש 3 — נוכחות חברתית</h3></div>
+        <p><strong>למה היא קיימת:</strong> לבדוק נוכחות בסביבה חברתית אמיתית, לא מבוימת.</p>
+        <p><strong>מה חייב לקרות:</strong> אם קורה רגע אמיתי ולא-מבוים (מישהי ניגשת, אינטראקציה ספונטנית) — לעבד אותו אחרי במפורש: מה היה בשליטתו, מה היה מזל.</p>
+        <p><strong>מה אסור שיקרה:</strong> לתת לרגע טוב לעבור ברקע בלי עיבוד — או להיפך, לתת לו לחשוב שהכל היה מזל.</p>
+        <p><strong>איך יודעים שאפשר להתקדם:</strong> שפה פחות מתנצלת; יציבה/טון משתפרים גם בלי הנחיה ישירה.</p>
+      </article>
+
+      <article class="pb-milestone pb-milestone--draft">
+        <div class="pb-milestone-head"><span class="pb-milestone-tag pb-milestone-tag--draft">טיוטה</span><h3>מפגש 4 — התנסות בעולם האמיתי</h3></div>
+        <p><strong>למה היא קיימת (השערה):</strong> הזירה עוברת מהחדר/הרחוב לחיים בפועל שלו (דייטים אמיתיים).</p>
+        <p><strong>מה חייב לקרות (השערה):</strong> לעבוד מתוך הסיפורים שלו עצמו, לא מתיאוריה כללית. לחפש סימני יוזמה עצמאית.</p>
+        <p><strong>מה אסור שיקרה (השערה):</strong> לעבור לטכניקות דייטינג כלליות רק כי הנושא "דייטים".</p>
+        <p><strong>איך יודעים שאפשר להתקדם:</strong> <em>עדיין לא ידוע — ימולא אחרי שהמפגש יקרה בפועל.</em></p>
+      </article>
+
+      <article class="pb-milestone pb-milestone--empty">
+        <div class="pb-milestone-head"><span class="pb-milestone-tag pb-milestone-tag--empty">אין עדיין</span><h3>מפגשים 5–8</h3></div>
+        <p>יתמלאו מתוך מה שבאמת קורה עם עידן ולקוחות הבאים — לא מומצאים מראש. כשיהיה חומר אמיתי, כל מפגש יקבל כאן כרטיס משלו, באותו מבנה.</p>
+      </article>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 05 · TOOLBOX -->
+  <!-- ============================================================ -->
+  <section id="toolbox" class="pb-chapter">
+    <div class="pb-chapter-num">05</div>
+    <h1 class="pb-chapter-title">Toolbox — לפי תחום, לא לפי פגישה</h1>
+    <p class="pb-chapter-lede">שני התחומים הראשונים כבר מבוססים על מה שקרה בפועל. השאר — שלד מוכן למלא, לא תוכן כללי מומצא.</p>
+
+    <div class="pb-toolbox">
+      <article class="pb-tool pb-tool--seeded">
+        <h3>סטייל</h3>
+        <p class="pb-tool-status">מבוסס על ניסיון אמיתי</p>
+        <p><strong>עקרונות:</strong> הופעה שמרגישה שלו, לא תחפושת. הלבוש הוא כלי לנוכחות, לא קישוט.</p>
+        <p><strong>תרגילים:</strong> שופינג מודרך עם דגש על "איך זה מרגיש כשאתה נכנס איתו לחדר", לא רק "איך זה נראה".</p>
+        <p><strong>טעויות נפוצות:</strong> להסביר תיאורטית "למה זה יעבוד" במקום להראות/להדגים אישית כשזה נתקל בהתנגדות.</p>
+      </article>
+
+      <article class="pb-tool pb-tool--seeded">
+        <h3>נוכחות</h3>
+        <p class="pb-tool-status">מבוסס על ניסיון אמיתי</p>
+        <p><strong>עקרונות:</strong> קרקע, טון, איך נכנסים למקום. נמדדת בשפה (מתנצלת מול ישירה) לא רק בשפת גוף.</p>
+        <p><strong>תרגילים:</strong> תשומת לב מכוונת לרגע הכניסה למרחב; זיהוי בזמן אמת של שפה מתנצלת.</p>
+        <p><strong>טעויות נפוצות:</strong> למדוד נוכחות רק לפי תוצאה חיצונית (הצלחה עם מישהי) במקום לפי סימנים פנימיים (טון, יציבה, שפה).</p>
+      </article>
+
+      <article class="pb-tool pb-tool--empty"><h3>שפת גוף</h3><p class="pb-tool-status">שלד — ימולא מניסיון בפועל</p></article>
+      <article class="pb-tool pb-tool--empty"><h3>טקסטינג</h3><p class="pb-tool-status">שלד — ימולא מניסיון בפועל</p></article>
+      <article class="pb-tool pb-tool--empty"><h3>קריאת אנשים</h3><p class="pb-tool-status">שלד — ימולא מניסיון בפועל</p></article>
+      <article class="pb-tool pb-tool--empty"><h3>גבולות</h3><p class="pb-tool-status">שלד — ימולא מניסיון בפועל</p></article>
+      <article class="pb-tool pb-tool--empty"><h3>דייט ראשון</h3><p class="pb-tool-status">שלד — ימולא מניסיון בפועל</p></article>
+      <article class="pb-tool pb-tool--empty"><h3>פחד מדחייה</h3><p class="pb-tool-status">שלד — ימולא מניסיון בפועל</p></article>
+      <article class="pb-tool pb-tool--empty"><h3>אנרגיה</h3><p class="pb-tool-status">שלד — ימולא מניסיון בפועל</p></article>
+      <article class="pb-tool pb-tool--empty"><h3>שיחות</h3><p class="pb-tool-status">שלד — ימולא מניסיון בפועל</p></article>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 06 · CASE STUDIES -->
+  <!-- ============================================================ -->
+  <section id="cases" class="pb-chapter">
+    <div class="pb-chapter-num">06</div>
+    <h1 class="pb-chapter-title">Case Studies</h1>
+    <p class="pb-chapter-lede">תבנית קבועה לכל לקוח. להעתיק את כל הבלוק לכל לקוח חדש.</p>
+
+    <article class="pb-case">
+      <h3 class="pb-case-name">עידן <span class="pb-case-status">בתהליך — עדכני נכון למפגש 3</span></h3>
+      <div class="pb-case-grid">
+        <div><label>לפני</label><p>סקפטי, מתקשה לענות על שאלות בסיסיות על עצמו ("מה אתה רוצה", "מה החסרונות שלך"). לא רואה את עצמו כשווה.</p></div>
+        <div><label>אחרי</label><p><em>עוד לא רלוונטי — התהליך בעיצומו.</em></p></div>
+        <div><label>נקודת מפנה (עד כה)</label><p>תרגיל המראה במפגש 1; הדוגמה האישית (קעקועים) במפגש 2 — שני הרגעים שבהם מופשט הפך למוחשי.</p></div>
+        <div><label>מה עבד</label><p>מעבר מהיר מהסבר תיאורטי לעדות/דוגמה אישית כשנתקל בקיר. חשיפה לרגע חברתי לא-מבוים (בר).</p></div>
+        <div><label>מה לא עבד / עדיין לא</label><p>תפיסות חשיבה מוטעות עדיין נמצאות. פער בין ידע קוגניטיבי לביסוס בגוף.</p></div>
+        <div><label>מה למדתי</label><p>שינוי משמעותי קרה בפער שבין מפגשים, לא רק בתוכם — צריך לכבד את הזמן הזה, לא רק את הזמן המשותף.</p></div>
+      </div>
+    </article>
+
+    <article class="pb-case pb-case--empty">
+      <h3 class="pb-case-name">— הלקוח הבא —</h3>
+      <p class="pb-note">כשיתחיל תהליך חדש, כאן ייכנס case study נוסף, באותו מבנה בדיוק.</p>
+    </article>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 07 · PROGRESS TRACKER -->
+  <!-- ============================================================ -->
+  <section id="tracker" class="pb-chapter">
+    <div class="pb-chapter-num">07</div>
+    <h1 class="pb-chapter-title">Progress Tracker</h1>
+    <p class="pb-chapter-lede">לא לפי הצלחות עם נשים. לפי שמונה ממדים פנימיים. למלא/לעדכן אחרי כל מפגש.</p>
+
+    <div class="pb-tracker">
+      <div class="pb-tracker-client">עידן — נכון למפגש 3</div>
+      <div class="pb-tracker-grid">
+        <div class="pb-tracker-row"><span>אחריות</span><div class="pb-bar"><div class="pb-bar-fill" style="width:55%"></div></div></div>
+        <div class="pb-tracker-row"><span>סקרנות</span><div class="pb-bar"><div class="pb-bar-fill" style="width:60%"></div></div></div>
+        <div class="pb-tracker-row"><span>נוכחות</span><div class="pb-bar"><div class="pb-bar-fill" style="width:65%"></div></div></div>
+        <div class="pb-tracker-row"><span>ביטחון פנימי</span><div class="pb-bar"><div class="pb-bar-fill" style="width:45%"></div></div></div>
+        <div class="pb-tracker-row"><span>יוזמה</span><div class="pb-bar"><div class="pb-bar-fill" style="width:35%"></div></div></div>
+        <div class="pb-tracker-row"><span>התנסויות</span><div class="pb-bar"><div class="pb-bar-fill" style="width:20%"></div></div></div>
+        <div class="pb-tracker-row"><span>עצמאות</span><div class="pb-bar"><div class="pb-bar-fill" style="width:10%"></div></div></div>
+        <div class="pb-tracker-row"><span>מודעות עצמית</span><div class="pb-bar"><div class="pb-bar-fill" style="width:50%"></div></div></div>
+      </div>
+      <p class="pb-note">↳ האומדנים למעלה הם הערכה ראשונית שלך, לא מדע מדויק. הערך שלהם הוא במעקב לאורך זמן (האם זה עולה מפגש אחר מפגש), לא במספר עצמו.</p>
+    </div>
+  </section>
+
+  <!-- ============================================================ -->
+  <!-- 08 · INSIGHT BOOK -->
+  <!-- ============================================================ -->
+  <section id="insights" class="pb-chapter">
+    <div class="pb-chapter-num">08</div>
+    <h1 class="pb-chapter-title">ספר התובנות</h1>
+    <p class="pb-chapter-lede">משפטים, עקרונות, סיפורים — כדי שלא ילכו לאיבוד. להוסיף כאן בכל פעם שמשהו קופץ, גם אם עוד לא ברור מה עושים איתו.</p>
+
+    <div class="pb-insights-list">
+      <div class="pb-insight"><p>מופשט שנתקל בקיר לא נפתר בעוד הסבר — הוא נפתר בעדות. תרגיל, או סיפור אמיתי שלי.</p></div>
+      <div class="pb-insight"><p>שינוי לא קורה רק בחדר. הפער שבין מפגשים הוא חלק מהעבודה, לא הפסקה ממנה.</p></div>
+      <div class="pb-insight"><p>רגע אמיתי ולא-מבוים שווה יותר מכל תרגיל מתוכנן — ותמיד צריך לעבד אותו אחרי, לא להשאיר אותו ברקע.</p></div>
+      <div class="pb-insight"><p>כל רגע טוב חייב להיפרד בקול רם למה שהיה בשליטתו ולמה שהיה מזל — אחרת נלמד השיעור הלא-נכון.</p></div>
+      <div class="pb-insight"><p>השאלה שבודקת כל החלטה: זה בונה משהו שמחזיק בלעדיי?</p></div>
+      <!-- תובנה חדשה? תוסיף כאן div.pb-insight נוסף. -->
+    </div>
+  </section>
+
+</main>
+
+</body>
+</html>
