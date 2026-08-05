@@ -97,6 +97,8 @@
 }
 .fit__nav--start{ justify-content:center; margin-top:30px; }
 .fit__nav--result{ justify-content:center; margin-top:32px; }
+.fit__channel-note{ font-size:0.9062rem; color:var(--muted); margin:24px 0 0; text-align:center; }
+.fit__channel-note a{ color:var(--sage-deep); }
 
 .fit__btn-continue{
   appearance:none; border:none; cursor:pointer;
