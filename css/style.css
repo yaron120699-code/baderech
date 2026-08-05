@@ -59,6 +59,34 @@ html{
     color:var(--sage-deep);
   }
 
+  /* ---------- MOVEMENTS ("איך נראית הדרך?") ---------- */
+  .movements__list{
+    display:flex; flex-direction:column; gap:28px;
+    margin-top:36px;
+  }
+  .movements__item{
+    display:flex; align-items:baseline; gap:22px;
+    padding-bottom:28px; border-bottom:1px solid var(--line);
+  }
+  .movements__item:last-child{ border-bottom:none; padding-bottom:0; }
+  .movements__word{
+    font-family:var(--serif); font-weight:400; font-size:1.75rem;
+    color:var(--sage-deep); flex-shrink:0; min-width:110px;
+  }
+  .movements__desc{
+    font-family:var(--sans); font-weight:300; font-size:1.1875rem;
+    line-height:1.6; color:var(--ink);
+  }
+  .movements__close{
+    font-family:var(--serif); font-size:1.375rem; font-weight:400;
+    line-height:1.55; color:var(--ink);
+    margin-top:44px; max-width:640px;
+  }
+  @media (max-width:640px){
+    .movements__item{ flex-direction:column; gap:8px; }
+    .movements__word{ min-width:0; }
+  }
+
   a{ color:inherit; }
 
   .wrap{
@@ -541,6 +569,25 @@ html{
   }
   details.faq-item[open] summary::after{ transform:rotate(45deg); }
   details.faq-item .faq-a{ padding:0 0 22px 0; color:var(--muted); font-size:1rem; max-width:620px; }
+
+  /* ---------- FEATURE LIST (always-visible bullets, no accordion) ---------- */
+  .feature-list{ display:grid; gap:14px; max-width:760px; }
+  .feature-item{
+    border-radius:14px; background:var(--card);
+    border:1px solid var(--line);
+    padding:22px 26px;
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+  }
+  .feature-item__title{
+    font-family:var(--serif); font-size:1.1875rem; font-weight:500;
+    color:var(--ink); margin-bottom:8px;
+    display:flex; align-items:center; gap:12px;
+  }
+  .feature-item__title::before{
+    content:""; width:6px; height:6px; border-radius:50%;
+    background:var(--sage-deep); flex-shrink:0;
+  }
+  .feature-item__desc{ color:var(--muted); font-size:1rem; max-width:620px; line-height:1.6; }
 
   /* ---------- REFLECT WIDGET ---------- */
   .reflect h2{ font-size:clamp(1.75rem,4.5vw,2.8438rem); max-width:700px; }
