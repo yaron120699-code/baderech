@@ -132,6 +132,14 @@
   color:var(--muted-2);
 }
 
+.research__channel-note{
+  margin-top:22px;
+  text-align:center;
+  font-size:0.9375rem;
+  color:var(--muted);
+}
+.research__channel-note a{ color:var(--sage-deep); }
+
 /* reassurance message that fades in only if sending takes a couple of seconds */
 .research__sending-hint{
   margin-top:16px;

@@ -371,7 +371,7 @@
       answers = {};
       var thanksMsg = document.getElementById('thanksMessage');
       if(contact){
-        thanksMsg.textContent = 'השארת פרטים — אחזור אליך אישית, בלי לחץ.';
+        thanksMsg.textContent = 'השארת פרטים, אחזור אליך אישית, בלי לחץ.';
       } else {
         thanksMsg.textContent = 'התשובות שלך יעזרו לי להבין נכון יותר מה עובר על גברים היום. תודה.';
       }
