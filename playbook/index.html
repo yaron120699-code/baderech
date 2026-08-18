@@ -1,915 +1,2088 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Playbook — בדרך.</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#F7F6F1">
-
+<title>Playbook V2 — בדרך.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F6F1; --paper-2:#FFFEFA; --ink:#1B1A17; --ink-2:#44423C;
+  --ink-3:#7A776E; --rule:#DFDCD2;
+  --slate:#33505E;      /* מבנה: שלבים, מספור */
+  --gate:#3F6B4F;       /* Stage Gate */
+  --danger:#9E3B34;     /* Red Flags */
+  --wash:#EFEDE5;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:'Heebo',system-ui,sans-serif;font-weight:400;
+  font-size:17px;line-height:1.72;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
 
-<link rel="stylesheet" href="/css/style.css">
-<link rel="stylesheet" href="/playbook/playbook.css">
+/* ---------- top bar ---------- */
+.bar{
+  position:sticky;top:0;z-index:40;background:rgba(247,246,241,.92);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);
+}
+.bar .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.brand{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:19px;letter-spacing:-.01em;white-space:nowrap}
+.brand span{color:var(--ink-3);font-weight:400;font-size:14px;margin-inline-start:8px;font-family:'Heebo',sans-serif}
+.hot{margin-inline-start:auto;display:flex;gap:6px}
+.hot a{
+  font-size:13px;color:var(--slate);text-decoration:none;padding:5px 11px;
+  border:1px solid var(--rule);border-radius:2px;background:var(--paper-2);white-space:nowrap;
+}
+.hot a:hover{border-color:var(--slate)}
+.menu{display:none}
+
+/* ---------- hero ---------- */
+.hero{padding:64px 0 40px;border-bottom:1px solid var(--rule)}
+.hero h1{
+  font-family:'Frank Ruhl Libre',serif;font-size:clamp(38px,7vw,62px);
+  line-height:1.05;margin:0 0 6px;font-weight:900;letter-spacing:-.02em;
+}
+.hero .sub{font-family:'Frank Ruhl Libre',serif;font-size:clamp(20px,3vw,26px);color:var(--ink-2);margin:0 0 26px}
+.hero .meta{font-size:13px;color:var(--ink-3);letter-spacing:.04em}
+
+/* the signature: the five-question strip */
+.strip{margin:34px 0 0;border-top:1px solid var(--ink);padding-top:14px}
+.strip .lbl{font-size:12px;letter-spacing:.14em;color:var(--ink-3);margin-bottom:14px}
+.strip ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--rule)}
+.strip li{background:var(--paper);padding:14px 12px 16px}
+.strip .num{font-family:'Frank Ruhl Libre',serif;font-size:13px;color:var(--slate);display:block;margin-bottom:6px}
+.strip .q{font-family:'Frank Ruhl Libre',serif;font-size:16.5px;line-height:1.35;font-weight:500}
+
+/* ---------- layout ---------- */
+.cols{display:grid;grid-template-columns:230px 1fr;gap:56px;align-items:start;padding:44px 0 90px}
+nav.toc{position:sticky;top:82px;font-size:14.5px}
+nav.toc .t{font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin-bottom:12px}
+nav.toc a{display:block;text-decoration:none;color:var(--ink-2);padding:4px 0;border-inline-start:2px solid transparent;padding-inline-start:12px;margin-inline-start:-14px;line-height:1.35}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.on{color:var(--ink);border-color:var(--slate);font-weight:500}
+nav.toc .n{font-family:'Frank Ruhl Libre',serif;color:var(--slate);font-size:12.5px;margin-inline-end:8px}
+
+/* ---------- content ---------- */
+main{min-width:0}
+section{margin-bottom:8px}
+h1{
+  font-family:'Frank Ruhl Libre',serif;font-size:clamp(27px,4.2vw,37px);font-weight:700;
+  line-height:1.15;margin:64px 0 20px;padding-top:20px;border-top:2px solid var(--ink);letter-spacing:-.01em;
+}
+section:first-of-type h1{margin-top:0;border-top:none;padding-top:0}
+h2{font-family:'Frank Ruhl Libre',serif;font-size:23px;font-weight:700;margin:38px 0 12px;line-height:1.25}
+h3{font-size:16px;font-weight:700;margin:26px 0 8px;letter-spacing:.01em}
+h2.h-danger{color:var(--danger)}
+h2.h-danger::before{content:"";display:inline-block;width:9px;height:9px;background:var(--danger);margin-inline-end:10px;vertical-align:middle}
+h2.h-gate{color:var(--gate)}
+h2.h-gate::before{content:"";display:inline-block;width:9px;height:9px;background:var(--gate);margin-inline-end:10px;vertical-align:middle}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 16px;padding-inline-start:22px}
+li{margin-bottom:5px}
+strong{font-weight:700}
+hr{border:none;border-top:1px solid var(--rule);margin:44px 0}
+a{color:var(--slate)}
+
+blockquote{
+  margin:22px 0;padding:16px 20px;background:var(--wash);
+  border-inline-start:3px solid var(--slate);
+}
+blockquote p{margin:0 0 8px;font-family:'Frank Ruhl Libre',serif;font-size:19px;line-height:1.5}
+blockquote p:last-child{margin:0}
+
+.tw{overflow-x:auto;margin:20px 0;border:1px solid var(--rule);background:var(--paper-2)}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:460px}
+th,td{text-align:start;padding:10px 14px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.5}
+th{background:var(--wash);font-weight:500;font-size:13px;letter-spacing:.03em;color:var(--ink-2);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:500}
+
+/* fill-in templates + decision trees */
+pre{
+  direction:ltr;text-align:left;overflow-x:auto;
+  background:var(--paper-2);border:1px dashed #C9C5B8;
+  padding:18px 20px;margin:20px 0;font-size:13.5px;line-height:1.75;
+}
+pre code{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;white-space:pre}
+:not(pre)>code{background:var(--wash);padding:1px 5px;font-size:14px;font-family:ui-monospace,Menlo,monospace}
+
+.top{
+  position:fixed;inset-block-end:20px;inset-inline-start:20px;z-index:30;
+  background:var(--ink);color:var(--paper);text-decoration:none;
+  width:40px;height:40px;display:none;align-items:center;justify-content:center;
+  border-radius:50%;font-size:17px;
+}
+.top.show{display:flex}
+
+@media (max-width:900px){
+  .cols{grid-template-columns:1fr;gap:0;padding-top:28px}
+  nav.toc{position:static;margin-bottom:34px;padding-bottom:24px;border-bottom:1px solid var(--rule)}
+  nav.toc.hidden{display:none}
+  .menu{display:block;margin-inline-start:auto;background:none;border:1px solid var(--rule);
+        border-radius:2px;padding:6px 12px;font-family:inherit;font-size:13px;color:var(--ink-2);cursor:pointer}
+  .hot{display:none}
+  .strip ol{grid-template-columns:1fr;gap:1px}
+  .hero{padding:40px 0 30px}
+}
+@media print{
+  .bar,nav.toc,.top,.strip{display:none}
+  .cols{grid-template-columns:1fr;padding:0}
+  body{font-size:11pt;background:#fff}
+  h1{page-break-before:always;border-top:none}
+  section:first-of-type h1{page-break-before:avoid}
+  .tw,pre,table{page-break-inside:avoid}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
 </head>
 <body>
 
-<!--
-  ============================================================
-  איך לערוך את המסמך הזה עם הזמן — תזכורת לעצמך
-  ============================================================
-  זה לא מסמך שנועד להיראות "גמור". הוא נועד להשתנות אחרי כל
-  לקוח, כל תובנה, כל טעות. כמה כללי אצבע:
+<div class="bar"><div class="wrap">
+  <div class="brand">בַּדֶּרֶךְ.<span>Playbook V2</span></div>
+  <div class="hot">
+    <a href="#sec-00--איך-משתמשים-ב-Playbook">00 · איך משתמשים</a>
+    <a href="#sec-08--Diagnostic-Tools">08 · אבחון</a>
+    <a href="#sec-10--Session-OS">10 · Session OS</a>
+    <a href="#sec-13--Case-Notes-Template">13 · Case Notes</a>
+  </div>
+  <button class="menu" id="menuBtn" aria-expanded="false">תוכן</button>
+</div></div>
 
-  1. ספר התובנות (פרק 8, בתחתית): כל תובנה חדשה = עוד <div class="pb-insight">
-     חדש, מודבק לפני הסגירה של pb-insights-list. אין צורך למחוק ישנות.
+<header class="hero"><div class="wrap">
+  <h1>מערכת הפעלה לליווי</h1>
+  <p class="sub">Playbook V2 · מסמך עבודה פנימי</p>
+  <p class="meta">Stage-based · לא Session-based &nbsp;·&nbsp; גרסה 2.0</p>
 
-  2. Case Studies (פרק 6): לכל לקוח חדש — תעתיק את ה-<article class="pb-case">
-     כולו (מ-<article עד </article>), תדביק אחריו, תמלא מחדש.
+  <div class="strip">
+    <div class="lbl">עשרים דקות לפני מפגש, המסמך הזה עונה על חמש שאלות</div>
+    <ol>
+      <li><span class="num">01</span><span class="q">איפה אנחנו</span></li>
+      <li><span class="num">02</span><span class="q">מה עדיין לא הבנו</span></li>
+      <li><span class="num">03</span><span class="q">מה לבדוק היום</span></li>
+      <li><span class="num">04</span><span class="q">איך נדע מה למדנו</span></li>
+      <li><span class="num">05</span><span class="q">מה צריך לקרות כדי להתקדם או לסיים</span></li>
+    </ol>
+  </div>
+</div></header>
 
-  3. המתודולוגיה (פרק 2) והבלופרינט לפגישה (פרק 3) הם הכי "יציבים",
-     אבל גם הם לא קדושים — אם לקוח מלמד אותך שסדר השלבים לא נכון,
-     תשנה את הסדר. המסמך הזה משרת אותך, לא להפך.
+<div class="wrap cols">
+  <nav class="toc" id="toc">
+    <div class="t">תוכן העניינים</div>
+    <a href="#00--איך-משתמשים-ב-Playbook"><span class="n">00</span>איך משתמשים ב-Playbook</a>
+<a href="#01--Philosophy--DNA"><span class="n">01</span>Philosophy / DNA</a>
+<a href="#02--Process-Map"><span class="n">02</span>Process Map</a>
+<a href="#03--Stage-1-מיפוי"><span class="n">03</span>Stage 1: מיפוי</a>
+<a href="#04--Stage-2-חשיפה"><span class="n">04</span>Stage 2: חשיפה</a>
+<a href="#05--Stage-3-ניסוי"><span class="n">05</span>Stage 3: ניסוי</a>
+<a href="#06--Stage-4-אינטגרציה"><span class="n">06</span>Stage 4: אינטגרציה</a>
+<a href="#07--Stage-5-עצמאות--יציאה"><span class="n">07</span>Stage 5: עצמאות / יציאה</a>
+<a href="#08--Diagnostic-Tools"><span class="n">08</span>Diagnostic Tools</a>
+<a href="#09--Modules"><span class="n">09</span>Modules</a>
+<a href="#10--Session-OS"><span class="n">10</span>Session OS</a>
+<a href="#11--Progress-amp-Independence"><span class="n">11</span>Progress &amp; Independence</a>
+<a href="#12--Exit"><span class="n">12</span>Exit</a>
+<a href="#13--Case-Notes-Template"><span class="n">13</span>Case Notes Template</a>
+<a href="#14--Case-Example-עידן"><span class="n">14</span>Case Example: עידן</a>
+<a href="#15--Audit-של-V1-KEEP--MOVE--REWRITE--REMOVE--MISSING"><span class="n">15</span>Audit של V1: KEEP / MOVE / REWRITE / REMOVE / MISSING</a>
+<a href="#נספח--תחזוקת-ה-Playbook"><span class="n">·</span>תחזוקת ה-Playbook</a>
+<a href="#נספח--הפער-הפתוח-היחיד"><span class="n">·</span>הפער הפתוח היחיד</a>
+  </nav>
+  <main><section></section>
+<section id="sec-בדרך--Playbook-V2"><h1 id="בדרך--Playbook-V2">בדרך. — Playbook V2</h1>
+<h3>מערכת הפעלה לליווי</h3>
+<p>מסמך עבודה פנימי. לא חומר שיווקי. לא ספר רעיונות.</p>
+<p><strong>מבחן ההצלחה של המסמך הזה:</strong> 20 דקות לפני מפגש אני פותח אותו ויוצא עם חמישה דברים —
+איפה אנחנו → מה אנחנו עדיין לא מבינים → מה נכון לבדוק היום → איך נדע מה למדנו → מה צריך לקרות כדי להתקדם או לסיים.</p>
+<p>אם אני נדרש לקרוא יותר מ-3 עמודים כדי להגיע לזה — המסמך נכשל, ולא אני.</p>
+<hr />
+</section>
+<section id="sec-00--איך-משתמשים-ב-Playbook"><h1 id="00--איך-משתמשים-ב-Playbook">00 — איך משתמשים ב-Playbook</h1>
+<p><strong>זה כל מה שצריך לדעת. עמוד אחד.</strong></p>
+<h3>שני צירים, לא אחד</h3>
+<p>בכל רגע בתהליך אני חייב להיות מסוגל לומר <strong>שתי מילים</strong>:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ציר</th>
+<th>השאלה</th>
+<th>איפה זה נמצא</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>A — Stage</strong></td>
+<td>מה אני <em>יודע</em> ומה האדם <em>מחזיק</em></td>
+<td>פרקים 03–07</td>
+</tr>
+<tr>
+<td><strong>B — צוואר בקבוק</strong></td>
+<td>מה אנחנו <em>עובדים עליו</em> עכשיו</td>
+<td>פרק 08</td>
+</tr>
+</tbody>
+</table></div>
+<blockquote>
+<p>"עידן ב-Stage 3, צוואר הבקבוק הוא המשכיות אחרי היכרות."</p>
+</blockquote>
+<p><strong>אם אני לא מצליח להשלים את המשפט הזה — זו המשימה של המפגש הבא. לא כלום אחר.</strong></p>
+<h3>רצף העבודה לפני כל מפגש (10 דקות)</h3>
+<ol>
+<li>פותח את Case Notes של האדם (פרק 13).</li>
+<li>קורא שלוש שורות: Stage נוכחי, צוואר בקבוק, ההשערה הפעילה.</li>
+<li>קורא מה הוא היה אמור לבדוק השבוע — ומה קרה בפועל.</li>
+<li>שואל: <strong>ההשערה עוד מחזיקה?</strong> אם לא — פרק 08, לא פרק 09.</li>
+<li>בוחר מודול/כלי (פרק 09) — <strong>רק אחרי</strong> שהשלב 4 סגור.</li>
+<li>ממלא את התבנית "לפני המפגש" (פרק 10).</li>
+</ol>
+<h3>שלושה כללים שגוברים על כל השאר</h3>
+<ol>
+<li><strong>הכלי נבחר אחרי האבחנה.</strong> לא האבחנה לפי הכלי.</li>
+<li><strong>צוואר בקבוק אחד בכל פעם.</strong> שני צווארים = אין צוואר, יש רשימת נושאים.</li>
+<li><strong>Stage מתקדם רק דרך Stage Gate.</strong> לא לפי מספר מפגשים, לא לפי תחושה טובה במפגש.</li>
+</ol>
+<h3>מה זה <em>לא</em></h3>
+<p>Stage אינו נושא. Module הוא נושא.
+"זהות", "סטייל", "טקסטינג" הם <strong>מודולים</strong> — כלים שמופעלים כשהאבחנה דורשת אותם.
+זו הטעות המבנית המרכזית של V1, וזה התיקון המרכזי של V2.</p>
+<hr />
+</section>
+<section id="sec-01--Philosophy--DNA"><h1 id="01--Philosophy--DNA">01 — Philosophy / DNA</h1>
+<p><strong>עקרונות. לא מבנה. המבנה נמצא בפרקים 02–12.</strong></p>
+<p>הפילוסופיה נשארת כמעט כפי שהיא — היא טובה. מה שהשתנה: היא כבר לא מנסה לתפקד כתהליך.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>אמונת עבודה</th>
+<th>מה זה מחייב אותי לעשות בפועל</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>העולם הוא המעבדה</td>
+<td>לא לסמוך על דיווח בלבד. לייצר או לתפוס עדות מהעולם — פרק 05.</td>
+</tr>
+<tr>
+<td>כל אינטראקציה היא מידע</td>
+<td>גם "כלום לא קרה" הוא נתון. לתעד גם ניסויים שלא בוצעו — הסיבה היא הנתון.</td>
+</tr>
+<tr>
+<td>אם זה לא מגיע ממנו, זה לא יחזיק</td>
+<td>הוא מנסח את התובנה, לא אני. פרק 10, מהלך 5.</td>
+</tr>
+<tr>
+<td>אחריות לפני כלים</td>
+<td>לא לתת טכניקה לאדם שעדיין מחפש אשמים בעולם.</td>
+</tr>
+<tr>
+<td>חוויות לפני תוצאות</td>
+<td>המדד הוא יוזמה ונוכחות, לא "דייט שני".</td>
+</tr>
+<tr>
+<td>סקרנות לפני ביטחון</td>
+<td>גם שלי כלפיו: השערה, לא אבחנה.</td>
+</tr>
+<tr>
+<td>ראה לפני שאתה בונה</td>
+<td>אין מודול בלי עדות.</td>
+</tr>
+<tr>
+<td>כשמופשט פוגש קיר — תהיה העדות</td>
+<td>לא הסבר שני. תרגיל, סיפור אישי, סיטואציה.</td>
+</tr>
+<tr>
+<td>תן לזמן לעבוד</td>
+<td>הפער בין המפגשים הוא הזירה, לא הפסקה.</td>
+</tr>
+<tr>
+<td>הבחן בין שליטה למזל</td>
+<td>בקול רם, בכל רגע טוב <strong>ובכל רגע רע</strong>.</td>
+</tr>
+<tr>
+<td>אין תלות במלווה</td>
+<td>פרק 11 מודד את זה. פרק 12 מסיים בגללו.</td>
+</tr>
+</tbody>
+</table></div>
+<h3>מה לא נעשה</h3>
+<ul>
+<li>לא מוותרים על מיפוי לטובת מהירות.</li>
+<li>לא מחליפים חשיפה אמיתית בתרגול מבוים לגמרי.</li>
+<li>לא מודדים הצלחה ב"הוא סומך עליי".</li>
+<li>לא מקדמים Stage כי עברו X מפגשים.</li>
+<li>לא מפעילים מודול כי הוא "הנושא הבא".</li>
+<li>לא ממשיכים תהליך רק כי תמיד יש עוד מה לשפר.</li>
+</ul>
+<h3>המבחן היחיד לכל החלטה מתודולוגית</h3>
+<blockquote>
+<p><strong>זה בונה משהו שמחזיק בלעדיי?</strong></p>
+</blockquote>
+<hr />
+</section>
+<section id="sec-02--Process-Map"><h1 id="02--Process-Map">02 — Process Map</h1>
+<h2 id="המבנה">המבנה</h2>
+<pre><code>[שער 0]  התאמה ומסגור   →  שער, לא שלב. פעם אחת, בהתחלה.
+   ↓
+[Stage 1]  מיפוי        →  מה הוא אומר על עצמו
+   ↓
+[Stage 2]  חשיפה        →  מה קורה בפועל
+   ↓
+[Stage 3]  ניסוי        →  צוואר בקבוק → השערה → ניסוי → מידע → התאמה   ◄── לופ
+   ↓
+[Stage 4]  אינטגרציה    →  האם זה שלו
+   ↓
+[Stage 5]  עצמאות/יציאה →  Pre-exit → Final → Follow-up
+</code></pre>
+<h2 id="למה-המבנה-הזה-ולא-זה-של-V1">למה המבנה הזה ולא זה של V1</h2>
+<p>V1 בנה חמישה שלבים: מיפוי → זהות → נוכחות → התנסות → עצמאות.
+שלושה מהם (זהות, נוכחות, התנסות) הם <strong>תכנים</strong>, לא מצבי תהליך. לכן V1 לא יכול לענות על "איפה האדם נמצא" — הוא יכול לענות רק על "באיזה נושא נגענו לאחרונה". זה בדיוק הכשל שתיארת.</p>
+<p>ב-V2 כל Stage מוגדר לפי <strong>מצב הידיעה</strong>:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>מה יש לי בסוף השלב</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 מיפוי</td>
+<td>תמונה של הסיפור שהוא מספר + השערה ראשונה</td>
+</tr>
+<tr>
+<td>2 חשיפה</td>
+<td>עדות מהעולם שמאשרת/סותרת את הסיפור</td>
+</tr>
+<tr>
+<td>3 ניסוי</td>
+<td>צוואר בקבוק מזוהה + מידע ממחזורי ניסוי</td>
+</tr>
+<tr>
+<td>4 אינטגרציה</td>
+<td>הוכחה שהיכולת עובדת בלעדיי</td>
+</tr>
+<tr>
+<td>5 יציאה</td>
+<td>סיום מסודר + יכולת שלו לזהות את הצוואר הבא</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="שינויים-מבניים-שהוספתי-ואת-הנימוק">שינויים מבניים שהוספתי (ואת הנימוק)</h2>
+<p><strong>1. שער 0 — התאמה ומסגור.</strong> חסר לגמרי ב-V1.
+מטרתו לענות: האם אני האדם הנכון לזה? מה הוא חושב שהוא קונה? מה אני לא מספק? האם יש כאן משהו שדורש מקצוען אחר (דיכאון, חרדה חברתית משתקת, טראומה, מחשבות פגיעה בעצמו)?
+זהו שער ולא שלב כי הוא נחצה פעם אחת ולא חוזר — אבל אם הוא לא נחצה, כל התהליך נבנה על חול.
+<strong>תוצר:</strong> מסגור בכתב של מה התהליך כן ומה הוא לא + החלטה: ממשיכים / לא מתאים / מפנה החוצה.</p>
+<p><strong>2. "חשיפה" אינה שלב שנסגר — היא מכשיר חוזר.</strong>
+Stage 2 הוא הפעם הראשונה שאני עובר מסיפור לעדות. אבל בכל פעם שהשערה נתקעת ב-Stage 3, אני חוזר לכלי החשיפה. לכן: יש חץ חזרה מ-3 ל-2, ולא מעבר חד-כיווני.</p>
+<p><strong>3. Stage 3 הוא לופ, לא קטע.</strong> רוב התהליך יקרה כאן. זה תקין. מה שלא תקין: להישאר ב-3 יותר מ-4–5 מחזורי ניסוי בלי שהצוואר זז — זה Red Flag (פרק 06).</p>
+<p><strong>4. אין חזרה מ-4 ל-3 שנחשבת כישלון.</strong> אם באינטגרציה מתגלה צוואר בקבוק חדש ואמיתי — חוזרים ל-3 במודול אחר. זו התקדמות, לא רגרסיה. אבל אם חוזרים ל-3 על <strong>אותו</strong> צוואר — האבחנה הייתה שגויה.</p>
+<h2 id="כלל-המעבר">כלל המעבר</h2>
+<p>מעבר Stage דורש שלושה דברים, תמיד:
+1. תשובה לשאלות השלב (לא כללית).
+2. עדות אחת לפחות שאינה דיווח עצמי.
+3. משפט אחד שאני יכול לכתוב ב-Case Notes בלי לגמגם.</p>
+<hr />
+</section>
+<section id="sec-03--Stage-1-מיפוי"><h1 id="03--Stage-1-מיפוי">03 — Stage 1: מיפוי</h1>
+<h2 id="מטרת-השלב">מטרת השלב</h2>
+<p>להבין איפה האדם באמת נמצא — ולנסח השערה ראשונה שאפשר לבדוק. <strong>לא</strong> להתחיל לתקן.</p>
+<h2 id="שאלות-שאני-צריך-לענות-עליהן">שאלות שאני צריך לענות עליהן</h2>
+<ul>
+<li>מה הוא רוצה — ומה הוא רוצה <strong>מתחת</strong> לזה? (זוגיות? להפסיק להרגיש פחות-שווה? שליטה?)</li>
+<li>מה הוא מספר על עצמו, ובאיזה טון?</li>
+<li>מה כבר ניסה, ומה קרה?</li>
+<li>איפה הוא ממקם את הסיבה — בעולם, באחרים, או בעצמו?</li>
+<li>מה הפער חוץ-פנים אצלו ספציפית?</li>
+<li>כמה הוא מוכן לעשות בלעדיי?</li>
+<li><strong>מה ההשערה הראשונה שלי, ומה יפריך אותה?</strong></li>
+</ul>
+<h2 id="סימנים-שאני-מחפש">סימנים שאני מחפש</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>סימן</th>
+<th>מה זה כנראה אומר</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>תשובות כלליות שחוזרות גם אחרי לחיצה עדינה</td>
+<td>אין עוד שפה לעצמו — או שאין אמון עדיין</td>
+</tr>
+<tr>
+<td>כל הסיפורים מסתיימים בגורם חיצוני</td>
+<td>אחריות עדיין לא בפנים; אין להתחיל כלים</td>
+</tr>
+<tr>
+<td>דיבור מדויק ומפורט על אחרים, מעורפל על עצמו</td>
+<td>הבעיה קרובה יותר לזהות מלכישורים</td>
+</tr>
+<tr>
+<td>הוא יודע מה "צריך לעשות" ולא עושה</td>
+<td>הפער אינו ידע. אל תיתן עוד ידע</td>
+</tr>
+<tr>
+<td>מתקן אותי / מסביר לי למה זה לא יעבוד אצלו</td>
+<td>סקפטיות — לא בעיה. חומר גלם</td>
+</tr>
+<tr>
+<td>ביטחון מוגזם בתיאור עצמי</td>
+<td>לא לקבל. לדחוף ל-Stage 2 מהר</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="תרגילים-וכלים-מ-V1">תרגילים וכלים (מ-V1)</h2>
+<ul>
+<li><strong>תרגיל המראה</strong> — עבד עם עידן במפגש 1. הכלי הכי חזק שיש ב-V1 להפיכת מופשט למוחשי.</li>
+<li><strong>שאלות פתיחה קשות:</strong> מה אתה רוצה / מה החסרונות שלך / מתי הרגשת הכי כמוך.</li>
+<li><strong>שאלות זהות (מודול סטייל):</strong> אתה מתלבש למי שאתה או למי שאתה מפחד שיחשבו שאתה?</li>
+<li><strong>הדוגמה האישית שלי</strong> — כשמופשט נתקע. (עידן: קעקועים, מפגש 2.)</li>
+<li><strong>מפת הסיפורים:</strong> 3 סיפורים אמיתיים מהחצי שנה האחרונה — לא דעות.</li>
+</ul>
+<h2 id="ניסויי-עולם-אמיתי">ניסויי עולם אמיתי</h2>
+<ul>
+<li><strong>בייסליין ברחוב</strong> (מ-V1, מודול שפת גוף): 20 דקות בציבור בלי טלפון, בלי לתקן כלום, רק לשים לב. 3 משפטים בסוף.
+  — כאן זה <strong>לא</strong> תרגיל שפת גוף. זה כלי מיפוי: מה הוא מבחין בו לראשונה מלמד אותי איפה תשומת הלב שלו נמצאת.</li>
+<li><strong>תיעוד שבוע:</strong> כל אינטראקציה שהוא נמנע ממנה. בלי לשנות התנהגות. רק רשימה.</li>
+</ul>
+<h2 id="מה-אני-מתעד">מה אני מתעד</h2>
+<ul>
+<li>הסיפור שלו במשפט אחד, <strong>בשפה שלו</strong>.</li>
+<li>מה הוא מבקש מול מה שאני חושד שהוא צריך.</li>
+<li>3 סיטואציות קונקרטיות (לא דעות) לשימוש עתידי.</li>
+<li>ההשערה הראשונה + <strong>מה יפריך אותה</strong>.</li>
+<li>Independence Score בסיסי (פרק 11) — נקודת אפס.</li>
+</ul>
+<h2 class="h-gate" id="Stage-Gate--2">Stage Gate → 2</h2>
+<ul>
+<li>[ ] יש תשובה אמיתית אחת לפחות שאינה כללית.</li>
+<li>[ ] אני יודע לנסח השערה בפורמט: <em>"אני חושד ש-X קורה, ואם זה נכון אני אמור לראות Y."</em></li>
+<li>[ ] הוא מסכים על סיטואציה אחת מהעולם האמיתי שאפשר להסתכל בה.</li>
+<li>[ ] יש מספר בסיסי ב-Independence Score.</li>
+</ul>
+<h2 class="h-danger" id="Red-Flags">Red Flags</h2>
+<ul>
+<li><strong>אני מתחיל לתת כלים כדי להרגיש שהמפגש היה מוצלח.</strong> עצור. זה השלב שהכי קל לדלג עליו והכי יקר.</li>
+<li>שלושה מפגשים ואין אף תשובה קונקרטית → הבעיה כנראה אמון או שהמסגור לא נסגר. חזור לשער 0.</li>
+<li>הוא רוצה שאני אחליט בשבילו מה הוא רוצה → מסמן תלות מהיום הראשון. לתעד.</li>
+<li>סימני מצוקה נפשית משמעותית (דיכאון, חרדה משתקת, מחשבות פגיעה בעצמו) → זה לא הליווי הנכון. להפנות לאיש מקצוע מוסמך, ולא לנהל את זה מכאן. זה לא כישלון של התהליך.</li>
+</ul>
+<hr />
+</section>
+<section id="sec-04--Stage-2-חשיפה"><h1 id="04--Stage-2-חשיפה">04 — Stage 2: חשיפה</h1>
+<h2 id="מטרת-השלב">מטרת השלב</h2>
+<p>לראות אותו בעולם, לא בסיפור. <strong>להפריך או לאמת את ההשערה מ-Stage 1 בעדות שאינה דיווח עצמי.</strong></p>
+<h2 id="שאלות-שאני-צריך-לענות-עליהן">שאלות שאני צריך לענות עליהן</h2>
+<ul>
+<li>מה הפער בין מה שהוא מתאר לבין מה שקורה?</li>
+<li>מה קורה לו בגוף ובשפה כשהוא נכנס למקום?</li>
+<li>מתי בדיוק הוא מפסיק להיות עצמו? (רגע ההיפוך)</li>
+<li>מה מהמצוקה שלו קורה במציאות ומה קורה בראש שלו לפני ואחרי?</li>
+<li><strong>האם הצוואר שחשדתי בו הוא באמת הצוואר?</strong></li>
+</ul>
+<h2 id="סימנים-שאני-מחפש">סימנים שאני מחפש</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>סימן</th>
+<th>פירוש</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>הפער בין הדיווח לעדות גדול</td>
+<td>הסיפור אינו כלי אבחון אצלו. להגדיל את משקל החשיפה בכל התהליך</td>
+</tr>
+<tr>
+<td>הוא משתנה רק כשמישהי מעניינת אותו</td>
+<td>הצוואר אינו כישורים. הוא ויסות/ערך עצמי</td>
+</tr>
+<tr>
+<td>הוא מתפקד מצוין ומדווח שנכשל</td>
+<td>הצוואר הוא פרשנות, לא ביצוע — מודול קריאת אנשים</td>
+</tr>
+<tr>
+<td>רגע אמיתי קרה והוא לא שם לב אליו</td>
+<td>חסר לו מכשיר תצפית. זה עצמו מה שצריך לבנות</td>
+</tr>
+<tr>
+<td>הוא מדווח בדיוק את מה שאני רוצה לשמוע</td>
+<td>חשד. לחפש עדות שאינה תלויה בו</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="תרגילים-וכלים-מ-V1">תרגילים וכלים (מ-V1)</h2>
+<ul>
+<li><strong>חשיפה חברתית לא-מבוימת</strong> (בר/מקום ציבורי, כמו מפגש 3 עם עידן) — עם עיבוד מיד אחרי.</li>
+<li><strong>תצפית מול פרשנות</strong> (מודול קריאת אנשים): שתי עמודות. מה ראית / מה החלטת שזה אומר.</li>
+<li><strong>הפרדת שליטה ממזל</strong> — בקול רם, על כל רגע.</li>
+<li><strong>Audit של נכסים דיגיטליים</strong> (חדש, נדרש): פרופיל, סטוריז, תמונות — פרק 08.</li>
+<li><strong>Audit של 3–5 ההיכרויות האחרונות</strong> (חדש, נדרש): שרשרת ההמשכיות — פרק 08.</li>
+</ul>
+<h2 id="ניסויי-עולם-אמיתי">ניסויי עולם אמיתי</h2>
+<ul>
+<li>לצאת יחד לסביבה אמיתית, ואני <strong>לא מנחה בזמן אמת</strong>. מתערב רק אם משהו נשבר.</li>
+<li>הוא שולח לי ראיה גולמית: צילום מסך של התכתבות, הפרופיל, תיאור עובדתי של דייט (מה נאמר, לא מה הרגשתי).</li>
+<li><strong>מבחן דיסוננס:</strong> אני (או צד שלישי ניטרלי) רואה קודם את הנכס הדיגיטלי ואחר כך את האדם. מה ההפרש?</li>
+</ul>
+<h2 id="מה-אני-מתעד">מה אני מתעד</h2>
+<ul>
+<li><strong>עדות גולמית</strong> בנפרד מפרשנות. שתי רשומות שונות.</li>
+<li>רגע ההיפוך: איפה בדיוק הוא הפסיק להיות עצמו.</li>
+<li>מה ההשערה מ-Stage 1 עמדה או נפלה.</li>
+<li>הצוואר המדויק, בניסוח של שלב בשרשרת — לא כנושא.</li>
+</ul>
+<h2 class="h-gate" id="Stage-Gate--3">Stage Gate → 3</h2>
+<ul>
+<li>[ ] יש לי עדות אחת לפחות שאינה דיווח עצמי.</li>
+<li>[ ] ההשערה הראשונה אושרה, תוקנה או הוחלפה — <strong>בכתב</strong>.</li>
+<li>[ ] אני יכול לנקוב בצוואר הבקבוק <strong>כשלב בשרשרת</strong>, לא כנושא. ("נשבר בין החלפת פרטים להצעה", לא "בעיות תקשורת".)</li>
+<li>[ ] הוא מסכים שזה הצוואר. אם לא — זה עצמו הצוואר.</li>
+</ul>
+<h2 class="h-danger" id="Red-Flags">Red Flags</h2>
+<ul>
+<li>אין דרך לראות עדות → כל התהליך יתבסס על סיפור. לעצור ולפתור את זה קודם.</li>
+<li>הוא מסכים לכל אבחנה שאני מציע → אני שומע הד, לא מידע. לשאול פעם אחת בניסוח הפוך.</li>
+<li>אני נהנה מלהיות צודק בהשערה שלי → סימן שהפסקתי לבדוק.</li>
+<li>הצוואר שמצאתי הוא בדיוק המודול שאני הכי טוב בו → חשד לניגוד עניינים מקצועי. לבדוק פעם נוספת.</li>
+</ul>
+<hr />
+</section>
+<section id="sec-05--Stage-3-ניסוי"><h1 id="05--Stage-3-ניסוי">05 — Stage 3: ניסוי</h1>
+<h2 id="מטרת-השלב">מטרת השלב</h2>
+<p>לצמצם את הצוואר דרך מחזורים קצרים: <strong>מצב → צוואר → השערה → ניסוי → מידע → התאמה.</strong>
+זה השלב הארוך ביותר, ורוב העבודה קורית כאן. זה בסדר.</p>
+<h2 id="שאלות-שאני-צריך-לענות-עליהן">שאלות שאני צריך לענות עליהן</h2>
+<ul>
+<li>מה הניסוי הקטן ביותר שייתן את המידע הגדול ביותר?</li>
+<li>מה יפריך את ההשערה? (אם אין תשובה — זו לא השערה)</li>
+<li>הוא לא עשה את הניסוי — <strong>למה?</strong> (הימנעות / לא ברור / לא רלוונטי / לא היה מצב)</li>
+<li>מה זז בפועל, ומה זז רק בהרגשה?</li>
+<li><strong>האם אנחנו עוד על הצוואר הנכון?</strong> ← לשאול בכל מפגש, בקול רם.</li>
+</ul>
+<h2 id="פורמט-הניסוי-חובה-בלי-חריגים">פורמט הניסוי (חובה, בלי חריגים)</h2>
+<pre><code>השערה:      אני חושד ש______
+תחזית:      אם זה נכון, אני אמור לראות______
+הפרכה:      אם אראה ______ — ההשערה נפלה
+ניסוי:      הוא הולך לעשות ______ עד ______
+מידע חוזר:  הוא מביא ______ (עובדה, לא הרגשה)
+</code></pre>
+<p><strong>ניסוי אחד לשבוע. לא שני ניסויים.</strong> שני ניסויים = לא נדע מה עבד.
+כל ניסויי ה-20–30 דקות מ-V1 (בכל מודול) הם מלאי מוכן. אין צורך להמציא.</p>
+<h2 id="סימנים-שאני-מחפש">סימנים שאני מחפש</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>סימן</th>
+<th>מה עושים</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>הוא עשה את הניסוי בלי תזכורת</td>
+<td>← Action עולה. לשקול Stage 4</td>
+</tr>
+<tr>
+<td>הוא עשה, זה לא עבד, והוא ניסה גרסה אחרת בעצמו</td>
+<td>← זה הסימן הכי חזק בכל התהליך. Reflection</td>
+</tr>
+<tr>
+<td>הוא לא עשה, ומסביר למה זה לא היה מתאים</td>
+<td>← לבדוק: הימנעות או אבחנה נכונה שלו? שתיהן מידע</td>
+</tr>
+<tr>
+<td>הצוואר זז — אבל תוצאות לא</td>
+<td>← תקין. לא לתקן צוואר שזז</td>
+</tr>
+<tr>
+<td>שלושה מחזורים והצוואר לא זז</td>
+<td>← האבחנה שגויה. חזרה ל-Stage 2</td>
+</tr>
+<tr>
+<td>הוא מבצע מושלם ומדווח שלא קרה כלום</td>
+<td>← הצוואר הוא פרשנות/ציפייה, לא ביצוע</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="תרגילים-וכלים">תרגילים וכלים</h2>
+<p><strong>קודם אבחנה, אז מודול.</strong> פרק 08 → פרק 09.
+בפועל: 80% מהניסויים כאן יבואו מ-4–5 מודולים בלבד. זה תקין ורצוי.</p>
+<h2 id="ניסויי-עולם-אמיתי">ניסויי עולם אמיתי</h2>
+<p>לפי המודול (פרק 09). כולם בעלי אותם שלושה מאפיינים:
+1. ניתן לביצוע בשבוע אחד.
+2. מחזיר <strong>עובדה</strong>, לא הרגשה.
+3. המדד הוא היוזמה, לא התוצאה.</p>
+<h2 id="מה-אני-מתעד">מה אני מתעד</h2>
+<ul>
+<li>לוג ניסויים: תאריך / השערה / ניסוי / בוצע? / מה קרה בפועל / מה למדנו.</li>
+<li>מה <strong>הוא</strong> ניסח בעצמו לעומת מה שאני נתתי לו ישירות. שתי עמודות. זה הופך להיות מדד היציאה.</li>
+<li>מספר המחזורים על הצוואר הזה.</li>
+<li>Independence Score מעודכן.</li>
+</ul>
+<h2 class="h-gate" id="Stage-Gate--4">Stage Gate → 4</h2>
+<ul>
+<li>[ ] הצוואר זז — בעדות, לא בהרגשה.</li>
+<li>[ ] הוא ניסח לפחות תובנה אחת מרכזית <strong>בעצמו</strong>, לפני שאני אמרתי אותה.</li>
+<li>[ ] הוא הפעיל וריאציה משלו על ניסוי לפחות פעם אחת.</li>
+<li>[ ] הוא יודע לומר מה הצוואר הנוכחי כשאני שואל.</li>
+<li>[ ] Independence Score ≥ 8 (פרק 11).</li>
+</ul>
+<h2 class="h-danger" id="Red-Flags">Red Flags</h2>
+<ul>
+<li><strong>אני מייצר ניסויים כדי שיהיה תוכן למפגש.</strong> עצור.</li>
+<li>הוא מבצע מצוין רק כשאני מבקש, ואפס בין מפגשים → תלות. ללכת ל-Stage 4 בכוונה ולהוריד מעורבות.</li>
+<li>4–5 מחזורים והצוואר לא זז → אני עובד על הבעיה הלא נכונה. Stage 2.</li>
+<li>אני מסביר במקום לתת עדות → חזרה לכלל: מופשט שנתקע לא נפתר בהסבר שני.</li>
+<li>החרדה שלו עולה מניסוי לניסוי → הניסויים גדולים מדי. לצמק, לא לדחוף.</li>
+</ul>
+<hr />
+</section>
+<section id="sec-06--Stage-4-אינטגרציה"><h1 id="06--Stage-4-אינטגרציה">06 — Stage 4: אינטגרציה</h1>
+<h2 id="מטרת-השלב">מטרת השלב</h2>
+<p>לבדוק אם היכולת הפכה <strong>שלו</strong>. השלב הזה נראה שקט ומרגיש כמו "פחות עבודה" — וזו בדיוק המטרה. אני מוריד מעורבות <strong>בכוונה</strong> ומודד מה נשאר.</p>
+<h2 id="שאלות-שאני-צריך-לענות-עליהן">שאלות שאני צריך לענות עליהן</h2>
+<ul>
+<li>מה הוא עושה כשאני לא מבקש?</li>
+<li>כשמשהו נשבר — מה הוא עושה <strong>לפני</strong> שהוא כותב לי?</li>
+<li>הוא מזהה דפוס חדש בעצמו, שלא דיברנו עליו?</li>
+<li>הוא יודע להצביע על הצוואר <strong>הבא</strong> שלו?</li>
+<li>הוא צריך ממני אישור או פרספקטיבה? (שני דברים שונים לחלוטין)</li>
+</ul>
+<h2 id="סימנים-שאני-מחפש">סימנים שאני מחפש</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>סימן</th>
+<th>קריאה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>הוא מביא למפגש אג'נדה משלו</td>
+<td>אינטגרציה עובדת</td>
+</tr>
+<tr>
+<td>הוא מספר מה עשה <strong>אחרי</strong> שכבר עשה</td>
+<td>לא מחכה לאישור</td>
+</tr>
+<tr>
+<td>הוא מנתח כישלון לבד ומגיע עם מסקנה</td>
+<td>Reflection בשל</td>
+</tr>
+<tr>
+<td>הוא שואל "מה לכתוב לה"</td>
+<td>← תלות. לא לענות. להחזיר שאלה</td>
+</tr>
+<tr>
+<td>הוא מזהה דפוס שאני לא ראיתי</td>
+<td>הסימן הכי טוב שיש</td>
+</tr>
+<tr>
+<td>הכול "מעולה" ואין חומר</td>
+<td>חשד: או שהוא נמנע, או שהתהליך נגמר. לבדוק בעדות</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="תרגילים-וכלים">תרגילים וכלים</h2>
+<ul>
+<li><strong>מפגש שהוא מוביל:</strong> הוא קובע את האג'נדה. אני שואל ולא מציע.</li>
+<li><strong>מבחן ההחזרה:</strong> על כל שאלה מעשית שהוא שואל — אני עונה בשאלה אחת. ומודד כמה פעמים הוא הגיע לתשובה לבד.</li>
+<li><strong>"מה היה קורה בלעדיי":</strong> על סיטואציה מהשבוע — מה היית עושה אם לא היה לי מי לשאול?</li>
+<li><strong>הוא מנסח את הצוואר הבא.</strong> בכתב. במילים שלו.</li>
+<li>מכל מודול שהופעל: הכלי לזיהוי-עצמי, לא הכלי לביצוע. (למשל בטקסטינג: לא "מה לכתוב", אלא "האם זה מי שאני?" לפני שליחה.)</li>
+</ul>
+<h2 id="ניסויי-עולם-אמיתי">ניסויי עולם אמיתי</h2>
+<ul>
+<li><strong>שבועיים בלי משימה ממני.</strong> הוא מדווח מה עשה בעצמו. זה הניסוי.</li>
+<li>הוא בוחר ניסוי בעצמו, מנסח השערה בעצמו, ומביא את המידע.</li>
+<li>סיטואציה שנכשלת — ואני לא מתערב. איך הוא מתאושש, ובתוך כמה זמן.</li>
+</ul>
+<h2 id="מה-אני-מתעד">מה אני מתעד</h2>
+<ul>
+<li>יחס "הוא ניסח" מול "אני נתתי" — לאורך הזמן. <strong>המדד המרכזי של השלב.</strong></li>
+<li>זמן התאוששות אחרי כישלון (בשעות/ימים). מגמה, לא מספר.</li>
+<li>הצוואר הבא בניסוח שלו.</li>
+<li>Independence Score מלא, כולל על מה בדיוק ניקדתי.</li>
+</ul>
+<h2 class="h-gate" id="Stage-Gate--5">Stage Gate → 5</h2>
+<ul>
+<li>[ ] Independence Score ≥ 12, ולפחות שני ממדים ב-3 (פרק 11).</li>
+<li>[ ] לפחות מחזור אחד מלא שהוא ניהל לבד: זיהוי → ניסוי → מסקנה → התאמה.</li>
+<li>[ ] הוא יודע לנקוב בצוואר הבא שלו בלי עזרה.</li>
+<li>[ ] הוא התאושש מכישלון אחד לפחות בלי שאני התערבתי.</li>
+<li>[ ] אני מזהה בעצמי שאני חוזר על דברים שהוא כבר יודע.</li>
+</ul>
+<h2 class="h-danger" id="Red-Flags">Red Flags</h2>
+<ul>
+<li><strong>אני מייצר לו תוכן חדש כדי שהמפגש יורגש מוצלח</strong> → זה הסימן שהתהליך נגמר ואני מאריך אותו. פרק 12.</li>
+<li>הוא מדווח עצמאות ובפועל שולח לי הודעות לפני כל החלטה → הפער הזה הוא הצוואר החדש, וצריך לומר אותו בקול.</li>
+<li>כל התקדמות מותנית בכך שאני "מאמין בו" → תלות רגשית. להוריד מעורבות ולעבוד על זה ישירות.</li>
+<li>צוואר חדש <strong>אמיתי</strong> מתגלה → לחזור ל-Stage 3 מודע ובכתב. לא רגרסיה. אבל לא להיתקע שם.</li>
+</ul>
+<hr />
+</section>
+<section id="sec-07--Stage-5-עצמאות--יציאה"><h1 id="07--Stage-5-עצמאות--יציאה">07 — Stage 5: עצמאות / יציאה</h1>
+<h2 id="מטרת-השלב">מטרת השלב</h2>
+<p>לסיים כך שהוא ממשיך לבד — עם היכולת להבין, לפעול, ללמוד ולזהות את הצוואר הבא בעצמו.
+<strong>המנגנון המלא בפרק 12.</strong> כאן רק המבנה של השלב.</p>
+<h2 id="שאלות-שאני-צריך-לענות-עליהן">שאלות שאני צריך לענות עליהן</h2>
+<ul>
+<li>מה הוא לוקח איתו — במילים שלו, לא שלי?</li>
+<li>מה עוד לא סגור, והאם זה משהו שהוא יכול לסגור לבד?</li>
+<li>מה יקרה בפעם הראשונה שהוא ייכשל אחרי הסיום?</li>
+<li>האם הסיום הזה נכון לו — או נוח לי?</li>
+</ul>
+<h2 id="סימנים-שאני-מחפש">סימנים שאני מחפש</h2>
+<ul>
+<li>הוא מספר על התקדמות שלא הייתי מעורב בה בכלל.</li>
+<li>הוא לא מנסח את השינוי כ"בגללך".</li>
+<li>הוא מדבר על תחומים אחרים בחיים באותם כלים.</li>
+<li>כשמשהו נשבר — הוא מגיע עם ניתוח, לא עם בקשה לפתרון.</li>
+<li><strong>אני משועמם.</strong> זה נתון לגיטימי.</li>
+</ul>
+<h2 id="תרגילים-וכלים">תרגילים וכלים</h2>
+<ul>
+<li>Pre-exit: 1–2 מפגשים בהורדת מעורבות מכוונת (פרק 12).</li>
+<li>מפגש הסיום המובנה (פרק 12).</li>
+<li>"ספר התובנות שלו" — הוא כותב את 5–7 העקרונות שלו במילים שלו. <strong>לא העקרונות של "בדרך.".</strong></li>
+<li><strong>תרחיש הכישלון:</strong> מה תעשה בפעם הראשונה שזה ייפול, בלי לכתוב לי?</li>
+</ul>
+<h2 id="מה-אני-מתעד">מה אני מתעד</h2>
+<ul>
+<li>לפני/אחרי — בעדות ובניסוח שלו.</li>
+<li>מה עבד ומה לא במקרה הזה, כדי לשפר את המערכת (זה חוזר לפרק 15).</li>
+<li>מה השאלה שהוא לוקח איתו.</li>
+<li>תאריך Follow-up.</li>
+</ul>
+<h2 class="h-gate" id="Stage-Gate--סיום">Stage Gate → סיום</h2>
+<p>כל Exit Criteria בפרק 12 מסומנים ✓ — או שיש החלטה מודעת ומתועדת לסיים בכל זאת (חוסר התאמה, תלות, הבעיה אינה שלי).</p>
+<h2 class="h-danger" id="Red-Flags">Red Flags</h2>
+<ul>
+<li>הוא לא רוצה לסיים, ואני מסכים בלי לבדוק למה → תלות. לסיים בכל זאת, בהדרגה.</li>
+<li><strong>אני</strong> לא רוצה לסיים → לבדוק אם זה שיקול מקצועי או כלכלי/אגו. לכתוב את התשובה.</li>
+<li>מסיימים והוא לא מצליח לנסח דבר אחד בעצמו → זה לא סיום, זה נטישה. לחזור ל-Stage 4.</li>
+</ul>
+<hr />
+</section>
+<section id="sec-08--Diagnostic-Tools"><h1 id="08--Diagnostic-Tools">08 — Diagnostic Tools</h1>
+<p><strong>זה הפרק שהיה חסר לגמרי ב-V1. זה הפרק שאני פותח כשאני לא יודע מה לעשות במפגש.</strong></p>
+<h2 id="081--שרשרת-ההמשכיות">08.1 — שרשרת ההמשכיות</h2>
+<p>כל צוואר בקבוק בעולם הדייטינג נמצא בשלב אחד מהשרשרת הזאת. <strong>התפקיד שלי הוא למצוא את החוליה, לא את הנושא.</strong></p>
+<pre><code>0 סביבה      → הוא בכלל נמצא במקומות שבהם קורים דברים?
+1 הזדמנות    → נוצר מפגש/אינטראקציה
+2 עניין ראשוני → משהו קרה מעבר לנימוס
+3 החלפת פרטים → יש ערוץ המשך
+4 תקשורת     → יש שיחה חיה בטקסט
+5 הצעה       → הוא מוביל למשהו קונקרטי
+6 מפגש       → זה קרה בפועל
+7 המשכיות    → יש שני/שלישי
+8 קשר        → משהו נבנה
+9 מה שהוא רוצה באמת → זה מספק אותו?
+</code></pre>
+<h3>איך משתמשים בפועל (10 דקות, בכתב, איתו)</h3>
+<ol>
+<li>לוקחים <strong>3–5 ההיכרויות האחרונות</strong>. בשמות/כינויים, לא בכלליות.</li>
+<li>לכל אחת: <strong>באיזו חוליה זה נגמר?</strong> (מספר, לא סיפור.)</li>
+<li>סופרים. חוליה שחוזרת פעמיים ומעלה = <strong>הצוואר</strong>.</li>
+<li>שואלים על החוליה הזאת בלבד: <strong>מה קרה בפועל בפעם האחרונה?</strong></li>
+</ol>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>היכרות</th>
+<th>איפה הכיר</th>
+<th>נשבר בחוליה</th>
+<th>מה קרה בפועל</th>
+<th>מי הפסיק ליזום</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<h3>כללי קריאה</h3>
+<ul>
+<li>אם השבירה מתפזרת על כל השרשרת → הצוואר אינו בשרשרת. הוא בזהות/ויסות. עבור ל-08.5.</li>
+<li>אם השבירה תמיד בחוליה 5 → הוא לא מוביל. אל תלמד אותו לשוחח יותר טוב.</li>
+<li>אם השבירה תמיד בחוליה 7 → הבעיה אינה יצירת עניין. אל תיגע בסטייל.</li>
+<li>אם <strong>הוא</strong> תמיד זה שהפסיק ליזום → זו לא "התפיידות". זו הימנעות, ויש לקרוא לה בשמה.</li>
+<li>אם השבירה בחוליה 9 (יש הצלחה, מרגיש רע) → 08.4.</li>
+</ul>
+<h2 id="081b--סוג-הצוואר-אותה-חוליה-חמישה-מקורות">08.1b — סוג הצוואר: אותה חוליה, חמישה מקורות</h2>
+<p>מצאתי את החוליה. <strong>זה חצי אבחנה.</strong> אותה חוליה שבורה יכולה לנבוע מחמישה מקורות שונים, וכל אחד דורש התערבות אחרת לגמרי. <strong>הסוג הוא מה שקובע את המודול — לא החוליה.</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>סוג</th>
+<th>מה זה</th>
+<th>השאלה שמבחינה</th>
+<th>ההתערבות</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>1 · נפח / סביבה</strong></td>
+<td>אין מספיק הזדמנויות מלכתחילה</td>
+<td>"כמה אנשים חדשים פגשת בחודש?"</td>
+<td>לשנות את הסביבה, לא את האדם. מודולים: כיוון, חברויות, הרגלים</td>
+</tr>
+<tr>
+<td><strong>2 · מיומנות</strong></td>
+<td>הוא לא יודע איך</td>
+<td>"אם הייתי מדגים לו פעם אחת — הוא היה יודע לחזור על זה?"</td>
+<td>מודול + תרגול + עדות</td>
+</tr>
+<tr>
+<td><strong>3 · ויסות / הימנעות</strong></td>
+<td>הוא יודע בדיוק, ולא עושה</td>
+<td>"מה קורה לך בגוף שנייה לפני?"</td>
+<td>חשיפה מדורגת <strong>ועיבוד</strong>. פחד מדחייה, גבולות</td>
+</tr>
+<tr>
+<td><strong>4 · כיול / פרשנות</strong></td>
+<td>הוא קורא את המצב לא נכון</td>
+<td>"מה ראית, ומה הסקת?" — שתי עמודות</td>
+<td>איסוף עדות + לופ משוב. קריאת אנשים, digital</td>
+</tr>
+<tr>
+<td><strong>5 · מטרה / משמעות</strong></td>
+<td>הוא מצליח וזה לא עוזר</td>
+<td>"נניח שזה יעבוד מושלם — מה ישתנה?"</td>
+<td>לא בשרשרת. 08.4</td>
+</tr>
+</tbody>
+</table></div>
+<h3>טעות האבחנה הנפוצה ביותר</h3>
+<p><strong>ויסות שמתחזה למיומנות.</strong> אדם שאומר "אני לא יודע מה להגיד" כמעט תמיד יודע בדיוק מה להגיד — ולא אומר. אם לימדתי אותו מה להגיד, והוא עדיין לא אומר — <strong>הסוג היה 3, לא 2, וההוראה שנתתי הייתה בזבוז מפגש.</strong></p>
+<p>מבחן ההפרדה: תן לו לנסח בעצמו מה הוא היה אומר. אם הניסוח שלו טוב — זה לא ידע. זה ויסות.</p>
+<h3>כלל כתיבה</h3>
+<p>הצוואר נרשם בתיק <strong>תמיד</strong> כשני מספרים: חוליה + סוג.
+<code>"חוליה 5, סוג 3"</code> — לא "בעיה בהובלה". שני מספרים מובילים למודול אחד; משפט מוביל לשיחה.</p>
+<h2 id="082--Decision-Tree-לא-מכיר-מספיק-אנשים">08.2 — Decision Tree: לא מכיר מספיק אנשים</h2>
+<pre><code>האם הוא נמצא בסביבות שבהם קורים מפגשים?
+├─ לא → זו לא בעיה חברתית. זו בעיית סביבה ולוח שנה.
+│        מודול: הרגלים / כיוון.  ניסוי: אירוע אחד בשבוע. נקודה.
+└─ כן ↓
 
-  4. אחרי כל מפגש אמיתי, שווה לעדכן את ה-Progress Tracker (פרק 7)
-     של הלקוח הרלוונטי — זה מה שהופך את זה מיומן לכלי חיזוי.
-  ============================================================
--->
+האם הוא יוצר אינטראקציות שם?
+├─ לא ↓
+│   מה עוצר?
+│   ├─ פחד מדחייה  → מודול פחד מדחייה. ניסוי: בקשה קטנה שתידחה.
+│   ├─ לא יודע מה להגיד → מודול שיחות. ניסוי: 3 שאלות המשך.
+│   ├─ מרגיש לא שווה → מודול זהות. אין להתחיל בכלים.
+│   ├─ הגוף נועל אותו → מודול נוכחות/אנרגיה. ניסוי: בייסליין.
+│   └─ &quot;לא מעניין אותי לצאת&quot; → לבדוק: אמת או הגנה?
+│        ← השאלה המבחינה: מה היה קורה אם הובטח לך שלא תידחה?
+└─ כן, אבל שום דבר לא מתפתח → זה לא הצוואר הזה. עבור ל-08.3.
+</code></pre>
+<h2 id="083--Decision-Tree-יש-היכרויות-אין-המשכיות">08.3 — Decision Tree: יש היכרויות, אין המשכיות</h2>
+<pre><code>מלא את טבלת 08.1 קודם. ואז:
 
-<header class="pb-topbar">
-  <a href="/" class="pb-brand">בַּדֶּרֶךְ<span>.</span></a>
-  <span class="pb-topbar-label">Playbook — גרסה 1.0 · מסמך חי</span>
-</header>
+נשבר בחוליה 2 (אין עניין ראשוני)?
+├─ הוא לא נקרא נכון → מודול נוכחות / סטייל / שפת גוף
+└─ הוא נקרא נכון אבל אין כימיה → אין צוואר. זה נפח. להגדיל נפח, לא לתקן.
 
-<nav class="pb-toc" aria-label="תוכן עניינים">
-  <a href="#philosophy">01 · פילוסופיה</a>
-  <a href="#methodology">02 · מתודולוגיה</a>
-  <a href="#blueprint">03 · בלופרינט לפגישה</a>
-  <a href="#milestones">04 · אבני דרך</a>
-  <a href="#toolbox">05 · Toolbox</a>
-  <a href="#cases">06 · Case Studies</a>
-  <a href="#tracker">07 · Progress Tracker</a>
-  <a href="#insights">08 · ספר התובנות</a>
-</nav>
+נשבר בחוליה 3–4 (הפרטים נעלמים / השיחה גוועת)?
+├─ הוא כותב אחרת ממי שהוא → מודול טקסטינג
+├─ הוא מחשב תזמונים ומתפרק בהמתנה → הצוואר הוא ויסות, לא טקסטינג
+├─ שיחה אינסופית בלי הצעה → מודול טקסטינג, כלל 3 ההודעות
+└─ הפרופיל/הסטוריז סותרים את מי שפגשו → 08.6 (Audit דיגיטלי)
 
-<main class="pb-main">
+נשבר בחוליה 5 (לא מוביל)?
+├─ מחכה לאות ברור → מודול פחד מדחייה + גבולות
+├─ לא רוצה &quot;להיות זה שלוחץ&quot; → זו הימנעות בתחפושת של נימוס
+└─ מציע במעורפל → ניסוי: הצעה קונקרטית אחת, מקום ושעה
 
-  <!-- ============================================================ -->
-  <!-- 01 · PHILOSOPHY -->
-  <!-- ============================================================ -->
-  <section id="philosophy" class="pb-chapter">
-    <div class="pb-chapter-num">01</div>
-    <h1 class="pb-chapter-title">פילוסופיית "בדרך."</h1>
-    <p class="pb-chapter-lede">למה זה בכלל קיים, לפני כל שאלה טכנית אחרת.</p>
+נשבר בחוליה 6–7 (נפגשו, לא ממשיך)?
+├─ הוא נראה אחרת ממה שהיא ציפתה → 08.6
+├─ הוא לא היה נוכח בדייט → מודול נוכחות / דייט ראשון
+├─ הוא הופך למישהו אחר כשמישהי מעניינת אותו → **זה הצוואר האמיתי.** מודול זהות + ויסות
+└─ הוא פירש אינטראקציה טובה כעניין רומנטי → מודול קריאת אנשים.
+     ניסוי: תצפית מול פרשנות, בכתב, על 3 מקרים.
+</code></pre>
+<h2 id="084--Decision-Tree-יש-הצלחה-אבל-הוא-מרגיש-רע">08.4 — Decision Tree: יש הצלחה אבל הוא מרגיש רע</h2>
+<pre><code>האם התוצאה בכלל מה שהוא רצה?
+├─ לא → הבעיה בהגדרת המטרה. חזרה ל-Stage 1. זה קורה, וזה תקין.
+└─ כן ↓
 
-    <div class="pb-block">
-      <h2 class="pb-h2">למה "בדרך." קיים</h2>
-      <p class="pb-p">אצל רוב הלקוחות הפער האמיתי הוא לא בין מי שהם לבין מי שהם רוצים להיות — הוא בין מי שהם באמת לבין מה שהם מציגים החוצה. רוב מי שמגיע נראה בסדר כלפי חוץ. זה הפער שעליו עובדים.</p>
-    </div>
+מה קורה מיד אחרי הצלחה?
+├─ מחפש את ההצלחה הבאה → צורך באישור. הצלחה לא תרפא את זה.
+│    ← מודול זהות. אין ניסוי דייטינג בשלב הזה.
+├─ מרגיש רמאי → פער חוץ-פנים. משהו נבנה כשכבה, לא כזהות.
+│    ← לבדוק איזה מודול &quot;נלמד&quot; ולא הופנם.
+├─ חרד מהאבדן → ויסות + גבולות
+└─ שמח, ואז ריק → הצוואר אינו דייטינג בכלל.
+     ← לשאול ישירות: מה עוד בחיים שלך מרגיש כך? (מודול כיוון)
+</code></pre>
+<blockquote>
+<p><strong>כלל:</strong> אם הצוואר יצא מהזירה הרומנטית — לומר את זה בקול, במפורש, ולשנות את החוזה של התהליך. לא להמשיך "תהליך דייטינג" על בעיה שאינה דייטינג.</p>
+</blockquote>
+<h2 id="085--Decision-Tree-הוא-עושה-הכול-ושום-דבר-לא-זז">08.5 — Decision Tree: הוא עושה הכול ושום דבר לא זז</h2>
+<p><em>(חסר ב-V1 לחלוטין, ומופיע כמעט בכל תהליך.)</em></p>
+<pre><code>הוא באמת עושה, או מדווח שעושה?
+├─ מדווח בלבד → הצוואר הוא הימנעות. לעבוד על זה ישירות, לא על התוכן.
+└─ באמת עושה ↓
 
-    <div class="pb-block">
-      <h2 class="pb-h2">עקרונות עבודה</h2>
-      <ul class="pb-principles">
-        <li>אין אשמים — יש רק מה שקורה עכשיו, ומה אפשר לעשות איתו.</li>
-        <li>סקרנות לפני ביטחון.</li>
-        <li>העולם הוא המעבדה — לא מדמים, מזמינים חיים אמיתיים לקרות.</li>
-        <li>כל אינטראקציה היא מידע, כולל זו שנכשלה או שהייתה מקרית.</li>
-        <li>אם זה לא מגיע ממנו, זה לא יחזיק. בונים תנאים, לא בונים בשבילו.</li>
-        <li>חוויות לפני תוצאות.</li>
-        <li>אחריות לפני כלים.</li>
-      </ul>
-      <p class="pb-note">↳ הרשימה לא סגורה. עיקרון שמוכיח את עצמו שוב עם לקוחות שונים — מקומו כאן.</p>
-    </div>
+הוא מבצע כטכניקה או מתוך עצמו?
+├─ כטכניקה → זו שכבה. היא לא תחזיק. חזרה למודול זהות.
+└─ מתוך עצמו ↓
 
-    <div class="pb-block pb-block--split">
-      <div>
-        <h2 class="pb-h2">לא נעשה</h2>
-        <ul class="pb-list">
-          <li>לא מוותרים על מיפוי לטובת מהירות.</li>
-          <li>לא מחליפים ניסיון אישי בהוראה גנרית.</li>
-          <li>לא מודדים הצלחה לפי "הוא סומך עליי" — המדד הוא "זה עובד גם בלעדיי".</li>
-          <li>לא מחליפים חשיפה אמיתית בתרגול מבוים לגמרי.</li>
-        </ul>
-      </div>
-      <div>
-        <h2 class="pb-h2">תמיד נעשה</h2>
-        <ul class="pb-list">
-          <li>מיפוי לפני כל דבר אחר, גם אם זה לוקח זמן.</li>
-          <li>כשמופשט פוגש קיר — עוברים לעדות מוחשית, לא לעוד הסבר.</li>
-          <li>מבדילים בקול רם בין שליטה למזל.</li>
-          <li>בונים לקראת זה שהוא לא יצטרך אותי.</li>
-        </ul>
-      </div>
-    </div>
-  </section>
+הציפייה שלו סבירה?
+├─ לא (מצפה לשינוי תוצאות בשבועיים) → למסגר מחדש: המדד הוא יוזמה.
+└─ כן ↓
 
-  <!-- ============================================================ -->
-  <!-- 02 · METHODOLOGY -->
-  <!-- ============================================================ -->
-  <section id="methodology" class="pb-chapter">
-    <div class="pb-chapter-num">02</div>
-    <h1 class="pb-chapter-title">המתודולוגיה</h1>
-    <p class="pb-chapter-lede">לא לפי פגישות — לפי מה שקורה באדם. מבוסס על לקוחות אמיתיים, לא תיאוריה. הסדר נגזר ממה שקרה בפועל, ולכן ישתנה אם לקוח הבא ילמד אחרת.</p>
+→ **האבחנה שלי שגויה.** חזרה ל-Stage 2. לחפש עדות חדשה, לא ניסוי חדש.
+</code></pre>
+<h2 id="086--Audit-נכסים-דיגיטליים-Instagram--פרופיל--סטוריז">08.6 — Audit נכסים דיגיטליים (Instagram / פרופיל / סטוריז)</h2>
+<p><em>(MISSING ב-V1. נדרש ישירות ע"י המקרה של עידן.)</em></p>
+<p><strong>מה זה בודק:</strong> לא "האם הפרופיל יפה". אלא <strong>האם הוא מייצר דיסונס מול האדם שפוגשים.</strong></p>
+<h3>הפרוטוקול</h3>
+<ol>
+<li><strong>מבחן 3 שניות:</strong> צד שלישי רואה 3 שניות מהפרופיל וכותב 3 מילים. משווים למי שהוא באמת.</li>
+<li><strong>מבחן ההפרש:</strong> אני רואה קודם את הפרופיל, ואז את האדם. איפה ההפרש? לאיזה כיוון?</li>
+<li><strong>סטוריז, 7 ימים אחרונים:</strong> לכל סטורי — מה זה מספר עליו? למי זה מכוון? מה זה מבקש?</li>
+<li><strong>ספירה:</strong> כמה מהתוכן משדר <em>מי שהוא</em> מול <em>מה שהוא רוצה שיחשבו</em>.</li>
+<li><strong>מחיקה אחת:</strong> מה הדבר האחד שהיה מוריד את הדיסוננס אם הוא נעלם?</li>
+</ol>
+<h3>דגלים אדומים בפרופיל</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מה רואים</th>
+<th>מה זה מייצר</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>תוכן שמנסה להוכיח סטטוס</td>
+<td>ציפייה שהאדם לא עומד בה</td>
+</tr>
+<tr>
+<td>אפס נוכחות אנושית (רק נופים/חיות/ציטוטים)</td>
+<td>אין ממה לבנות עניין; ההיכרות מתאפסת</td>
+</tr>
+<tr>
+<td>פער גדול בין סטייל בתמונות לסטייל בפועל</td>
+<td>תחושת הטעיה קלה, גם בלי מילים</td>
+</tr>
+<tr>
+<td>הומור/טון שונה לגמרי מהטון בהתכתבות</td>
+<td>חוסר קונגרואנטיות — אותו כשל של "לבצע ביטחון"</td>
+</tr>
+<tr>
+<td>תוכן שמכוון לגברים אחרים</td>
+<td>הקהל שגוי</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>כלל:</strong> ה-Audit הוא כלי חשיפה, לא פרויקט שיפור. מטרתו למצוא <strong>דיסוננס אחד</strong>, לא לעצב מחדש נוכחות דיגיטלית.</p>
+<h2 id="087--כתיבת-השערה-מה-נחשב-ומה-לא">08.7 — כתיבת השערה: מה נחשב ומה לא</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>לא השערה</th>
+<th>השערה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"יש לו בעיות בתקשורת"</td>
+<td>"הוא מאבד מומנטום בין החלפת פרטים להצעה, כי הוא מחכה לאות ודאי"</td>
+</tr>
+<tr>
+<td>"הוא צריך ביטחון"</td>
+<td>"כשהיא מעניינת אותו, הטון שלו נעשה מנומס ומאבד את הישירות"</td>
+</tr>
+<tr>
+<td>"האינסטגרם שלו לא טוב"</td>
+<td>"הפרופיל מבטיח סטטוס, והמפגש מספק אדם שקט — וההפרש קורא כאכזבה"</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>מבחן:</strong> אם אין תשובה ל"מה יפריך את זה" — זו דעה, לא השערה. לא בונים עליה ניסוי.</p>
+<h2 id="088--כלל-בחירת-הצוואר">08.8 — כלל בחירת הצוואר</h2>
+<p>כשיש כמה צווארים מועמדים, בוחרים לפי הסדר הזה:</p>
+<ol>
+<li><strong>מה שנשבר ראשון בשרשרת.</strong> אין טעם לתקן חוליה 7 אם 5 שבורה.</li>
+<li><strong>מה שחוזר על עצמו בעדות</strong>, לא מה שהוא מדבר עליו הכי הרבה.</li>
+<li><strong>מה שהזזה שלו תשנה את כל מה שבא אחריו.</strong></li>
+<li><strong>מה שאפשר לבדוק תוך שבוע.</strong></li>
+</ol>
+<hr />
+</section>
+<section id="sec-09--Modules"><h1 id="09--Modules">09 — Modules</h1>
+<p><strong>ארגז הכלים. מודול אינו מפגש ואינו שלב — הוא כלי שמופעל כשהאבחנה דורשת אותו.</strong></p>
+<p>כל ניסוי כאן קיים כבר ב-V1. אין המצאות חדשות למלא מקום.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מודול</th>
+<th>חתימת הצוואר — מתי מפעילים</th>
+<th>כלים מ-V1</th>
+<th>ניסוי (20–30 דק')</th>
+<th>מתי מכבים</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>זהות</strong></td>
+<td>הוא נעשה מישהו אחר; "לא שווה"; מבצע ולא מרגיש</td>
+<td>תרגיל המראה; שאלות "למי אתה מתלבש"; הדוגמה האישית</td>
+<td>שני פריטים: אחד "בטוח", אחד "רציתי ופחדתי" — לצאת עם שניהם</td>
+<td>הוא בוחר מתוך זהות ולא מתוך פחד</td>
+</tr>
+<tr>
+<td><strong>סטייל</strong></td>
+<td>חוליה 2; ההופעה סותרת את מי שהוא</td>
+<td>שופינג מודרך ("איך זה מרגיש להיכנס איתו"); צילום לפני יציאה; ארון קפסולה</td>
+<td>ניסוי פריט העוצמה</td>
+<td>המראה תואם את הפנים; זמן החלטה בבוקר קטן</td>
+</tr>
+<tr>
+<td><strong>נוכחות / אנרגיה</strong></td>
+<td>הוא לא תופס מקום; שפה מתנצלת; לא נזכר בו</td>
+<td>תשומת לב לרגע הכניסה; זיהוי שפה מתנצלת; חזרה לנשימה</td>
+<td>20 דק' שיחה, טלפון בכיס, מיקוד מוחלט באחר</td>
+<td>נוכחות קורית בלי מחשבה מודעת</td>
+</tr>
+<tr>
+<td><strong>שפת גוף</strong></td>
+<td>הגוף נועל; קונגרואנטיות שבורה</td>
+<td>בניית בייסליין עצמי; Fronting; תרגול בסביבה אמיתית</td>
+<td>בייסליין ברחוב: 20 דק', בלי טלפון, בלי לתקן</td>
+<td>הוא מפסיק לחשוב על זה</td>
+</tr>
+<tr>
+<td><strong>שיחות</strong></td>
+<td>חוליה 4; מונולוג; אין המשך</td>
+<td>שאלות פתוחות + שאלות המשך; הקשבה רפלקטיבית; Labeling</td>
+<td>כלל התור (Sprecher): על כל חשיפה — שאלת המשך</td>
+<td>האחר מדבר יותר ומרגיש מובן</td>
+</tr>
+<tr>
+<td><strong>קריאת אנשים</strong></td>
+<td>פרשנות-יתר או פרשנות-חסר; "חשבתי שהיא מעוניינת"</td>
+<td>תצפית מול פרשנות בשתי עמודות; בדיקת השערה מול הצטברות אותות</td>
+<td>25 דק' בקפה: שתי עמודות, לספור קפיצות למסקנה</td>
+<td>הוא מפריד תצפית מפרשנות בזמן אמת</td>
+</tr>
+<tr>
+<td><strong>טקסטינג</strong></td>
+<td>חוליות 3–5; מומנטום נעלם; חרדת המתנה</td>
+<td>כלל 3 ההודעות; טיוטה + "האם זה מי שאני?"; אי-פרשנות של זמני תגובה</td>
+<td>הודעה אמיתית בלי חישוב תזמון + 30 דק' בלי טלפון</td>
+<td>הוא שולח מה שהתכוון ומתאם בלי דרמה</td>
+</tr>
+<tr>
+<td><strong>דייט ראשון</strong></td>
+<td>חוליה 6–7; "הדייט היה טוב ואז כלום"</td>
+<td>שאלות המשך; קשר עין רך; מקום פנים-אל-פנים; 36 שאלות</td>
+<td>3 שאלות המשך אמיתיות בשיחה עם זר</td>
+<td>הוא נהנה מהמפגש, לא רק מהתוצאה</td>
+</tr>
+<tr>
+<td><strong>פחד מדחייה</strong></td>
+<td>הימנעות; חוליה 5; לא יוזם</td>
+<td>חשיפה מדורגת; "למה?" בעדינות אחרי לא; מבחן אפקט הזרקור</td>
+<td>בקשה קטנה שסביר שתידחה. המטרה: לספוג "לא"</td>
+<td>היוזמה קורית למרות הפחד; התאוששות מהירה</td>
+</tr>
+<tr>
+<td><strong>גבולות</strong></td>
+<td>ריצוי; "כן" שמשמעו "לא"; נבלע בקשרים</td>
+<td>משפטים בגוף ראשון; Yes! No. Yes?; שאלות מכוילות</td>
+<td>"לא" קטן אחד ב-24 שעות, בשיחה אמיתית</td>
+<td>מציב גבול בלי אשמה ובלי תוקפנות</td>
+</tr>
+<tr>
+<td><strong>Instagram / digital</strong></td>
+<td>דיסוננס פרופיל–אדם; חוליות 3–6</td>
+<td>— (חדש: פרק 08.6)</td>
+<td>מבחן 3 שניות + מחיקה אחת</td>
+<td>ההפרש בין הנכס לאדם קטן</td>
+</tr>
+<tr>
+<td><strong>חברויות</strong></td>
+<td>אין סביבה חברתית; בודד גם בהצלחות</td>
+<td>חשיפה חברתית לא-מבוימת + עיבוד</td>
+<td>יזום מפגש אחד עם מישהו קיים</td>
+<td>יש מרחב חברתי שאינו רומנטי</td>
+</tr>
+<tr>
+<td><strong>גוף</strong></td>
+<td>הימנעות פיזית; בושה; אנרגיה נמוכה</td>
+<td>בייסליין; עבודה על קרקע</td>
+<td>— (לפי המקרה)</td>
+<td>הגוף אינו מכשול לנוכחות</td>
+</tr>
+<tr>
+<td><strong>הרגלים</strong></td>
+<td>הכול תלוי במצב רוח; אפס עקביות</td>
+<td>ניסוי שבועי אחד קטן</td>
+<td>הרגל אחד, שבוע, בלי גמישות</td>
+<td>הוא מקיים בלי תזכורת</td>
+</tr>
+<tr>
+<td><strong>כיוון</strong></td>
+<td>"מצליח ומרגיש ריק"; הצוואר יצא מהזירה</td>
+<td>שאלות מכוננות; ספר התובנות שלו</td>
+<td>לכתוב מה הוא רוצה בעוד שנה, בעצמו</td>
+<td>הוא יודע לאן, לא רק ממה</td>
+</tr>
+</tbody>
+</table></div>
+<h3>כללי הפעלה</h3>
+<ul>
+<li><strong>מודול אחד פעיל בכל זמן.</strong> לכל היותר שניים, אם אחד מהם בתחזוקה.</li>
+<li>מודול לא נגמר במפגש. הוא נגמר בעמודת "מתי מכבים".</li>
+<li>אם מודול פעיל שלושה מפגשים ואין תזוזה → זו האבחנה שגויה, לא המודול. פרק 08.5.</li>
+<li>אם אני מגיע למודול לפני שיש השערה בכתב → אני מלמד סילבוס. עצור.</li>
+<li><strong>אם יש לי חוליה ואין לי סוג (08.1b) — אני עוד לא יודע איזה מודול.</strong> חוליה 5 מסוג 2 היא מודול הובלה; חוליה 5 מסוג 3 היא פחד מדחייה. אותה חוליה, שתי עבודות שונות לגמרי.</li>
+</ul>
+<hr />
+</section>
+<section id="sec-10--Session-OS"><h1 id="10--Session-OS">10 — Session OS</h1>
+<h2 id="101--לפני-המפגש">10.1 — לפני המפגש</h2>
+<p><em>(להעתיק לכל מפגש. 8 דקות מילוי.)</em></p>
+<pre><code>אדם:                         תאריך:            מפגש #
 
-    <div class="pb-stages">
-      <div class="pb-stage">
-        <div class="pb-stage-num">1</div>
-        <h3>מיפוי</h3>
-        <p>להבין מי האדם ומה חסר לו, לפני כל בנייה. השלב שהכי קל לדלג עליו, והכי יקר.</p>
-      </div>
-      <div class="pb-stage">
-        <div class="pb-stage-num">2</div>
-        <h3>זהות</h3>
-        <p>יישור החוץ עם הפנים. הופעה שמרגישה לו, לא תדמית.</p>
-      </div>
-      <div class="pb-stage">
-        <div class="pb-stage-num">3</div>
-        <h3>נוכחות</h3>
-        <p>איך הוא תופס מקום. קרקע, טון, שפה בלי התנצלות.</p>
-      </div>
-      <div class="pb-stage">
-        <div class="pb-stage-num">4</div>
-        <h3>התנסות</h3>
-        <p>העולם האמיתי, לא תרגיל. כאן נבדק אם מה שנבנה מחזיק מחוץ לחדר.</p>
-      </div>
-      <div class="pb-stage">
-        <div class="pb-stage-num">5</div>
-        <h3>עצמאות</h3>
-        <p>המטרה מהיום הראשון: זה עובד גם בלעדיי.</p>
-      </div>
-    </div>
+STAGE נוכחי:
+צוואר הבקבוק:
+ההשערה הפעילה:              (השערה / תחזית / מה יפריך)
 
-    <div class="pb-block">
-      <h2 class="pb-h2">חוק העבודה שחוזר בכל שלב</h2>
-      <ol class="pb-loop">
-        <li><strong>ראה לפני שאתה בונה.</strong> לא לקבל תשובה כללית.</li>
-        <li><strong>כשמופשט פוגש קיר, תהיה העדות.</strong> תרגיל או סיפור אמיתי, לא עוד הסבר.</li>
-        <li><strong>תן לזמן לעבוד.</strong> הפער בין מפגשים הוא חלק מהתהליך.</li>
-        <li><strong>חפש עדות אמיתית מהעולם ותעבד אותה אחרי.</strong> תמיד תבדיל בין שליטה למזל.</li>
-        <li><strong>מבחן לכל החלטה:</strong> זה בונה משהו שמחזיק בלעדיי?</li>
-      </ol>
-    </div>
-  </section>
+מה השתנה מאז הפעם הקודמת:
+מה ניסינו:
+מה קרה בפועל:               (עובדות. לא הרגשות)
+מה הוא לא עשה, ולמה:
 
-  <!-- ============================================================ -->
-  <!-- 03 · SESSION BLUEPRINT TEMPLATE -->
-  <!-- ============================================================ -->
-  <section id="blueprint" class="pb-chapter">
-    <div class="pb-chapter-num">03</div>
-    <h1 class="pb-chapter-title">בלופרינט קבוע לכל פגישה</h1>
-    <p class="pb-chapter-lede">למלא לפני כל מפגש, לכל לקוח. תעתיק את הבלוק הזה כמו שהוא לכל פגישה חדשה.</p>
+מה אני רוצה להבין היום:     (שאלה אחת. לא שלוש)
+עדות שאני צריך:             (מה יאשר או יפריך)
+מודול / תרגיל אפשרי:        (אפשרי. לא מתוכנן)
 
-    <article class="pb-template">
-      <div class="pb-template-row"><label>לקוח / תאריך</label><div class="pb-fill">_______________</div></div>
-      <div class="pb-template-row"><label>מטרת הפגישה</label><div class="pb-fill">_______________</div></div>
-      <div class="pb-template-row"><label>העיקרון המרכזי</label><div class="pb-fill">_______________</div></div>
-      <div class="pb-template-row"><label>מה אני רוצה שישתנה</label><div class="pb-fill">_______________</div></div>
-      <div class="pb-template-row"><label>מה אני רוצה שהוא יבין</label><div class="pb-fill">_______________</div></div>
-      <div class="pb-template-row"><label>שאלות שאני חייב לשאול</label><div class="pb-fill">_______________</div></div>
-      <div class="pb-template-row"><label>סיפורים שאפשר להשתמש בהם</label><div class="pb-fill">_______________</div></div>
-      <div class="pb-template-row"><label>תרגילים</label><div class="pb-fill">_______________</div></div>
-      <div class="pb-template-row"><label>משימת השבוע</label><div class="pb-fill">_______________</div></div>
-      <div class="pb-template-row"><label>KPI לפגישה הזו</label><div class="pb-fill">_______________</div></div>
-      <div class="pb-template-row pb-template-row--reflect"><label>Reflection (אחרי)</label><div class="pb-fill">_______________</div></div>
-    </article>
-  </section>
+מה אסור לי להחליט מראש:
+מה אני צפוי להסביר יותר מדי:
+היכן אני עלול להפוך ליועץ:
+</code></pre>
+<h3>על "מה אסור לי להחליט מראש"</h3>
+<p>השדה הזה הוא ההגנה מפני הכשל של V1. שלוש דוגמאות למה ממלאים בו:
+- אסור לי להחליט מראש <strong>שהצוואר לא זז</strong>.
+- אסור לי להחליט מראש <strong>שהוא נמנע</strong> (אולי הוא צדק שהניסוי לא התאים).
+- אסור לי להחליט מראש <strong>שההשערה שלי נכונה</strong> ורק לחפש אישור לה.</p>
+<h2 id="102--במהלך-המפגש-מסגרת-6-המהלכים">10.2 — במהלך המפגש: מסגרת 6 המהלכים</h2>
+<p>הצעת ה-Observe → Ask → Hypothesize → Test → Reflect טובה, אבל היא מפספסת את שני הכשלים האמיתיים: (א) אני מפרש לפני שיש לי עובדות, (ב) <strong>אני</strong> מנסח את התובנה במקומו. לכן:</p>
+<pre><code>1  עדות      →  מה קרה בפועל. עובדות בלבד. אני לא מפרש. (10–15 דק')
+                 &quot;מה אמרת? מה היא אמרה? מה עשית אז?&quot;
 
-  <!-- ============================================================ -->
-  <!-- 04 · MILESTONES (6-8 SESSIONS) -->
-  <!-- ============================================================ -->
-  <section id="milestones" class="pb-chapter">
-    <div class="pb-chapter-num">04</div>
-    <h1 class="pb-chapter-title">אבני דרך לאורך תהליך</h1>
-    <p class="pb-chapter-lede">לא רשימת נושאים — אבני דרך. טיוטה ראשונה, מבוססת על 3 המפגשים הראשונים עם עידן. מפגשים 4-8 עדיין לא קרו בפועל — מסומנים ככה בכוונה, לא ממולאים בניחוש.</p>
+2  הפרדה     →  לפצל: מה ראית / מה החלטת שזה אומר.
+                 גם על עצמי: מה אני יודע מול מה אני מניח.
 
-    <div class="pb-milestones">
-      <article class="pb-milestone pb-milestone--validated">
-        <div class="pb-milestone-head"><span class="pb-milestone-tag">מאומת</span><h3>מפגש 1 — מיפוי ואמון</h3></div>
-        <p><strong>למה היא קיימת:</strong> להבין מי האדם באמת, לפני כל בנייה.</p>
-        <p><strong>מה חייב לקרות:</strong> מעבר מסקפטיות לריכוז ואמון. שאלות בסיסיות ("מה אתה רוצה", "מה החסרונות שלך") מקבלות תשובה אמיתית, גם אם זה לוקח זמן.</p>
-        <p><strong>מה אסור שיקרה:</strong> קבלת תשובה כללית כ"מספיק טוב" רק כדי להתקדם.</p>
-        <p><strong>איך יודעים שאפשר להתקדם:</strong> יש תשובה אמיתית אחת לפחות, לא רק כלליות.</p>
-      </article>
+3  השערה בקול →  לומר את ההשערה **כהשערה**, ולתת לו לסתור.
+                 &quot;אני חושד ש___. איפה זה לא מדויק?&quot;
 
-      <article class="pb-milestone pb-milestone--validated">
-        <div class="pb-milestone-head"><span class="pb-milestone-tag">מאומת</span><h3>מפגש 2 — זהות ונוכחות</h3></div>
-        <p><strong>למה היא קיימת:</strong> ליישר את החוץ עם הפנים; להתחיל לבנות נוכחות פיזית.</p>
-        <p><strong>מה חייב לקרות:</strong> הופעה שמרגישה שלו. אם רעיון מופשט ("להביא את עצמך מחדש") לא נקלט — מעבר מיידי לדוגמה אישית קונקרטית.</p>
-        <p><strong>מה אסור שיקרה:</strong> להתעקש על ההסבר המופשט אחרי שהוא כבר לא עובד.</p>
-        <p><strong>איך יודעים שאפשר להתקדם:</strong> שינוי מורגש באנרגיה/קרקע, לא רק במראה החיצוני.</p>
-      </article>
+4  עדות חיה  →  אם זה נתקע — לא הסבר שני. תרגיל, סיפור אישי שלי,
+                 או סיטואציה עכשיו בחדר.
 
-      <article class="pb-milestone pb-milestone--validated">
-        <div class="pb-milestone-head"><span class="pb-milestone-tag">מאומת</span><h3>מפגש 3 — נוכחות חברתית</h3></div>
-        <p><strong>למה היא קיימת:</strong> לבדוק נוכחות בסביבה חברתית אמיתית, לא מבוימת.</p>
-        <p><strong>מה חייב לקרות:</strong> אם קורה רגע אמיתי ולא-מבוים (מישהי ניגשת, אינטראקציה ספונטנית) — לעבד אותו אחרי במפורש: מה היה בשליטתו, מה היה מזל.</p>
-        <p><strong>מה אסור שיקרה:</strong> לתת לרגע טוב לעבור ברקע בלי עיבוד — או להיפך, לתת לו לחשוב שהכל היה מזל.</p>
-        <p><strong>איך יודעים שאפשר להתקדם:</strong> שפה פחות מתנצלת; יציבה/טון משתפרים גם בלי הנחיה ישירה.</p>
-      </article>
+5  הוא מנסח  →  הוא אומר את המסקנה. במילים שלו. אני שותק.
+                 אם אני אומר אותה — לתעד את זה בעמודה &quot;אני נתתי&quot;.
 
-      <article class="pb-milestone pb-milestone--draft">
-        <div class="pb-milestone-head"><span class="pb-milestone-tag pb-milestone-tag--draft">טיוטה</span><h3>מפגש 4 — התנסות בעולם האמיתי</h3></div>
-        <p><strong>למה היא קיימת (השערה):</strong> הזירה עוברת מהחדר/הרחוב לחיים בפועל שלו (דייטים אמיתיים).</p>
-        <p><strong>מה חייב לקרות (השערה):</strong> לעבוד מתוך הסיפורים שלו עצמו, לא מתיאוריה כללית. לחפש סימני יוזמה עצמאית.</p>
-        <p><strong>מה אסור שיקרה (השערה):</strong> לעבור לטכניקות דייטינג כלליות רק כי הנושא "דייטים".</p>
-        <p><strong>איך יודעים שאפשר להתקדם:</strong> <em>עדיין לא ידוע — ימולא אחרי שהמפגש יקרה בפועל.</em></p>
-      </article>
+6  ניסוי אחד →  אחד. עד מתי. מה הוא מביא חזרה. **עדיף שהוא יציע.**
+</code></pre>
+<h3>קצב וזמן (מפגש 90 דקות)</h3>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מהלך</th>
+<th>זמן</th>
+<th>סימן שחרגתי</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1 עדות</td>
+<td>15–20</td>
+<td>אני יודע פחות עובדות מדעות</td>
+</tr>
+<tr>
+<td>2 הפרדה</td>
+<td>10</td>
+<td>הוא מספר סיפור ואני מסכים איתו</td>
+</tr>
+<tr>
+<td>3 השערה</td>
+<td>10–15</td>
+<td>הוא רק מהנהן</td>
+</tr>
+<tr>
+<td>4 עדות חיה</td>
+<td>20–30</td>
+<td>הסברתי אותו דבר בשלוש דרכים</td>
+</tr>
+<tr>
+<td>5 הוא מנסח</td>
+<td>10</td>
+<td>אני דיברתי יותר מ-30% מהמפגש</td>
+</tr>
+<tr>
+<td>6 ניסוי</td>
+<td>10</td>
+<td>הניסוי שלי ולא שלו</td>
+</tr>
+</tbody>
+</table></div>
+<h3>שלושה טריגרים לעצור מיד</h3>
+<ol>
+<li><strong>אני מסביר את אותו דבר בפעם השלישית.</strong> ← מהלך 4. עדות, לא הסבר.</li>
+<li><strong>הוא שאל "מה לכתוב/מה לעשות" ואני התחלתי לענות.</strong> ← להחזיר שאלה: "מה היית עושה אם לא היה לך את מי לשאול?"</li>
+<li><strong>אני מדבר יותר ממנו.</strong> ← לשתוק 20 שניות. הוא ימלא.</li>
+</ol>
+<h2 id="103--אחרי-המפגש">10.3 — אחרי המפגש</h2>
+<p><em>(10 דקות. באותו יום. אחרת זה לא יקרה.)</em></p>
+<pre><code>מה גילינו:                       (עובדה חדשה, לא הרגשה על המפגש)
+איזו השערה התחזקה / נחלשה:
+מה **הוא** גילה בעצמו:
+מה **אני** נתתי לו ישירות:
+הוא הולך לבדוק עד הפעם הבאה:
+המידע שאנחנו רוצים חזרה:         (מה בדיוק, באיזה פורמט)
+האם אנחנו עוד על הצוואר הנכון:   כן / לא / לא בטוח → מה יכריע
+Independence Score:              מודעות__ פעולה__ רפלקציה__ תלות__ התאוששות__
+Stage Gate:                      מה עוד חסר
+תובנה לספר התובנות (אם יש):
+תובנה על **המערכת** (אם יש):     ← זה מה שמשפר את ה-Playbook
+</code></pre>
+<h3>מבחן הערך של המפגש</h3>
+<p>מפגש היה בעל ערך אם לפחות <strong>אחד</strong> מהשלושה קרה:</p>
+<ol>
+<li><strong>הצטבר מידע</strong> — אני יודע משהו על העולם שלא ידעתי לפני. (גם הפרכה נחשבת.)</li>
+<li><strong>הוא ניסח משהו בעצמו</strong> — במילים שלו, לפניי.</li>
+<li><strong>יש ניסוי ברור לשבוע</strong> — עם תחזית ועם הפרכה.</li>
+</ol>
+<p><strong>מפגש נעים שבו אף אחד מהשלושה לא קרה — לא היה בעל ערך.</strong> לתעד את זה בכתב. זו ההגנה מפני תהליך שנמשך לנצח.</p>
+<hr />
+</section>
+<section id="sec-11--Progress-amp-Independence"><h1 id="11--Progress-amp-Independence">11 — Progress &amp; Independence</h1>
+<h2 id="111--הכלל-היחיד-שחשוב">11.1 — הכלל היחיד שחשוב</h2>
+<p><strong>כל ניקוד נעשה על סמך עדות מ</strong>בין<strong> המפגשים — לא ממה שקרה בחדר ולא ממה שהוא דיווח על עצמו.</strong>
+בכל ניקוד רושמים <strong>על מה</strong> ניקדתי. בלי זה זו תחושה, לא מדד.</p>
+<h2 id="112--Independence-Rubric-5-ממדים--03">11.2 — Independence Rubric (5 ממדים × 0–3)</h2>
+<p><strong>0</strong> = לא קיים · <strong>1</strong> = קורה כשאני דוחף · <strong>2</strong> = קורה לבד לפעמים · <strong>3</strong> = ברירת מחדל</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ממד</th>
+<th>מה בודקים</th>
+<th>3 נראה כך</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>מודעות עצמית</strong></td>
+<td>מזהה דפוסים לבד</td>
+<td>מגיע עם דפוס שאני לא ראיתי</td>
+</tr>
+<tr>
+<td><strong>פעולה</strong></td>
+<td>פועל בלי דחיפה</td>
+<td>עשה, ואז ספר לי</td>
+</tr>
+<tr>
+<td><strong>רפלקציה</strong></td>
+<td>כשלא עובד — מנתח, לומד, מנסה גרסה אחרת</td>
+<td>הריץ מחזור שלם לבד</td>
+</tr>
+<tr>
+<td><strong>תלות</strong> <em>(הפוך)</em></td>
+<td>האם הוא צריך אישור ממני לפני החלטות</td>
+<td>לא שואל "מה לכתוב"; מבקש פרספקטיבה, לא אישור</td>
+</tr>
+<tr>
+<td><strong>התאוששות</strong></td>
+<td>מה קורה אחרי כישלון</td>
+<td>חוזר ליזום בלי שמישהו הרים אותו</td>
+</tr>
+</tbody>
+</table></div>
+<h3>למה חמישה ולא שלושה</h3>
+<ul>
+<li><strong>תלות</strong> נפרד כי אדם יכול להיות מודע, פעיל ורפלקטיבי — ולשלוח לי הודעה לפני כל טקסט. זה בדיוק מה שהתהליך אמור למנוע, ולכן זה נמדד בנפרד.</li>
+<li><strong>התאוששות</strong> נפרד כי איכות ניתוח וזמן חזרה לפעולה הם דברים שונים: יש מי שמנתח מצוין ולא מרים את הראש שבועיים. וזה גם הממד היחיד שנבדק רק בכישלון.</li>
+</ul>
+<h2 id="113--קריאת-התוצאה-מתוך-15">11.3 — קריאת התוצאה (מתוך 15)</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ניקוד</th>
+<th>משמעות</th>
+<th>פעולה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>0–7</td>
+<td>תלוי</td>
+<td>Stage 3. אין להוריד מעורבות עוד</td>
+</tr>
+<tr>
+<td>8–11</td>
+<td>בדרך</td>
+<td>Stage 4. להוריד מעורבות בכוונה ולמדוד</td>
+</tr>
+<tr>
+<td>12–15 + שני ממדים ב-3</td>
+<td>עצמאי מעשית</td>
+<td>Pre-exit (פרק 12)</td>
+</tr>
+<tr>
+<td>ירידה בין שני מפגשים</td>
+<td>משהו קרה</td>
+<td>לבדוק אירוע, לא לתקן ניקוד</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>הערך אינו במספר. הערך בכיוון.</strong> מספר יחיד לא אומר כלום; שלוש מדידות אומרות הרבה.</p>
+<h2 id="114--מה-עוד-עוקבים-מגמה-לא-KPI">11.4 — מה עוד עוקבים (מגמה, לא KPI)</h2>
+<ul>
+<li><strong>יחס "הוא ניסח" : "אני נתתי"</strong> — צריך להתהפך לאורך התהליך. המדד הכי טוב שיש כאן.</li>
+<li><strong>זמן התאוששות</strong> אחרי כישלון (ימים).</li>
+<li><strong>מספר יוזמות בשבוע</strong> — כולל אלה שנדחו. יוזמה היא המדד, לא תוצאה.</li>
+<li><strong>מספר המחזורים על הצוואר הנוכחי</strong> — אם עולה על 4, קרא 08.5.</li>
+<li>שמונת הממדים הפנימיים מ-V1 (אחריות, סקרנות, נוכחות, ביטחון פנימי, יוזמה, התנסויות, עצמאות, מודעות) — נשארים, אבל <strong>כאומדן איכותני ברקע</strong>, לא כמנוע החלטות. חמשת הממדים למעלה הם מנוע ההחלטות.</li>
+</ul>
+<h2 id="115--אנטי-KPI-מה-לא-מודדים">11.5 — אנטי-KPI: מה לא מודדים</h2>
+<ul>
+<li>מספר דייטים.</li>
+<li>"האם יש לו זוגיות".</li>
+<li>כמה הוא מסמן ✓ על המשימות.</li>
+<li>כמה הוא מרוצה מהמפגש. (מפגש נעים ≠ מפגש בעל ערך.)</li>
+<li>כמה הוא סומך עליי.</li>
+</ul>
+<hr />
+</section>
+<section id="sec-12--Exit"><h1 id="12--Exit">12 — Exit</h1>
+<h2 id="121--Exit-Criteria">12.1 — Exit Criteria</h2>
+<p>התהליך מתקרב לסיום כשכל השורות הבאות נכונות <strong>בעדות</strong>, לא בהרגשה:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>#</th>
+<th>קריטריון</th>
+<th>איך אני יודע (עדות נדרשת)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>מבין את עצמו טוב יותר</td>
+<td>ניסח דפוס אחד לפחות שאני לא הצבעתי עליו</td>
+</tr>
+<tr>
+<td>2</td>
+<td>מסוגל לפעול בעצמו</td>
+<td>3 יוזמות רצופות בין מפגשים בלי דחיפה</td>
+</tr>
+<tr>
+<td>3</td>
+<td>יודע להתמודד עם אי-הצלחה</td>
+<td>כישלון אחד שממנו התאושש בלי התערבותי</td>
+</tr>
+<tr>
+<td>4</td>
+<td>יודע ללמוד מהעולם</td>
+<td>הריץ מחזור שלם לבד: שם לב → ניסה → הסיק → התאים</td>
+</tr>
+<tr>
+<td>5</td>
+<td>יודע לזהות את הצוואר הבא</td>
+<td>ניסח אותו בכתב, במילים שלו</td>
+</tr>
+<tr>
+<td>6</td>
+<td>צריך אותי פחות</td>
+<td>Independence ≥ 12; יחס "הוא ניסח : אני נתתי" התהפך</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>5 מתוך 6 = מתחילים Pre-exit. 6 מתוך 6 = מסיימים.</strong></p>
+<h3>תנאי שאינם קריטריון יציאה</h3>
+<ul>
+<li>עברו X מפגשים.</li>
+<li>יש לו זוגיות.</li>
+<li>הוא מרגיש טוב עכשיו.</li>
+<li>אין יותר מה ללמד. (תמיד יש. זה לא רלוונטי.)</li>
+</ul>
+<h2 id="122--מתי-מסיימים-גם-אם-הקריטריונים-לא-מולאו">12.2 — מתי מסיימים גם אם הקריטריונים לא מולאו</h2>
+<p>לתעד את הסיבה, ולומר אותה לו במפורש:</p>
+<ul>
+<li><strong>חוסר התאמה</strong> — הוא רוצה תוצאה מובטחת, או מישהו שיחליט בשבילו.</li>
+<li><strong>תלות שאינה נסגרת</strong> — 3 מפגשים ב-Stage 4 ואין תזוזה בממד התלות. המשך הליווי מזיק.</li>
+<li><strong>הבעיה אינה שלי</strong> — מצוקה נפשית משמעותית, טראומה, התמכרות. להפנות לאיש מקצוע מוסמך, בברור ובלי דרמה.</li>
+<li><strong>הצוואר יצא מהזירה ואני לא האדם לזה</strong> — לגיטימי לומר.</li>
+</ul>
+<h2 id="123--Pre-exit-12-מפגשים-בהורדת-מעורבות-מכוונת">12.3 — Pre-exit: 1–2 מפגשים בהורדת מעורבות מכוונת</h2>
+<p><strong>זה לא "מפגש רגיל שבו אני מדבר פחות". יש כאן פרוטוקול.</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מה שאני מפסיק</th>
+<th>מה שאני עושה במקום</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>לא נותן משימה</td>
+<td>הוא מגיע עם מה שהוא בדק בעצמו</td>
+</tr>
+<tr>
+<td>לא יוזם קשר בין מפגשים</td>
+<td>עונה בקצרה, בלי לפתח</td>
+</tr>
+<tr>
+<td>לא עונה על "מה לעשות"</td>
+<td>"מה כבר ניסית? מה היית עושה אם לא היה לי?"</td>
+</tr>
+<tr>
+<td>לא קובע אג'נדה</td>
+<td>הוא פותח את המפגש. אני שואל</td>
+</tr>
+<tr>
+<td>לא מסביר</td>
+<td>אם הוא לא יודע — זה נתון, לא כישלון</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>מה שאני מודד בשבועיים האלה:</strong> מה קרה כשלא דחפתי. זה כל הניסוי.</p>
+<p><strong>אם הכול נעצר בלי שדחפתי</strong> → הוא לא בשל ליציאה. לחזור ל-Stage 4 ולומר את זה בקול: "שמנו לב שכשאני לא דוחף, זה נעצר. זה מה שנעבוד עליו." זו העבודה החשובה ביותר בכל התהליך.</p>
+<h2 id="124--מפגש-הסיום-מבנה-90-דקות">12.4 — מפגש הסיום (מבנה, ~90 דקות)</h2>
+<pre><code>1. הוא מספר את הסיפור         (20 דק')
+   מאיפה התחלנו ולאיפה הגענו — במילים שלו. אני לא מתקן ולא משלים.
+   ← אם הוא לא מצליח לספר את זה, זה לא סיום. לעצור כאן.
 
-      <article class="pb-milestone pb-milestone--empty">
-        <div class="pb-milestone-head"><span class="pb-milestone-tag pb-milestone-tag--empty">אין עדיין</span><h3>מפגשים 5–8</h3></div>
-        <p>יתמלאו מתוך מה שבאמת קורה עם עידן ולקוחות הבאים — לא מומצאים מראש. כשיהיה חומר אמיתי, כל מפגש יקבל כאן כרטיס משלו, באותו מבנה.</p>
-      </article>
-    </div>
-  </section>
+2. לפני / אחרי                (10 דק')
+   אני מקריא מה כתבתי במפגש הראשון. הוא מגיב.
 
-  <!-- ============================================================ -->
-  <!-- 05 · TOOLBOX -->
-  <!-- ============================================================ -->
-  <section id="toolbox" class="pb-chapter">
-      <div class="pb-chapter-num">05</div>
-      <h1 class="pb-chapter-title">Toolbox — לפי תחום, לא לפי פגישה</h1>
-      <p class="pb-chapter-lede">כל תחום במבנה זהה: מה חשוב, מה כולם מסכימים עליו, איפה חלוקים, טעויות, תרגילים, מיתוסים שהופרכו, סיפורים אמיתיים, שאלות ללקוח, מה מדידים, איך יודעים שהתקדם, והחיבור לפילוסופיית "בדרך.". בסוף כל תחום — What Baderech Does Differently וניסוי אחד ל-20–30 דקות. לחצו על שם התחום כדי לפתוח.</p>
-  
-      <div class="pb-legend">
-        <span><b>[מחקר]</b> = נתמך במחקר עמיתים מבוקר</span>
-        <span><b>[קונצנזוס]</b> = הסכמה רחבה בין מומחים ופרקטיקנים</span>
-        <span><b>[עדות]</b> = דיווח אנקדוטלי / ניסיון חי</span>
-      </div>
-  
-      <details class="pb-domain" id="dom-body">
-        <summary class="pb-domain-summary">
-          <span>שפת גוף</span>
-          <span class="pb-domain-summary-meta"><span class="pb-domain-pill">מחקר עומק</span></span>
-        </summary>
-        <div class="pb-domain-body">
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">1 · למה זה חשוב</p>
-          <p>לא כי "זה 93% מהתקשורת" — זו הפרכה, ראו סעיף מיתוסים. שפת הגוף חשובה כי היא הערוץ שלא ניתן לכבות: בני אדם משדרים כל הזמן ונבחנים כל הזמן, מהרגע שהם נכנסים לשדה הראייה של מישהו אחר.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">2 · מה כל המומחים מסכימים עליו</p>
-          <p>(א) <strong>קונגרואנטיות, לא ביצוע</strong> — שפת גוף לא נמדדת כנכונה/שגויה, אלא כהתאמה בין מה שמוצג לבין מה שקורה בפנים; ניסיון "להרשים" יוצר חוסר-אותנטיות שמזוהה, ו"fake it till you make it" מסוכן כי עצבנות דולפת דרך הביצוע <span class="pb-tag pb-tag--consensus">קונצנזוס</span>. (ב) <strong>הקשר ובייסליין לפני פרשנות</strong> — כלל היסוד של Joe Navarro: תמיד להתבונן בהקשר ובהתנהגות, לחפש סימנים אוניברסליים וגם ייחודיים לאדם, לבסס קו-בסיס, ולחפש כמה סימנים משתנים יחד — לא סימן בודד <span class="pb-tag pb-tag--research">מחקר</span>. (ג) <strong>אין סימן בודד שמוכיח כלום</strong> — גם נבארו עצמו, אחרי יותר מ-13,000 חקירות ב-FBI, קבע במפורש שאין שום התנהגות בודדת שמעידה על שקר <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">3 · איפה הם חלוקים</p>
-          <p>מגע עין: מאמני דייטינג פופולריים ממליצים על "החזקת מבט שנייה יותר" כאיתות ביטחון. המחקר זהיר בהרבה — רוב השקרנים בפועל דווקא מגזימים במגע עין כדי "להוכיח" שהם לא משקרים <span class="pb-tag pb-tag--research">מחקר</span>. גם מידת ה"מדע": Vanessa Van Edwards ממסגרת עצמה כחוקרת התנהגות עם מעבדה, בעוד רוב תוכן הדייטינג הפופולרי הוא ניסיון-וטעייה של מאמנים בודדים בלי בסיס מחקרי.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">4 · טעויות נפוצות</p>
-          <p>קריאת סימן בודד כאמת מוחלטת (ידיים משולבות = הגנתיות — בפועל לרוב פשוט תנוחה נוחה <span class="pb-tag pb-tag--research">מחקר</span>); ביצוע ביטחון במקום בנייתו (מוביל לדליפת עצבנות, לא להסתרתה); התעלמות מהקשר פיזי גרידא (כיסא בלי משענות/חדר קר מעלים סיכוי לידיים משולבות בלי שום קשר רגשי).</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">5 · תרגילים חוזרים</p>
-          <p>תרגול בסביבה אמיתית, לא מול מראה; בניית "בייסליין" עצמי — איך אתה נראה כשאתה רגוע לגמרי; "Fronting" (Van Edwards) — הטיית הגוף והרגליים לכיוון האדם שמעניין אותך, בלי מכשול בין.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">6 · מיתוסים שהופרכו</p>
-          <p>"93% מהתקשורת היא לא-מילולית" — הבנה שגויה של מחקר Mehrabian; המספר תקף רק למצב ניסוי צר (מילה בודדת שנשאמרת בטון סותר), לא לתקשורת בכלל <span class="pb-tag pb-tag--research">מחקר</span>. "ידיים משולבות = הגנתיות" — לרוב רק תנוחת מנוחה <span class="pb-tag pb-tag--research">מחקר</span>. "שקרנים נמנעים ממגע עין" — מחקר 2012 לא מצא קורלציה בין תנועת עיניים לשקר; שקרנים מנוסים דווקא מגזימים במגע עין <span class="pb-tag pb-tag--research">מחקר</span>. כיוון מבט NLP (ימינה=שקר) — אוניברסיטת אדינבורו לא מצאה קשר בשלושה מחקרים נפרדים <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">7 · סיפורים אמיתיים</p>
-          <p>בתי משפט ומשטרה בארה"ב לפעמים דורשים מצעירים אפרו-אמריקאים "תסתכל עליי", כשהם דווקא נמנעים ממגע עין כסימן כבוד תרבותי — טעות פרשנות בלי הקשר שגרמה נזק אמיתי, לא רק תיאורטי <span class="pb-tag pb-tag--anecdote">עדות</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">8 · שאלות ללקוח</p>
-          <p>מה קורה לגוף שלך כשאתה נכנס למקום שאתה לא מכיר? מתי לאחרונה שמת לב שהגוף שלך "אמר" משהו לפני שפתחת את הפה? איפה אתה מרגיש הכי הרבה קרקע — ואיפה הכי פחות?</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">9 · מה אפשר למדוד</p>
-          <p>כמות ואיכות הפעמים שהוא שם לב בזמן אמת לתנוחת הגוף שלו (לא רק שינה אותה בהנחיה); תדירות דיווח-עצמי על הרגשת קרקע במצבים חברתיים; שינוי נצפה בטון/יציבה בין תחילת תהליך לסופו.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">10 · איך אדע שהתקדם</p>
-          <p>לא "הוא זוכר לעמוד ישר" — הוא מפסיק לחשוב על זה. ברגע שיציבה טובה קורית בלי מחשבה מודעת, זה עבר משכבת ביצוע לשכבת זהות.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">11 · חיבור לפילוסופיית "בדרך."</p>
-          <p>אותו עיקרון בדיוק שכבר זיקקנו: "ראה לפני שאתה בונה" — קודם בייסליין ותצפית אמיתית, לא ביצוע מיידי. וגם "חוויות לפני תוצאות" — שפת גוף אמיתית לא מלמדים בכיתה, מזמינים אותה לקרות ברחוב/בבר ומעבדים אחריה.</p>
-        </div>
-        <div class="pb-diff">
-          <p class="pb-diff-title">What Baderech Does Differently</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> תשמור על קשר עין.<br><strong>בדרך.:</strong> תהיה מספיק נוכח כדי שלא תצטרך לחשוב על קשר עין.</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> תלמד לזהות 400 סימנים של שפת גוף אצל אחרים.<br><strong>בדרך.:</strong> תלמד קודם לשים לב מה קורה בגוף שלך — מי שלא מרגיש את עצמו, לא באמת יקרא אף אחד אחר נכון.</p>
-        </div>
-        <div class="pb-experiment">
-          <p class="pb-experiment-title">ניסוי אחד (20–30 דקות)</p>
-          <p>"בייסליין ברחוב". הלקוח יושב במקום ציבורי לבד, בלי טלפון, 20 דקות. המשימה: לא לתקן שום דבר בגוף שלו במכוון — רק לשים לב, בלי שיפוט, מה הגוף שלו עושה כשאף אחד לא "מלמד" אותו איך לשבת. בסוף: לכתוב 3 משפטים על מה הבחין בו לראשונה.</p>
-        </div>
-        </div>
-      </details>
-  
-      <details class="pb-domain" id="dom-style">
-        <summary class="pb-domain-summary">
-          <span>סטייל</span>
-          <span class="pb-domain-summary-meta"><span class="pb-domain-pill">ניסיון + מחקר עומק</span></span>
-        </summary>
-        <div class="pb-domain-body">
-        <div class="pb-domain-realbox">
-          <p class="pb-domain-realbox-label">מהניסיון האמיתי (עידן)</p>
-          <p><strong>עקרונות:</strong> הופעה שמרגישה שלו, לא תחפושת. הלבוש הוא כלי לנוכחות, לא קישוט.</p><p><strong>תרגילים:</strong> שופינג מודרך עם דגש על "איך זה מרגיש כשאתה נכנס איתו לחדר", לא רק "איך זה נראה".</p><p><strong>טעויות נפוצות:</strong> להסביר תיאורטית "למה זה יעבוד" במקום להראות/להדגים אישית כשזה נתקל בהתנגדות.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">1 · למה זה חשוב</p>
-          <p>רושם ראשוני נוצר במהירות ומטה את כל מה שבא אחריו — "אפקט ההילה" (Edward Thorndike, 1920) גורם לכך שתכונה חיובית אחת גולשת אוטומטית להערכות על אינטליגנציה, חמימות ואמינות <span class="pb-tag pb-tag--research">מחקר</span>. אך חשוב יותר הכיוון ההפוך: בגדים משפיעים גם על הלובש עצמו — "enclothed cognition" (Adam & Galinsky, 2012) מראה שלבישת פריט בעל משמעות סמלית משנה תהליכים קוגניטיביים של הלובש <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">2 · מה כל המומחים מסכימים עליו</p>
-          <p>טיפוח בסיסי (היגיינה, התאמה, גזרה) חשוב יותר מיוקרה <span class="pb-tag pb-tag--consensus">קונצנזוס</span>; התאמה להקשר מנצחת "יפה" אבסולוטי <span class="pb-tag pb-tag--consensus">קונצנזוס</span>; עקביות בין המראה לזהות האמיתית — סטייל צריך להרגיש כמוך, לא כתחפושת <span class="pb-tag pb-tag--consensus">קונצנזוס</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">3 · איפה הם חלוקים</p>
-          <p>עד כמה מראה חיצוני באמת "מזיז את המחט". מחקרי אפקט ההילה מראים השפעה חזקה, בעוד מחקר "Blinded by Beauty" טוען שהתפיסה מוטה ומצפוניות מנבאת ביצועים טוב יותר ממשיכות <span class="pb-tag pb-tag--research">מחקר</span>. מטה-אנליזה מ-2023 (Horton, Adam & Galinsky, 105 אפקטים, N=3,789) תמכה בערך הראייתי של enclothed cognition — אך ציינה ששכפול בעל עוצמה גבוהה נכשל בשחזור אחד האפקטים המקוריים <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">4 · טעויות נפוצות</p>
-          <p>להתלבש כדי "להרשים" במקום כדי להיות עקבי עם עצמו; העתקת טרנדים בלי התאמה לגוף/הקשר; הזנחת הבסיס (גזרה, ניקיון) לטובת פריטים יקרים; שימוש בסטייל כמסכה שרק מגדילה את הפער בין החוץ לפנים.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">5 · תרגילים חוזרים</p>
-          <p>"ארון קפסולה" — מספר קטן של פריטים איכותיים ותואמים; צילום עצמי לפני יציאה כדי לראות מה אחרים רואים; משוב מאדם מהימן; "ניסוי פריט העוצמה" (Adam & Galinsky) — לבישת פריט שמסמל מצב פנימי רצוי ובדיקת ההשפעה בפועל.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">6 · מיתוסים שהופרכו</p>
-          <p>"בגדים לא עושים את האדם" — מופרך חלקית: הם משפיעים על מצבו המנטלי של הלובש עצמו <span class="pb-tag pb-tag--research">מחקר</span>. "צריך לבזבז הרבה כדי להיראות טוב" — מופרך: גזרה והתאמה חשובות יותר מהמחיר <span class="pb-tag pb-tag--consensus">קונצנזוס</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">7 · סיפורים אמיתיים</p>
-          <p>ניסוי "מעיל הרופא" של Adam & Galinsky: נבדקים שלבשו בפועל מעיל שהוצג כ"מעיל רופא" שיפרו קשב סלקטיבי, בעוד מי שרק ראה את המעיל מונח לפניו לא השתפר — ההשפעה תלויה גם בלבישה בפועל וגם במשמעות הסמלית של הפריט <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">8 · שאלות ללקוח</p>
-          <p>מתי הרגשת הכי "כמוך" בבגדים? מה אתה מנסה שאנשים יחשבו עליך? האם אתה מתלבש למי שאתה, או למי שאתה מפחד שיחשבו שאתה? מה בארון גורם לך להרגיש כמו תחפושת?</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">9 · מה אפשר למדוד</p>
-          <p>אחוז הימים שהוא מרגיש בנוח עם מה שלבש; זמן ההחלטה בבוקר; עקביות המשוב החיצוני; יחס פריטים שמשרתים זהות ברורה מול פריטי "מסכה".</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">10 · איך אדע שהתקדם</p>
-          <p>הוא בוחר בגדים מתוך זהות ולא מתוך פחד; מפסיק לשאול "מה יחשבו" ומתחיל לשאול "מה מייצג אותי"; המראה תואם את מי שהוא בפנים.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">11 · חיבור לפילוסופיית "בדרך."</p>
-          <p>סטייל הוא הביטוי הגלוי ביותר של שלב ה<strong>זהות</strong> — יישור החוץ עם הפנים. כשהחוץ אומר משהו והפנים מרגיש אחרת, זה בדיוק הפער שהמתודה מטפלת בו.</p>
-        </div>
-        <div class="pb-diff">
-          <p class="pb-diff-title">What Baderech Does Differently</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> התלבש כדי להרשים ולמשוך.<br><strong>בדרך.:</strong> התלבש כדי להיות עקבי עם עצמך — הרושם הוא תוצר לוואי.</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> קנה נכון והבעיה נפתרה.<br><strong>בדרך.:</strong> אם המראה לא הולם את הפנים, זו עוד שכבה שלא תחזיק בלעדיי.</p>
-        </div>
-        <div class="pb-experiment">
-          <p class="pb-experiment-title">ניסוי אחד (20–30 דקות)</p>
-          <p>בחר שני פריטים — אחד ש"בדרך כלל אתה לובש כדי להרגיש בטוח", ואחד ש"תמיד רצית ללבוש אך חששת מה יחשבו". צא איתם לרחוב/קפה ל-25 דקות. שים לב: איפה הרגשת יותר כמוך? עַבֵּד: מה בתגובה שלך היה בשליטתך, ומה רק דמיינת שיקרה?</p>
-        </div>
-        </div>
-      </details>
-  
-      <details class="pb-domain" id="dom-presence">
-        <summary class="pb-domain-summary">
-          <span>נוכחות</span>
-          <span class="pb-domain-summary-meta"><span class="pb-domain-pill">ניסיון אמיתי בלבד</span></span>
-        </summary>
-        <div class="pb-domain-body">
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">עקרונות</p>
-          <p>קרקע, טון, איך נכנסים למקום. נמדדת בשפה (מתנצלת מול ישירה) לא רק בשפת גוף.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">תרגילים</p>
-          <p>תשומת לב מכוונת לרגע הכניסה למרחב; זיהוי בזמן אמת של שפה מתנצלת.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">טעויות נפוצות</p>
-          <p>למדוד נוכחות רק לפי תוצאה חיצונית (הצלחה עם מישהי) במקום לפי סימנים פנימיים (טון, יציבה, שפה).</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">קשר לתחום המחקרי "אנרגיה"</p>
-          <p>התחום הזה חופף מאוד לתחום "אנרגיה" שנחקר לעומק למעלה — כדאי לקרוא את שניהם ביחד. "אנרגיה" מוסיף כאן את הבסיס המחקרי (Cabane, הפרכת power posing, הידבקות רגשית) שעדיין חסר לתחום הזה.</p>
-        </div>
-        <div class="pb-diff">
-          <p class="pb-diff-title">What Baderech Does Differently</p>
-          
-        </div>
-        <div class="pb-experiment">
-          <p class="pb-experiment-title">ניסוי אחד (20–30 דקות)</p>
-          <p>ראו את הניסוי בתחום "אנרגיה" למעלה — הוא ישים ישירות גם כאן.</p>
-        </div>
-        </div>
-      </details>
-  
-      <details class="pb-domain" id="dom-texting">
-        <summary class="pb-domain-summary">
-          <span>טקסטינג</span>
-          <span class="pb-domain-summary-meta"><span class="pb-domain-pill">מחקר עומק</span></span>
-        </summary>
-        <div class="pb-domain-body">
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">1 · למה זה חשוב</p>
-          <p>בדייטינג מודרני ההיכרות הראשונית קורית בטקסט — הזירה שבה נוצר או נהרס עניין עוד לפני מפגש פנים-אל-פנים. תזמון תגובה נקרא על ידי הצד השני כ"נתון" על מידת העניין <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">2 · מה כל המומחים מסכימים עליו</p>
-          <p>בהירות ואותנטיות מנצחות "משחקים" <span class="pb-tag pb-tag--consensus">קונצנזוס</span>; טקסט הוא כלי לתאם מפגש, לא תחליף לקשר <span class="pb-tag pb-tag--consensus">קונצנזוס</span>; יש לכוון לעניין הדדי ולא לרדיפה חד-צדדית <span class="pb-tag pb-tag--consensus">קונצנזוס</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">3 · איפה הם חלוקים</p>
-          <p>תזמון: מחקר Teichmann ואחרים (2026, N=543) מצא עקומת U-הפוך — טקסט "בבוקר שאחרי" הדייט הביא לכוונות הקשר הגבוהות ביותר, טוב יותר ממיידי או מאחרי יומיים <span class="pb-tag pb-tag--research">מחקר</span>. נתוני Hinge (300,000 שיחות, שבועיים במאי) מצאו שהמתנה אופטימלית לדאבל-טקסט היא כ-3:52 שעות, ושגם אחרי שבוע יש 12% סיכוי תגובה לעומת 0.39% ללא הודעה שנייה [מחקר על נתוני אפליקציה]. המחלוקת: עד כמה תזמון הוא "משחק" מול פשוט אות אמינות.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">4 · טעויות נפוצות</p>
-          <p>"משחקי כוח" של המתנה מכוונת; דאבל-טקסט פסיבי-אגרסיבי; שיחות טקסט אינסופיות בלי לתאם מפגש; השקעת משמעות רגשית עצומה בכל השהיית תגובה.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">5 · תרגילים חוזרים</p>
-          <p>"כלל 3 ההודעות" — אחרי תיאום ראשוני, לעבור למפגש; כתיבת טיוטה ובדיקה "האם זה מי שאני?" לפני שליחה; הימנעות מפרשנות-יתר של זמני תגובה.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">6 · מיתוסים שהופרכו</p>
-          <p>"תמיד חכה X שעות כדי לא להיראות נזקק" — הופרך חלקית: המתנה מוגזמת (יומיים) הורידה עניין ונתפסה כפחות אמינה <span class="pb-tag pb-tag--research">מחקר</span>. עקרון המחסור / "מהודר מדי" לא נתמך כמנגנון במחקר <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">7 · סיפורים אמיתיים</p>
-          <p>מחקר Teichmann: 543 משתתפים דירגו תרחישים; "הבוקר שאחרי" ניצח, נשים היו רגישות יותר לתזמון. הסתייגות: התרחישים היו בדיוניים ותוכן ההודעות הוסתר בכוונה כדי לבודד את משתנה התזמון — יש לקחת בזהירות בהעברה למציאות [מחקר עם סייג].</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">8 · שאלות ללקוח</p>
-          <p>מה אתה מרגיש כשלא עונים לך מייד? מה אתה מנסה להשיג בהודעה — קשר או ביטחון? מתי טקסט הפך אצלך למקום מסתור מפני מפגש אמיתי?</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">9 · מה אפשר למדוד</p>
-          <p>יחס טקסט-למפגש (כמה זמן עד שמתאמים); רמת חרדה בהמתנה לתגובה (1–10); מספר ההודעות שנכתבו מתוך אותנטיות מול "טקטיקה".</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">10 · איך אדע שהתקדם</p>
-          <p>הוא שולח מה שהוא מתכוון, מתאם מפגש בלי דרמה, ולא מתמוטט רגשית מהשהיית תגובה — זמן ההמתנה מפסיק להיות מבחן על ערכו העצמי.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">11 · חיבור לפילוסופיית "בדרך."</p>
-          <p>טקסטינג חושף את הפער חוץ-פנים בזמן אמת. ההמתנה לתגובה היא בדיוק "הזמן שבין המפגשים" שבו קורה השינוי: איך הוא מחזיק את עצמו כשאין אישור חיצוני מיידי.</p>
-        </div>
-        <div class="pb-diff">
-          <p class="pb-diff-title">What Baderech Does Differently</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> שלוט בתזמון כדי לנצח.<br><strong>בדרך.:</strong> היה ברור ואמין; אם אתה מחשב כל שנייה — הבעיה היא הוויסות הפנימי שלך, לא הטיימינג.</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> אל תיראה נזקק.<br><strong>בדרך.:</strong> אל תהיה תלוי — וזה שונה. עצמאות רגשית אמיתית, לא הצגה של ריחוק.</p>
-        </div>
-        <div class="pb-experiment">
-          <p class="pb-experiment-title">ניסוי אחד (20–30 דקות)</p>
-          <p>שלח הודעה אמיתית שרצית לשלוח (לאו דווקא רומנטי) בלי לחשב תזמון, ואל תבדוק את הטלפון 30 דקות. עַבֵּד: מה מהחרדה קשור לאדם השני, ומה קשור לסיפור שאתה מספר לעצמך על עצמך?</p>
-        </div>
-        </div>
-      </details>
-  
-      <details class="pb-domain" id="dom-boundaries">
-        <summary class="pb-domain-summary">
-          <span>גבולות</span>
-          <span class="pb-domain-summary-meta"><span class="pb-domain-pill">מחקר עומק</span></span>
-        </summary>
-        <div class="pb-domain-body">
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">1 · למה זה חשוב</p>
-          <p>גבולות הם ביטוי ישיר של ערך עצמי. Nedra Glover Tawwab מגדירה אותם כציפיות, כללים וצרכים שעוזרים להרגיש בטוח ונוח, ומזהה 6 סוגים: פיזי, מיני, אינטלקטואלי, רגשי, חומרי וזמן [קונצנזוס קליני]. בלי גבולות, קשר בדייטינג מתדרדר לזירת ריצוי.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">2 · מה כל המומחים מסכימים עליו</p>
-          <p>גבולות צריכים להיאמר במפורש — אנשים לא יכולים לנחש אותם (Tawwab) <span class="pb-tag pb-tag--consensus">קונצנזוס</span>; "לא" הוא לגיטימי ומגן — אצל Chris Voss, "לא" הוא נקודת פתיחה שמעניקה לצד השני תחושת ביטחון [קונצנזוס/פרקטיקה]; גבול בריא כולל כבוד גם לעצמך וגם לאחר (William Ury) <span class="pb-tag pb-tag--consensus">קונצנזוס</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">3 · איפה הם חלוקים</p>
-          <p>בין הגישה הטיפולית (Tawwab — גבול כהצהרת צורך אסרטיבית, חד-צדדית) לגישה הנגוציאטורית (Voss — גבול כתהליך משותף דרך שאלות מכוילות). המחלוקת: עד כמה גבול הוא הצהרה מול תהליך.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">4 · טעויות נפוצות</p>
-          <p>לבלבל בין גבול (מה *אני* אעשה) לאולטימטום (ניסיון לשלוט באחר); להתנצל על גבול; לשתוק ואז להתפוצץ; לצפות שאחרים "יקראו מחשבות".</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">5 · תרגילים חוזרים</p>
-          <p>משפטים אסרטיביים בגוף ראשון (Tawwab); מבנה "Yes! No. Yes?" של Ury — תחילה אישור ה"כן" הפנימי (הערך שאתה מגן עליו), אחר כך "לא" ברור, ולבסוף הצעת "כן?" חלופי; שאלות מכוילות של Voss ("How am I supposed to do that?").</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">6 · מיתוסים שהופרכו</p>
-          <p>"גבולות פוגעים בקשר" — הפוך: "לא" מייצר ביטחון, ומערכת העצבים לומדת בהדרגה שגבול הוא בטוח [קונצנזוס קליני]. "אמפתיה = הסכמה" — מופרך: אמפתיה טקטית מבינה את רגש הצד השני בלי לוותר על העמדה (Voss) [פרקטיקה].</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">7 · סיפורים אמיתיים</p>
-          <p>ה"Positive No" של Ury נשען על מנהיגים כמו רוזה פארקס, מנדלה וגנדי. ציטוט מכונן (גנדי): "'לא' שנאמר מתוך שכנוע עמוק טוב וגדול מ'כן' שנאמר רק כדי לרצות" [עדות היסטורית]. Ury: "'כן' בלי 'לא' הוא פייסנות; 'לא' בלי 'כן' הוא מלחמה" <span class="pb-tag pb-tag--consensus">קונצנזוס</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">8 · שאלות ללקוח</p>
-          <p>מתי אמרת "כן" והתכוונת "לא"? מה אתה חושש שיקרה אם תגיד "לא"? על מי הכי קשה לך לשמור גבול? מהו ה"כן" שמסתתר מאחורי ה"לא" שלך (Ury)?</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">9 · מה אפשר למדוד</p>
-          <p>מספר הפעמים שאמר "לא" כשהתכוון לכך; משך הזמן עד שהביע צורך; רמת אשמה אחרי הצבת גבול (1–10).</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">10 · איך אדע שהתקדם</p>
-          <p>הוא מציב גבול בלי אשמה משתקת ובלי תוקפנות; ה"לא" שלו נשען על "כן" פנימי ברור; הוא כבר לא צריך אותי כדי לאשר לעצמו שמותר לו.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">11 · חיבור לפילוסופיית "בדרך."</p>
-          <p>גבולות הם המבחן האולטימטיבי ל"האם זה מחזיק בלעדיי" — הם הביטוי של אחריות וערך עצמי, לא של הצלחה בדייט.</p>
-        </div>
-        <div class="pb-diff">
-          <p class="pb-diff-title">What Baderech Does Differently</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> הצב גבולות כדי לשלוט בקשר.<br><strong>בדרך.:</strong> הצב גבולות כדי לדעת מי אתה — הגבול הוא הצהרת זהות, לא נשק.</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> 'לא' מרחיק אנשים.<br><strong>בדרך.:</strong> 'לא' אמיתי מקרב את האנשים הנכונים ומסנן את הלא-נכונים.</p>
-        </div>
-        <div class="pb-experiment">
-          <p class="pb-experiment-title">ניסוי אחד (20–30 דקות)</p>
-          <p>בשיחה אמיתית ב-24 השעות הקרובות, אמור "לא" קטן אחד שבדרך כלל היית אומר עליו "כן" מתוך ריצוי (מבנה Ury: אשר צורך → סרב בבהירות → הצע חלופה אם רלוונטי). עַבֵּד: מה הרגשת בגוף? מה קרה בפועל מול מה שדמיינת?</p>
-        </div>
-        </div>
-      </details>
-  
-      <details class="pb-domain" id="dom-reading">
-        <summary class="pb-domain-summary">
-          <span>קריאת אנשים</span>
-          <span class="pb-domain-summary-meta"><span class="pb-domain-pill">מחקר עומק</span></span>
-        </summary>
-        <div class="pb-domain-body">
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">1 · למה זה חשוב</p>
-          <p>קריאת אנשים מדויקת מונעת גם פרשנות-חסר (החמצת עניין) וגם פרשנות-יתר (חרדה מדומיינת). בני אדם קוראים "פרוסות דקות" של התנהגות בדיוק מפתיע (Ambady & Rosenthal, 1992) <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">2 · מה כל המומחים מסכימים עליו</p>
-          <p>שיפוט מהיר של פרוסות התנהגות קצרות (פחות מ-5 דקות) מנבא תוצאות אמיתיות בדיוק של כ-70% <span class="pb-tag pb-tag--research">מחקר</span>; אמפתיה טקטית עדיפה על ניחוש (Voss) [פרקטיקה]; קריאה טובה נשענת על סקרנות ונוכחות, לא "פיצוח" מניפולטיבי <span class="pb-tag pb-tag--consensus">קונצנזוס</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">3 · איפה הם חלוקים</p>
-          <p>אינטואיציה מהירה — אמינה (Gladwell, "Blink") או מטעה? מחקר מראה ששיפוט נעשה פחות מדויק כשמתלבטים (Ambady, 2010), אך גם ש"חוכמת ההמונים" (ממוצע שיפוטים) עדיפה על שיפוט יחיד <span class="pb-tag pb-tag--research">מחקר</span>. Gladwell עצמו מזהיר מ"טעות וורן הרדינג" — הסקת כשירות ממראה מרשים.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">4 · טעויות נפוצות</p>
-          <p>השלכת משמעות על אות בודד; "טעות וורן הרדינג" (מראה מרשים = כשירות); התעלמות מהקשר; פרשנות-יתר שנובעת מחרדה עצמית ולא מהאדם ממול.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">5 · תרגילים חוזרים</p>
-          <p>"Labeling" (Voss) — "נראה ש..." לאימות רגש; שאלות מכוילות פתוחות; תצפית בלי מסקנה (רק לתאר את מה שקורה); בדיקת השערה מול הצטברות אותות, לא אות בודד.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">6 · מיתוסים שהופרכו</p>
-          <p>"93% מהתקשורת לא-מילולית" (כלל 7-38-55 של Mehrabian) — מיתוס: Mehrabian עצמו הבהיר שהנוסחה חלה רק על מסרים של רגשות/עמדות שבהם המילים סותרות את הטון, לא על תקשורת בכלל <span class="pb-tag pb-tag--research">מחקר</span>. "אפשר לזהות שקר בוודאות משפת גוף" — לא נתמך היטב במחקר.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">7 · סיפורים אמיתיים</p>
-          <p>מחקר "Half a Minute" (Ambady & Rosenthal, 1993): שלושה קטעי וידאו אילמים בני 10 שניות (30 שניות בסך הכול) של 13 מורים דורגו על ידי צופים זרים; הדירוגים נותרו במתאם מובהק עם הערכות התלמידים בסוף הסמסטר — גם לאחר בקרה על מושכות פיזית <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">8 · שאלות ללקוח</p>
-          <p>מתי לאחרונה "קראת" מישהו לא נכון? האם אתה נוטה לפרשנות-חסר או פרשנות-יתר? כמה מהמסקנות שלך על אנשים מבוססות על אות אחד בלבד?</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">9 · מה אפשר למדוד</p>
-          <p>דיוק הניבוי (השערה מול מציאות שהתבררה); יחס תיאור-למסקנה; מספר האותות שנאספו לפני הסקת מסקנה.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">10 · איך אדע שהתקדם</p>
-          <p>הוא מפריד בין תצפית לפרשנות; שואל במקום להניח; מזהה מתי החרדה שלו צובעת את מה שהוא "רואה".</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">11 · חיבור לפילוסופיית "בדרך."</p>
-          <p>קריאת אנשים היא ביטוי של סקרנות ונוכחות. היא גם מאמנת את ההבחנה בין מה שבשליטתי (תשומת הלב שלי) למה שלא (מה שקורה בתוך האחר).</p>
-        </div>
-        <div class="pb-diff">
-          <p class="pb-diff-title">What Baderech Does Differently</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> למד לפצח אנשים כדי לקבל יתרון.<br><strong>בדרך.:</strong> היה סקרן כלפי אנשים כדי להיות נוכח — הקריאה היא תוצר של עניין אמיתי, לא מניפולציה.</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> האינסטינקט הראשון תמיד צודק.<br><strong>בדרך.:</strong> האינסטינקט הוא השערה; אסוף אותות והבחן בין מה שראית למה שהחרדה שלך המציאה.</p>
-        </div>
-        <div class="pb-experiment">
-          <p class="pb-experiment-title">ניסוי אחד (20–30 דקות)</p>
-          <p>בבית קפה, התבונן 25 דקות בזוג או באדם, ורשום בעמודה אחת רק תצפיות (מה עשה בפועל), ובעמודה נפרדת פרשנויות. ספור כמה פעמים קפצת ישר למסקנה. עַבֵּד: היכן הרצון או החרדה שלך צבע את מה ש"ראית"?</p>
-        </div>
-        </div>
-      </details>
-  
-      <details class="pb-domain" id="dom-firstdate">
-        <summary class="pb-domain-summary">
-          <span>דייט ראשון</span>
-          <span class="pb-domain-summary-meta"><span class="pb-domain-pill">מחקר עומק</span></span>
-        </summary>
-        <div class="pb-domain-body">
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">1 · למה זה חשוב</p>
-          <p>הדייט הראשון הוא הזירה שבה הפער חוץ-פנים נחשף במלואו. עניין רומנטי תלוי ביצירת רושם חיובי יותר מרושם מדויק (Human et al., 569 רווקים בשני מחקרי speed-dating) <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">2 · מה כל המומחים מסכימים עליו</p>
-          <p>נוכחות וקשב מלא חשובים יותר מ"ביצוע" מושלם <span class="pb-tag pb-tag--consensus">קונצנזוס</span>; קשר עין הדדי מנבא דייט שני (Hoffmann et al., 2024) <span class="pb-tag pb-tag--research">מחקר</span>; שאלות המשך והתעניינות אמיתית מגבירות חיבה וסיכוי לדייט שני (Huang et al., Harvard, 2017) <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">3 · איפה הם חלוקים</p>
-          <p>דיוק מול חיוביות: Human et al. מצאו שניחוש מדויק של אישיות בן/בת הזוג דווקא הוריד את הסיכוי לדייט שני <span class="pb-tag pb-tag--research">מחקר</span> — בניגוד לאינטואיציה שחיבור פירושו "לראות מי הם באמת". קיימת גם מחלוקת על משקל בחירת המקום/הפעילות.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">4 · טעויות נפוצות</p>
-          <p>להתייחס לדייט כאל "מבחן" (מגביר חרדה, מוריד נוכחות); ראיון חד-צדדי במקום דו-שיח; שתייה/דיבור מוגזמים מתוך עצבים; מיקוד ב"האם אני מספיק טוב" במקום סקרנות כלפי האחר.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">5 · תרגילים חוזרים</p>
-          <p>שאלות פתוחות + שאלות המשך (Huang et al.); קשר עין רך; "36 השאלות" של Arthur Aron (1997) להעמקת קרבה דרך חשיפה עצמית מדורגת; מקום עם אור טבעי וישיבה פנים-אל-פנים.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">6 · מיתוסים שהופרכו</p>
-          <p>"צריך להרשים כדי להצליח" — הפוך: רושם חיובי ונוכחות מנצחים ביצוע <span class="pb-tag pb-tag--research">מחקר</span>. "צריך לשחק קשה-להשגה" — מורכב: אי-ודאות עשויה לעורר סקרנות אך לא בהכרח משיכה רומנטית אמיתית (Whitchurch et al., 2011) <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">7 · סיפורים אמיתיים</p>
-          <p>מחקר speed-dating של Hoffmann (2024, 60 נבדקים): קשר עין הדדי כמעט שילש את הרצון לדייט שני, לעומת עלייה צנועה בלבד ממשיכה נחזית <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">8 · שאלות ללקוח</p>
-          <p>האם אתה בא לדייט כדי לגלות את האחר, או כדי להיבחן? מתי בדייט הרגשת הכי נוכח? מה קורה לגוף שלך כשאתה חושב "האם אני מספיק טוב"?</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">9 · מה אפשר למדוד</p>
-          <p>יחס שאלות/הצהרות; מספר שאלות ההמשך; רמת נוכחות מדווחת-עצמית; זמן שהוקדש ל"איך אני נראה" מול לאחר.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">10 · איך אדע שהתקדם</p>
-          <p>הוא נהנה מהמפגש עצמו ולא רק מהתוצאה; שואל מתוך סקרנות; יוצא מדייט "כושל" בלי למוטט את ערכו העצמי — כי המדד הוא נוכחות ויוזמה, לא "דייט שני".</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">11 · חיבור לפילוסופיית "בדרך."</p>
-          <p>הדייט הוא שלב ה<strong>התנסות</strong> — עדות חיה ולא מדומה. תמיד לעבד אחריו: מה היה בשליטתו (נוכחות, יוזמה, סקרנות) ומה מזל/נסיבות.</p>
-        </div>
-        <div class="pb-diff">
-          <p class="pb-diff-title">What Baderech Does Differently</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> המטרה של דייט ראשון = להשיג דייט שני.<br><strong>בדרך.:</strong> המטרה = להיות נוכח ולגלות; דייט שני הוא תוצר לוואי, לא המדד.</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> הרשם אותה.<br><strong>בדרך.:</strong> התעניין בה — רושם חיובי ונוכחות מנצחים ביצוע מושלם.</p>
-        </div>
-        <div class="pb-experiment">
-          <p class="pb-experiment-title">ניסוי אחד (20–30 דקות)</p>
-          <p>בשיחה הבאה עם זר (לאו דווקא דייט), הצב מטרה יחידה: לשאול 3 שאלות המשך אמיתיות על מה שהוא אמר. שים לב מתי הדחף לדבר על עצמך גובר. עַבֵּד: מה קרה לחיבור כששאלת במקום להרשים?</p>
-        </div>
-        </div>
-      </details>
-  
-      <details class="pb-domain" id="dom-rejection">
-        <summary class="pb-domain-summary">
-          <span>פחד מדחייה</span>
-          <span class="pb-domain-summary-meta"><span class="pb-domain-pill">מחקר עומק</span></span>
-        </summary>
-        <div class="pb-domain-body">
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">1 · למה זה חשוב</p>
-          <p>דחייה מפעילה את אותם אזורי מוח כמו כאב פיזי (Guy Winch, "Emotional First Aid") <span class="pb-tag pb-tag--research">מחקר</span> — ולכן היא "עמידה בפני היגיון". הפחד מדחייה — יותר מהדחייה עצמה — לרוב החסם המרכזי.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">2 · מה כל המומחים מסכימים עליו</p>
-          <p>דחייה כואבת ביולוגית — לא חולשה <span class="pb-tag pb-tag--research">מחקר</span>; חשיפה הדרגתית מפחיתה רגישות (Jia Jiang, "Rejection Therapy") [עדות + עקרון קליני]; "אפקט הזרקור" — אנחנו מעריכים ביתר כמה אחרים שמים לב אלינו (Gilovich, Medvec & Savitsky, 2000) <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">3 · איפה הם חלוקים</p>
-          <p>בין דה-סנסיטיזציה התנהגותית (Jiang — לחפש דחייה באופן אקטיבי) לטיפול קוגניטיבי-רגשי (Winch — "עזרה ראשונה רגשית", טיפול בפצע). המחלוקת: האם חשיפה חוזרת מספיקה, או שנדרש גם עיבוד רגשי.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">4 · טעויות נפוצות</p>
-          <p>הימנעות (מזינה את הפחד); הכללת-יתר ("נדחיתי, אז אני דחוי"); לקיחת דחייה כעדות על ערך עצמי; "רומינציה" — לעיסה חוזרת שמעמיקה את הפצע (Winch).</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">5 · תרגילים חוזרים</p>
-          <p>חשיפה מדורגת / "דיאטת דחייה" (Jiang); שאלת "למה?" בעדינות אחרי "לא" (לעיתים הופך "לא" ל"כן" ותמיד מספק מידע); מבחן מציאות לאפקט הזרקור; "עזרה ראשונה רגשית" — טיפול פעיל בפצע.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">6 · מיתוסים שהופרכו</p>
-          <p>"אם אתעלם, זה יעבור" — מופרך: פצעים רגשיים לא-מטופלים "מזדהמים" (Winch) <span class="pb-tag pb-tag--research">מחקר</span>. "כולם שמו לב לכישלון שלי" — מופרך: אפקט הזרקור מראה שאנשים ממוקדים בעצמם <span class="pb-tag pb-tag--research">מחקר</span>. "Fake it till you make it" — "בדרך." דוחה זאת מפורשות.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">7 · סיפורים אמיתיים</p>
-          <p>Jia Jiang — 100 ימי דחייה יזומה; בקשת דונאטס בצורת טבעות אולימפיות מ-Krispy Kreme זכתה ל"כן". הרצאת ה-TED שלו מדורגת בטופ 200 מתוך כ-60,000 הרצאות; הסתיים עם 51 "כן" מול 49 "לא" <span class="pb-tag pb-tag--anecdote">עדות</span>. במקביל, בניסוי הקלאסי של Winch — גם כשאמרו לנבדקים שהדחייה מבוימת לחלוטין, הכאב לא נעלם <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">8 · שאלות ללקוח</p>
-          <p>מה אתה אומר לעצמך מיד אחרי "לא"? מהי הדחייה הכי גדולה שאתה נמנע מלסכן? כמה מהסיפור "כולם ראו" הוא עובדה, וכמה דמיון?</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">9 · מה אפשר למדוד</p>
-          <p>מספר ה"בקשות/יוזמות" בשבוע (גם אם נדחו); זמן ההתאוששות אחרי דחייה; עוצמת ההכללה ("אני דחוי" מול "זה פשוט לא הסתדר").</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">10 · איך אדע שהתקדם</p>
-          <p>הוא יוזם למרות הפחד; מתאושש מהר יותר; מפריד בין "נדחיתי" ל"אני חסר ערך" — היוזמה עצמה היא המדד, לא התוצאה.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">11 · חיבור לפילוסופיית "בדרך."</p>
-          <p>פחד מדחייה הוא לב-ליבו של הפער חוץ-פנים. ההתקדמות נמדדת ביוזמה ואחריות — לא ב"כמה פעמים אמרו כן". תמיד להפריד: מה היה בשליטתו (שיזם) ממה שלא (התשובה שקיבל).</p>
-        </div>
-        <div class="pb-diff">
-          <p class="pb-diff-title">What Baderech Does Differently</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> תפתח עור עבה / אל תיקח ללב.<br><strong>בדרך.:</strong> דחייה כואבת באמת — נטפל בפצע, לא נעמיד פנים שאין כאב.</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> פחות דחיות = הצלחה.<br><strong>בדרך.:</strong> יותר יוזמות = הצלחה. המדד הוא שיזמת, לא שאמרו כן.</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> העמד פנים שאתה בטוח.<br><strong>בדרך.:</strong> בנה ביטחון אמיתי דרך התנסות מעובדת — לא "fake it till you make it".</p>
-        </div>
-        <div class="pb-experiment">
-          <p class="pb-experiment-title">ניסוי אחד (20–30 דקות)</p>
-          <p>בקש בקשה קטנה שסביר שתידחה (הנחה בחנות, טובה קטנה מזר). המטרה — לספוג "לא", לא לקבל "כן". אחרי הדחייה, שאל בעדינות "למה?". עַבֵּד: כמה כאב זה גרם בפועל, מול כמה חששת מראש?</p>
-        </div>
-        </div>
-      </details>
-  
-      <details class="pb-domain" id="dom-energy">
-        <summary class="pb-domain-summary">
-          <span>אנרגיה</span>
-          <span class="pb-domain-summary-meta"><span class="pb-domain-pill">מחקר עומק</span></span>
-        </summary>
-        <div class="pb-domain-body">
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">1 · למה זה חשוב</p>
-          <p>נוכחות היא מרכיב הליבה של כריזמה. Olivia Fox Cabane ("The Charisma Myth") מזהה שלושה מרכיבים: נוכחות, עוצמה וחמימות <span class="pb-tag pb-tag--consensus">קונצנזוס</span>. רגשות "מדבקים" — אנשים קולטים אוטומטית את מצב הרוח של הסובבים ("emotional contagion", Hatfield, Cacioppo & Rapson) <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">2 · מה כל המומחים מסכימים עליו</p>
-          <p>כריזמה נלמדת, לא מולדת (Cabane) <span class="pb-tag pb-tag--consensus">קונצנזוס</span>; נוכחות = תשומת לב מלאה לרגע, וזה מה שהופך אותך לבלתי נשכח <span class="pb-tag pb-tag--consensus">קונצנזוס</span>; האיזון בין עוצמה לחמימות הוא המפתח — עוצמה בלי חמימות נתפסת כקרה; חמימות בלי עוצמה נתפסת ככניעה <span class="pb-tag pb-tag--consensus">קונצנזוס</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">3 · איפה הם חלוקים</p>
-          <p>מקור הנוכחות: Cabane — מצבים מנטליים פנימיים (מיינדפולנס) יוצרים נוכחות מבפנים החוצה. הגישה ההתנהגותית ("power posing" של Amy Cuddy) טענה שתנוחה חיצונית יוצרת מצב פנימי — אך זו הופרכה (ראו מיתוסים). המחלוקת: פנים-החוצה מול חוץ-פנימה.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">4 · טעויות נפוצות</p>
-          <p>בדיקת טלפון (Van Edwards: זו "שפת גוף של מפסיד" בשוגג — כיווץ כתפיים והורדת סנטר); ריבוי משימות שמנפץ נוכחות; ניסיון "לשדר ביטחון" מזויף שנקלט כחרדה; מיקוד בעצמך במקום באחר.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">5 · תרגילים חוזרים</p>
-          <p>מיינדפולנס / חזרה לנשימה כשהמחשבה נודדת (Cabane); הרמת המבט מהטלפון בזמן המתנה (Van Edwards); ויסות טון קול לנמוך ורגוע; תרגול הקשבה מלאה.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">6 · מיתוסים שהופרכו</p>
-          <p>"Power posing" — הופרך: מטה-אנליזה וגיליון מיוחד ב-*Comprehensive Results in Social Psychology* (2017, 11 מחקרים) לא שחזרו את האפקט; Dana Carney, מחברת המחקר המקורי, כתבה מפורשות שאינה מאמינה עוד באפקטים אלה <span class="pb-tag pb-tag--research">מחקר</span>. "כריזמה מולדת" — הופרך (Cabane) <span class="pb-tag pb-tag--consensus">קונצנזוס</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">7 · סיפורים אמיתיים</p>
-          <p>מחקר Sigal Barsade, "The Ripple Effect" (2002): קונפדרט בודד שהביע מצב רוח מסוים "הדביק" את כל הקבוצה — אומת גם על ידי מקודדים חיצוניים וגם בדיווח עצמי; מצב רוח חיובי הגביר שיתוף פעולה, הוריד קונפליקט ושיפר ביצוע נתפס <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">8 · שאלות ללקוח</p>
-          <p>מתי אתה מרגיש הכי נוכח? מה מוציא אותך מהרגע? איזו אנרגיה אתה מכניס לחדר — ומאיפה היא באה? מתי אתה "מבצע" נוכחות במקום פשוט להיות נוכח?</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">9 · מה אפשר למדוד</p>
-          <p>משך הנוכחות הרצוף בשיחה בלי היסח; תדירות בדיקת הטלפון בסיטואציה חברתית; משוב מאחרים על "איך זה להיות לידך".</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">10 · איך אדע שהתקדם</p>
-          <p>אנשים מרגישים מוקשבים לידו; הוא נוכח בלי מאמץ מלאכותי; האנרגיה שלו נובעת ממצב פנימי אמיתי ולא מהצגה — היא מחזיקה גם בלעדיי.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">11 · חיבור לפילוסופיית "בדרך."</p>
-          <p>אנרגיה היא שלב ה<strong>נוכחות</strong> — איך הוא תופס מקום. "בדרך." דוחה נוכחות מזויפת (fake it) לטובת נוכחות שנובעת מיישור פנימי. כשמתרחשת עדות חיה של השפעת האנרגיה שלו על קבוצה — יש לעבד: מה השפיע בפועל, ומה היו נסיבות.</p>
-        </div>
-        <div class="pb-diff">
-          <p class="pb-diff-title">What Baderech Does Differently</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> עמוד בתנוחת כוח / שדר ביטחון.<br><strong>בדרך.:</strong> נוכחות נובעת ממצב פנימי אמיתי — power posing הופרך; אנחנו בונים נוכחות מבפנים.</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> אנרגיה = להיות אקסטרוברט רועש.<br><strong>בדרך.:</strong> אנרגיה = תשומת לב מלאה; גם מופנם יכול להיות נוכח בעוצמה.</p>
-        </div>
-        <div class="pb-experiment">
-          <p class="pb-experiment-title">ניסוי אחד (20–30 דקות)</p>
-          <p>נהל שיחה של 20 דקות עם מישהו כשהטלפון בכיס (לא על השולחן) ואתה מתמקד אך ורק במה שהוא אומר. כשהמחשבה נודדת — חזור לנשימה. עַבֵּד: מתי הרגשת דחף להיסח? איך הגיב האדם השני לנוכחות המלאה שלך?</p>
-        </div>
-        </div>
-      </details>
-  
-      <details class="pb-domain" id="dom-conversations">
-        <summary class="pb-domain-summary">
-          <span>שיחות</span>
-          <span class="pb-domain-summary-meta"><span class="pb-domain-pill">מחקר עומק</span></span>
-        </summary>
-        <div class="pb-domain-body">
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">1 · למה זה חשוב</p>
-          <p>שיחה היא הכלי המרכזי לבניית קשר. Celeste Headlee (TED) מזהה: כנות, קיצור, בהירות והרבה הקשבה. שאלות מגבירות חיבה (Huang et al., Harvard) <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">2 · מה כל המומחים מסכימים עליו</p>
-          <p>הקשבה אמיתית גוברת על דיבור מרשים (Headlee; Carl Rogers) <span class="pb-tag pb-tag--consensus">קונצנזוס</span>; חשיפה עצמית הדדית ומדורגת מייצרת קרבה (Aron; Sprecher et al., 2013) <span class="pb-tag pb-tag--research">מחקר</span>; שאלות המשך מגבירות חיבה וסיכוי לדייט שני (Huang et al.) <span class="pb-tag pb-tag--research">מחקר</span>; "היה מעוניין באחרים" — העיקרון המאחד את כל הכללים (Headlee) <span class="pb-tag pb-tag--consensus">קונצנזוס</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">3 · איפה הם חלוקים</p>
-          <p>מבנה/טכניקה (Van Edwards — נקודות פתיחה מתוכננות) מול ספונטניות (Headlee — "אל תיאחז בשאלות ששיננת; הקשב וזוז עם השיחה"). קיימת גם מחלוקת על תפקיד ה-small talk — מכשול מול גשר הכרחי.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">4 · טעויות נפוצות</p>
-          <p>להקשיב כדי להשיב ולא כדי להבין (Stephen Covey, מצוטט אצל Headlee); "pontificating" (הצהרת דעה בלי פתיחות); ריבוי משימות; חשיפה חד-צדדית (מונולוג, או מוקדם מדי); שאלות בלי שאלות המשך.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">5 · תרגילים חוזרים</p>
-          <p>שאלות פתוחות + שאלות המשך (Huang, Headlee, Van Edwards); חשיפה הדדית בתורות (Sprecher); "mirroring" ו-"labeling" (Voss) להעמקת השיחה; הקשבה רפלקטיבית (Rogers & Farson, 1957 — לשקף במילים שלך מה האחר התכוון, כדי לאמת הבנה).</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">6 · מיתוסים שהופרכו</p>
-          <p>"כלל 7-38-55" (93% לא-מילולי) — מיתוס ש-Mehrabian עצמו הבהיר שאינו חל על תקשורת בכלל <span class="pb-tag pb-tag--research">מחקר</span>. "מי ששואל שאלות נראה חלש או סקרן מדי" — הופרך: שואלי שאלות המשך נחבבים יותר (Huang et al.) <span class="pb-tag pb-tag--research">מחקר</span>. "פשוט תדבר יותר בביטחון" — הפוך: ההקשבה, לא הדיבור, יוצרת קרבה.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">7 · סיפורים אמיתיים</p>
-          <p>מחקר Sprecher (2013, 78 זוגות זרים): חשיפה עצמית בתורות (הדדיות מיידית) הביאה ליותר חיבה, קרבה ודמיון נתפס מאשר חשיפה חד-צדדית — גם אחרי שהצד המקשיב "השלים" תור בשלב מאוחר יותר <span class="pb-tag pb-tag--research">מחקר</span>. מחקר Huang, Yeomans, Brooks, Minson & Gino (2017): בניתוח שיחות speed-dating, מי ששאל יותר שאלות המשך זכה ליותר "כן" לדייט שני; שאלה נוספת אחת בכל דייט הייתה מביאה בממוצע ל"כן" נוסף אחד <span class="pb-tag pb-tag--research">מחקר</span>.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">8 · שאלות ללקוח</p>
-          <p>אתה מקשיב כדי להבין או כדי להשיב? מתי לאחרונה שאלת שאלת המשך אמיתית? מתי אתה נוטה למונולוג? מה קשה לך יותר — לחשוף או להקשיב?</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">9 · מה אפשר למדוד</p>
-          <p>יחס דיבור/הקשבה; מספר שאלות ההמשך בשיחה; מאזן החשיפה ההדדית; זמן עד להפרעה (interruption) של האחר.</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">10 · איך אדע שהתקדם</p>
-          <p>האדם השני מדבר יותר ומרגיש מובן; הוא שואל מתוך סקרנות אמיתית; שיחות מגיעות לעומק בלי מאמץ — הוא לא צריך "תסריט".</p>
-        </div>
-        <div class="pb-domain-part">
-          <p class="pb-domain-part-num">11 · חיבור לפילוסופיית "בדרך."</p>
-          <p>שיחה טובה היא ביטוי של סקרנות ונוכחות. כשמושג מופשט "נתקע" אצל הלקוח — "בדרך." לא מסביר עוד, אלא הופך לעד חי. שיחה טובה בונה עצמאות: כלי שמחזיק גם בלי המאמן.</p>
-        </div>
-        <div class="pb-diff">
-          <p class="pb-diff-title">What Baderech Does Differently</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> למד מה להגיד כדי להישמע מעניין.<br><strong>בדרך.:</strong> למד להתעניין — מי ששואל ומקשיב נחבב יותר ממי שרק מרשים.</p>
-          <p class="pb-diff-row"><strong>רוב העולם:</strong> שלוט בשיחה.<br><strong>בדרך.:</strong> היה סקרן בשיחה; חשיפה הדדית וסקרנות בונות קרבה, לא שליטה.</p>
-        </div>
-        <div class="pb-experiment">
-          <p class="pb-experiment-title">ניסוי אחד (20–30 דקות)</p>
-          <p>נסה את "כלל התור" של Sprecher: על כל דבר שאתה חושף על עצמך, שאל שאלת המשך אחת על האחר, לאורך כל השיחה. עַבֵּד: איך השתנתה השיחה? מתי היה לך קשה לתת לאחר מקום?</p>
-        </div>
-        </div>
-      </details>
-  
-      <div class="pb-methodnote">
-        <h3>הערות מתודולוגיות חוצות-תחומים</h3>
-        <p><strong>מגבלות ומחלוקות פתוחות:</strong> חלק מהמחקרים (טקסטינג, playing hard to get) נערכו על תרחישים בדיוניים או במעבדה — יש להתייחס בזהירות בהעברה למציאות. אפקט ההילה ו-enclothed cognition עברו ביקורת שחזור חלקית. ממצא שאלות ההמשך (Huang) זכה לביקורת מתודולוגית ולתגובת-נגד — הכיוון נתמך היטב אך אינו נטול מחלוקת. Power posing הופרך במפורש — אין להשתמש בו כטכניקה. נתוני Hinge הם נתוני אפליקציה מסחרית, לא מחקר עמיתים.</p>
-        <p><strong>חוט השדרה של "בדרך.":</strong> בכל התחומים, המדד האמיתי להתקדמות אינו "הצלחה בדייט" אלא אחריות, סקרנות, נוכחות, יוזמה ומודעות עצמית. הזירה הדייטינגית רק חושפת את הפער חוץ-פנים; היא אינה השורש. עדות חיה ולא-מבוימת עדיפה תמיד על תרגיל מתוכנן — ותמיד יש לעבד אותה, תוך הפרדה מפורשת בין מה שהיה בשליטת הלקוח לבין מה שהיה מזל. המבחן לכל החלטה מתודולוגית: <strong>"האם זה בונה משהו שמחזיק בלעדיי?"</strong></p>
-      </div>
-  </section>
+3. שליטה מול מזל              (10 דק')
+   מה מהשינוי היה בשליטתו. מה היה נסיבות. בקול רם, כמו תמיד.
 
-  <!-- ============================================================ -->
-  <!-- 06 · CASE STUDIES -->
-  <!-- ============================================================ -->
-  <section id="cases" class="pb-chapter">
-    <div class="pb-chapter-num">06</div>
-    <h1 class="pb-chapter-title">Case Studies</h1>
-    <p class="pb-chapter-lede">תבנית קבועה לכל לקוח. להעתיק את כל הבלוק לכל לקוח חדש.</p>
+4. ספר התובנות שלו            (20 דק')
+   הוא כותב 5–7 עקרונות משלו. במילים שלו. לא של &quot;בדרך.&quot;.
+   ← זה התוצר הפיזי של התהליך.
 
-    <article class="pb-case">
-      <h3 class="pb-case-name">עידן <span class="pb-case-status">בתהליך — עדכני נכון למפגש 3</span></h3>
-      <div class="pb-case-grid">
-        <div><label>לפני</label><p>סקפטי, מתקשה לענות על שאלות בסיסיות על עצמו ("מה אתה רוצה", "מה החסרונות שלך"). לא רואה את עצמו כשווה.</p></div>
-        <div><label>אחרי</label><p><em>עוד לא רלוונטי — התהליך בעיצומו.</em></p></div>
-        <div><label>נקודת מפנה (עד כה)</label><p>תרגיל המראה במפגש 1; הדוגמה האישית (קעקועים) במפגש 2 — שני הרגעים שבהם מופשט הפך למוחשי.</p></div>
-        <div><label>מה עבד</label><p>מעבר מהיר מהסבר תיאורטי לעדות/דוגמה אישית כשנתקל בקיר. חשיפה לרגע חברתי לא-מבוים (בר).</p></div>
-        <div><label>מה לא עבד / עדיין לא</label><p>תפיסות חשיבה מוטעות עדיין נמצאות. פער בין ידע קוגניטיבי לביסוס בגוף.</p></div>
-        <div><label>מה למדתי</label><p>שינוי משמעותי קרה בפער שבין מפגשים, לא רק בתוכם — צריך לכבד את הזמן הזה, לא רק את הזמן המשותף.</p></div>
-      </div>
-    </article>
+5. הצוואר הבא                 (10 דק')
+   הוא מנסח. אני לא מציע. גם אם אני רואה משהו אחר.
 
-    <article class="pb-case pb-case--empty">
-      <h3 class="pb-case-name">— הלקוח הבא —</h3>
-      <p class="pb-note">כשיתחיל תהליך חדש, כאן ייכנס case study נוסף, באותו מבנה בדיוק.</p>
-    </article>
-  </section>
+6. תרחיש הכישלון              (10 דק')
+   &quot;בפעם הראשונה שזה ייפול — מה תעשה, בלי לכתוב לי?&quot;
+   ← לתת לו לענות עד הסוף. זה המבחן האמיתי.
 
-  <!-- ============================================================ -->
-  <!-- 07 · PROGRESS TRACKER -->
-  <!-- ============================================================ -->
-  <section id="tracker" class="pb-chapter">
-    <div class="pb-chapter-num">07</div>
-    <h1 class="pb-chapter-title">Progress Tracker</h1>
-    <p class="pb-chapter-lede">לא לפי הצלחות עם נשים. לפי שמונה ממדים פנימיים. למלא/לעדכן אחרי כל מפגש.</p>
+7. גבולות הקשר מכאן           (5 דק')
+   מה כן ומה לא. תאריך Follow-up. בכתב.
+</code></pre>
+<p><strong>מה לא עושים במפגש הסיום:</strong> לא מלמדים דבר חדש. לא פותחים צוואר חדש. לא מייצרים סיבה להמשיך.</p>
+<h2 id="125--Follow-up">12.5 — Follow-up</h2>
+<p><strong>מתי:</strong> חודש. ואם רלוונטי — עוד פעם אחת בשלושה חודשים. לא יותר, אלא אם הוא יוזם.</p>
+<p><strong>ארבע שאלות. שיחה של 20 דקות, לא מפגש.</strong></p>
+<ol>
+<li>מה קרה מאז?</li>
+<li>מה נשבר, ומה עשית?</li>
+<li>מה מהדברים שדיברנו עליהם אתה עוד משתמש בו — ומה נשר?</li>
+<li>על מה אתה עובד עכשיו לבד?</li>
+</ol>
+<p><strong>מה אני מחפש:</strong> האם הוא ממשיך להריץ מחזורים בלעדיי, ומה מהמערכת שרד. שאלה 3 היא המשוב הכי כנה שאקבל על ה-Playbook כולו — <strong>מה שנשר, נשר כי הוא היה שלי ולא שלו.</strong></p>
+<p><strong>מה שאסור:</strong> להפוך את ה-Follow-up לפתיחה של תהליך חדש. אם צריך תהליך חדש — זה חוזה חדש, עם שער 0 מחדש.</p>
+<hr />
+</section>
+<section id="sec-13--Case-Notes-Template"><h1 id="13--Case-Notes-Template">13 — Case Notes Template</h1>
+<p><strong>להעתיק את כל הבלוק לכל אדם חדש. זה הקובץ החי. ה-Playbook הוא רק ההוראות.</strong></p>
+<pre><code>════════════════════════════════════════
+אדם:                    התחלנו:
+מפגשים עד כה:           STAGE נוכחי:
+════════════════════════════════════════
 
-    <div class="pb-tracker">
-      <div class="pb-tracker-client">עידן — נכון למפגש 3</div>
-      <div class="pb-tracker-grid">
-        <div class="pb-tracker-row"><span>אחריות</span><div class="pb-bar"><div class="pb-bar-fill" style="width:55%"></div></div></div>
-        <div class="pb-tracker-row"><span>סקרנות</span><div class="pb-bar"><div class="pb-bar-fill" style="width:60%"></div></div></div>
-        <div class="pb-tracker-row"><span>נוכחות</span><div class="pb-bar"><div class="pb-bar-fill" style="width:65%"></div></div></div>
-        <div class="pb-tracker-row"><span>ביטחון פנימי</span><div class="pb-bar"><div class="pb-bar-fill" style="width:45%"></div></div></div>
-        <div class="pb-tracker-row"><span>יוזמה</span><div class="pb-bar"><div class="pb-bar-fill" style="width:35%"></div></div></div>
-        <div class="pb-tracker-row"><span>התנסויות</span><div class="pb-bar"><div class="pb-bar-fill" style="width:20%"></div></div></div>
-        <div class="pb-tracker-row"><span>עצמאות</span><div class="pb-bar"><div class="pb-bar-fill" style="width:10%"></div></div></div>
-        <div class="pb-tracker-row"><span>מודעות עצמית</span><div class="pb-bar"><div class="pb-bar-fill" style="width:50%"></div></div></div>
-      </div>
-      <p class="pb-note">↳ האומדנים למעלה הם הערכה ראשונית שלך, לא מדע מדויק. הערך שלהם הוא במעקב לאורך זמן (האם זה עולה מפגש אחר מפגש), לא במספר עצמו.</p>
-    </div>
-  </section>
+── שער 0 — התאמה ומסגור ──
+מה הוא מבקש:
+מה אני חושד שהוא צריך:
+מה התהליך כן:
+מה התהליך לא:
+דגלים (מצוקה / תלות / ציפייה לתוצאה מובטחת):
+החלטה: ממשיכים / לא מתאים / הפניה
 
-  <!-- ============================================================ -->
-  <!-- 08 · INSIGHT BOOK -->
-  <!-- ============================================================ -->
-  <section id="insights" class="pb-chapter">
-    <div class="pb-chapter-num">08</div>
-    <h1 class="pb-chapter-title">ספר התובנות</h1>
-    <p class="pb-chapter-lede">משפטים, עקרונות, סיפורים — כדי שלא ילכו לאיבוד. להוסיף כאן בכל פעם שמשהו קופץ, גם אם עוד לא ברור מה עושים איתו.</p>
+── Stage 1 — מיפוי ──
+הסיפור שלו במשפט אחד (בשפה שלו):
+3 סיטואציות קונקרטיות:
+איפה הוא ממקם את הסיבה:
+ההשערה הראשונה:            מה יפריך אותה:
+Stage Gate 1: ☐ תשובה אמיתית  ☐ השערה בפורמט  ☐ סיטואציה להסתכל בה  ☐ ניקוד אפס
 
-    <div class="pb-insights-list">
-      <div class="pb-insight"><p>מופשט שנתקל בקיר לא נפתר בעוד הסבר — הוא נפתר בעדות. תרגיל, או סיפור אמיתי שלי.</p></div>
-      <div class="pb-insight"><p>שינוי לא קורה רק בחדר. הפער שבין מפגשים הוא חלק מהעבודה, לא הפסקה ממנה.</p></div>
-      <div class="pb-insight"><p>רגע אמיתי ולא-מבוים שווה יותר מכל תרגיל מתוכנן — ותמיד צריך לעבד אותו אחרי, לא להשאיר אותו ברקע.</p></div>
-      <div class="pb-insight"><p>כל רגע טוב חייב להיפרד בקול רם למה שהיה בשליטתו ולמה שהיה מזל — אחרת נלמד השיעור הלא-נכון.</p></div>
-      <div class="pb-insight"><p>השאלה שבודקת כל החלטה: זה בונה משהו שמחזיק בלעדיי?</p></div>
-      <!-- תובנה חדשה? תוסיף כאן div.pb-insight נוסף. -->
-    </div>
-  </section>
+── Stage 2 — חשיפה ──
+עדות גולמית (מה קרה):
+פרשנות (בנפרד!):
+רגע ההיפוך:
+טבלת שרשרת (08.1):
+   היכרות | איפה | נשברה בחוליה | מה קרה | מי הפסיק ליזום
+   1.
+   2.
+   3.
+   4.
+   5.
+Audit דיגיטלי (08.6) — הדיסוננס האחד:
+Stage Gate 2: ☐ עדות שאינה דיווח  ☐ השערה תוקנה בכתב  ☐ צוואר כחוליה  ☐ הוא מסכים
 
-</main>
+── לוג צווארי בקבוק ──
+תאריך | הצוואר | מחזורים | זז? | מה החליף אותו ולמה
+      |         |         |     |
 
+── לוג השערות ──
+תאריך | השערה | תחזית | מה יפריך | תוצאה: אושרה/נפלה/תוקנה
+      |       |       |          |
+
+── לוג ניסויים ──
+תאריך | ניסוי | בוצע? | אם לא — למה | מה קרה בפועל | מה למדנו
+      |       |       |             |              |
+
+── מודולים ──
+פעיל כרגע:
+הופעלו וכבו:
+לא נגעו (ומדוע לא רלוונטי):
+
+── הוא ניסח / אני נתתי ──
+הוא ניסח בעצמו          |  אני נתתי ישירות
+                        |
+
+── Independence Score לאורך זמן ──
+תאריך | מודעות | פעולה | רפלקציה | תלות | התאוששות | סה&quot;כ | על מה ניקדתי
+      |        |       |         |      |          |      |
+
+── Exit Criteria ──
+☐ 1 מבין את עצמו     עדות:
+☐ 2 פועל בעצמו       עדות:
+☐ 3 מתמודד עם כישלון עדות:
+☐ 4 לומד מהעולם      עדות:
+☐ 5 מזהה צוואר הבא   עדות:
+☐ 6 צריך אותי פחות   עדות:
+Pre-exit התחיל:      מפגש סיום:      Follow-up:
+
+── ספר התובנות (שלו) ──
+
+── תובנות על המערכת ──
+(מה המקרה הזה לימד אותי על ה-Playbook עצמו)
+════════════════════════════════════════
+</code></pre>
+<hr />
+</section>
+<section id="sec-14--Case-Example-עידן"><h1 id="14--Case-Example-עידן">14 — Case Example: עידן</h1>
+<p><strong>מטרת הפרק: להוכיח שהמערכת עונה על השאלות. לא להפוך את המערכת למקרה של עידן.</strong></p>
+<h2 id="141--איפה-הוא-נמצא-ב-Playbook-V2">14.1 — איפה הוא נמצא ב-Playbook V2</h2>
+<blockquote>
+<p><strong>Stage 3 (ניסוי) — עם חוב פתוח מ-Stage 2.</strong>
+<strong>צוואר הבקבוק: המשכיות. חוליה: חשד ל-3–6, לא מזוהה. סוג: לא ידוע.</strong></p>
+</blockquote>
+<p><strong>שני נעלמים, לא אחד.</strong> גם אחרי שאדע את החוליה, אני עוד לא אדע את הסוג (08.1b) — והסוג הוא מה שבוחר את המודול. המפגש הבא צריך לסגור את שניהם, ושאלת הסוג היא השנייה: <em>הוא לא ידע איך, או שידע ולא עשה?</em></p>
+<p><strong>למה Stage 3 ולא 2:</strong> מיפוי נעשה (מפגשים 1–3), הייתה חשיפה חברתית אמיתית ולא-מבוימת, והצוואר <strong>זז</strong> מ"יצירת הזדמנות" ל"המשכיות". זו התקדמות אמיתית ומתועדת. הזזת צוואר היא בדיוק מה שמעביר ל-Stage 3.</p>
+<p><strong>למה יש חוב מ-Stage 2:</strong> על הצוואר <strong>החדש</strong> אין לי עדיין עדות. יש חשד ("האינסטגרם לא עושה איתו חסד") — וחשד אינו השערה. אני לא יודע באיזו חוליה זה נשבר, ולכן כל ניסוי שאבנה עכשיו הוא ניחוש.</p>
+<p><strong>המשמעות המעשית:</strong> המפגש הבא הוא <strong>מפגש חשיפה בתוך Stage 3</strong>. לא מפגש כלים. אני לא נוגע באינסטגרם, לא בטקסטינג ולא בסטייל עד שהטבלה מולאה.</p>
+<p><strong>על ה-Exit:</strong> מוקדם. אבל <strong>מדידה</strong> של Independence מתחילה עכשיו — כדי שיהיו לי שלוש נקודות ולא אחת כשזה יהיה רלוונטי. מדידה ≠ יציאה.</p>
+<h2 id="142--שני-הצעדים-הבאים-ואחד-שלישי-מותנה">14.2 — שני הצעדים הבאים (ואחד שלישי מותנה)</h2>
+<h3>צעד 1 — לסגור את חוב החשיפה (המפגש הבא, ~40 דקות)</h3>
+<p><strong>מלא את טבלת 08.1 על 3–5 ההיכרויות האחרונות. בכתב. איתו.</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>היכרות</th>
+<th>איפה הכיר</th>
+<th>נשברה בחוליה</th>
+<th>מה קרה בפועל</th>
+<th>מי הפסיק ליזום</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>הכלל הקריטי:</strong> לא לקבל "זה התפייד". "התפייד" זה לא נתון — זה תיאור מרחוק.
+לשאול: <strong>מי הפסיק לכתוב? מה ההודעה האחרונה שנשלחה? מי שלח אותה? מה הוצע ולא קרה?</strong></p>
+<p><strong>מה אני מחפש בספירה:</strong>
+- אם 2+ נשברות בחוליה 5 (הצעה) → הצוואר הוא הובלה/הימנעות. <strong>לא אינסטגרם.</strong>
+- אם 2+ נשברות בחוליה 6–7 (נפגשו ואז כלום) → החשד לדיסוננס מתחזק, וגם החשד ל"הוא נעשה מישהו אחר כשמישהי מעניינת אותו".
+- אם 2+ נשברות בחוליה 3–4 (הפרטים/השיחה) → מודול טקסטינג.
+- אם זה מתפזר על כל השרשרת → הצוואר אינו בשרשרת. הוא בזהות. (08.4)
+- אם <strong>הוא</strong> תמיד הפסיק ליזום → זו הימנעות, ולומר את זה בקול. זה הצוואר.</p>
+<h3>צעד 2 — Audit דיגיטלי, בגרסה המצומצמת (~20 דקות)</h3>
+<p><strong>רק</strong> בפרוטוקול 08.6, ורק כדי למצוא <strong>דיסוננס אחד</strong>. לא פרויקט שיפור פרופיל.</p>
+<ol>
+<li>מבחן 3 שניות — 3 מילים מצד שלישי.</li>
+<li>סטוריז 7 ימים: לכל אחד — מה זה מספר עליו? למי זה מכוון? מה זה מבקש?</li>
+<li>ספירה: כמה משדר <em>מי שהוא</em> מול <em>מה שהוא רוצה שיחשבו</em>.</li>
+<li>שאלה אחת מסיימת: <strong>מה הדבר האחד שאם ייעלם — הפער בין הפרופיל לאדם יקטן?</strong></li>
+</ol>
+<p><strong>זהו. לא לגעת בזה יותר עד שיהיה מידע מהניסוי.</strong></p>
+<h3>צעד 3 — ניסוי אחד לשבוע (רק לאחר 1 ו-2)</h3>
+<p>בהתאם לתוצאת הספירה. <strong>אחד.</strong> שלוש אפשרויות מוכנות:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>אם השבירה ב...</th>
+<th>ניסוי (מ-V1)</th>
+<th>מה יפריך את ההשערה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>חוליה 5 — לא מוביל</td>
+<td>הצעה קונקרטית אחת (מקום + שעה) לאדם אחד, גם בלי אות ודאי</td>
+<td>הוא הציע והיא נענתה בקלות → הצוואר לא כאן</td>
+</tr>
+<tr>
+<td>חוליה 6–7 — נפגשו ונעצר</td>
+<td>3 שאלות המשך אמיתיות במפגש הבא + לתעד מיד אחריו מה אמרה</td>
+<td>הנוכחות הייתה שם והמפגש נעצר בכל זאת → הצוואר בפרשנות או בהתאמה</td>
+</tr>
+<tr>
+<td>חוליה 3–4 — מומנטום</td>
+<td>הודעה אמיתית בלי חישוב תזמון + 30 דק' בלי טלפון</td>
+<td>הוא שלח בקלות והתגובה הגיעה → הצוואר הוא הובלה, לא טקסטינג</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="143--התבנית-לפני-המפגש-ממולאת">14.3 — התבנית "לפני המפגש", ממולאת</h2>
+<pre><code>אדם: עידן            תאריך: ______            מפגש #4
+
+STAGE נוכחי:       3 (ניסוי) — חוב חשיפה פתוח על הצוואר החדש
+צוואר הבקבוק:      המשכיות. חוליה לא מזוהה. חשד ל-5 או 6–7
+ההשערה הפעילה:     אין השערה תקפה — יש חשד. זה מה שהמפגש סוגר.
+                   (חשד: הנכסים הדיגיטליים יוצרים ציפייה שהמפגש לא עומד בה)
+
+מה השתנה מאז:      מכיר יותר נשים. נוצרות הזדמנויות. הצוואר זז.
+מה ניסינו:         חשיפה חברתית לא-מבוימת (מפגש 3), עיבוד שליטה/מזל
+מה קרה בפועל:      שפה פחות מתנצלת. יוזמה עלתה. ההזדמנויות לא מגיעות למימוש
+מה הוא לא עשה:     טרם נדרש — לא היה ניסוי מוגדר על הצוואר החדש
+
+מה אני רוצה להבין: באיזו חוליה בדיוק נשברת השרשרת. שאלה אחת.
+עדות שאני צריך:    3–5 היכרויות, בשמות, עם חוליית שבירה מדויקת
+מודול אפשרי:       אף אחד עדיין. Instagram/digital כמועמד ראשון, לא כהחלטה
+
+מה אסור לי להחליט מראש:
+  • שהאינסטגרם הוא הבעיה. זה החשד שלי, וזה בדיוק מה שיגרום לי לחפש אישור.
+  • שזו &quot;התפיידות&quot;. אולי הוא זה שהפסיק ליזום.
+  • שהוא בשל ל-Stage 4 כי הוא מתקדם נחמד.
+  • שהצוואר בכלל בזירה הרומנטית.
+
+מה אני צפוי להסביר יותר מדי: איך אינסטגרם נקרא. אני נלהב מזה. להיזהר.
+היכן אני עלול להפוך ליועץ: ברגע שהוא ישאל &quot;אז מה למחוק&quot;. לא לענות. להחזיר שאלה.
+</code></pre>
+<h2 id="144--Independence-Score-של-עידן-נקודת-אפס">14.4 — Independence Score של עידן, נקודת אפס</h2>
+<p>הערכה מהעדות הקיימת (מפגשים 1–3), לתיקון אחרי המפגש הבא:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ממד</th>
+<th>ניקוד</th>
+<th>על מה ניקדתי</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>מודעות עצמית</td>
+<td>1–2</td>
+<td>תפיסות מוטעות עוד נמצאות; אבל יש תזוזה בין מפגשים</td>
+</tr>
+<tr>
+<td>פעולה</td>
+<td>2</td>
+<td>מכיר יותר נשים לאחרונה — יזום, ולא בגלל משימה שלי</td>
+</tr>
+<tr>
+<td>רפלקציה</td>
+<td>1</td>
+<td>עדיין לא נצפה מחזור שהוא הריץ לבד</td>
+</tr>
+<tr>
+<td>תלות</td>
+<td>?</td>
+<td><strong>לא נמדד. זה מה שאני צריך לבדוק.</strong> האם הוא שולח לי טקסטים לאישור?</td>
+</tr>
+<tr>
+<td>התאוששות</td>
+<td>?</td>
+<td>טרם נצפה כישלון מעובד</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>סה"כ: ~5 מתוך 15, עם שני ממדים לא ידועים.</strong>
+<strong>המסקנה: Stage 3. לא להוריד מעורבות עוד. אבל למדוד את "תלות" מהמפגש הבא, במפורש.</strong></p>
+<h2 id="145--מה-יעביר-את-עידן-ל-Stage-4">14.5 — מה יעביר את עידן ל-Stage 4</h2>
+<ul>
+<li>הצוואר זז — בעדות. (החוליה השבורה הפסיקה להישבר, פעמיים.)</li>
+<li>הוא ניסח תובנה מרכזית אחת בעצמו לפני שאמרתי אותה.</li>
+<li>הוא הריץ וריאציה משלו על ניסוי.</li>
+<li>הוא יודע לומר מה הצוואר הנוכחי כשאני שואל.</li>
+<li>Independence ≥ 8, וממד "תלות" נמדד ולא ריק.</li>
+</ul>
+<p><strong>מה שלא יעביר אותו:</strong> דייט מוצלח. פרופיל משופר. מפגש נעים.</p>
+<hr />
+</section>
+<section id="sec-15--Audit-של-V1-KEEP--MOVE--REWRITE--REMOVE--MISSING"><h1 id="15--Audit-של-V1-KEEP--MOVE--REWRITE--REMOVE--MISSING">15 — Audit של V1: KEEP / MOVE / REWRITE / REMOVE / MISSING</h1>
+<p><strong>ביקורת אגרסיבית, כמו שביקשת. כל שורה מתייחסת לפרק ב-V1.</strong></p>
+<h2 id="KEEP--נשאר-כמעט-כפי-שהוא">KEEP — נשאר כמעט כפי שהוא</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מה</th>
+<th>למה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11 עקרונות העבודה (01)</td>
+<td>הליבה. נשארו במלואם בפרק 01, עם עמודה שהופכת כל עיקרון להתחייבות מעשית</td>
+</tr>
+<tr>
+<td>"מופשט שנתקע לא נפתר בהסבר — הוא נפתר בעדות"</td>
+<td>העיקרון הפרקטי החזק ביותר ב-V1. הפך למהלך 4 בפרק 10</td>
+</tr>
+<tr>
+<td>הפרדת שליטה ממזל, בקול רם</td>
+<td>נשאר, והורחב: גם על רגעים רעים, לא רק טובים</td>
+</tr>
+<tr>
+<td>"האם זה מחזיק בלעדיי" כמבחן לכל החלטה</td>
+<td>הפך למנוע של פרקים 11 ו-12</td>
+</tr>
+<tr>
+<td>"תן לזמן לעבוד" — הפער בין המפגשים הוא הזירה</td>
+<td>זה מה שהופך את פרק 11 לאפשרי בכלל</td>
+</tr>
+<tr>
+<td>מחקר ה-Toolbox (מיתוסים, מחלוקות, סימוני [מחקר]/[קונצנזוס])</td>
+<td>נכס אמיתי. אבל לא בנתיב החם — ראה MOVE</td>
+</tr>
+<tr>
+<td>ספר התובנות (08)</td>
+<td>הכלי היחיד ב-V1 שהיה מערכת לומדת. הורחב: גם תובנות על המערכת עצמה</td>
+</tr>
+<tr>
+<td>תרגיל המראה, הדוגמה האישית (קעקועים)</td>
+<td>הכלים שעבדו בפועל. שובצו ב-Stage 1</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="MOVE--טוב-במקום-הלא-נכון">MOVE — טוב, במקום הלא נכון</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מה</th>
+<th>מאיפה → לאן</th>
+<th>למה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>"ניסוי אחד (20–30 דקות)" בכל מודול</strong></td>
+<td>תחתית כל תחום ב-Toolbox → <strong>עמודת הליבה של פרק 09</strong></td>
+<td>זה היה הדבר השימושי ביותר ב-V1, קבור בסוף כל בלוק אחרי 11 סעיפים תיאורטיים. אלה 12 ניסויים מוכנים — כל מלאי Stage 3</td>
+</tr>
+<tr>
+<td>"איך אדע שהתקדם" (סעיף 10 בכל תחום)</td>
+<td>תוך התחום → עמודת <strong>"מתי מכבים"</strong> בפרק 09</td>
+<td>היה תיאור. הפך לתנאי כיבוי מודול</td>
+</tr>
+<tr>
+<td>"מה אפשר למדוד" (סעיף 9)</td>
+<td>תוך התחום → פרק 11, מגמות</td>
+<td>היו 40+ מדדים בלי היררכיה. נשארו כרקע; מנוע ההחלטות הוא הרובריקה</td>
+</tr>
+<tr>
+<td>כרטיסי מפגש 1–3 (04)</td>
+<td>"אבני דרך" (= מבנה תהליך) → <strong>Case Notes של עידן</strong></td>
+<td>אלה תיעודי מקרה מדויקים, לא מבנה. כמבנה הם מסוכנים: הם מזמינים "מפגש 4 = ..."</td>
+</tr>
+<tr>
+<td>Progress Tracker, 8 ממדים (07)</td>
+<td>מנוע החלטות → אומדן איכותני ברקע</td>
+<td>8 סליידרים בלי הגדרות וללא דרישת עדות אינם מנוע החלטות</td>
+</tr>
+<tr>
+<td>"What Baderech Does Differently"</td>
+<td>Playbook → <strong>מסמך מיצוב/שיווק נפרד</strong></td>
+<td>לא נמחק — פשוט לא כאן. זו עבודת מיצוב מצוינת שלא עוזרת ב-20 הדקות שלפני מפגש</td>
+</tr>
+<tr>
+<td>11 סעיפי המחקר בכל תחום</td>
+<td>נתיב חם → <strong>ספריית עומק נפרדת</strong> (V1 נשאר כמו שהוא, כארכיון)</td>
+<td>לקרוא לפני שבונים מודול. לא שעה לפני מפגש</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="REWRITE--רעיון-טוב-כתיבה-לא-שימושית">REWRITE — רעיון טוב, כתיבה לא שימושית</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מה</th>
+<th>הבעיה</th>
+<th>מה במקום</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>המתודולוגיה (02): מיפוי → זהות → נוכחות → התנסות → עצמאות</strong></td>
+<td>3 מתוך 5 השלבים הם <strong>תכנים</strong>, לא מצבי תהליך. לכן אי אפשר לענות "איפה האדם נמצא" — רק "באיזה נושא נגענו". זה שורש הבעיה שתיארת</td>
+<td>5 שלבים לפי <strong>מצב ידיעה</strong> (פרק 02) + זהות/נוכחות הופכים למודולים (09)</td>
+</tr>
+<tr>
+<td><strong>בלופרינט הפגישה (03)</strong></td>
+<td>10 שדות ואף אחד מהם לא שואל <strong>איפה האדם בתהליך</strong> או <strong>מה ההשערה</strong>. "מטרת הפגישה" ו-"KPI לפגישה" מזמינים מפגש-נושא</td>
+<td>פרק 10: Stage → צוואר → השערה → עדות נדרשת → מה אסור להחליט מראש</td>
+</tr>
+<tr>
+<td><strong>"אבני דרך" (04)</strong></td>
+<td>ממוספר לפי מפגשים. "מפגשים 5–8 יתמלאו" מנציח מבנה session-based</td>
+<td>Stage Gates (03–07): תנאי מעבר, לא מספרי מפגש</td>
+</tr>
+<tr>
+<td><strong>"חוק העבודה שחוזר בכל שלב" (02)</strong></td>
+<td>5 כללים מצוינים, מנוסחים כאמונות ולא כפעולות</td>
+<td>הפכו למהלכים 1–6 בפרק 10, עם זמנים ועם טריגרים לעצירה</td>
+</tr>
+<tr>
+<td><strong>Case Study של עידן (06)</strong></td>
+<td>לפני/אחרי/מה עבד — נרטיב. לא ניתן לנהל ממנו תהליך</td>
+<td>פרק 13: לוגים של צווארים, השערות, ניסויים, ניקוד — עם תאריכים</td>
+</tr>
+<tr>
+<td><strong>"מיפוי לפני כל דבר אחר"</strong></td>
+<td>נכון, אבל לא אומר מתי המיפוי <strong>נגמר</strong></td>
+<td>Stage Gate 1, עם 4 תנאים</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="REMOVE--לא-עוזר-לנהל-תהליך">REMOVE — לא עוזר לנהל תהליך</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מה</th>
+<th>למה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"מפגשים 5–8 — יתמלאו מתוך מה שקורה"</td>
+<td>ריק שמנציח מבנה שגוי. במבנה החדש אין "מפגש 5"</td>
+</tr>
+<tr>
+<td>שדה "KPI לפגישה הזו"</td>
+<td>מזמין מדידה שטחית של המפגש. הוחלף במבחן שלושת התנאים (10.3)</td>
+</tr>
+<tr>
+<td>"מטרת הפגישה" כשדה עליון</td>
+<td>הוחלף ב"מה אני רוצה <strong>להבין</strong> היום" — שאלה, לא יעד</td>
+</tr>
+<tr>
+<td>הכפילות שפת גוף / קריאת אנשים / אנרגיה / נוכחות</td>
+<td>ארבעה תחומים שחוזרים על אותו חומר, כולל אותה הפרכת Mehrabian שלוש פעמים. מוזגו לשני מודולים</td>
+</tr>
+<tr>
+<td>"נוכחות" כתחום נפרד עם הערה "ראו את הניסוי ב'אנרגיה'"</td>
+<td>תחום שמפנה לתחום אחר אינו תחום</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>מה לא הוסר למרות שאינו USP:</strong> כל 11 העקרונות, כל מלאי הניסויים, כל תיעוד המקרה של עידן, כל ספר התובנות. זה מסמך פנימי — הקריטריון הוא שימושיות, לא בידול.</p>
+<h2 id="MISSING--לא-היה-ב-V1-בכלל">MISSING — לא היה ב-V1 בכלל</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מה</th>
+<th>למה זה קריטי</th>
+<th>איפה עכשיו</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Stage Gates</strong></td>
+<td>בלי זה, התקדמות היא תחושה</td>
+<td>03–07</td>
+</tr>
+<tr>
+<td><strong>Decision Trees</strong></td>
+<td>הפער הגדול ביותר. V1 לא עונה על "מה עושים כשלא יודעים"</td>
+<td>08.2–08.5</td>
+</tr>
+<tr>
+<td><strong>שרשרת ההמשכיות</strong></td>
+<td>מאפשר לנקוב בצוואר כחוליה ולא כנושא. מונע את "מפגש 3 = טקסטינג"</td>
+<td>08.1</td>
+</tr>
+<tr>
+<td><strong>פורמט השערה + הפרכה</strong></td>
+<td>בלי "מה יפריך" אין ניסוי — יש רק פעילות</td>
+<td>08.7</td>
+</tr>
+<tr>
+<td><strong>Audit דיגיטלי</strong></td>
+<td>הצוואר של עידן, ו-V1 לא מכיר בכלל את הזירה הזאת</td>
+<td>08.6</td>
+</tr>
+<tr>
+<td><strong>"הוא עושה הכול וזה לא זז"</strong></td>
+<td>התרחיש הנפוץ שבו V1 משתתק</td>
+<td>08.5</td>
+</tr>
+<tr>
+<td><strong>שער 0: התאמה, מסגור, והפניה החוצה</strong></td>
+<td>V1 מניח שכל מי שמגיע מתאים, ואין בו זכר להפניה לאיש מקצוע במצוקה נפשית</td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Independence Rubric עם ממד תלות</strong></td>
+<td>V1 מכריז "לא לייצר תלות" ואינו מודד אותה</td>
+<td>11.2</td>
+</tr>
+<tr>
+<td><strong>דרישת עדות לניקוד</strong></td>
+<td>בלי זה כל מדידה היא הד של המפגש</td>
+<td>11.1</td>
+</tr>
+<tr>
+<td><strong>Exit Criteria / Pre-exit / מפגש סיום / Follow-up</strong></td>
+<td>V1 כתב "עצמאות" כשלב ולא נתן שום מנגנון סיום</td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>מבחן ערך המפגש</strong></td>
+<td>ההגנה מפני תהליך שנמשך לנצח כי הוא נעים</td>
+<td>10.3</td>
+</tr>
+<tr>
+<td><strong>הפרדת עדות מפרשנות בתיעוד</strong></td>
+<td>V1 מזהיר מפרשנות-יתר אצל הלקוח, ומערבב אותן בתיעוד שלו</td>
+<td>04, 13</td>
+</tr>
+<tr>
+<td><strong>"מה אני נתתי" מול "מה הוא ניסח"</strong></td>
+<td>המדד הישיר ביותר ל"מחזיק בלעדיי"</td>
+<td>06, 13</td>
+</tr>
+<tr>
+<td><strong>מה לעשות כשהצוואר יוצא מהזירה הרומנטית</strong></td>
+<td>קורה, ו-V1 אינו מכיר בזה</td>
+<td>08.4</td>
+</tr>
+<tr>
+<td><strong>תובנות על המערכת</strong></td>
+<td>V1 היה מסמך חי לתובנות על <strong>לקוחות</strong>, לא על עצמו</td>
+<td>13</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+</section>
+<section id="sec-נספח--תחזוקת-ה-Playbook"><h1 id="נספח--תחזוקת-ה-Playbook">נספח — תחזוקת ה-Playbook</h1>
+<p><strong>זה מסמך חי. אבל לא כל דבר נכנס אליו.</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מתי מעדכנים</th>
+<th>מה מותר לשנות</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>אחרי כל תהליך שהסתיים</td>
+<td>Follow-up שאלה 3 (מה נשר) → מה להסיר מ-09</td>
+</tr>
+<tr>
+<td>כשצוואר בקבוק חדש הופיע פעמיים אצל שני אנשים שונים</td>
+<td>להוסיף ענף ל-08</td>
+</tr>
+<tr>
+<td>כשניסוי נכשל בביצוע אצל 3 אנשים</td>
+<td>לא לתקן את הניסוי — לבדוק אם הוא מאובחן נכון</td>
+</tr>
+<tr>
+<td><strong>לא</strong> אחרי מפגש בודד מרשים</td>
+<td>מקרה אחד הוא לא דפוס. לספר התובנות, לא ל-Playbook</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>הכלל:</strong> לפני שמוסיפים משהו ל-Playbook — לשאול איזו שאלה מ-00 הוא עוזר לענות עליה. אם אף אחת, מקומו בספר התובנות.</p>
+<hr />
+</section>
+<section id="sec-נספח--הפער-הפתוח-היחיד"><h1 id="נספח--הפער-הפתוח-היחיד">נספח — הפער הפתוח היחיד</h1>
+<p><code>[חסר — נדרש, ולא ניתן להמציא]</code></p>
+<p><strong>רשימת הפניה מקצועית.</strong></p>
+<p>שער 0 ו-08.4 שניהם מסתיימים בהוראה "להפנות החוצה" — וכרגע הם מפנים לריק. זה לא פער תיעודי, זה פער מקצועי: ברגע שיושב מולי אדם עם דיכאון מתפקד-למחצה, חרדה חברתית משתקת או מחשבות פגיעה בעצמו, ההוראה "להפנות" בלי שם וטלפון אינה הוראה.</p>
+<p>צריך שלושה שמות, לפני התהליך הבא:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>תחום</th>
+<th>שם</th>
+<th>איך פונים</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CBT / חרדה חברתית</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>פסיכולוג/ית קליני/ת</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>מצוקה חריפה — קו סיוע + גורם מקצועי</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>הכלל שנלווה לרשימה:</strong> הפניה אינה סיום התהליך בהכרח. אני יכול ללוות <strong>במקביל</strong> לטיפול — אני לא יכול ללוות <strong>במקומו</strong>. וההחלטה נאמרת בגלוי לאדם, לא מתקבלת מעליו.</p></section></main>
+</div>
+
+<a href="#" class="top" id="top" aria-label="חזרה למעלה">↑</a>
+
+<script>
+(function(){
+  var toc=document.getElementById('toc'), btn=document.getElementById('menuBtn'),
+      top=document.getElementById('top'), links=[].slice.call(toc.querySelectorAll('a')),
+      secs=links.map(function(a){return document.querySelector('#sec-'+CSS.escape(a.getAttribute('href').slice(5)));});
+
+  if(window.matchMedia('(max-width:900px)').matches) toc.classList.add('hidden');
+  btn.addEventListener('click',function(){
+    var h=toc.classList.toggle('hidden');
+    btn.setAttribute('aria-expanded', String(!h));
+  });
+  links.forEach(function(a){a.addEventListener('click',function(){
+    if(window.matchMedia('(max-width:900px)').matches) toc.classList.add('hidden');
+  });});
+
+  function onScroll(){
+    top.classList.toggle('show', window.scrollY>600);
+    var y=window.scrollY+120, cur=-1;
+    secs.forEach(function(s,i){ if(s && s.offsetTop<=y) cur=i; });
+    links.forEach(function(a,i){ a.classList.toggle('on', i===cur); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
 </body>
 </html>
