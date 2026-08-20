@@ -1,0 +1,837 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#F7F6F1">
+<title>Playbook V2 · חומרי עזר — בדרך.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F6F1; --paper-2:#FFFEFA; --ink:#1B1A17; --ink-2:#44423C;
+  --ink-3:#7A776E; --rule:#DFDCD2;
+  --slate:#33505E;      /* מבנה: שלבים, מספור */
+  --gate:#3F6B4F;       /* Stage Gate */
+  --danger:#9E3B34;     /* Red Flags */
+  --wash:#EFEDE5;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:'Heebo',system-ui,sans-serif;font-weight:400;
+  font-size:17px;line-height:1.72;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+
+/* ---------- top bar ---------- */
+.bar{
+  position:sticky;top:0;z-index:40;background:rgba(247,246,241,.92);
+  backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);
+}
+.bar .wrap{display:flex;align-items:center;gap:20px;height:60px}
+.brand{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:19px;letter-spacing:-.01em;white-space:nowrap}
+.brand span{color:var(--ink-3);font-weight:400;font-size:14px;margin-inline-start:8px;font-family:'Heebo',sans-serif}
+.hot{margin-inline-start:auto;display:flex;gap:6px}
+.hot a{
+  font-size:13px;color:var(--slate);text-decoration:none;padding:5px 11px;
+  border:1px solid var(--rule);border-radius:2px;background:var(--paper-2);white-space:nowrap;
+}
+.hot a:hover{border-color:var(--slate)}
+.menu{display:none}
+
+/* ---------- hero ---------- */
+.hero{padding:64px 0 40px;border-bottom:1px solid var(--rule)}
+.hero h1{
+  font-family:'Frank Ruhl Libre',serif;font-size:clamp(38px,7vw,62px);
+  line-height:1.05;margin:0 0 6px;font-weight:900;letter-spacing:-.02em;
+}
+.hero .sub{font-family:'Frank Ruhl Libre',serif;font-size:clamp(20px,3vw,26px);color:var(--ink-2);margin:0 0 26px}
+.hero .meta{font-size:13px;color:var(--ink-3);letter-spacing:.04em}
+
+/* the signature: the five-question strip */
+.strip{margin:34px 0 0;border-top:1px solid var(--ink);padding-top:14px}
+.strip .lbl{font-size:12px;letter-spacing:.14em;color:var(--ink-3);margin-bottom:14px}
+.strip ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--rule)}
+.strip li{background:var(--paper);padding:14px 12px 16px}
+.strip .num{font-family:'Frank Ruhl Libre',serif;font-size:13px;color:var(--slate);display:block;margin-bottom:6px}
+.strip .q{font-family:'Frank Ruhl Libre',serif;font-size:16.5px;line-height:1.35;font-weight:500}
+
+/* ---------- layout ---------- */
+.cols{display:grid;grid-template-columns:230px 1fr;gap:56px;align-items:start;padding:44px 0 90px}
+nav.toc{position:sticky;top:82px;font-size:14.5px}
+nav.toc .t{font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin-bottom:12px}
+nav.toc a{display:block;text-decoration:none;color:var(--ink-2);padding:4px 0;border-inline-start:2px solid transparent;padding-inline-start:12px;margin-inline-start:-14px;line-height:1.35}
+nav.toc a:hover{color:var(--ink)}
+nav.toc a.on{color:var(--ink);border-color:var(--slate);font-weight:500}
+nav.toc .n{font-family:'Frank Ruhl Libre',serif;color:var(--slate);font-size:12.5px;margin-inline-end:8px}
+
+/* ---------- content ---------- */
+main{min-width:0}
+section{margin-bottom:8px}
+h1{
+  font-family:'Frank Ruhl Libre',serif;font-size:clamp(27px,4.2vw,37px);font-weight:700;
+  line-height:1.15;margin:64px 0 20px;padding-top:20px;border-top:2px solid var(--ink);letter-spacing:-.01em;
+}
+section:first-of-type h1{margin-top:0;border-top:none;padding-top:0}
+h2{font-family:'Frank Ruhl Libre',serif;font-size:23px;font-weight:700;margin:38px 0 12px;line-height:1.25}
+h3{font-size:16px;font-weight:700;margin:26px 0 8px;letter-spacing:.01em}
+h2.h-danger{color:var(--danger)}
+h2.h-danger::before{content:"";display:inline-block;width:9px;height:9px;background:var(--danger);margin-inline-end:10px;vertical-align:middle}
+h2.h-gate{color:var(--gate)}
+h2.h-gate::before{content:"";display:inline-block;width:9px;height:9px;background:var(--gate);margin-inline-end:10px;vertical-align:middle}
+p{margin:0 0 14px}
+ul,ol{margin:0 0 16px;padding-inline-start:22px}
+li{margin-bottom:5px}
+strong{font-weight:700}
+hr{border:none;border-top:1px solid var(--rule);margin:44px 0}
+a{color:var(--slate)}
+
+blockquote{
+  margin:22px 0;padding:16px 20px;background:var(--wash);
+  border-inline-start:3px solid var(--slate);
+}
+blockquote p{margin:0 0 8px;font-family:'Frank Ruhl Libre',serif;font-size:19px;line-height:1.5}
+blockquote p:last-child{margin:0}
+
+.tw{overflow-x:auto;margin:20px 0;border:1px solid var(--rule);background:var(--paper-2)}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:460px}
+th,td{text-align:start;padding:10px 14px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.5}
+th{background:var(--wash);font-weight:500;font-size:13px;letter-spacing:.03em;color:var(--ink-2);white-space:nowrap}
+tr:last-child td{border-bottom:none}
+td:first-child{font-weight:500}
+
+/* fill-in templates + decision trees */
+pre{
+  direction:ltr;text-align:left;overflow-x:auto;
+  background:var(--paper-2);border:1px dashed #C9C5B8;
+  padding:18px 20px;margin:20px 0;font-size:13.5px;line-height:1.75;
+}
+pre code{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;white-space:pre}
+:not(pre)>code{background:var(--wash);padding:1px 5px;font-size:14px;font-family:ui-monospace,Menlo,monospace}
+
+.top{
+  position:fixed;inset-block-end:20px;inset-inline-start:20px;z-index:30;
+  background:var(--ink);color:var(--paper);text-decoration:none;
+  width:40px;height:40px;display:none;align-items:center;justify-content:center;
+  border-radius:50%;font-size:17px;
+}
+.top.show{display:flex}
+
+@media (max-width:900px){
+  .cols{grid-template-columns:1fr;gap:0;padding-top:28px}
+  nav.toc{position:static;margin-bottom:34px;padding-bottom:24px;border-bottom:1px solid var(--rule)}
+  nav.toc.hidden{display:none}
+  .menu{display:block;margin-inline-start:auto;background:none;border:1px solid var(--rule);
+        border-radius:2px;padding:6px 12px;font-family:inherit;font-size:13px;color:var(--ink-2);cursor:pointer}
+  .hot{display:none}
+  .strip ol{grid-template-columns:1fr;gap:1px}
+  .hero{padding:40px 0 30px}
+}
+@media print{
+  .bar,nav.toc,.top,.strip{display:none}
+  .cols{grid-template-columns:1fr;padding:0}
+  body{font-size:11pt;background:#fff}
+  h1{page-break-before:always;border-top:none}
+  section:first-of-type h1{page-break-before:avoid}
+  .tw,pre,table{page-break-inside:avoid}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* ---------- תוספות ניווט (V2.1) ---------- */
+.swap{
+  font-size:13px;color:var(--paper);background:var(--slate);text-decoration:none;
+  padding:5px 11px;border:1px solid var(--slate);border-radius:2px;white-space:nowrap;
+}
+.swap:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.bar .swap{margin-inline-start:10px}
+nav.toc .grp{font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin:14px 0 6px}
+nav.toc a.sub{font-size:13.5px;padding-inline-start:26px}
+nav.toc .foot{margin-top:18px;padding-top:14px;border-top:1px solid var(--rule)}
+nav.toc .foot a{color:var(--slate);font-weight:500}
+
+/* מפת ההפעלה של Quick Start */
+.route{margin:22px 0 6px;border-top:1px solid var(--ink);border-bottom:1px solid var(--rule)}
+.route .lbl{font-size:12px;letter-spacing:.14em;color:var(--ink-3);padding:12px 0 10px}
+.route ol{list-style:none;margin:0;padding:0 0 8px}
+.route li{display:flex;gap:14px;align-items:baseline;padding:9px 0;border-top:1px solid var(--rule);margin:0}
+.route .num{font-family:'Frank Ruhl Libre',serif;font-size:13px;color:var(--slate);min-width:22px}
+.route .q{font-family:'Frank Ruhl Libre',serif;font-size:17px;line-height:1.35;flex:1 1 auto}
+.route .go{font-size:13.5px;flex:0 1 auto;text-align:start}
+
+/* אינדקס חמשת השלבים */
+.stages{list-style:none;margin:22px 0 8px;padding:0;display:grid;gap:1px;background:var(--rule);
+        grid-template-columns:repeat(5,1fr)}
+.stages li{background:var(--paper-2);padding:14px 14px 16px;margin:0}
+.stages .n{font-family:'Frank Ruhl Libre',serif;font-size:12px;color:var(--slate);display:block;margin-bottom:4px}
+.stages a{font-family:'Frank Ruhl Libre',serif;font-size:17px;font-weight:700;text-decoration:none;color:var(--ink);display:block;line-height:1.2}
+.stages a:hover{color:var(--slate)}
+.stages p{font-size:13px;color:var(--ink-2);margin:6px 0 0;line-height:1.45}
+
+/* הערת עורך / הפניה לנספחים */
+.note{border:1px dashed #C9C5B8;background:var(--paper-2);padding:14px 18px;margin:20px 0;font-size:15px}
+.note .t{font-size:11px;letter-spacing:.14em;color:var(--ink-3);display:block;margin-bottom:6px}
+.note p:last-child{margin-bottom:0}
+.todo{color:var(--danger)}
+
+@media (max-width:900px){
+  .route li{flex-wrap:wrap}
+  .route .go{width:100%}
+  .stages{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <div class="brand">בַּדֶּרֶךְ.<span>חומרי עזר</span></div>
+  <div class="hot">
+    <a href="#sec-01--Philosophy--DNA">Philosophy / DNA</a>
+    <a href="#sec-14--Case-Example-עידן">Case: עידן</a>
+    <a href="#sec-15--Audit-של-V1-KEEP--MOVE--REWRITE--REMOVE--MISSING">Audit V1</a>
+  </div>
+  <a class="swap" href="index.html">ל-Playbook הפעיל ←</a>
+  <button class="menu" id="menuBtn" aria-expanded="false">תוכן</button>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <h1>חומרי עזר</h1>
+  <p class="sub">Playbook V2 · נספחים ורקע מתודולוגי</p>
+  <p class="meta">לא נדרש לפני מפגש &nbsp;·&nbsp; נקרא כשמחליטים על המערכת עצמה</p>
+
+  <div class="strip">
+    <div class="lbl">מה יש כאן</div>
+    <ol>
+      <li><span class="num">01</span><span class="q">על מה התהליך עומד</span></li>
+      <li><span class="num">02</span><span class="q">למה V2 בנוי כך ולא כמו V1</span></li>
+      <li><span class="num">03</span><span class="q">איך זה נראה על מקרה אמיתי</span></li>
+      <li><span class="num">04</span><span class="q">מה נשמר, מה נזרק, ולמה</span></li>
+      <li><span class="num">05</span><span class="q">איך מתחזקים את המסמך ומה עוד חסר</span></li>
+    </ol>
+  </div>
+</div></header>
+
+<div class="wrap cols">
+  <nav class="toc" id="toc">
+    <div class="t">תוכן העניינים</div>
+    <a href="#01--Philosophy--DNA"><span class="n">·</span>Philosophy / DNA</a>
+<a href="#ref-למה-V2-שונה-מ-V1"><span class="n">·</span>למה V2 שונה מ-V1</a>
+<a href="#14--Case-Example-עידן"><span class="n">·</span>Case Example: עידן</a>
+<a href="#15--Audit-של-V1-KEEP--MOVE--REWRITE--REMOVE--MISSING"><span class="n">·</span>Audit של V1</a>
+<a href="#נספח--תחזוקת-ה-Playbook"><span class="n">·</span>תחזוקת ה-Playbook</a>
+<a href="#נספח--הפער-הפתוח-היחיד"><span class="n">·</span>הפער הפתוח: רשימת הפניה</a>
+    <div class="foot">
+      <a href="index.html">ל-Playbook הפעיל ←</a>
+      <a href="../growth/">Content &amp; Growth OS ←</a>
+    </div>
+  </nav>
+  <main><section></section>
+<section id="sec-ref-intro"><h1 id="ref-intro">חומרי עזר — Playbook V2</h1>
+<p>כל מה שנחוץ כדי <em>להבין</em> את המערכת, ולא כדי להפעיל אותה במפגש.
+ה-Playbook הפעיל נשאר קצר בכוונה; מה שמסביר, מנמק או מדגים — יושב כאן.</p>
+<div class="note">
+<span class="t">ניווט</span>
+<p><a href="index.html">← ה-Playbook הפעיל (00–13)</a> · <a href="../growth/">Content &amp; Growth OS</a></p>
+</div>
+<hr />
+</section>
+
+<section id="sec-01--Philosophy--DNA"><h1 id="01--Philosophy--DNA">Philosophy / DNA</h1>
+<p><strong>עקרונות. לא מבנה. המבנה נמצא בפרקים 02–12.</strong></p>
+<p>הפילוסופיה נשארת כמעט כפי שהיא — היא טובה. מה שהשתנה: היא כבר לא מנסה לתפקד כתהליך.</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>אמונת עבודה</th>
+<th>מה זה מחייב אותי לעשות בפועל</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>העולם הוא המעבדה</td>
+<td>לא לסמוך על דיווח בלבד. לייצר או לתפוס עדות מהעולם — פרק 05.</td>
+</tr>
+<tr>
+<td>כל אינטראקציה היא מידע</td>
+<td>גם "כלום לא קרה" הוא נתון. לתעד גם ניסויים שלא בוצעו — הסיבה היא הנתון.</td>
+</tr>
+<tr>
+<td>אם זה לא מגיע ממנו, זה לא יחזיק</td>
+<td>הוא מנסח את התובנה, לא אני. פרק 10, מהלך 5.</td>
+</tr>
+<tr>
+<td>אחריות לפני כלים</td>
+<td>לא לתת טכניקה לאדם שעדיין מחפש אשמים בעולם.</td>
+</tr>
+<tr>
+<td>חוויות לפני תוצאות</td>
+<td>המדד הוא יוזמה ונוכחות, לא "דייט שני".</td>
+</tr>
+<tr>
+<td>סקרנות לפני ביטחון</td>
+<td>גם שלי כלפיו: השערה, לא אבחנה.</td>
+</tr>
+<tr>
+<td>ראה לפני שאתה בונה</td>
+<td>אין מודול בלי עדות.</td>
+</tr>
+<tr>
+<td>כשמופשט פוגש קיר — תהיה העדות</td>
+<td>לא הסבר שני. תרגיל, סיפור אישי, סיטואציה.</td>
+</tr>
+<tr>
+<td>תן לזמן לעבוד</td>
+<td>הפער בין המפגשים הוא הזירה, לא הפסקה.</td>
+</tr>
+<tr>
+<td>הבחן בין שליטה למזל</td>
+<td>בקול רם, בכל רגע טוב <strong>ובכל רגע רע</strong>.</td>
+</tr>
+<tr>
+<td>אין תלות במלווה</td>
+<td>פרק 11 מודד את זה. פרק 12 מסיים בגללו.</td>
+</tr>
+</tbody>
+</table></div>
+<h3>מה לא נעשה</h3>
+<ul>
+<li>לא מוותרים על מיפוי לטובת מהירות.</li>
+<li>לא מחליפים חשיפה אמיתית בתרגול מבוים לגמרי.</li>
+<li>לא מודדים הצלחה ב"הוא סומך עליי".</li>
+<li>לא מקדמים Stage כי עברו X מפגשים.</li>
+<li>לא מפעילים מודול כי הוא "הנושא הבא".</li>
+<li>לא ממשיכים תהליך רק כי תמיד יש עוד מה לשפר.</li>
+</ul>
+<h3>המבחן היחיד לכל החלטה מתודולוגית</h3>
+<blockquote>
+<p><strong>זה בונה משהו שמחזיק בלעדיי?</strong></p>
+</blockquote>
+<hr />
+</section>
+<section id="sec-ref-למה-V2-שונה-מ-V1"><h1 id="ref-למה-V2-שונה-מ-V1">למה V2 שונה מ-V1 — החלטות ונימוקים</h1>
+<h2 id="למה-המבנה-הזה-ולא-זה-של-V1">למה המבנה הזה ולא זה של V1</h2>
+<p>V1 בנה חמישה שלבים: מיפוי → זהות → נוכחות → התנסות → עצמאות.
+שלושה מהם (זהות, נוכחות, התנסות) הם <strong>תכנים</strong>, לא מצבי תהליך. לכן V1 לא יכול לענות על "איפה האדם נמצא" — הוא יכול לענות רק על "באיזה נושא נגענו לאחרונה". זה בדיוק הכשל שתיארת.</p>
+<h2 id="שינויים-מבניים-שהוספתי-ואת-הנימוק">שינויים מבניים שהוספתי (ואת הנימוק)</h2>
+<p><strong>1. שער 0 — התאמה ומסגור.</strong> חסר לגמרי ב-V1. הפרק המלא נמצא ב-<a href="index.html#sec-01--שער-0-התאמה-ומסגור">Playbook הפעיל, פרק 01</a>.</p>
+<p><strong>2. "חשיפה" אינה שלב שנסגר — היא מכשיר חוזר.</strong>
+Stage 2 הוא הפעם הראשונה שאני עובר מסיפור לעדות. אבל בכל פעם שהשערה נתקעת ב-Stage 3, אני חוזר לכלי החשיפה. לכן: יש חץ חזרה מ-3 ל-2, ולא מעבר חד-כיווני.</p>
+<p><strong>3. Stage 3 הוא לופ, לא קטע.</strong> רוב התהליך יקרה כאן. זה תקין. מה שלא תקין: להישאר ב-3 יותר מ-4–5 מחזורי ניסוי בלי שהצוואר זז — זה Red Flag (פרק 06).</p>
+<p><strong>4. אין חזרה מ-4 ל-3 שנחשבת כישלון.</strong> אם באינטגרציה מתגלה צוואר בקבוק חדש ואמיתי — חוזרים ל-3 במודול אחר. זו התקדמות, לא רגרסיה. אבל אם חוזרים ל-3 על <strong>אותו</strong> צוואר — האבחנה הייתה שגויה.</p>
+<div class="note">
+<span class="t">היכן המבנה עצמו</span>
+<p>תרשים ה-Process Map, טבלת "מה יש לי בסוף כל שלב" וכלל המעבר נמצאים ב-<a href="index.html#sec-02--Process-Map">Playbook הפעיל, פרק 02</a>.</p>
+</div>
+<hr />
+</section>
+<section id="sec-14--Case-Example-עידן"><h1 id="14--Case-Example-עידן">Case Example: עידן</h1>
+<p><strong>מטרת הפרק: להוכיח שהמערכת עונה על השאלות. לא להפוך את המערכת למקרה של עידן.</strong></p>
+<h2 id="141--איפה-הוא-נמצא-ב-Playbook-V2">14.1 — איפה הוא נמצא ב-Playbook V2</h2>
+<blockquote>
+<p><strong>Stage 3 (ניסוי) — עם חוב פתוח מ-Stage 2.</strong>
+<strong>צוואר הבקבוק: המשכיות. חוליה: חשד ל-3–6, לא מזוהה. סוג: לא ידוע.</strong></p>
+</blockquote>
+<p><strong>שני נעלמים, לא אחד.</strong> גם אחרי שאדע את החוליה, אני עוד לא אדע את הסוג (08.1b) — והסוג הוא מה שבוחר את המודול. המפגש הבא צריך לסגור את שניהם, ושאלת הסוג היא השנייה: <em>הוא לא ידע איך, או שידע ולא עשה?</em></p>
+<p><strong>למה Stage 3 ולא 2:</strong> מיפוי נעשה (מפגשים 1–3), הייתה חשיפה חברתית אמיתית ולא-מבוימת, והצוואר <strong>זז</strong> מ"יצירת הזדמנות" ל"המשכיות". זו התקדמות אמיתית ומתועדת. הזזת צוואר היא בדיוק מה שמעביר ל-Stage 3.</p>
+<p><strong>למה יש חוב מ-Stage 2:</strong> על הצוואר <strong>החדש</strong> אין לי עדיין עדות. יש חשד ("האינסטגרם לא עושה איתו חסד") — וחשד אינו השערה. אני לא יודע באיזו חוליה זה נשבר, ולכן כל ניסוי שאבנה עכשיו הוא ניחוש.</p>
+<p><strong>המשמעות המעשית:</strong> המפגש הבא הוא <strong>מפגש חשיפה בתוך Stage 3</strong>. לא מפגש כלים. אני לא נוגע באינסטגרם, לא בטקסטינג ולא בסטייל עד שהטבלה מולאה.</p>
+<p><strong>על ה-Exit:</strong> מוקדם. אבל <strong>מדידה</strong> של Independence מתחילה עכשיו — כדי שיהיו לי שלוש נקודות ולא אחת כשזה יהיה רלוונטי. מדידה ≠ יציאה.</p>
+<h2 id="142--שני-הצעדים-הבאים-ואחד-שלישי-מותנה">14.2 — שני הצעדים הבאים (ואחד שלישי מותנה)</h2>
+<h3>צעד 1 — לסגור את חוב החשיפה (המפגש הבא, ~40 דקות)</h3>
+<p><strong>מלא את טבלת 08.1 על 3–5 ההיכרויות האחרונות. בכתב. איתו.</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>היכרות</th>
+<th>איפה הכיר</th>
+<th>נשברה בחוליה</th>
+<th>מה קרה בפועל</th>
+<th>מי הפסיק ליזום</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>הכלל הקריטי:</strong> לא לקבל "זה התפייד". "התפייד" זה לא נתון — זה תיאור מרחוק.
+לשאול: <strong>מי הפסיק לכתוב? מה ההודעה האחרונה שנשלחה? מי שלח אותה? מה הוצע ולא קרה?</strong></p>
+<p><strong>מה אני מחפש בספירה:</strong>
+- אם 2+ נשברות בחוליה 5 (הצעה) → הצוואר הוא הובלה/הימנעות. <strong>לא אינסטגרם.</strong>
+- אם 2+ נשברות בחוליה 6–7 (נפגשו ואז כלום) → החשד לדיסוננס מתחזק, וגם החשד ל"הוא נעשה מישהו אחר כשמישהי מעניינת אותו".
+- אם 2+ נשברות בחוליה 3–4 (הפרטים/השיחה) → מודול טקסטינג.
+- אם זה מתפזר על כל השרשרת → הצוואר אינו בשרשרת. הוא בזהות. (08.4)
+- אם <strong>הוא</strong> תמיד הפסיק ליזום → זו הימנעות, ולומר את זה בקול. זה הצוואר.</p>
+<h3>צעד 2 — Audit דיגיטלי, בגרסה המצומצמת (~20 דקות)</h3>
+<p><strong>רק</strong> בפרוטוקול 08.6, ורק כדי למצוא <strong>דיסוננס אחד</strong>. לא פרויקט שיפור פרופיל.</p>
+<ol>
+<li>מבחן 3 שניות — 3 מילים מצד שלישי.</li>
+<li>סטוריז 7 ימים: לכל אחד — מה זה מספר עליו? למי זה מכוון? מה זה מבקש?</li>
+<li>ספירה: כמה משדר <em>מי שהוא</em> מול <em>מה שהוא רוצה שיחשבו</em>.</li>
+<li>שאלה אחת מסיימת: <strong>מה הדבר האחד שאם ייעלם — הפער בין הפרופיל לאדם יקטן?</strong></li>
+</ol>
+<p><strong>זהו. לא לגעת בזה יותר עד שיהיה מידע מהניסוי.</strong></p>
+<h3>צעד 3 — ניסוי אחד לשבוע (רק לאחר 1 ו-2)</h3>
+<p>בהתאם לתוצאת הספירה. <strong>אחד.</strong> שלוש אפשרויות מוכנות:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>אם השבירה ב...</th>
+<th>ניסוי (מ-V1)</th>
+<th>מה יפריך את ההשערה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>חוליה 5 — לא מוביל</td>
+<td>הצעה קונקרטית אחת (מקום + שעה) לאדם אחד, גם בלי אות ודאי</td>
+<td>הוא הציע והיא נענתה בקלות → הצוואר לא כאן</td>
+</tr>
+<tr>
+<td>חוליה 6–7 — נפגשו ונעצר</td>
+<td>3 שאלות המשך אמיתיות במפגש הבא + לתעד מיד אחריו מה אמרה</td>
+<td>הנוכחות הייתה שם והמפגש נעצר בכל זאת → הצוואר בפרשנות או בהתאמה</td>
+</tr>
+<tr>
+<td>חוליה 3–4 — מומנטום</td>
+<td>הודעה אמיתית בלי חישוב תזמון + 30 דק' בלי טלפון</td>
+<td>הוא שלח בקלות והתגובה הגיעה → הצוואר הוא הובלה, לא טקסטינג</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="143--התבנית-לפני-המפגש-ממולאת">14.3 — התבנית "לפני המפגש", ממולאת</h2>
+<pre><code>אדם: עידן            תאריך: ______            מפגש #4
+
+STAGE נוכחי:       3 (ניסוי) — חוב חשיפה פתוח על הצוואר החדש
+צוואר הבקבוק:      המשכיות. חוליה לא מזוהה. חשד ל-5 או 6–7
+ההשערה הפעילה:     אין השערה תקפה — יש חשד. זה מה שהמפגש סוגר.
+                   (חשד: הנכסים הדיגיטליים יוצרים ציפייה שהמפגש לא עומד בה)
+
+מה השתנה מאז:      מכיר יותר נשים. נוצרות הזדמנויות. הצוואר זז.
+מה ניסינו:         חשיפה חברתית לא-מבוימת (מפגש 3), עיבוד שליטה/מזל
+מה קרה בפועל:      שפה פחות מתנצלת. יוזמה עלתה. ההזדמנויות לא מגיעות למימוש
+מה הוא לא עשה:     טרם נדרש — לא היה ניסוי מוגדר על הצוואר החדש
+
+מה אני רוצה להבין: באיזו חוליה בדיוק נשברת השרשרת. שאלה אחת.
+עדות שאני צריך:    3–5 היכרויות, בשמות, עם חוליית שבירה מדויקת
+מודול אפשרי:       אף אחד עדיין. Instagram/digital כמועמד ראשון, לא כהחלטה
+
+מה אסור לי להחליט מראש:
+  • שהאינסטגרם הוא הבעיה. זה החשד שלי, וזה בדיוק מה שיגרום לי לחפש אישור.
+  • שזו &quot;התפיידות&quot;. אולי הוא זה שהפסיק ליזום.
+  • שהוא בשל ל-Stage 4 כי הוא מתקדם נחמד.
+  • שהצוואר בכלל בזירה הרומנטית.
+
+מה אני צפוי להסביר יותר מדי: איך אינסטגרם נקרא. אני נלהב מזה. להיזהר.
+היכן אני עלול להפוך ליועץ: ברגע שהוא ישאל &quot;אז מה למחוק&quot;. לא לענות. להחזיר שאלה.
+</code></pre>
+<h2 id="144--Independence-Score-של-עידן-נקודת-אפס">14.4 — Independence Score של עידן, נקודת אפס</h2>
+<p>הערכה מהעדות הקיימת (מפגשים 1–3), לתיקון אחרי המפגש הבא:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>ממד</th>
+<th>ניקוד</th>
+<th>על מה ניקדתי</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>מודעות עצמית</td>
+<td>1–2</td>
+<td>תפיסות מוטעות עוד נמצאות; אבל יש תזוזה בין מפגשים</td>
+</tr>
+<tr>
+<td>פעולה</td>
+<td>2</td>
+<td>מכיר יותר נשים לאחרונה — יזום, ולא בגלל משימה שלי</td>
+</tr>
+<tr>
+<td>רפלקציה</td>
+<td>1</td>
+<td>עדיין לא נצפה מחזור שהוא הריץ לבד</td>
+</tr>
+<tr>
+<td>תלות</td>
+<td>?</td>
+<td><strong>לא נמדד. זה מה שאני צריך לבדוק.</strong> האם הוא שולח לי טקסטים לאישור?</td>
+</tr>
+<tr>
+<td>התאוששות</td>
+<td>?</td>
+<td>טרם נצפה כישלון מעובד</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>סה"כ: ~5 מתוך 15, עם שני ממדים לא ידועים.</strong>
+<strong>המסקנה: Stage 3. לא להוריד מעורבות עוד. אבל למדוד את "תלות" מהמפגש הבא, במפורש.</strong></p>
+<h2 id="145--מה-יעביר-את-עידן-ל-Stage-4">14.5 — מה יעביר את עידן ל-Stage 4</h2>
+<ul>
+<li>הצוואר זז — בעדות. (החוליה השבורה הפסיקה להישבר, פעמיים.)</li>
+<li>הוא ניסח תובנה מרכזית אחת בעצמו לפני שאמרתי אותה.</li>
+<li>הוא הריץ וריאציה משלו על ניסוי.</li>
+<li>הוא יודע לומר מה הצוואר הנוכחי כשאני שואל.</li>
+<li>Independence ≥ 8, וממד "תלות" נמדד ולא ריק.</li>
+</ul>
+<p><strong>מה שלא יעביר אותו:</strong> דייט מוצלח. פרופיל משופר. מפגש נעים.</p>
+<hr />
+</section>
+<section id="sec-15--Audit-של-V1-KEEP--MOVE--REWRITE--REMOVE--MISSING"><h1 id="15--Audit-של-V1-KEEP--MOVE--REWRITE--REMOVE--MISSING">Audit של V1: KEEP / MOVE / REWRITE / REMOVE / MISSING</h1>
+<p><strong>ביקורת אגרסיבית, כמו שביקשת. כל שורה מתייחסת לפרק ב-V1.</strong></p>
+<h2 id="KEEP--נשאר-כמעט-כפי-שהוא">KEEP — נשאר כמעט כפי שהוא</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מה</th>
+<th>למה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>11 עקרונות העבודה (01)</td>
+<td>הליבה. נשארו במלואם בפרק Philosophy / DNA שכאן, עם עמודה שהופכת כל עיקרון להתחייבות מעשית</td>
+</tr>
+<tr>
+<td>"מופשט שנתקע לא נפתר בהסבר — הוא נפתר בעדות"</td>
+<td>העיקרון הפרקטי החזק ביותר ב-V1. הפך למהלך 4 בפרק 10</td>
+</tr>
+<tr>
+<td>הפרדת שליטה ממזל, בקול רם</td>
+<td>נשאר, והורחב: גם על רגעים רעים, לא רק טובים</td>
+</tr>
+<tr>
+<td>"האם זה מחזיק בלעדיי" כמבחן לכל החלטה</td>
+<td>הפך למנוע של פרקים 11 ו-12</td>
+</tr>
+<tr>
+<td>"תן לזמן לעבוד" — הפער בין המפגשים הוא הזירה</td>
+<td>זה מה שהופך את פרק 11 לאפשרי בכלל</td>
+</tr>
+<tr>
+<td>מחקר ה-Toolbox (מיתוסים, מחלוקות, סימוני [מחקר]/[קונצנזוס])</td>
+<td>נכס אמיתי. אבל לא בנתיב החם — ראה MOVE</td>
+</tr>
+<tr>
+<td>ספר התובנות (08)</td>
+<td>הכלי היחיד ב-V1 שהיה מערכת לומדת. הורחב: גם תובנות על המערכת עצמה</td>
+</tr>
+<tr>
+<td>תרגיל המראה, הדוגמה האישית (קעקועים)</td>
+<td>הכלים שעבדו בפועל. שובצו ב-Stage 1</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="MOVE--טוב-במקום-הלא-נכון">MOVE — טוב, במקום הלא נכון</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מה</th>
+<th>מאיפה → לאן</th>
+<th>למה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>"ניסוי אחד (20–30 דקות)" בכל מודול</strong></td>
+<td>תחתית כל תחום ב-Toolbox → <strong>עמודת הליבה של פרק 09</strong></td>
+<td>זה היה הדבר השימושי ביותר ב-V1, קבור בסוף כל בלוק אחרי 11 סעיפים תיאורטיים. אלה 12 ניסויים מוכנים — כל מלאי Stage 3</td>
+</tr>
+<tr>
+<td>"איך אדע שהתקדם" (סעיף 10 בכל תחום)</td>
+<td>תוך התחום → עמודת <strong>"מתי מכבים"</strong> בפרק 09</td>
+<td>היה תיאור. הפך לתנאי כיבוי מודול</td>
+</tr>
+<tr>
+<td>"מה אפשר למדוד" (סעיף 9)</td>
+<td>תוך התחום → פרק 11, מגמות</td>
+<td>היו 40+ מדדים בלי היררכיה. נשארו כרקע; מנוע ההחלטות הוא הרובריקה</td>
+</tr>
+<tr>
+<td>כרטיסי מפגש 1–3 (04)</td>
+<td>"אבני דרך" (= מבנה תהליך) → <strong>Case Notes של עידן</strong></td>
+<td>אלה תיעודי מקרה מדויקים, לא מבנה. כמבנה הם מסוכנים: הם מזמינים "מפגש 4 = ..."</td>
+</tr>
+<tr>
+<td>Progress Tracker, 8 ממדים (07)</td>
+<td>מנוע החלטות → אומדן איכותני ברקע</td>
+<td>8 סליידרים בלי הגדרות וללא דרישת עדות אינם מנוע החלטות</td>
+</tr>
+<tr>
+<td>"What Baderech Does Differently"</td>
+<td>Playbook → <strong>מסמך מיצוב/שיווק נפרד</strong></td>
+<td>לא נמחק — פשוט לא כאן. זו עבודת מיצוב מצוינת שלא עוזרת ב-20 הדקות שלפני מפגש</td>
+</tr>
+<tr>
+<td>11 סעיפי המחקר בכל תחום</td>
+<td>נתיב חם → <strong>ספריית עומק נפרדת</strong> (V1 נשאר כמו שהוא, כארכיון)</td>
+<td>לקרוא לפני שבונים מודול. לא שעה לפני מפגש</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="REWRITE--רעיון-טוב-כתיבה-לא-שימושית">REWRITE — רעיון טוב, כתיבה לא שימושית</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מה</th>
+<th>הבעיה</th>
+<th>מה במקום</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>המתודולוגיה (02): מיפוי → זהות → נוכחות → התנסות → עצמאות</strong></td>
+<td>3 מתוך 5 השלבים הם <strong>תכנים</strong>, לא מצבי תהליך. לכן אי אפשר לענות "איפה האדם נמצא" — רק "באיזה נושא נגענו". זה שורש הבעיה שתיארת</td>
+<td>5 שלבים לפי <strong>מצב ידיעה</strong> (פרק 02) + זהות/נוכחות הופכים למודולים (09)</td>
+</tr>
+<tr>
+<td><strong>בלופרינט הפגישה (03)</strong></td>
+<td>10 שדות ואף אחד מהם לא שואל <strong>איפה האדם בתהליך</strong> או <strong>מה ההשערה</strong>. "מטרת הפגישה" ו-"KPI לפגישה" מזמינים מפגש-נושא</td>
+<td>פרק 10: Stage → צוואר → השערה → עדות נדרשת → מה אסור להחליט מראש</td>
+</tr>
+<tr>
+<td><strong>"אבני דרך" (04)</strong></td>
+<td>ממוספר לפי מפגשים. "מפגשים 5–8 יתמלאו" מנציח מבנה session-based</td>
+<td>Stage Gates (03–07): תנאי מעבר, לא מספרי מפגש</td>
+</tr>
+<tr>
+<td><strong>"חוק העבודה שחוזר בכל שלב" (02)</strong></td>
+<td>5 כללים מצוינים, מנוסחים כאמונות ולא כפעולות</td>
+<td>הפכו למהלכים 1–6 בפרק 10, עם זמנים ועם טריגרים לעצירה</td>
+</tr>
+<tr>
+<td><strong>Case Study של עידן (06)</strong></td>
+<td>לפני/אחרי/מה עבד — נרטיב. לא ניתן לנהל ממנו תהליך</td>
+<td>פרק 13: לוגים של צווארים, השערות, ניסויים, ניקוד — עם תאריכים</td>
+</tr>
+<tr>
+<td><strong>"מיפוי לפני כל דבר אחר"</strong></td>
+<td>נכון, אבל לא אומר מתי המיפוי <strong>נגמר</strong></td>
+<td>Stage Gate 1, עם 4 תנאים</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="REMOVE--לא-עוזר-לנהל-תהליך">REMOVE — לא עוזר לנהל תהליך</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מה</th>
+<th>למה</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>"מפגשים 5–8 — יתמלאו מתוך מה שקורה"</td>
+<td>ריק שמנציח מבנה שגוי. במבנה החדש אין "מפגש 5"</td>
+</tr>
+<tr>
+<td>שדה "KPI לפגישה הזו"</td>
+<td>מזמין מדידה שטחית של המפגש. הוחלף במבחן שלושת התנאים (10.3)</td>
+</tr>
+<tr>
+<td>"מטרת הפגישה" כשדה עליון</td>
+<td>הוחלף ב"מה אני רוצה <strong>להבין</strong> היום" — שאלה, לא יעד</td>
+</tr>
+<tr>
+<td>הכפילות שפת גוף / קריאת אנשים / אנרגיה / נוכחות</td>
+<td>ארבעה תחומים שחוזרים על אותו חומר, כולל אותה הפרכת Mehrabian שלוש פעמים. מוזגו לשני מודולים</td>
+</tr>
+<tr>
+<td>"נוכחות" כתחום נפרד עם הערה "ראו את הניסוי ב'אנרגיה'"</td>
+<td>תחום שמפנה לתחום אחר אינו תחום</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>מה לא הוסר למרות שאינו USP:</strong> כל 11 העקרונות, כל מלאי הניסויים, כל תיעוד המקרה של עידן, כל ספר התובנות. זה מסמך פנימי — הקריטריון הוא שימושיות, לא בידול.</p>
+<h2 id="MISSING--לא-היה-ב-V1-בכלל">MISSING — לא היה ב-V1 בכלל</h2>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מה</th>
+<th>למה זה קריטי</th>
+<th>איפה עכשיו</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Stage Gates</strong></td>
+<td>בלי זה, התקדמות היא תחושה</td>
+<td>03–07</td>
+</tr>
+<tr>
+<td><strong>Decision Trees</strong></td>
+<td>הפער הגדול ביותר. V1 לא עונה על "מה עושים כשלא יודעים"</td>
+<td>08.2–08.5</td>
+</tr>
+<tr>
+<td><strong>שרשרת ההמשכיות</strong></td>
+<td>מאפשר לנקוב בצוואר כחוליה ולא כנושא. מונע את "מפגש 3 = טקסטינג"</td>
+<td>08.1</td>
+</tr>
+<tr>
+<td><strong>פורמט השערה + הפרכה</strong></td>
+<td>בלי "מה יפריך" אין ניסוי — יש רק פעילות</td>
+<td>08.7</td>
+</tr>
+<tr>
+<td><strong>Audit דיגיטלי</strong></td>
+<td>הצוואר של עידן, ו-V1 לא מכיר בכלל את הזירה הזאת</td>
+<td>08.6</td>
+</tr>
+<tr>
+<td><strong>"הוא עושה הכול וזה לא זז"</strong></td>
+<td>התרחיש הנפוץ שבו V1 משתתק</td>
+<td>08.5</td>
+</tr>
+<tr>
+<td><strong>שער 0: התאמה, מסגור, והפניה החוצה</strong></td>
+<td>V1 מניח שכל מי שמגיע מתאים, ואין בו זכר להפניה לאיש מקצוע במצוקה נפשית</td>
+<td>02</td>
+</tr>
+<tr>
+<td><strong>Independence Rubric עם ממד תלות</strong></td>
+<td>V1 מכריז "לא לייצר תלות" ואינו מודד אותה</td>
+<td>11.2</td>
+</tr>
+<tr>
+<td><strong>דרישת עדות לניקוד</strong></td>
+<td>בלי זה כל מדידה היא הד של המפגש</td>
+<td>11.1</td>
+</tr>
+<tr>
+<td><strong>Exit Criteria / Pre-exit / מפגש סיום / Follow-up</strong></td>
+<td>V1 כתב "עצמאות" כשלב ולא נתן שום מנגנון סיום</td>
+<td>12</td>
+</tr>
+<tr>
+<td><strong>מבחן ערך המפגש</strong></td>
+<td>ההגנה מפני תהליך שנמשך לנצח כי הוא נעים</td>
+<td>10.3</td>
+</tr>
+<tr>
+<td><strong>הפרדת עדות מפרשנות בתיעוד</strong></td>
+<td>V1 מזהיר מפרשנות-יתר אצל הלקוח, ומערבב אותן בתיעוד שלו</td>
+<td>04, 13</td>
+</tr>
+<tr>
+<td><strong>"מה אני נתתי" מול "מה הוא ניסח"</strong></td>
+<td>המדד הישיר ביותר ל"מחזיק בלעדיי"</td>
+<td>06, 13</td>
+</tr>
+<tr>
+<td><strong>מה לעשות כשהצוואר יוצא מהזירה הרומנטית</strong></td>
+<td>קורה, ו-V1 אינו מכיר בזה</td>
+<td>08.4</td>
+</tr>
+<tr>
+<td><strong>תובנות על המערכת</strong></td>
+<td>V1 היה מסמך חי לתובנות על <strong>לקוחות</strong>, לא על עצמו</td>
+<td>13</td>
+</tr>
+</tbody>
+</table></div>
+<hr />
+</section>
+<section id="sec-נספח--תחזוקת-ה-Playbook"><h1 id="נספח--תחזוקת-ה-Playbook">נספח — תחזוקת ה-Playbook</h1>
+<p><strong>זה מסמך חי. אבל לא כל דבר נכנס אליו.</strong></p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>מתי מעדכנים</th>
+<th>מה מותר לשנות</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>אחרי כל תהליך שהסתיים</td>
+<td>Follow-up שאלה 3 (מה נשר) → מה להסיר מ-09</td>
+</tr>
+<tr>
+<td>כשצוואר בקבוק חדש הופיע פעמיים אצל שני אנשים שונים</td>
+<td>להוסיף ענף ל-08</td>
+</tr>
+<tr>
+<td>כשניסוי נכשל בביצוע אצל 3 אנשים</td>
+<td>לא לתקן את הניסוי — לבדוק אם הוא מאובחן נכון</td>
+</tr>
+<tr>
+<td><strong>לא</strong> אחרי מפגש בודד מרשים</td>
+<td>מקרה אחד הוא לא דפוס. לספר התובנות, לא ל-Playbook</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>הכלל:</strong> לפני שמוסיפים משהו ל-Playbook — לשאול איזו שאלה מ-00 הוא עוזר לענות עליה. אם אף אחת, מקומו בספר התובנות.</p>
+<hr />
+</section>
+<section id="sec-נספח--הפער-הפתוח-היחיד"><h1 id="נספח--הפער-הפתוח-היחיד">נספח — הפער הפתוח היחיד</h1>
+<p><strong>קשור ישירות ל<a href="index.html#sec-01--שער-0-התאמה-ומסגור">שער 0</a>.</strong></p>
+<p><code>[חסר — נדרש, ולא ניתן להמציא]</code></p>
+<p><strong>רשימת הפניה מקצועית.</strong></p>
+<p>שער 0 ו-08.4 שניהם מסתיימים בהוראה "להפנות החוצה" — וכרגע הם מפנים לריק. זה לא פער תיעודי, זה פער מקצועי: ברגע שיושב מולי אדם עם דיכאון מתפקד-למחצה, חרדה חברתית משתקת או מחשבות פגיעה בעצמו, ההוראה "להפנות" בלי שם וטלפון אינה הוראה.</p>
+<p>צריך שלושה שמות, לפני התהליך הבא:</p>
+<div class="tw"><table>
+<thead>
+<tr>
+<th>תחום</th>
+<th>שם</th>
+<th>איך פונים</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CBT / חרדה חברתית</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>פסיכולוג/ית קליני/ת</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>מצוקה חריפה — קו סיוע + גורם מקצועי</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>הכלל שנלווה לרשימה:</strong> הפניה אינה סיום התהליך בהכרח. אני יכול ללוות <strong>במקביל</strong> לטיפול — אני לא יכול ללוות <strong>במקומו</strong>. וההחלטה נאמרת בגלוי לאדם, לא מתקבלת מעליו.</p></section>
+</main>
+</div>
+
+<a href="#" class="top" id="top" aria-label="חזרה למעלה">↑</a>
+
+<script>
+(function(){
+  var toc=document.getElementById('toc'), btn=document.getElementById('menuBtn'),
+      top=document.getElementById('top'), links=[].slice.call(toc.querySelectorAll('a[href^="#"]')),
+      secs=links.map(function(a){return document.querySelector('#sec-'+CSS.escape(a.getAttribute('href').slice(5)));});
+
+  if(window.matchMedia('(max-width:900px)').matches) toc.classList.add('hidden');
+  btn.addEventListener('click',function(){
+    var h=toc.classList.toggle('hidden');
+    btn.setAttribute('aria-expanded', String(!h));
+  });
+  links.forEach(function(a){a.addEventListener('click',function(){
+    if(window.matchMedia('(max-width:900px)').matches) toc.classList.add('hidden');
+  });});
+
+  function onScroll(){
+    top.classList.toggle('show', window.scrollY>600);
+    var y=window.scrollY+120, cur=-1;
+    secs.forEach(function(s,i){ if(s && s.offsetTop<=y) cur=i; });
+    links.forEach(function(a,i){ a.classList.toggle('on', i===cur); });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+})();
+</script>
+</body>
+</html>
