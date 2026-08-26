@@ -58,6 +58,9 @@ html{
     margin-bottom:24px;
     color:var(--sage-deep);
   }
+.hero .eyebrow {
+  font-size: clamp(1.25rem, 1.8vw, 1.375rem);
+}
 
   /* ---------- MOVEMENTS ("איך נראית הדרך?") ---------- */
   .movements__list{
