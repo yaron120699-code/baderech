@@ -5,566 +5,76 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="theme-color" content="#F7F6F1">
-<title>Content &amp; Growth OS — בדרך.</title>
+<title>הפלייבוק של בדרך.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
 <style>
-:root{
-  --paper:#F7F6F1; --paper-2:#FFFEFA; --ink:#1B1A17; --ink-2:#44423C;
-  --ink-3:#7A776E; --rule:#DFDCD2;
-  --slate:#33505E;      /* מבנה: שלבים, מספור */
-  --gate:#3F6B4F;       /* Stage Gate */
-  --danger:#9E3B34;     /* Red Flags */
-  --wash:#EFEDE5;
-}
-*{box-sizing:border-box}
-html{scroll-behavior:smooth;scroll-padding-top:76px}
-body{
-  margin:0;background:var(--paper);color:var(--ink);
-  font-family:'Heebo',system-ui,sans-serif;font-weight:400;
-  font-size:17px;line-height:1.72;-webkit-font-smoothing:antialiased;
-}
-.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
-
-/* ---------- top bar ---------- */
-.bar{
-  position:sticky;top:0;z-index:40;background:rgba(247,246,241,.92);
-  backdrop-filter:blur(8px);border-bottom:1px solid var(--rule);
-}
-.bar .wrap{display:flex;align-items:center;gap:20px;height:60px}
-.brand{font-family:'Frank Ruhl Libre',serif;font-weight:700;font-size:19px;letter-spacing:-.01em;white-space:nowrap}
-.brand span{color:var(--ink-3);font-weight:400;font-size:14px;margin-inline-start:8px;font-family:'Heebo',sans-serif}
-.hot{margin-inline-start:auto;display:flex;gap:6px}
-.hot a{
-  font-size:13px;color:var(--slate);text-decoration:none;padding:5px 11px;
-  border:1px solid var(--rule);border-radius:2px;background:var(--paper-2);white-space:nowrap;
-}
-.hot a:hover{border-color:var(--slate)}
-.menu{display:none}
-
-/* ---------- hero ---------- */
-.hero{padding:64px 0 40px;border-bottom:1px solid var(--rule)}
-.hero h1{
-  font-family:'Frank Ruhl Libre',serif;font-size:clamp(38px,7vw,62px);
-  line-height:1.05;margin:0 0 6px;font-weight:900;letter-spacing:-.02em;
-}
-.hero .sub{font-family:'Frank Ruhl Libre',serif;font-size:clamp(20px,3vw,26px);color:var(--ink-2);margin:0 0 26px}
-.hero .meta{font-size:13px;color:var(--ink-3);letter-spacing:.04em}
-
-/* the signature: the five-question strip */
-.strip{margin:34px 0 0;border-top:1px solid var(--ink);padding-top:14px}
-.strip .lbl{font-size:12px;letter-spacing:.14em;color:var(--ink-3);margin-bottom:14px}
-.strip ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--rule)}
-.strip li{background:var(--paper);padding:14px 12px 16px}
-.strip .num{font-family:'Frank Ruhl Libre',serif;font-size:13px;color:var(--slate);display:block;margin-bottom:6px}
-.strip .q{font-family:'Frank Ruhl Libre',serif;font-size:16.5px;line-height:1.35;font-weight:500}
-
-/* ---------- layout ---------- */
-.cols{display:grid;grid-template-columns:230px 1fr;gap:56px;align-items:start;padding:44px 0 90px}
-nav.toc{position:sticky;top:82px;font-size:14.5px}
-nav.toc .t{font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin-bottom:12px}
-nav.toc a{display:block;text-decoration:none;color:var(--ink-2);padding:4px 0;border-inline-start:2px solid transparent;padding-inline-start:12px;margin-inline-start:-14px;line-height:1.35}
-nav.toc a:hover{color:var(--ink)}
-nav.toc a.on{color:var(--ink);border-color:var(--slate);font-weight:500}
-nav.toc .n{font-family:'Frank Ruhl Libre',serif;color:var(--slate);font-size:12.5px;margin-inline-end:8px}
-
-/* ---------- content ---------- */
-main{min-width:0}
-section{margin-bottom:8px}
-h1{
-  font-family:'Frank Ruhl Libre',serif;font-size:clamp(27px,4.2vw,37px);font-weight:700;
-  line-height:1.15;margin:64px 0 20px;padding-top:20px;border-top:2px solid var(--ink);letter-spacing:-.01em;
-}
-section:first-of-type h1{margin-top:0;border-top:none;padding-top:0}
-h2{font-family:'Frank Ruhl Libre',serif;font-size:23px;font-weight:700;margin:38px 0 12px;line-height:1.25}
-h3{font-size:16px;font-weight:700;margin:26px 0 8px;letter-spacing:.01em}
-h2.h-danger{color:var(--danger)}
-h2.h-danger::before{content:"";display:inline-block;width:9px;height:9px;background:var(--danger);margin-inline-end:10px;vertical-align:middle}
-h2.h-gate{color:var(--gate)}
-h2.h-gate::before{content:"";display:inline-block;width:9px;height:9px;background:var(--gate);margin-inline-end:10px;vertical-align:middle}
-p{margin:0 0 14px}
-ul,ol{margin:0 0 16px;padding-inline-start:22px}
-li{margin-bottom:5px}
-strong{font-weight:700}
-hr{border:none;border-top:1px solid var(--rule);margin:44px 0}
-a{color:var(--slate)}
-
-blockquote{
-  margin:22px 0;padding:16px 20px;background:var(--wash);
-  border-inline-start:3px solid var(--slate);
-}
-blockquote p{margin:0 0 8px;font-family:'Frank Ruhl Libre',serif;font-size:19px;line-height:1.5}
-blockquote p:last-child{margin:0}
-
-.tw{overflow-x:auto;margin:20px 0;border:1px solid var(--rule);background:var(--paper-2)}
-table{border-collapse:collapse;width:100%;font-size:15px;min-width:460px}
-th,td{text-align:start;padding:10px 14px;border-bottom:1px solid var(--rule);vertical-align:top;line-height:1.5}
-th{background:var(--wash);font-weight:500;font-size:13px;letter-spacing:.03em;color:var(--ink-2);white-space:nowrap}
-tr:last-child td{border-bottom:none}
-td:first-child{font-weight:500}
-
-/* fill-in templates + decision trees */
-pre{
-  direction:ltr;text-align:left;overflow-x:auto;
-  background:var(--paper-2);border:1px dashed #C9C5B8;
-  padding:18px 20px;margin:20px 0;font-size:13.5px;line-height:1.75;
-}
-pre code{font-family:ui-monospace,'SFMono-Regular',Menlo,Consolas,monospace;white-space:pre}
-:not(pre)>code{background:var(--wash);padding:1px 5px;font-size:14px;font-family:ui-monospace,Menlo,monospace}
-
-.top{
-  position:fixed;inset-block-end:20px;inset-inline-start:20px;z-index:30;
-  background:var(--ink);color:var(--paper);text-decoration:none;
-  width:40px;height:40px;display:none;align-items:center;justify-content:center;
-  border-radius:50%;font-size:17px;
-}
-.top.show{display:flex}
-
-@media (max-width:900px){
-  .cols{grid-template-columns:1fr;gap:0;padding-top:28px}
-  nav.toc{position:static;margin-bottom:34px;padding-bottom:24px;border-bottom:1px solid var(--rule)}
-  nav.toc.hidden{display:none}
-  .menu{display:block;margin-inline-start:auto;background:none;border:1px solid var(--rule);
-        border-radius:2px;padding:6px 12px;font-family:inherit;font-size:13px;color:var(--ink-2);cursor:pointer}
-  .hot{display:none}
-  .strip ol{grid-template-columns:1fr;gap:1px}
-  .hero{padding:40px 0 30px}
-}
-@media print{
-  .bar,nav.toc,.top,.strip{display:none}
-  .cols{grid-template-columns:1fr;padding:0}
-  body{font-size:11pt;background:#fff}
-  h1{page-break-before:always;border-top:none}
-  section:first-of-type h1{page-break-before:avoid}
-  .tw,pre,table{page-break-inside:avoid}
-}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
-
-/* ---------- תוספות ניווט (V2.1) ---------- */
-.swap{
-  font-size:13px;color:var(--paper);background:var(--slate);text-decoration:none;
-  padding:5px 11px;border:1px solid var(--slate);border-radius:2px;white-space:nowrap;
-}
-.swap:hover{background:var(--ink);border-color:var(--ink);color:var(--paper)}
-.bar .swap{margin-inline-start:10px}
-nav.toc .grp{font-size:11px;letter-spacing:.14em;color:var(--ink-3);margin:14px 0 6px}
-nav.toc a.sub{font-size:13.5px;padding-inline-start:26px}
-nav.toc .foot{margin-top:18px;padding-top:14px;border-top:1px solid var(--rule)}
-nav.toc .foot a{color:var(--slate);font-weight:500}
-
-/* מפת ההפעלה של Quick Start */
-.route{margin:22px 0 6px;border-top:1px solid var(--ink);border-bottom:1px solid var(--rule)}
-.route .lbl{font-size:12px;letter-spacing:.14em;color:var(--ink-3);padding:12px 0 10px}
-.route ol{list-style:none;margin:0;padding:0 0 8px}
-.route li{display:flex;gap:14px;align-items:baseline;padding:9px 0;border-top:1px solid var(--rule);margin:0}
-.route .num{font-family:'Frank Ruhl Libre',serif;font-size:13px;color:var(--slate);min-width:22px}
-.route .q{font-family:'Frank Ruhl Libre',serif;font-size:17px;line-height:1.35;flex:1 1 auto}
-.route .go{font-size:13.5px;flex:0 1 auto;text-align:start}
-
-/* אינדקס חמשת השלבים */
-.stages{list-style:none;margin:22px 0 8px;padding:0;display:grid;gap:1px;background:var(--rule);
-        grid-template-columns:repeat(5,1fr)}
-.stages li{background:var(--paper-2);padding:14px 14px 16px;margin:0}
-.stages .n{font-family:'Frank Ruhl Libre',serif;font-size:12px;color:var(--slate);display:block;margin-bottom:4px}
-.stages a{font-family:'Frank Ruhl Libre',serif;font-size:17px;font-weight:700;text-decoration:none;color:var(--ink);display:block;line-height:1.2}
-.stages a:hover{color:var(--slate)}
-.stages p{font-size:13px;color:var(--ink-2);margin:6px 0 0;line-height:1.45}
-
-/* הערת עורך / הפניה לנספחים */
-.note{border:1px dashed #C9C5B8;background:var(--paper-2);padding:14px 18px;margin:20px 0;font-size:15px}
-.note .t{font-size:11px;letter-spacing:.14em;color:var(--ink-3);display:block;margin-bottom:6px}
-.note p:last-child{margin-bottom:0}
-.todo{color:var(--danger)}
-
-@media (max-width:900px){
-  .route li{flex-wrap:wrap}
-  .route .go{width:100%}
-  .stages{grid-template-columns:1fr}
-}
-
-/* ---------- Growth OS ---------- */
-.ph{
-  font-family:ui-monospace,Menlo,monospace;font-size:13px;
-  color:var(--danger);background:var(--paper-2);
-  border:1px dashed #C9C5B8;padding:1px 6px;white-space:nowrap;
-}
+:root{--paper:#F7F6F1;--paper2:#FFFEFA;--ink:#1B1A17;--ink2:#44423C;--muted:#7A776E;--rule:#DFDCD2;--slate:#33505E;--green:#3F6B4F;--red:#9E3B34;--wash:#EFEDE5}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:78px}body{margin:0;background:var(--paper);color:var(--ink);font-family:'Heebo',sans-serif;font-size:17px;line-height:1.72}.wrap{max-width:1050px;margin:auto;padding:0 24px}.bar{position:sticky;top:0;z-index:20;background:rgba(247,246,241,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}.bar .wrap{height:60px;display:flex;align-items:center;gap:18px}.brand{font-family:'Frank Ruhl Libre',serif;font-size:20px;font-weight:700}.brand span{font-family:'Heebo';font-size:13px;font-weight:400;color:var(--muted);margin-inline-start:8px}.hot{margin-inline-start:auto;display:flex;gap:6px}.hot a{font-size:13px;text-decoration:none;color:var(--slate);padding:5px 10px;border:1px solid var(--rule);background:var(--paper2)}.hero{padding:68px 0 42px;border-bottom:1px solid var(--rule)}.eyebrow{font-size:12px;letter-spacing:.15em;color:var(--muted);margin-bottom:12px}.hero h1,h1,h2{font-family:'Frank Ruhl Libre',serif}.hero h1{font-size:clamp(44px,8vw,70px);line-height:1;margin:0 0 12px;font-weight:900}.hero .sub{font-family:'Frank Ruhl Libre',serif;font-size:clamp(23px,4vw,31px);margin:0 0 22px;color:var(--ink2)}.hero .lead{max-width:760px;font-size:18px;color:var(--ink2)}.manifesto{margin-top:32px;padding:24px 26px;background:var(--ink);color:var(--paper);font-family:'Frank Ruhl Libre',serif;font-size:clamp(21px,3vw,28px);line-height:1.45}.map{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);margin-top:34px;border:1px solid var(--rule)}.map a{background:var(--paper2);padding:14px;text-decoration:none;color:var(--ink);min-height:92px}.map b{display:block;font-family:'Frank Ruhl Libre';font-size:17px}.map small{color:var(--muted)}.cols{display:grid;grid-template-columns:220px 1fr;gap:58px;padding:46px 0 100px}.toc{position:sticky;top:82px}.toc .t{font-size:11px;letter-spacing:.14em;color:var(--muted);margin-bottom:10px}.toc a{display:block;text-decoration:none;color:var(--ink2);font-size:14px;padding:5px 0;border-inline-start:2px solid transparent;padding-inline-start:12px;margin-inline-start:-14px}.toc a:hover{color:var(--ink);border-color:var(--slate)}main{min-width:0}section{padding-top:12px;margin-bottom:68px}section>h1{font-size:35px;line-height:1.15;margin:0 0 8px;padding-top:26px;border-top:2px solid var(--ink)}section:first-child>h1{border:0;padding-top:0}.purpose{font-family:'Frank Ruhl Libre';font-style:italic;color:var(--ink2);font-size:18px;margin-bottom:28px}h2{font-size:24px;line-height:1.25;margin:34px 0 12px}p{margin:0 0 14px}ul{padding-inline-start:23px;margin:0 0 18px}li{margin-bottom:7px}blockquote{margin:22px 0;padding:17px 21px;background:var(--wash);border-inline-start:3px solid var(--slate)}blockquote p{font-family:'Frank Ruhl Libre';font-size:20px;line-height:1.5;margin:0}.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}.card{border:1px solid var(--rule);background:var(--paper2);padding:18px}.card b{display:block;margin-bottom:5px}.good{border-top:3px solid var(--green)}.bad{border-top:3px solid var(--red)}.loop{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}.loop span{padding:8px 12px;background:var(--paper2);border:1px solid var(--rule);font-weight:500}.loop i{font-style:normal;color:var(--muted);align-self:center}.table{overflow:auto;border:1px solid var(--rule);background:var(--paper2);margin:20px 0}table{width:100%;border-collapse:collapse;min-width:580px;font-size:15px}th,td{text-align:right;vertical-align:top;padding:11px 14px;border-bottom:1px solid var(--rule)}th{background:var(--wash);font-size:13px;color:var(--ink2)}tr:last-child td{border:0}.callout{padding:18px 20px;border:1px dashed #C9C5B8;background:var(--paper2);margin:20px 0}.callout .label{font-size:11px;letter-spacing:.14em;color:var(--muted);display:block;margin-bottom:6px}.red{color:var(--red)}.footer{border-top:1px solid var(--rule);padding:35px 0 60px;color:var(--muted);font-size:14px}@media(max-width:900px){.hot{display:none}.cols{grid-template-columns:1fr;gap:10px}.toc{position:static;border-bottom:1px solid var(--rule);padding-bottom:22px}.map{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr}.hero{padding-top:44px}}@media(max-width:540px){.map{grid-template-columns:1fr}.hero h1{font-size:48px}}
 </style>
 </head>
 <body>
-
-<div class="bar"><div class="wrap">
-  <div class="brand">בַּדֶּרֶךְ.<span>Growth OS</span></div>
-  <div class="hot">
-    <a href="#sec-01--Positioning">01 · מיצוב</a>
-    <a href="#sec-05--Funnel">05 · Funnel</a>
-    <a href="#sec-06--CTA-Library">06 · CTA</a>
-    <a href="#sec-09--Weekly-Operating-Rhythm">09 · שבוע עבודה</a>
-  </div>
-  <a class="swap" href="../playbook/">Playbook הליווי ←</a>
-  <button class="menu" id="menuBtn" aria-expanded="false">תוכן</button>
-</div></div>
-
+<div class="bar"><div class="wrap"><div class="brand">בַּדֶּרֶךְ.<span>Playbook</span></div><div class="hot"><a href="#dna">DNA</a><a href="#method">השיטה</a><a href="#process">התהליך</a><a href="#content">תוכן</a></div></div></div>
 <header class="hero"><div class="wrap">
-  <h1>מערכת תוכן וצמיחה</h1>
-  <p class="sub">Content &amp; Growth OS · מסמך עבודה פנימי</p>
-  <p class="meta">שלד גרסה 0.1 &nbsp;·&nbsp; נפרד מ-Playbook הליווי</p>
-
-  <div class="strip">
-    <div class="lbl">נתיב התנועה המרכזי</div>
-    <ol>
-      <li><span class="num">01</span><span class="q">ריל</span></li>
-      <li><span class="num">02</span><span class="q">פרופיל</span></li>
-      <li><span class="num">03</span><span class="q">אמון</span></li>
-      <li><span class="num">04</span><span class="q">אתר או תרגיל</span></li>
-      <li><span class="num">05</span><span class="q">שיחת התאמה</span></li>
-    </ol>
-  </div>
+<div class="eyebrow">מסמך ההפעלה של בדרך · V3</div>
+<h1>להביא את עצמך לעולם.</h1>
+<p class="sub">לא לבנות דמות. לא ללמוד טריקים. ללמוד לפגוש את החיים כמו שאתה.</p>
+<p class="lead">בדרך הוא תהליך לגברים שרוצים לפתח נוכחות, ביטחון ושיקול דעת בעולם האמיתי. דייטינג הוא אחת הזירות המרכזיות שלנו — כי שם פחד, ערך עצמי, תקשורת, משיכה, גבולות והצורך באישור נחשפים מהר. אבל המטרה גדולה יותר מנשים: לעזור לאדם להביא יותר מעצמו לעולם, עד שהוא יודע להמשיך בלעדיי.</p>
+<div class="manifesto">אנחנו לא מתכוננים לחיים. אנחנו עובדים בתוכם.</div>
+<div class="map"><a href="#dna"><b>01 · המצפן</b><small>מי אנחנו ומה אנחנו מסרבים לייצר</small></a><a href="#client"><b>02 · האדם</b><small>מי מגיע ומה באמת יושב מתחת לבקשה</small></a><a href="#method"><b>03 · השיטה</b><small>אבחון, שטח, ניסוי ופידבק</small></a><a href="#process"><b>04 · התהליך</b><small>איך העבודה נראית בפועל</small></a><a href="#tools"><b>05 · הכלים</b><small>סטייל, נוכחות, תקשורת ודייטינג</small></a><a href="#success"><b>06 · הצלחה</b><small>איך נראה אדם שכבר לא צריך אותי</small></a><a href="#risks"><b>07 · הסכנות</b><small>מתי הצלחה הופכת למסכה</small></a><a href="#content"><b>08 · תוכן וצמיחה</b><small>איך ה-DNA הופך למותג</small></a></div>
 </div></header>
-
 <div class="wrap cols">
-  <nav class="toc" id="toc">
-    <div class="t">תוכן העניינים</div>
-    <a href="#00--מה-המסמך-הזה"><span class="n">00</span>מה המסמך הזה</a>
-<a href="#01--Positioning"><span class="n">01</span>Positioning</a>
-<a href="#02--Audience"><span class="n">02</span>Audience</a>
-<a href="#03--Content-Principles"><span class="n">03</span>Content Principles</a>
-<a href="#04--Content-Pillars"><span class="n">04</span>Content Pillars</a>
-<a href="#05--Funnel"><span class="n">05</span>Funnel</a>
-<a href="#06--CTA-Library"><span class="n">06</span>CTA Library</a>
-<a href="#07--Distribution"><span class="n">07</span>Distribution</a>
-<a href="#08--Owned-Audience"><span class="n">08</span>Owned Audience</a>
-<a href="#09--Weekly-Operating-Rhythm"><span class="n">09</span>Weekly Operating Rhythm</a>
-<a href="#10--Metrics-amp-Learning-Log"><span class="n">10</span>Metrics &amp; Learning Log</a>
-    <div class="foot">
-      <a href="../playbook/">Playbook הליווי ←</a>
-      <a href="../playbook/reference.html">חומרי עזר ←</a>
-      <a href="../">דף הבית ←</a>
-    </div>
-  </nav>
-  <main><section></section>
+<nav class="toc"><div class="t">תוכן העניינים</div><a href="#dna">01 · המצפן של בדרך</a><a href="#client">02 · האדם שלנו</a><a href="#method">03 · המתודולוגיה</a><a href="#process">04 · מבנה התהליך</a><a href="#tools">05 · כלי העבודה</a><a href="#success">06 · מה נחשב הצלחה</a><a href="#risks">07 · סכנות וגבולות</a><a href="#content">08 · תוכן וצמיחה</a><a href="#sales">09 · שיחת התאמה</a><a href="#learning">10 · מערכת למידה</a></nav>
+<main>
+<section id="dna"><h1>01 · המצפן של בדרך</h1><p class="purpose">לפני כל כלי, מפגש, ריל או החלטה: מה אנחנו מנסים לעשות כאן?</p>
+<h2>התזה</h2><blockquote><p>בדרך עוזרת לגברים להביא את עצמם לעולם.</p></blockquote><p>לא להפוך למישהו אחר כדי להיות ראוי. לא לבנות פרסונה כריזמטית. לא לחכות לגרסה עתידית ומושלמת של עצמך לפני שמתחילים לחיות. אנחנו עובדים על הפער שבין האדם שכבר נמצא בפנים לבין הדרך שבה הוא מצליח — או לא מצליח — לבטא אותו בחוץ.</p>
+<h2>למה דייטינג?</h2><p>כי דייטינג הוא מעבדה צפופה לחיים. תוך דקות הוא יכול לחשוף פחד מדחייה, צורך באישור, שפת גוף, יכולת להוביל, כנות, גבולות, משיכה, הקשבה, ערך עצמי ויכולת להתמודד עם אי-ודאות. אנחנו לא מבטלים את הרצון להצליח עם נשים. אנחנו לוקחים אותו ברצינות — ובודקים מה האדם מבקש מההצלחה הזאת לתת לו.</p>
+<h2>ששת העקרונות</h2><div class="cards"><div class="card"><b>להבין לפני שדוחפים</b>״לא בא לי״ הוא לא סוף השיחה. הוא מידע. מה מחזיק אותך עכשיו?</div><div class="card"><b>חוויה לפני תיאוריה</b>לא לומדים את החיים ואז יוצאים אליהם. לומדים מתוך מה שקורה עכשיו.</div><div class="card"><b>לא אומרים לך מה לרצות</b>סטוץ, זוגיות, היכרות או חופש — הבחירה שלך. התפקיד שלנו הוא להבין למה ומה המחיר.</div><div class="card"><b>לא בונים דמות</b>כריזמה שאינה מחוברת לאדם היא עוד מסכה. המטרה היא פחות הופעה ויותר נוכחות.</div><div class="card"><b>הצלחה אינה ערך עצמי</b>״כן״ יכול להיות כיף. ״לא״ יכול לכאוב. אף אחד מהם לא אמור להפוך לפסק דין על מי שאתה.</div><div class="card"><b>איתי, עד שבלעדיי</b>התהליך מצליח כשהלקוח יודע לראות, לפרש, לבחור ולתת לעצמו פידבק.</div></div>
+<h2>האנטי-תוצאה</h2><div class="card bad"><b>הגבר שאנחנו מסרבים לייצר</b>נרקיסיסט כריזמטי שרץ אחרי האישור הבא; מתייחס לנשים כהישגים; משתמש במניפולציות; עושה דברים בצורה לא כנה; משחק דמות של גבר בטוח במקום לפתח שקט פנימי ושיקול דעת.</div></section>
 
-<section id="sec-00--מה-המסמך-הזה"><h1 id="00--מה-המסמך-הזה">00 — מה המסמך הזה</h1>
-<p>מערכת ההפעלה של התוכן והצמיחה של "בדרך.". <strong>זה לא Playbook הליווי</strong> — הליווי עוסק במה שקורה מול אדם אחד בתוך תהליך; המסמך הזה עוסק בשאלה איך אדם כזה מגיע לשיחת ההתאמה מלכתחילה.</p>
-<div class="tw"><table>
-<thead><tr><th>מסמך</th><th>עונה על</th><th>איפה</th></tr></thead>
-<tbody>
-<tr><td><strong>Playbook הליווי</strong></td><td>מה עושים בתוך התהליך, ואיך יודעים איפה האדם נמצא</td><td><a href="../playbook/" dir="ltr">/playbook</a></td></tr>
-<tr><td><strong>Growth OS</strong></td><td>מה מפרסמים, למי, לאן זה שולח, ואיך יודעים אם זה עבד</td><td>המסמך הזה</td></tr>
-</tbody>
-</table></div>
-<h3>סטטוס</h3>
-<p>זהו <strong>שלד</strong>. הפרקים והמבנה קבועים; חלק מהתוכן עדיין ריק ומסומן ב-<span class="ph">[ למלא ]</span>.
-כלל עבודה: <strong>לא ממציאים נתונים, מחקרים או מקרי הצלחה.</strong> אם אין ראיה — נשאר placeholder עד שיש.</p>
-<div class="note">
-<span class="t">מקורות אמת קיימים</span>
-<p>שלושה מקורות שכבר קיימים ואפשר להזין מהם את המסמך, בלי להמציא: דף הנחיתה (<a href="../">/</a>), בדיקת ההתאמה (<a href="../fit/">/fit</a>) ומחקר הקהל האנונימי (<a href="../research/">/research</a>).</p>
-</div>
-<hr />
-</section>
+<section id="client"><h1>02 · האדם שלנו</h1><p class="purpose">הבעיה שהוא אומר בקול היא נקודת הכניסה. היא לא תמיד הבעיה שעליה נעבוד.</p>
+<h2>מי מגיע</h2><p>גבר שמרגיש שיש פער בין מי שהוא לבין איך שהוא מופיע בעולם. לפעמים הוא אומר ״אני רוצה להצליח יותר עם נשים״. לפעמים ״אני קופא״, ״אין לי מושג מה להגיד״, ״אני לא קורא סיטואציות״ או ״אני יודע הכול בראש אבל לא עושה כלום״.</p>
+<h2>השאלות שמתחת לבקשה</h2><ul><li>למה אתה רוצה להיכנס לעולם הזה עכשיו?</li><li>מה אתה רוצה ללמוד, לחוות או להרוויח ממנו?</li><li>מה אתה מקווה שאישה שרוצה אותך תוכיח לך על עצמך?</li><li>מה קורה לך כשאתה מקבל ״לא״? ומה קורה כשאתה מקבל ״כן״?</li><li>איזה חלק בעבר שלך אתה עדיין מנסה לכסות דרך הצלחה, משיכה או אישור?</li><li>איפה הפער בפועל: סטייל, נוכחות, ניסיון, אמונות, תקשורת, הבנת הסיטואציה או משהו אחר?</li></ul>
+<div class="callout"><span class="label">עיקרון אבחוני</span>לא כל פחד מגישה הוא ״פחד מדחייה״. לפעמים הבחור פשוט לא יודע מה לומר. לפעמים הוא לא יודע לזהות עניין. לפעמים הוא לא אוהב איך שהוא נראה. אנחנו לא מכריחים סיפור פסיכולוגי במקום שבו חסרה מיומנות — ולא מלמדים מיומנות במקום שבו הפצע מנהל אותה.</div></section>
 
-<section id="sec-01--Positioning"><h1 id="01--Positioning">01 — Positioning</h1>
-<h2>מה זה, בשורה אחת</h2>
-<blockquote>
-<p>ליווי אישי 1:1 לגברים, לבנות ביטחון ונוכחות — בלי להפוך למישהו שאתה לא.</p>
-</blockquote>
-<p>זו הניסוח שכבר עומד בראש דף הנחיתה. כל התוכן צריך להוביל אליו, ולא להתחרות בו בניסוח אחר.</p>
+<section id="method"><h1>03 · המתודולוגיה</h1><p class="purpose">בדרך היא לולאת למידה, לא סילבוס.</p>
+<div class="loop"><span>מבינים</span><i>←</i><span>יוצאים</span><i>←</i><span>מנסים</span><i>←</i><span>טועים</span><i>←</i><span>מפרקים</span><i>←</i><span>משנים</span><i>←</i><span>חוזרים לעולם</span></div>
+<h2>1. מבינים</h2><p>מגדירים יחד מה האדם רוצה, למה, ומה הפער שמפריע לו כרגע. אין תכנית זהה לכולם.</p><h2>2. יוצאים</h2><p>עוברים מהשיחה לסביבה שבה החיים באמת קורים: רחוב, בר, חנות, דייט, מפגש חברתי או כל זירה רלוונטית.</p><h2>3. מנסים</h2><p>לא מחכים להרגיש מוכנים. בוחרים ניסוי קטן שאפשר ללמוד ממנו. אם הוא קופא, לא ישר דוחפים: ״מה מחזיק אותך? פחד לקבל לא? אתה לא יודע מה להגיד? רוצה שאראה לך שהשד לא כזה נורא?״</p><h2>4. מפרקים</h2><p>מה ראית? מה הרגשת? מה היא שידרה? מה רצית? איפה היית אתה ואיפה התחלת להופיע? הפידבק נשען על הסיטואציה, לא על חוקים מוחלטים.</p><h2>5. חוזרים</h2><p>עוד ניסיון, עם שינוי אחד. המטרה היא לא ערב מושלם אלא בניית שיקול דעת דרך חזרות אמיתיות.</p></section>
 
-<h2>מה זה כן</h2>
-<ul>
-<li>תהליך אישי שנבנה לפי האדם, ולא תוכנית מדף.</li>
-<li>עבודה בתוך החיים עצמם: שיחות, התנסות בעולם האמיתי, משוב.</li>
-<li>מספר מצומצם של אנשים בכל תקופה.</li>
-</ul>
+<section id="process"><h1>04 · מבנה התהליך</h1><p class="purpose">המסגרת קיימת כדי להחזיק את התהליך. היא לא אמורה לכלוא את האדם.</p>
+<div class="table"><table><thead><tr><th>שלב</th><th>המטרה</th><th>מה יכול לקרות</th><th>השאלה המובילה</th></tr></thead><tbody><tr><td>פתיחה ואבחון</td><td>להבין את האדם, המוטיבציה והפער</td><td>עבר, מטרות, אמונות, סטייל, דייטינג, מערכות יחסים</td><td>מה אתה באמת רוצה לקבל מהתהליך?</td></tr><tr><td>בסיס ונוכחות</td><td>ליישר בין האדם לבין איך שהוא מופיע</td><td>סטייל, טיפוח, יציבה, קול, קשר עין, אנרגיה</td><td>מה העולם פוגש כשאתה נכנס לחדר?</td></tr><tr><td>שטח ראשון</td><td>לראות את הדפוסים בזמן אמת</td><td>שיחות, גישות, תצפית, הדגמה, פידבק</td><td>מה באמת קורה לך ברגע האמת?</td></tr><tr><td>תקשורת ומשיכה</td><td>לפתח יכולת לקרוא ולהוביל אינטראקציה</td><td>שפת גוף, עניין, חוסר עניין, פלירטוט, גבולות, כנות</td><td>האם אתה פוגש אדם או מנסה להשיג תוצאה?</td></tr><tr><td>אינטגרציה</td><td>להפוך ידע לשיקול דעת עצמאי</td><td>דייטים, סיטואציות מורכבות, ניתוח עצמי</td><td>מה אתה כבר יודע לראות בלי לשאול אותי?</td></tr><tr><td>יציאה לעצמאות</td><td>לצמצם תלות במלווה</td><td>מפת המשך, הרגלי רפלקציה, מטרות אישיות</td><td>איך אתה ממשיך בדרך בלעדיי?</td></tr></tbody></table></div>
+<p><strong>הערה:</strong> השלבים אינם בהכרח שישה מפגשים נפרדים. לקוח יכול להזדקק ליותר שטח, יותר עבודה על סטייל, או כמעט בכלל לא. התהליך מותאם לאדם.</p></section>
 
-<h2>מה זה לא</h2>
-<ul>
-<li>לא קורס ולא תוכנית קבוצתית.</li>
-<li>לא טיפול נפשי, פסיכולוגי או רפואי.</li>
-<li>לא הבטחת תוצאה, לא משפטי קסם ולא "שיטה מוכחת" בשפת שיווק.</li>
-<li>לא תוכן שמוכר דייטים, מספרי הצלחות או שינוי מהיר.</li>
-</ul>
+<section id="tools"><h1>05 · כלי העבודה</h1><p class="purpose">כל כלי הוא אמצעי להביא יותר מהאדם החוצה — לא עוד ציון שהוא צריך להשיג.</p>
+<div class="cards"><div class="card"><b>סטייל וטיפוח</b>לא ״איך להתלבש כדי להשיג נשים״, אלא איך החוץ מתחיל לבטא את האדם שאתה רוצה להיות.</div><div class="card"><b>שפת גוף ונוכחות</b>יציבה, מבט, קול, קצב ותנועה — וגם היכולת לקרוא את האדם שמולך בלי להפוך כל מחווה לנוסחה.</div><div class="card"><b>תקשורת</b>סקרנות, הקשבה, הומור, פלירטוט, הובלה, יכולת לומר מה אתה רוצה ולהישאר קשוב למה שהצד השני רוצה.</div><div class="card"><b>אמונות ופחד</b>לזהות מתי מחשבה מגבילה אותך ומתי היא פשוט מצביעה על מיומנות שעוד לא פיתחת.</div><div class="card"><b>גבולות והסכמה</b>אפשר לבדוק גבולות בצורה מכבדת; סימנים של חוסר עניין הם מידע, לא אתגר שצריך לנצח.</div><div class="card"><b>רפלקציה</b>אחרי סיטואציה: מה ראיתי, מה רציתי, מה עשיתי, מה למדתי, ומה אנסה אחרת בפעם הבאה.</div></div></section>
 
-<h2>ההבחנה מול השוק</h2>
-<p><span class="ph">[ למלא ]</span> — מיפוי קצר של מי עוד מדבר לקהל הזה בעברית, ומה בדיוק שונה אצלנו.
-לכתוב רק אחרי צפייה בפועל בחשבונות ספציפיים, בלי הכללות ובלי לצטט נתונים שלא נבדקו.</p>
+<section id="success"><h1>06 · מה נחשב הצלחה</h1><p class="purpose">לא כמה הוא השיג. מי הוא הפך להיות בזמן שניסה.</p>
+<h2>איך הוא נראה חצי שנה אחרי</h2><p>יש משהו באנרגיה שלו. בדרך שבה הוא עומד, מדבר ומתלבש. תחושה של רעננות. לא יהירות אלא שקט פנימי. הוא מסוגל לרצות מאוד מישהי בלי שהתגובה שלה תקבע את הערך שלו.</p>
+<div class="cards"><div class="card good"><b>כשאומרים לו כן</b>הוא נהנה, מתרגש וממשיך לבדוק אם גם הוא באמת מעוניין בה. הוא לא עף לשמיים כאילו קיבל הוכחה שהוא סוף סוף שווה.</div><div class="card good"><b>כשאומרים לו לא</b>זה יכול לבאס. הוא נשאר במקום. הוא לא הופך את הדחייה לזהות ולא חייב לברוח מיד לאישור הבא.</div><div class="card good"><b>בתוך אינטראקציה</b>הוא קורא שפת גוף והקשר, מרשה לעצמו לבדוק גבולות בכבוד, מתקשר בכנות ולא מחפש רק את המהלך ״הנכון״.</div><div class="card good"><b>אחרי האינטראקציה</b>הוא לא צריך לשלוח לי ״איך הייתי?״. הוא יודע לנתח את עצמו בלי להלקות את עצמו.</div></div>
+<blockquote><p>ה-KPI העליון: הוא כבר לא צריך את הפידבק שלי, כי הוא למד לתת אותו לעצמו.</p></blockquote></section>
 
-<h2>משפט המיצוב לשימוש חוזר בתוכן</h2>
-<pre><code>למי:      ______________________
-שרוצה:    ______________________
-אבל:      ______________________
-ובלי:     ______________________
-</code></pre>
-<p><span class="ph">[ למלא ]</span> — לנסח פעם אחת, ואז להשתמש באותו ניסוח בביו, בפתיח של רילים ובשיחות התאמה.</p>
-<hr />
-</section>
+<section id="risks"><h1>07 · סכנות וגבולות</h1><p class="purpose">גם הצלחה יכולה להפוך למנגנון הרסני אם לא שמים לב למה היא משרתת.</p>
+<h2>מתי ההצלחה מתחילה לנהל אותו?</h2><ul><li>הוא מודד ערב לפי כמה נשים דיברו איתו.</li><li>הוא מחפש את הבחורה הבאה לפני שבכלל פגש את זו שמולו.</li><li>נשים הופכות להוכחה לערך או לסטטוס.</li><li>הוא מתחיל להשתמש במניפולציות כי התוצאה חשובה יותר מהכנות.</li><li>הוא משחק דמות שהוא חושב שנשים רוצות.</li><li>ה״כן״ הבא ממלא חור — ואז מיד נפתח עוד אחד.</li></ul>
+<div class="callout"><span class="label red">התערבות</span>לא מטיפים ולא מחליטים עבורו שהוא צריך זוגיות. שואלים: מה אתה מחפש עכשיו? האם אתה מנסה להכיר אותה או להשיג אותה? מה ההתנהגות הזאת נותנת לך? ומה ההשלכות אם היא הופכת להרגל?</div>
+<h2>הגבול המקצועי</h2><p>בדרך אינה טיפול פסיכולוגי ואינה תחליף לו. אנחנו יכולים לזהות דפוסים, לדבר על עבר ואמונות ולעבוד עם מה שעולה בשטח; כשנדרש טיפול קליני או כשהעומק חורג מהיכולת והמסגרת שלנו — מפנים לאיש מקצוע מתאים. היתרון שלנו אינו ״לדעת יותר מפסיכולוג״, אלא לעבוד בזירה אחרת: בתוך העולם שעליו בדרך כלל מדברים בדיעבד.</p></section>
 
-<section id="sec-02--Audience"><h1 id="02--Audience">02 — Audience</h1>
-<h2>למי זה מתאים</h2>
-<ul>
-<li>מרגיש שיש בו יותר ממה שהוא מצליח להביא לחיים שלו.</li>
-<li>איבד כיוון או עומד מול החלטה משמעותית.</li>
-<li>מוכן לפעול ולא רק לדבר על שינוי.</li>
-<li>מחפש תהליך אישי, לא פתרון קסם.</li>
-<li>מבין שזה תהליך שדורש השקעה משמעותית — בזמן, בנוכחות ובמשאבים.</li>
-</ul>
+<section id="content"><h1>08 · תוכן וצמיחה</h1><p class="purpose">התוכן לא מוכר דמות של מי שפתר את החיים. הוא פותח חלון לדרך.</p>
+<h2>העמדה</h2><p>המותג רחב יותר מהמוצר. המוצר מתחיל כרגע בעיקר מגברים, דייטינג, נוכחות וביטחון. התוכן יכול לגעת גם בקריירה, השוואה, כסף, זוגיות, בחירה, שאפתנות ומשמעות — כל עוד הוא חוזר לאותה שאלה: מה אנחנו מבקשים מהעולם להוכיח לנו, ואיך אנחנו מביאים את עצמנו אליו?</p>
+<h2>חתימת התוכן</h2><ul><li><strong>סיפור קטן לפני רעיון גדול.</strong> בר, דייט, טייס בחתונה, החלטה, רגע של קנאה או דחייה.</li><li><strong>קונקרטיות לפני הטפה.</strong> להראות מה קרה, לא רק להסביר מה נכון.</li><li><strong>מחשבה לפני תשובה.</strong> לא כל ריל חייב להסתיים ב״אז תעשו X״.</li><li><strong>גם הצד המכוער של השינוי.</strong> לא רק ״פעם פחדתי והיום אני בטוח״ — גם מה קרה כשההצלחה עצמה הפכה למרדף.</li><li><strong>לא גורו.</strong> מותר לדבר מתוך משהו שעוד לא פתור, כל עוד לא מוכרים עליו מומחיות שאין לנו.</li></ul>
+<h2>הפילטר לפני פרסום</h2><div class="table"><table><thead><tr><th>שאלה</th><th>אם התשובה היא לא</th></tr></thead><tbody><tr><td>האם יש פה משהו שאני באמת מאמין בו?</td><td>לא מפרסמים.</td></tr><tr><td>האם יש פה פרט, סיפור או זווית שמרגישים שלי?</td><td>מחפשים קונקרטיות.</td></tr><tr><td>האם זה גורם לי להישמע כאילו פתרתי משהו שעוד לא פתרתי?</td><td>משנים עמדה.</td></tr><tr><td>האם זה בונה את בדרך או רק רודף צפייה?</td><td>בודקים אם הטרנד שווה את המחיר.</td></tr><tr><td>האם הייתי שמח שלקוח ילמד מזה איך להתייחס לאדם שמולו?</td><td>עוצרים.</td></tr></tbody></table></div>
+<h2>מסע הצופה</h2><div class="loop"><span>פוגש סיפור</span><i>←</i><span>מזהה את עצמו</span><i>←</i><span>מבין את תפיסת העולם</span><i>←</i><span>בונה אמון</span><i>←</i><span>בודק התאמה</span></div>
+<p>CTA לא חייב להיות אגרסיבי. המטרה היא לא להפוך כל מחשבה למודעה, אלא ליצור מספיק עקביות כדי שמי שצריך את העבודה יבין שיש לה גם מסגרת מעשית.</p></section>
 
-<h2>למי זה פחות מתאים כרגע</h2>
-<ul>
-<li>עדיין לא מוכן להודות בפני עצמו שיש מה לשנות.</li>
-<li>צעיר מדי כרגע לתהליך כזה.</li>
-<li>עדיין לא מחובר מספיק לעצמו כדי להתחיל מכאן.</li>
-</ul>
-<p>הרשימות האלה כבר מופיעות בדף הנחיתה. התוכן לא אמור לסתור אותן — הוא אמור להיות הגרסה הקצרה שלהן.</p>
+<section id="sales"><h1>09 · שיחת התאמה</h1><p class="purpose">לא לשכנע אדם שהוא צריך את בדרך. להבין אם יש לנו עבודה אמיתית לעשות יחד.</p>
+<h2>מה אנחנו צריכים להבין</h2><ul><li>למה עכשיו?</li><li>מה הוא רוצה שייראה אחרת בעוד שלושה חודשים?</li><li>מה הוא כבר ניסה?</li><li>האם הוא מחפש כלי, קסם, אישור או תהליך?</li><li>האם הוא מוכן לצאת לעולם, להתנסות ולקבל פידבק?</li><li>האם המטרות והדרך שלו מתיישבות עם הגבולות שלנו?</li></ul>
+<h2>איך מסבירים את המוצר בפשטות</h2><blockquote><p>אני ואתה יושבים ומבינים מה אתה צריך כרגע — אולי סטייל, שפת גוף, הבנה של נשים, תקשורת או אמונות שמחזיקות אותך. ואז אנחנו יוצאים לעולם, רואים איך הדברים עובדים באמת, מנסים, טועים, מפרקים ומנסים שוב. המטרה היא שבסוף תדע לעשות את זה בלעדיי.</p></blockquote></section>
 
-<h2>מה אנחנו יודעים בפועל</h2>
-<div class="tw"><table>
-<thead><tr><th>מה צריך לדעת</th><th>מקור</th><th>מצב</th></tr></thead>
-<tbody>
-<tr><td>איך הוא מתאר את הבעיה במילים שלו</td><td>/research, שיחות התאמה</td><td><span class="ph">[ למלא ]</span></td></tr>
-<tr><td>מה הוא כבר ניסה לפני שהגיע</td><td>/research, שיחות התאמה</td><td><span class="ph">[ למלא ]</span></td></tr>
-<tr><td>מה גורם לו לא לפנות</td><td>שיחות שלא הבשילו</td><td><span class="ph">[ למלא ]</span></td></tr>
-<tr><td>איפה הוא נמצא כשהוא נתקל בתוכן</td><td>Instagram Insights</td><td><span class="ph">[ למלא ]</span></td></tr>
-</tbody>
-</table></div>
-<div class="note">
-<span class="t">כלל</span>
-<p>ציטוט קהל נכנס למסמך רק אם הוא נאמר בפועל ותועד. לא לנסח "מה הוא בטח מרגיש".</p>
-</div>
-<hr />
-</section>
-
-<section id="sec-03--Content-Principles"><h1 id="03--Content-Principles">03 — Content Principles</h1>
-<h2>שלושה מאפיינים שכל פריט תוכן חייב</h2>
-<div class="tw"><table>
-<thead><tr><th>מאפיין</th><th>מה זה אומר בפועל</th></tr></thead>
-<tbody>
-<tr><td><strong>רגוע</strong></td><td>קצב דיבור נורמלי, בלי צעקות, בלי עריכה קופצנית, בלי טריק פתיחה שמנותק מהתוכן.</td></tr>
-<tr><td><strong>מוכח</strong></td><td>מה שנאמר נשען על משהו שקרה — מפגש, ניסוי, דפוס שחזר. לא על תיאוריה כללית.</td></tr>
-<tr><td><strong>מתודולוגי</strong></td><td>מראה <em>דרך</em>: מה בודקים, לפי מה מחליטים, מה השלב הבא. לא רק תובנה.</td></tr>
-</tbody>
-</table></div>
-
-<h2>מה לא עושים</h2>
-<ul>
-<li><strong>בלי הייפ</strong> — בלי "השיטה שתשנה לך את החיים", בלי הבטחות תוצאה, בלי דחיפות מלאכותית.</li>
-<li><strong>בלי בושה</strong> — לא פונים לצופה מתוך "מה לא בסדר בך". לא משתמשים בבושה כמנוע פעולה.</li>
-<li><strong>בלי מניפולציה</strong> — בלי כותרות שמבטיחות משהו שלא נמצא בתוכן, בלי בדיקות מזויפות, בלי לחץ חברתי.</li>
-<li><strong>בלי הבטחות גנריות לביטחון עצמי</strong> — "תהיה בטוח בעצמך" הוא לא מסר, הוא סיסמה.</li>
-<li>בלי טענות טיפוליות: לא מאבחנים, לא מבטיחים לרפא כאב, חרדה או טראומה.</li>
-<li>בלי מקרי הצלחה שלא סופרו ואושרו על ידי האדם עצמו.</li>
-</ul>
-
-<h2>מבחן פרסום — שלוש שאלות לפני העלאה</h2>
-<ol>
-<li>האם זה נכון גם אם אף אחד לא ילחץ? (אם התוכן קורס בלי הכותרת — הכותרת היא מניפולציה.)</li>
-<li>האם אדם שרואה את זה מרגיש <strong>מובן</strong> או מרגיש <strong>שיש בו פגם</strong>?</li>
-<li>האם אני יכול להצביע על המקום שממנו זה מגיע — מפגש, ניסוי, דפוס שראיתי?</li>
-</ol>
-<hr />
-</section>
-
-<section id="sec-04--Content-Pillars"><h1 id="04--Content-Pillars">04 — Content Pillars</h1>
-<p>ארבעה עמודים. כל פריט תוכן שייך לאחד מהם — אם הוא לא שייך לאף אחד, הוא כנראה לא צריך לעלות.</p>
-<div class="tw"><table>
-<thead><tr><th>עמוד</th><th>מה יש בו</th><th>מה הוא עושה לצופה</th><th>תדירות</th></tr></thead>
-<tbody>
-<tr><td><strong>א. השיטה</strong></td><td>איך עובדים: מה בודקים, לפי מה מחליטים, איך נראה צעד אחד</td><td>מבין שיש כאן דרך ולא כריזמה</td><td><span class="ph">[ למלא ]</span></td></tr>
-<tr><td><strong>ב. העולם האמיתי</strong></td><td>מה קורה כשיוצאים החוצה ומתרגלים בפועל</td><td>רואה שזה לא נשאר בחדר</td><td><span class="ph">[ למלא ]</span></td></tr>
-<tr><td><strong>ג. מה מנהל אותך</strong></td><td>אמונות, פחדים ודפוסים — בשפה מתארת, לא מאשימה</td><td>מזהה את עצמו בלי להרגיש מותקף</td><td><span class="ph">[ למלא ]</span></td></tr>
-<tr><td><strong>ד. כנות על הגבולות</strong></td><td>למי זה לא מתאים, מה זה לא, מתי מפנים לאיש מקצוע</td><td>נותן אמון דווקא בגלל מה שלא מובטח</td><td><span class="ph">[ למלא ]</span></td></tr>
-</tbody>
-</table></div>
-<h3>הסיפור האישי</h3>
-<p>לא עמוד בפני עצמו — חומר שמשולב בתוך העמודים כשהוא משרת נקודה, ולא כנושא חוזר.</p>
-<h3>בנק רעיונות</h3>
-<p><span class="ph">[ למלא ]</span> — רשימה רצה של רעיונות לפי עמוד. הכלל: רעיון נכנס רק עם משפט אחד שמסביר מה הצופה לוקח ממנו.</p>
-<hr />
-</section>
-
-<section id="sec-05--Funnel"><h1 id="05--Funnel">05 — Funnel</h1>
-<h2>נתיב התנועה המרכזי</h2>
-<pre><code>ריל  →  פרופיל  →  אמון  →  אתר או תרגיל  →  שיחת התאמה
-</code></pre>
-<p>כל שלב עושה דבר אחד. אם שלב מנסה לעשות שניים — הוא מפיל את הבא אחריו.</p>
-
-<div class="tw"><table>
-<thead><tr><th>שלב</th><th>התפקיד היחיד שלו</th><th>מה מעביר הלאה</th><th>מה מפיל אותו</th></tr></thead>
-<tbody>
-<tr><td><strong>1. ריל</strong></td><td>לגרום למישהו לעצור ולהרגיש שמדברים על משהו אמיתי</td><td>צפייה עד הסוף / שמירה / כניסה לפרופיל</td><td>הייפ, כותרת שלא מכבדת את התוכן, מסר גנרי</td></tr>
-<tr><td><strong>2. פרופיל</strong></td><td>לענות תוך 10 שניות: מי זה, למי זה, ומה הצעד הבא</td><td>גלילה בתוכן קודם, לחיצה על הקישור</td><td>ביו לא ברור, קישור אחד עמוס, תוכן לא עקבי</td></tr>
-<tr><td><strong>3. אמון</strong></td><td>להוכיח לאורך זמן שיש כאן שיטה ואדם, לא קמפיין</td><td>מעקב, צפייה חוזרת, הודעה ראשונה</td><td>קצב לא יציב, סתירה בין מה שנאמר למה שנראה</td></tr>
-<tr><td><strong>4. אתר או תרגיל</strong></td><td>לתת צעד בגובה נמוך שאפשר לעשות לבד: <a href="../fit/">בדיקת ההתאמה</a> או <a href="../">האתר</a></td><td>סיום הבדיקה, קריאה בדף, פנייה</td><td>לבקש שיחה לפני שהאדם הבין מה זה</td></tr>
-<tr><td><strong>5. שיחת התאמה</strong></td><td>לבדוק התאמה אמיתית משני הצדדים — בלי מכירה</td><td>החלטה משותפת: מתחילים / לא מתאים / לא עכשיו</td><td>להפוך אותה לשיחת מכירה</td></tr>
-</tbody>
-</table></div>
-
-<div class="note">
-<span class="t">חיבור ל-Playbook</span>
-<p>שיחת ההתאמה היא הקצה של המשפך — ותחילת <a href="../playbook/#sec-01--שער-0-התאמה-ומסגור">שער 0</a> ב-Playbook הליווי. מהנקודה הזו ואילך, המסמך הזה כבר לא רלוונטי.</p>
-</div>
-
-<h2>נתיבים משניים</h2>
-<p><span class="ph">[ למלא ]</span> — מה קורה למי שמגיע ישירות לוואטסאפ, למי שסורק QR פיזי, ולמי שמגיע דרך המלצה. לתעד רק נתיבים שקרו בפועל.</p>
-<hr />
-</section>
-
-<section id="sec-06--CTA-Library"><h1 id="06--CTA-Library">06 — CTA Library</h1>
-<p>סולם לפי מרחק. לא מקפיצים אדם קר ישר לשיחה.</p>
-<div class="tw"><table>
-<thead><tr><th>מצב הצופה</th><th>הצעד המבוקש</th><th>יעד</th></tr></thead>
-<tbody>
-<tr><td>קר — ראה ריל אחד</td><td>בלי CTA, או "יש עוד כאלה בפרופיל"</td><td>הפרופיל</td></tr>
-<tr><td>פושר — עוקב, לא פנה</td><td>"אם בא לך לבדוק אם זה בכלל מתאים לך"</td><td><a href="../fit/">/fit</a> — כשתי דקות, בלי התחייבות</td></tr>
-<tr><td>פושר — רוצה להבין קודם</td><td>"הכול כתוב באתר, כולל למי זה לא מתאים"</td><td><a href="../">דף הבית</a></td></tr>
-<tr><td>חם — רוצה לדבר</td><td>"אפשר פשוט לכתוב לי"</td><td><a href="https://wa.me/972505494326">וואטסאפ</a></td></tr>
-<tr><td>חם — מוכן לשיחה</td><td>"נקבע שיחת היכרות קצרה"</td><td><a href="https://calendar.app.google/wmWEFsbg8ei6jcTp9">קביעת שיחה</a></td></tr>
-<tr><td>אנונימי — לא רוצה קשר</td><td>"אפשר לענות בלי להשאיר פרטים"</td><td><a href="../research/">/research</a></td></tr>
-</tbody>
-</table></div>
-
-<h3>ניסוחים קבועים</h3>
-<ul>
-<li>"בלי מכירה, בלי לחץ — רק שיחה כנה."</li>
-<li>"לא חייבים לדעת לאן הולכים. אפשר להתחיל מלהבין איפה אתה נמצא."</li>
-<li>"אם זה לא מתאים, אני אגיד את זה."</li>
-</ul>
-<h3>ניסוחים אסורים</h3>
-<ul>
-<li>ספירת מקומות שלא נבדקה, "נשארו X מקומות", דדליין מומצא.</li>
-<li>"תפסיק לפחד" / "תהיה גבר" / כל פנייה שמבוססת בושה.</li>
-<li>הבטחת תוצאה בזמן נתון.</li>
-</ul>
-<p><span class="ph">[ למלא ]</span> — ניסוחי CTA נוספים שנבדקו בפועל, עם ציון מה עבד ומה לא.</p>
-<hr />
-</section>
-
-<section id="sec-07--Distribution"><h1 id="07--Distribution">07 — Distribution</h1>
-<h2>ערוץ ראשי</h2>
-<p>Instagram — <a href="https://instagram.com/baderech_">baderech_</a>. הריל הוא נקודת הכניסה; הפרופיל הוא נקודת ההכרעה.</p>
-<div class="tw"><table>
-<thead><tr><th>פורמט</th><th>תפקיד</th><th>תדירות</th></tr></thead>
-<tbody>
-<tr><td>ריל</td><td>הגעה לאנשים חדשים</td><td><span class="ph">[ למלא ]</span></td></tr>
-<tr><td>סטורי</td><td>המשכיות ואמון מול מי שכבר עוקב</td><td><span class="ph">[ למלא ]</span></td></tr>
-<tr><td>פוסט / קרוסלה</td><td>תוכן שנשמר וחוזרים אליו</td><td><span class="ph">[ למלא ]</span></td></tr>
-<tr><td>ביו וקישור</td><td>לשלוח לצעד אחד ברור</td><td>נבדק פעם בחודש</td></tr>
-</tbody>
-</table></div>
-
-<h2>ערוצים משניים</h2>
-<p><span class="ph">[ למלא ]</span> — להחליט אם ומתי נכנסים לערוץ נוסף. הכלל: לא מוסיפים ערוץ לפני שהערוץ הראשי יציב בקצב.</p>
-
-<h2>נכסים פיזיים</h2>
-<p>קיימים כבר קוד QR וכרטיסים מודפסים בריפו. <span class="ph">[ למלא ]</span> — לאן הם מפנים כרגע ומה נמדד עליהם.</p>
-<hr />
-</section>
-
-<section id="sec-08--Owned-Audience"><h1 id="08--Owned-Audience">08 — Owned Audience</h1>
-<p>קהל שלא תלוי באלגוריתם: וואטסאפ ורשימת תפוצה. זה הנכס היחיד שנשאר גם אם חשבון נסגר או ההגעה נופלת.</p>
-
-<h2>מצב נוכחי</h2>
-<div class="tw"><table>
-<thead><tr><th>נכס</th><th>קיים?</th><th>מצב</th></tr></thead>
-<tbody>
-<tr><td>opt-in בסוף מחקר הקהל</td><td>כן</td><td>קיים ב-<a href="../research/">/research</a> — אופציונלי ולא מחייב</td></tr>
-<tr><td>רשימת וואטסאפ / ערוץ</td><td>לא</td><td><span class="ph">[ למלא ]</span> — להחליט אם ערוץ שידור או רשימה</td></tr>
-<tr><td>רשימת תפוצה במייל</td><td>לא</td><td><span class="ph">[ למלא ]</span></td></tr>
-</tbody>
-</table></div>
-
-<h2>כללים</h2>
-<ul>
-<li>הרשמה היא בחירה מפורשת. לא מוסיפים אנשים מהתכתבות פרטית.</li>
-<li>מה שנשלח הוא המשך של אותו תוכן — לא ערוץ מכירות.</li>
-<li>יציאה בלחיצה אחת, בלי לשאול למה.</li>
-</ul>
-<p><span class="ph">[ למלא ]</span> — מה בדיוק מקבל מי שנרשם, ובאיזה קצב.</p>
-<hr />
-</section>
-
-<section id="sec-09--Weekly-Operating-Rhythm"><h1 id="09--Weekly-Operating-Rhythm">09 — Weekly Operating Rhythm</h1>
-<p>הקצב חשוב יותר מהכמות. שבוע קבוע וקטן עדיף על שבוע גדול שלא חוזר.</p>
-<div class="tw"><table>
-<thead><tr><th>מתי</th><th>מה</th><th>תוצר</th></tr></thead>
-<tbody>
-<tr><td>תחילת שבוע</td><td>בחירת נושאים מבנק הרעיונות לפי עמודי התוכן</td><td>רשימה סגורה לשבוע</td></tr>
-<tr><td>אמצע שבוע</td><td>הקלטה ועריכה</td><td><span class="ph">[ למלא ]</span> פריטים</td></tr>
-<tr><td>לאורך השבוע</td><td>העלאה, מענה להודעות, סטוריז</td><td>—</td></tr>
-<tr><td>סוף שבוע</td><td>סקירה: מה עלה, מה קרה, מה למדתי</td><td>שורה אחת ב-Learning Log</td></tr>
-</tbody>
-</table></div>
-<div class="note">
-<span class="t">כלל עצירה</span>
-<p>שבוע בלי סקירה בסוף אינו שבוע עבודה — הוא שבוע פעילות. הסקירה היא מה שהופך פרסום ללמידה.</p>
-</div>
-<hr />
-</section>
-
-<section id="sec-10--Metrics-amp-Learning-Log"><h1 id="10--Metrics-amp-Learning-Log">10 — Metrics &amp; Learning Log</h1>
-<h2>מה מודדים</h2>
-<p>מודדים תנועה בין שלבי המשפך, לא פופולריות.</p>
-<div class="tw"><table>
-<thead><tr><th>שלב</th><th>המדד</th><th>נקודת פתיחה</th></tr></thead>
-<tbody>
-<tr><td>ריל</td><td>צפייה עד הסוף · שמירות</td><td><span class="ph">[ למלא ]</span></td></tr>
-<tr><td>פרופיל</td><td>כניסות לפרופיל מתוך צפיות</td><td><span class="ph">[ למלא ]</span></td></tr>
-<tr><td>אמון</td><td>עוקבים חוזרים · הודעות ראשונות</td><td><span class="ph">[ למלא ]</span></td></tr>
-<tr><td>אתר / תרגיל</td><td>כניסות ל-/fit · סיום הבדיקה</td><td><span class="ph">[ למלא ]</span></td></tr>
-<tr><td>שיחת התאמה</td><td>שיחות שנקבעו · מתוכן התאמות</td><td><span class="ph">[ למלא ]</span></td></tr>
-</tbody>
-</table></div>
-
-<h2>אנטי-מדדים</h2>
-<ul>
-<li>מספר עוקבים כמטרה בפני עצמה.</li>
-<li>ויראליות של פריט בודד.</li>
-<li>לייקים בלי תנועה קדימה במשפך.</li>
-</ul>
-
-<h2>Learning Log</h2>
-<p>שורה אחת לשבוע. בלי דוחות.</p>
-<pre><code>תאריך:        ______
-מה עלה:       ______
-מה קרה:       ______  (מספר אחד, לא תחושה)
-מה זה מלמד:   ______
-מה משנים:     ______  (דבר אחד בלבד)
-</code></pre>
-<div class="note">
-<span class="t">כלל</span>
-<p>משנים דבר אחד בשבוע. שני שינויים במקביל = אי אפשר לדעת מה עבד.</p>
-</div>
-<hr />
-</section>
-</main>
-</div>
-
-<a href="#" class="top" id="top" aria-label="חזרה למעלה">↑</a>
-
-<script>
-(function(){
-  var toc=document.getElementById('toc'), btn=document.getElementById('menuBtn'),
-      top=document.getElementById('top'), links=[].slice.call(toc.querySelectorAll('a[href^="#"]')),
-      secs=links.map(function(a){return document.querySelector('#sec-'+CSS.escape(a.getAttribute('href').slice(5)));});
-
-  if(window.matchMedia('(max-width:900px)').matches) toc.classList.add('hidden');
-  btn.addEventListener('click',function(){
-    var h=toc.classList.toggle('hidden');
-    btn.setAttribute('aria-expanded', String(!h));
-  });
-  links.forEach(function(a){a.addEventListener('click',function(){
-    if(window.matchMedia('(max-width:900px)').matches) toc.classList.add('hidden');
-  });});
-
-  function onScroll(){
-    top.classList.toggle('show', window.scrollY>600);
-    var y=window.scrollY+120, cur=-1;
-    secs.forEach(function(s,i){ if(s && s.offsetTop<=y) cur=i; });
-    links.forEach(function(a,i){ a.classList.toggle('on', i===cur); });
-  }
-  window.addEventListener('scroll', onScroll, {passive:true});
-  onScroll();
-})();
-</script>
-</body>
-</html>
+<section id="learning"><h1>10 · מערכת למידה</h1><p class="purpose">הפלייבוק אינו תורה. הוא תיעוד חי של מה שהשטח מלמד אותנו.</p>
+<h2>אחרי כל מפגש</h2><ul><li>מה חשבנו שהבעיה לפני המפגש?</li><li>מה ראינו בפועל?</li><li>מה עבד?</li><li>מה לא עבד?</li><li>איזו השערה השתנתה?</li><li>מה הניסוי הבא?</li></ul>
+<h2>אחרי כל תהליך</h2><ul><li>איזה שינוי נשאר גם בלי ירון?</li><li>איפה נוצרה תלות מיותרת?</li><li>איזה כלי היה משמעותי ואיזה היה רעש?</li><li>איזה דפוס חוזר אצל כמה לקוחות וכדאי להפוך לעיקרון?</li><li>איזה חלק בפלייבוק כבר לא נכון וצריך להימחק?</li></ul>
+<div class="callout"><span class="label">חוק התחזוקה</span>לא מוסיפים עיקרון בגלל רעיון יפה. מוסיפים אותו כשהוא שרד את העולם האמיתי.</div>
+<h2>משפט הסיום</h2><blockquote><p>בדרך לא נגמרת כשהפחד נעלם. היא מצליחה כשהאדם כבר יודע ללכת איתו, להבין את עצמו, לפגוש אחרים — ולהמשיך בלי שמישהו יחזיק לו את המפה.</p></blockquote></section>
+</main></div>
+<footer class="footer"><div class="wrap">בַּדֶּרֶךְ. · Playbook V3 · מסמך עבודה פנימי · אוגוסט 2026</div></footer>
+</body></html>
