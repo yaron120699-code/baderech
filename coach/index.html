@@ -1,368 +1,354 @@
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>בדרך — Coach OS</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>בדרך — Coach OS v4</title>
 <style>
 :root{--bg:#f4f1ea;--panel:#fffdf8;--ink:#1d1d1b;--muted:#77736b;--line:#ddd6ca;--green:#214d3b;--green2:#dfe9e3;--yellow:#9d7a37;--red:#9f4940;--soft:#ede8df}
-*{box-sizing:border-box}
-body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+*{box-sizing:border-box}body{margin:0;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
 .app{display:grid;grid-template-columns:245px 1fr;min-height:100vh}
 aside{background:#eae5dc;border-left:1px solid var(--line);padding:24px 18px;position:sticky;top:0;height:100vh}
 .brand{font-size:28px;font-weight:800}.sub,.tiny,.note{color:var(--muted);font-size:12px}.sub{margin:4px 0 22px}
-button,input,textarea,select{font:inherit}
-input,textarea,select{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:#fff}
-textarea{min-height:85px;resize:vertical;line-height:1.5}
-.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+button,input,textarea,select{font:inherit}input,textarea,select{width:100%;padding:10px;border:1px solid var(--line);border-radius:10px;background:#fff}
+textarea{min-height:85px;resize:vertical;line-height:1.5}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 .btn{border:0;border-radius:10px;padding:9px 12px;background:var(--green);color:#fff;font-weight:700;cursor:pointer}
-.btn.secondary{background:var(--soft);color:var(--ink)}
-nav{margin-top:18px}
+.btn.secondary{background:var(--soft);color:var(--ink)}nav{margin-top:18px}
 nav button{width:100%;border:0;background:transparent;text-align:right;padding:10px;border-radius:9px;cursor:pointer}
-nav button.active{background:var(--panel);font-weight:700}
-main{padding:28px 34px 60px;max-width:1250px;width:100%;margin:auto}
-.topbar{display:grid;grid-template-columns:1.3fr repeat(3,.6fr);gap:10px;margin-bottom:18px}
+nav button.active{background:var(--panel);font-weight:700}main{padding:28px 34px 60px;max-width:1150px;width:100%;margin:auto}
+.topbar{display:grid;grid-template-columns:1.4fr .7fr .7fr;gap:10px;margin-bottom:18px}
 .topcard,.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:15px}
 .topcard small{color:var(--muted);font-size:11px}.topcard b{display:block;margin-top:5px}
-.page{display:none}.page.active{display:block}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.skills{display:grid;grid-template-columns:1fr 1fr;gap:10px}
-.skill,.ev,.playbook{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
-.skill{cursor:pointer}
-.level{display:inline-block;padding:5px 8px;border-radius:999px;background:var(--soft);font-size:12px;margin-top:6px}
-.good{background:var(--green2);color:var(--green)}
+.page{display:none}.page.active{display:block}.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin:12px 0 6px}
 .warning{padding:11px;border-radius:10px;background:#fff3da;border:1px solid #ead3a0;font-size:13px}
 .redbox{padding:11px;border-radius:10px;background:#f8e5e3;border:1px solid #e6b9b4;font-size:13px}
 .route-result{background:#173c2e;color:#fff;padding:16px;border-radius:13px;margin-top:12px}
-.dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-left:6px}
-.green{background:var(--green)}.yellow{background:var(--yellow)}.red{background:var(--red)}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block;margin-left:6px}.green{background:var(--green)}.yellow{background:var(--yellow)}.red{background:var(--red)}.gray{background:#999}
 details{margin:9px 0}summary{cursor:pointer;font-weight:700}
-@media(max-width:850px){.app{grid-template-columns:1fr}aside{height:auto;position:relative;border-left:0;border-bottom:1px solid var(--line)}nav{display:flex;overflow:auto}nav button{min-width:max-content}.topbar,.grid,.skills{grid-template-columns:1fr}main{padding:20px 14px}}
-
-.playbook{padding:0;overflow:hidden}
-.playbook summary{padding:16px 18px;font-size:17px;background:#fff}
-.playbook[open] summary{border-bottom:1px solid var(--line)}
-.playbook>div{padding:0 18px 18px}
-.playbook h3{font-size:15px;margin-top:18px}
-.playbook ul{margin-top:6px;padding-right:22px;line-height:1.8}
-.playbook li{margin-bottom:4px}
-
+.playbook{background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.playbook summary{padding:15px}.playbook[open] summary{border-bottom:1px solid var(--line)}.playbook .body{padding:0 16px 16px;line-height:1.65}
+.playbook h3{font-size:15px;margin-top:18px}.playbook ul{padding-right:22px;line-height:1.8}
+.pred{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px;margin:8px 0}
+.skill-gate{display:grid;grid-template-columns:1fr 1fr;gap:10px}.gate-box{padding:12px;background:#fff;border:1px solid var(--line);border-radius:12px}
+@media(max-width:850px){.app{grid-template-columns:1fr}aside{height:auto;position:relative;border-left:0;border-bottom:1px solid var(--line)}nav{display:flex;overflow:auto}nav button{min-width:max-content}.topbar,.grid,.skill-gate{grid-template-columns:1fr}main{padding:20px 14px}}
 </style>
 </head>
 <body>
 <div class="app">
 <aside>
   <div class="brand">בדרך.</div>
-  <div class="sub">Coach OS — Bottleneck first</div>
+  <div class="sub">Coach OS v4.2 — מפתח דרכים</div>
   <label class="tiny">לקוח פעיל</label>
   <select id="clientSelect"></select>
-  <div class="row" style="margin-top:8px">
-    <button class="btn secondary" onclick="newClient()">+ לקוח</button>
-    <button class="btn secondary" onclick="exportData()">ייצוא</button>
-    <label class="btn secondary">ייבוא<input hidden id="importFile" type="file" accept=".json" onchange="importData(event)"></label>
-  </div>
+  <div class="row" style="margin-top:8px"><button class="btn secondary" onclick="newClient()">+ לקוח</button></div>
   <nav>
-    <button class="active" data-page="home">מפת מיומנויות</button>
-    <button data-page="route">מה עושים עכשיו?</button>
-    <button data-page="evidence">Evidence</button>
-    <button data-page="review">מבט לאחור</button>
-    <button data-page="screening">Screening & Ethics</button>
-    <button data-page="metrics">מדדים</button>
-    <button data-page="playbook">עיון ב־Playbook</button>
+    <button class="active" data-page="route">מה עושים עכשיו?</button>
+    <button data-page="gate">שער רמה</button>
+    <button data-page="screening">בדיקת התאמה & Ethics</button>
+    <button data-page="playbook">מפתח דרכים</button>
+    <button data-page="predictions">יומן תחזיות</button>
   </nav>
 </aside>
 
 <main>
   <div class="topbar">
-    <div class="topcard"><small>צוואר בקבוק</small><b id="topBottleneck">—</b></div>
-    <div class="topcard"><small>Screening</small><b id="topScreening">—</b></div>
-    <div class="topcard"><small>הזדמנויות / שבוע</small><b id="topOpp">0</b></div>
-    <div class="topcard"><small>ביצוע משימות</small><b id="topCompletion">—</b></div>
+    <div class="topcard"><small>צוואר בקבוק נוכחי</small><b id="topBottleneck">—</b></div>
+    <div class="topcard"><small>בדיקת התאמה</small><b id="topבדיקת התאמה">—</b></div>
+    <div class="topcard"><small>גבולות בסיס</small><b id="topEthics">—</b></div>
   </div>
 
-  <section id="home" class="page active">
-    <h1>מפת מיומנויות</h1>
-    <div class="warning">הרמות נגזרות מ־Evidence. לא ציון על האדם — רק כמה המיומנות כבר שלו.</div>
-    <div id="skills" class="skills" style="margin-top:12px"></div>
-  </section>
+  
+<section id="route" class="page active">
+  <h1>מה עושים עכשיו?</h1>
+  <p class="note">ארבע שאלות פשוטות: מה עוצר אותו, מה זה אומר, על מה אני נשען, ומה עושים עכשיו.</p>
 
-  <section id="route" class="page">
-    <h1>מה עושים עכשיו?</h1>
-    <div class="grid">
-      <div class="card">
-        <h2>Routing</h2>
-        <div class="note" id="routeSafetySummary"></div>
+  <div class="grid">
+    <div class="card">
+      <h2>1. מה עוצר אותו כרגע?</h2>
 
-        <span class="label">יש מספיק הזדמנויות?</span>
-        <select id="rOpp"><option value="">לא נענה</option><option value="yes">כן</option><option value="no">לא</option></select>
+      <span class="label">צוואר בקבוק נוכחי</span>
+      <select id="bottleneck"></select>
 
-        <span class="label">מצליח להדגים בחדר?</span>
-        <select id="rRoom"><option value="">לא נענה</option><option value="yes">כן</option><option value="no">לא</option></select>
+      <span class="label">יש לו מספיק הזדמנויות אמיתיות להתאמן?</span>
+      <select id="rOpp">
+        <option value="">לא נענה</option>
+        <option value="yes">כן</option>
+        <option value="no">לא</option>
+      </select>
 
-        <span class="label">מבצע בעולם האמיתי?</span>
-        <select id="rField"><option value="">לא נענה</option><option value="yes">כן</option><option value="no">לא</option></select>
+      <span class="label">אם נעשה סימולציה כאן — הוא יודע מה לעשות?</span>
+      <select id="rRoom">
+        <option value="">לא נענה</option>
+        <option value="yes">כן</option>
+        <option value="no">לא</option>
+      </select>
 
-        <span class="label">Arousal 0–10</span>
-        <input id="rArousal" type="number" min="0" max="10" placeholder="0–10">
+      <span class="label">בעולם האמיתי — הוא באמת עושה את זה?</span>
+      <select id="rField">
+        <option value="">לא נענה</option>
+        <option value="yes">כן</option>
+        <option value="no">לא</option>
+      </select>
 
-        <span class="label">Depth trigger?</span>
-        <select id="rDepth"><option value="">לא נענה</option><option value="no">לא</option><option value="yes">כן</option></select>
+      <span class="label">כמה לחץ יש לו ברגע האמת? 0–10</span>
+      <input id="rרמת לחץ" type="number" min="0" max="10" placeholder="למשל 7">
 
-        <button class="btn" style="margin-top:12px" onclick="computeRoute()">הפק Route</button>
-        <div id="routeResult"></div>
+      <span class="label">יש דפוס שחוזר גם אחרי תרגול וחשיפה?</span>
+      <select id="rהעמקה">
+        <option value="">לא נענה</option>
+        <option value="no">לא</option>
+        <option value="yes">כן</option>
+      </select>
+      <div class="tiny" style="margin-top:6px">
+        למשל: אותו פער חוזר בכמה מצבים, self-sabotage, או שהוא יודע לבצע אבל משהו רגשי שוב ושוב עוצר אותו.
       </div>
 
-      <div class="card">
-        <h2>החלטת עבודה</h2>
-        <span class="label">Current Bottleneck</span>
-        <select id="bottleneckSelect"></select>
-        <span class="label">השערה</span>
-        <textarea id="hypothesis"></textarea>
-        <span class="label">תחזית</span>
-        <textarea id="prediction" placeholder="אם נעשה X, אני מצפה לראות Y"></textarea>
-        <span class="label">Practice</span>
-        <textarea id="practicePlan"></textarea>
-        <span class="label">Exposure הבא</span>
-        <textarea id="exposurePlan"></textarea>
-        <button class="btn" onclick="saveRouteDecision()">שמור החלטה</button>
-        <span id="routeValidationMsg" class="tiny"></span>
-      </div>
+      <span class="label">הוא כבר יודע לבצע — אבל אולי בכלל לא רוצה את היעד הזה?</span>
+      <select id="rWant">
+        <option value="">לא נענה</option>
+        <option value="no">לא</option>
+        <option value="yes">כן</option>
+      </select>
+
+      <button class="btn" style="margin-top:14px" onclick="computeRoute()">מה זה אומר?</button>
+      <div id="routeResult"></div>
     </div>
-  </section>
 
-  <section id="evidence" class="page">
-    <h1>Evidence</h1>
-    <div class="grid">
-      <div class="card">
-        <span class="label">Skill</span><select id="evSkill"></select>
-        <span class="label">הקשר</span><input id="evContext" placeholder="הקשר בלבד — בלי שמות או פרטים מזהים">
-        <span class="label">מקור</span><select id="evObserved"><option value="true">נצפה / הוקלט</option><option value="false">דיווח עצמי</option></select>
-        <span class="label">מה קרה</span><textarea id="evNote" placeholder="התנהגות בלבד — בלי שמות או פרטים מזהים"></textarea>
-        <span class="label">רמת ביצוע</span><select id="evPerformance"><option value="0">נמנע</option><option value="1">עם תמיכה</option><option value="2">מבצע לבד</option><option value="3">מכייל</option><option value="4">עצמאי</option></select>
-        <span class="label">Arousal</span><input id="evArousal" type="number" min="0" max="10" value="5">
-        <button class="btn" onclick="addEvidence()">שמור Evidence</button>
+    <div class="card">
+      <h2>2. על מה אני נשען?</h2>
+      <p class="note">לא צריך לתעד כאן את כל הסיפור. רק לבדוק שההחלטה לא מגיעה מהבטן בלבד.</p>
+
+      <span class="label">מיומנות שאני בודק</span>
+      <select id="evמיומנות"></select>
+
+      <div class="skill-gate" style="margin-top:12px">
+        <label class="gate-box">
+          <input type="checkbox" id="e1">
+          ראיתי את זה בעצמי לפחות פעם אחת
+        </label>
+        <label class="gate-box">
+          <input type="checkbox" id="e2">
+          זה קרה יותר מפעם אחת
+        </label>
+        <label class="gate-box">
+          <input type="checkbox" id="e3">
+          זה קרה ביותר מסיטואציה אחת
+        </label>
       </div>
-      <div class="card"><h2>היסטוריה</h2><div id="evidenceList"></div></div>
+
+      <span class="label">ההשערה שלי</span>
+      <textarea id="hypothesis" placeholder="לדוגמה: הוא יודע לדבר, אבל ברגע שצריך ליזום הוא מחכה שהלחץ ייעלם."></textarea>
+
+      <span class="label">התחזית שלי</span>
+      <textarea id="prediction" placeholder="לדוגמה: אם נוריד את רמת הקושי, הוא יצליח ליזום לפחות פעם אחת בלי דחיפה שלי."></textarea>
+
+      <span class="label">3. מה עושים עכשיו?</span>
+      <textarea id="nextAction" placeholder="לדוגמה: 2 פתיחות קצרות בלי מטרה להשיג מספר."></textarea>
+
+      <button class="btn" onclick="saveDecision()">שמור החלטה</button>
+      <span id="saveMsg" class="tiny"></span>
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="review" class="page">
-    <h1>מבט לאחור</h1>
-    <div class="grid">
-      <div class="card">
-        <span class="label">מה אתה מרגיש שעבדנו עליו?</span><textarea data-field="review1"></textarea>
-        <span class="label">מה באמת השתנה?</span><textarea data-field="review2"></textarea>
-        <span class="label">איפה לא זזנו מספיק?</span><textarea data-field="review3"></textarea>
-        <span class="label">על מה דיברנו הרבה אבל עשינו מעט?</span><textarea data-field="review4"></textarea>
+
+  <section id="gate" class="page">
+    <h1>שער רמה</h1>
+    <div class="card">
+      <p class="note">ה־Evidence נשאר באקסל. כאן רק בודקים אם יש מספיק בסיס לומר שהמיומנות עלתה.</p>
+      <span class="label">מיומנות</span><select id="gateמיומנות"></select>
+      <span class="label">לאיזו רמה אתה רוצה להעלות?</span>
+      <select id="gateTarget"><option value="1">עם תמיכה</option><option value="2">מבצע לבד</option><option value="3">מכייל</option><option value="4">עצמאי</option></select>
+      <div class="skill-gate" style="margin-top:14px">
+        <label class="gate-box"><input type="checkbox" id="g1"> יש לפחות 3 הדגמות</label>
+        <label class="gate-box"><input type="checkbox" id="g2"> יש לפחות 2 הקשרים</label>
+        <label class="gate-box"><input type="checkbox" id="g3"> לפחות הדגמה אחת נצפתה</label>
+        <label class="gate-box"><input type="checkbox" id="g4"> הביצוע קרה ללא תלות חריגה בהכנה</label>
       </div>
-      <div class="card">
-        <span class="label">אם היית ממשיך לבד מחר, איפה היית הכי פחות בטוח?</span><textarea data-field="review5"></textarea>
-        <span class="label">הפער בין מה שאני חשבתי למה שהוא חווה</span><textarea data-field="coachGap"></textarea>
-      </div>
+      <button class="btn" style="margin-top:14px" onclick="checkGate()">בדוק שער</button>
+      <div id="gateResult"></div>
     </div>
   </section>
 
   <section id="screening" class="page">
-    <h1>Screening & Ethics</h1>
+    <h1>בדיקת התאמה & Ethics</h1>
     <div class="grid">
       <div class="card">
-        <span class="label">סטטוס</span><select id="screeningStatus"><option>Green</option><option>Yellow</option><option>Red</option></select>
-        <span class="label">Re-screen</span><input id="rescreenDate" type="date">
-        <span class="label">מה נצפה</span><textarea id="screeningNote" placeholder="תיאור התנהגותי בלבד, לא אבחנה"></textarea>
-        <div class="warning">Yellow = עבודה מוגבלת וזהירה. Red = גבול מסגרת.</div>
+        <h2>בדיקת התאמה</h2>
+        <span class="label">סטטוס</span>
+        <select id="screenStatus"><option value="Unknown">לא הוערך</option><option>Green</option><option>Yellow</option><option>Red</option></select>
+        <span class="label">תאריך Re-screen</span><input id="rescreen" type="date">
+        <div class="warning">הדגל נשאר כאן כי ה־Routing צורך אותו. התיאור וההיסטוריה נשארים באקסל.</div>
       </div>
       <div class="card">
-        <h2>Ethical Floor</h2>
+        <h2>גבולות בסיס</h2>
+        <div class="tiny" style="margin-bottom:10px">סמן רק מה שבאמת הוערך. לא מסומן = לא הוערך, לא בהכרח הפרה.</div>
         <label><input type="checkbox" id="eth1"> מכבד “לא” בלי שכנוע</label><br><br>
         <label><input type="checkbox" id="eth2"> אין הטעיה לגבי כוונה</label><br><br>
         <label><input type="checkbox" id="eth3"> אין תוכן מיני לא מבוקש</label><br><br>
         <label><input type="checkbox" id="eth4"> אין לחץ כשקשה לצד השני לעזוב</label><br><br>
         <label><input type="checkbox" id="eth5"> מסוגל לקחת אחריות ולתקן</label>
-        <div class="redbox" style="margin-top:12px">אם הרצפה האתית לא מתקיימת — המנוע נעצר.</div>
-        <button class="btn" style="margin-top:12px" onclick="saveScreening()">שמור</button>
-      </div>
-    </div>
-  </section>
-
-  <section id="metrics" class="page">
-    <h1>מדדים</h1>
-    <div class="grid">
-      <div class="card">
-        <span class="label">הזדמנויות / שבוע</span><input id="mOpp" type="number" min="0">
-        <span class="label">משימות שנקבעו</span><input id="mAssigned" type="number" min="0">
-        <span class="label">משימות שבוצעו</span><input id="mDone" type="number" min="0">
-        <span class="label">זמן השהיה עד יוזמה</span><input id="mLatency" type="number" min="0">
-        <span class="label">Recovery אחרי דחייה (שעות)</span><input id="mRecovery" type="number" min="0">
-        <span class="label">דקות Practice</span><input id="mPractice" type="number" min="0">
-        <button class="btn" onclick="saveMetrics()">שמור מדדים</button>
-      </div>
-      <div class="card">
-        <div class="row"><h2>Prediction Log</h2><b id="predictionAccuracy">Accuracy: —</b></div>
-        <div id="predictionLog"></div>
+        <button class="btn" style="margin-top:14px" onclick="saveSafety()">שמור</button>
       </div>
     </div>
   </section>
 
   <section id="playbook" class="page">
-    <h1>עיון ב־Playbook</h1>
-    <p class="note">ספר עיון, לא המסילה של התהליך.</p>
+    <h1>מפתח דרכים</h1>
+    <p class="note">ספר עיון בלבד. ה־Routing מחליט על מה עובדים; ה־מפתח דרכים עוזר לדעת איך לעבוד עליו.</p>
     <div id="playbookList"></div>
+  </section>
+
+  <section id="predictions" class="page">
+    <h1>יומן תחזיות</h1>
+    <div class="card">
+      <div class="row" style="justify-content:space-between"><b>דיוק חוצה לקוחות</b><b id="accuracy">—</b></div>
+      <div id="predList" style="margin-top:12px"></div>
+    </div>
   </section>
 </main>
 </div>
 
 <script>
-const SKILLS=[['presence','נוכחות / ויסות'],['appearance','נראות / סטייל'],['initiative','יוזמה'],['conversation','שיחה / ביטוי עצמי'],['perspective','Perspective'],['interest','הבעת עניין'],['leadership','הובלה'],['rejection','דחייה / Recovery'],['texting','טקסטינג'],['intimacy','אינטימיות'],['repair','Repair'],['relationship','מיומנויות קשר']].map(x=>({id:x[0],name:x[1]}));
-const LEVELS=['נמנע','עם תמיכה','מבצע לבד','מכייל','עצמאי'];
-const PLAYBOOKS=[{"title": "מיפוי ונקודת פתיחה", "purpose": "לבנות תמונת מצב אמיתית של איפה האדם נמצא היום: מה הוא רוצה, מה כבר עובד, איפה הוא נמנע, ואיפה קיים פער בין מה שהוא יודע לבין מה שהוא עושה. המטרה היא לא להבין אותו עד הסוף, אלא להבין מספיק כדי לזהות 1–3 Bottlenecks שאפשר לבדוק בעולם.", "understand": ["מה הוא באמת רוצה שייראה אחרת בעוד 2–3 חודשים.", "איפה יש חוסר ניסיון, ואיפה דווקא יש ידיעה בלי פעולה.", "כמה תגובות של נשים משפיעות על הערך העצמי שלו.", "איך הוא תופס את הנראות, הנוכחות והיכולת החברתית שלו.", "מה קורה ברגע שלפני הימנעות.", "איפה הוא כבר חזק וחשוב לא לפרק משהו שעובד."], "questions": ["אם בעוד שלושה חודשים התהליך עובד — מה שונה בחיים שלך?", "מה הדבר שהכי מתסכל אותך היום סביב נשים, דייטינג או ביטחון?", "מה כבר ניסית עד היום ומה הרגיש שכן עבד?", "מתי בפעם האחרונה רצית לעשות משהו ולא עשית?", "מה אמרת לעצמך באותו רגע?", "מה יותר מפחיד אותך: לקבל לא, או להצליח ואז לא לדעת מה לעשות?", "איפה בחיים אתה דווקא כן מרגיש בטוח ונוכח?", "עד כמה תגובה של אישה משפיעה על איך שאתה מרגיש לגבי עצמך?", "איך אתה חושב שאנשים קוראים אותך כשאתה נכנס לחדר?", "איפה אתה מרגיש שאתה יודע מה לעשות אבל לא מצליח להביא את זה לעולם?", "אם היית צריך לנחש — מה הדבר המרכזי שעוצר אותך כרגע?", "אם הייתי שואל חבר טוב שלך מה החוזקה הכי גדולה שלך מול אנשים — מה הוא היה אומר?"], "look": ["הימנעות שמתחפשת ל'אין הזדמנויות'.", "נשים כמדד לערך או כהוכחה לזהות.", "פער גדול בין יכולת חברתית כללית להתנהגות מול משיכה.", "נטייה לנתח במקום לפעול.", "פער בין האופן שבו הוא מתאר את עצמו לבין מה שנראה בחדר.", "ציפייה שהמאמן 'ייתן לו תשובה' במקום שהוא ילמד לקרוא את עצמו."], "exercises": ["תרגיל המראה: 'מה יש בי שאין בך?' ואז 'מה יש בך שאין בי?'.", "מפת חוזקות: חזק / מתפתח / מגביל כרגע.", "'מה קורה רגע לפני': ראיתי → חשבתי → הרגשתי → אמרתי לעצמי → עשיתי.", "מיקרו־פעולה אחת כבר מתוך הפגישה."], "progress": ["יש 1–3 Bottlenecks שניתן לבדוק התנהגותית.", "הלקוח מסוגל לתאר דפוס בלי להפוך אותו לזהות.", "יש לפחות חוזקה אחת שהוא מכיר בה.", "נבחרה פעולה אחת ברורה לשבוע הקרוב."], "leave": "עוברים הלאה כשיש תמונת מצב מספיק טובה כדי לפעול. לא צריך 'לסגור את הסיפור' של האדם לפני שמתחילים Practice או Exposure.", "next": "בחר Bottleneck אחד בלבד והעבר אותו ל־Routing. אם אין מספיק Evidence, תכנן Exposure שמטרתו לאסוף מידע ולא 'להצליח'."}, {"title": "נראות ונוכחות", "purpose": "לבדוק האם האופן שבו האדם נראה, מחזיק את הגוף ומופיע במרחב תומך בזהות שהוא רוצה להביא — או מסתיר אותה. המטרה אינה להפוך אותו למישהו אחר אלא לצמצם את הפער בין מי שהוא לבין מה שאנשים פוגשים מבחוץ.", "understand": ["איך הוא רואה את עצמו חיצונית לעומת איך אחרים עשויים לראות אותו.", "האם לבוש וטיפוח הם בחירה או ברירת מחדל.", "כמה הוא מרשה לעצמו להיות נראה.", "מה הגוף עושה במצבי לחץ או משיכה.", "איך קשר עין, קצב דיבור וטלפון משפיעים על הנוכחות."], "questions": ["כשאתה מסתכל במראה — מה אתה רואה ראשון?", "מה אתה אוהב בנראות שלך ומה היית רוצה לשפר?", "כשאתה בוחר בגדים, אתה בוחר מה שאתה אוהב או מה שלא ימשוך תשומת לב?", "יש משהו שהיית רוצה ללבוש אבל מרגיש לך 'יותר מדי'?", "מה היית רוצה שאדם ירגיש בעשר השניות הראשונות שהוא פוגש אותך?", "מה הגוף שלך עושה כשאתה נכנס למקום לא מוכר?", "איפה הידיים שלך נמצאות כשאתה לחוץ?", "מה קורה לקשר העין שלך כשמישהי מוצאת חן בעיניך?", "אתה מדבר מהר יותר כשאתה רוצה להרשים?", "עד כמה הטלפון משמש לך כמקום לברוח אליו במרחב ציבורי?", "מתי בפעם האחרונה הרגשת שאתה באמת נראה טוב ונוכח?", "אם היינו מצלמים אותך נכנס לבר עכשיו — מה היית רוצה לשנות?"], "look": ["פחד מלהיות נראה שמתחפש ל'אני פשוט צנוע'.", "סטייל חסר בחירה שמספר סיפור שלא מתאים לאדם.", "התכווצות פיזית סביב אנשים שהוא מעריך או נמשך אליהם.", "קצב דיבור גבוה שמבטא צורך להוכיח.", "תלות חזקה באישור חיצוני לנראות."], "exercises": ["לצאת מהחדר ולהיכנס מחדש תוך תצפית על קצב, מבט, יציבה וטלפון.", "'אותו אדם, שתי נוכחויות': רגיל מול 'כאילו מותר לי להיות פה'.", "קשר עין שקט של כמה שניות בלי למלא מיד את החלל.", "בחירת 2–3 לוקים/תמונות שמרגישים הכי 'אני' והבנת המכנה המשותף.", "שינוי אחד קטן בזמן אמת — שרוולים, יציבה, קצב, טיפוח או פריט."], "progress": ["הוא מסוגל לזהות מה הוא אוהב בנראות שלו ולא רק מה חסר.", "יש שינוי חיצוני אחד פרקטי ובר־ביצוע.", "קשר עין ונוכחות מרגישים פחות כמו 'משחק'.", "הוא מסוגל להיות במרחב בלי לברוח מיד לטלפון."], "leave": "עוברים הלאה כשנראות כבר אינה Bottleneck מרכזי. אין צורך להפוך את הלקוח ל'מושלם' חיצונית לפני שעובדים על יוזמה או שיחה.", "next": "קבע שינוי חיצוני אחד ו־Exposure של 'להיות נראה' בעולם. אסוף Evidence על נוכחות, לא רק תמונות לפני/אחרי."}, {"title": "שיחה והבאת עצמי", "purpose": "לעבור משיחה שמנוהלת כמו ראיון או מבחן לשיחה שבה האדם באמת נמצא, מגיב, משתף ומביא דעה. המטרה היא לא לתת עוד נושאים לשיחה אלא להפחית Performance ולבנות ביטוי עצמי.", "understand": ["האם הוא מקשיב או מכין את המשפט הבא.", "האם הוא מרגיש אחראי להחזיק את כל השיחה.", "כמה הוא משתף מעצמו לעומת שואל בלבד.", "כמה הוא מרשה לעצמו לא להסכים.", "האם הוא בודק אם הוא עצמו נהנה."], "questions": ["על מה אתה חושב בזמן שאתה מדבר עם מישהי?", "אתה באמת מקשיב או כבר מחפש מה להגיד אחר כך?", "מה קורה לך כשיש שתיקה?", "אתה מרגיש שאתה צריך להיות מעניין כל הזמן?", "כמה שאלות אתה שואל לעומת כמה אתה משתף?", "מה אתה עושה כשאין לך שאלה הבאה?", "עד כמה קל לך להביע דעה שעלולה לא למצוא חן?", "מה אתה רוצה שהיא תחשוב עליך תוך כדי השיחה?", "יש דברים שאתה מספר כדי להרשים ולא כי הם באמת רלוונטיים?", "עם חברים טובים — מה יוצא ממך שלא יוצא בדייט?", "מתי בפעם האחרונה אמרת משהו בלי לדעת איך הוא יתקבל?", "אתה בודק אם אתה רוצה שהשיחה תמשיך, או רק אם היא רוצה?"], "look": ["ראיון: שאלה אחרי שאלה בלי תגובה אישית.", "Performance: צורך להיות מצחיק/מעניין/מרשים.", "People pleasing: הסכמה אוטומטית וחוסר עמדה.", "חוסר סבילות לשתיקה.", "עיסוק עצמי גבוה שמונע סקרנות אמיתית."], "exercises": ["3 דקות שיחה בלי לשאול אף שאלה.", "המאמן נותן תשובות קצרות בכוונה והלקוח צריך להישאר נוכח.", "תרגול אי־הסכמה קטנה בלי להתנצל.", "אותו סיפור פעם אחת יבש ופעם שנייה עם דעה, רגש ופרט אישי.", "סיום יזום של שיחה שלא מעניינת אותו — כדי לתרגל בחירה."], "progress": ["הוא מגיב למה שנאמר במקום לקפוץ לשאלה הבאה.", "יש יותר דעה, הומור וסיפור אישי.", "שתיקה אינה נחווית מיד ככישלון.", "הוא מסוגל להבחין אם הוא עצמו נהנה."], "leave": "עוברים הלאה כששיחה בסיסית כבר זורמת מספיק כדי לאפשר כוונה, פלירטוט והבעת עניין. לא צריך כריזמה מושלמת.", "next": "Exposure שבו ה־KPI הוא ביטוי עצמי אחד, שתיקה אחת שלא מולאה, ובדיקה אחת של 'האם אני נהנה?'."}, {"title": "פלירטוט והבעת עניין", "purpose": "לעזור לאדם לעבור משיחה ניטרלית לשיחה שבה יש כוונה — בלי להתנצל על הרצון שלו ובלי להפוך אותו ללחץ. המטרה היא נוכחות ובהירות, לא 'טכניקות פלירטוט'.", "understand": ["כמה בושה קיימת סביב עצם הרצון.", "האם הוא מסתיר עניין כדי להימנע מדחייה.", "האם הוא יודע לקרוא הדדיות בסיסית.", "כמה ודאות הוא צריך לפני צעד קטן.", "האם פלירטוט מרגיש לו כמו 'להיות מישהו אחר'."], "questions": ["מה אתה חושב שיקרה אם יהיה ברור שאתה מעוניין?", "מה מביך אותך בלהראות משיכה?", "מה יותר מפחיד: לקבל לא, או שהיא תדע שאתה רוצה אותה?", "איך אתה מראה עניין היום, אם בכלל?", "מה ההבדל אצלך בין להיות נחמד לבין להיות פלרטטן?", "מה מרגיש לך 'יותר מדי'?", "כמה ודאות אתה מחפש לפני מחמאה או קשר עין?", "מה אתה עושה אם היא לא מחזירה את אותה אנרגיה?", "מה אתה עושה אם דווקא כן מחזירה?", "האם אתה מרשה לעצמך להיות מיני או שזה מיד מרגיש לא בסדר?", "איך אתה יודע שמישהי רוצה שהאינטראקציה תמשיך?", "מה הצעד הכי קטן שהיה הופך את הכוונה שלך לקצת יותר ברורה?"], "look": ["בושה סביב רצון או מיניות.", "Nice Guy pattern: רצון מוסתר ומאוחר יותר תסכול.", "ניטרליות מוגזמת כדי לא להסתכן.", "חיפוש 100% ודאות לפני כל פעולה.", "שימוש בטכניקות במקום תגובה לאדם שמולו."], "exercises": ["קשר עין + שתיקה קצרה במקום מילוי מיידי.", "מחמאה ספציפית בלי למחוק אותה מיד בצחוק.", "אותו משפט בשלוש גרסאות: ניטרלי / אישי / פלרטטני.", "תרגול מיקרו־סיכון: אמירה שמבהירה מעט עניין.", "תרגול נסיגה טבעית כשהעניין לא חוזר."], "progress": ["הוא מסוגל להבהיר עניין בלי התנצלות.", "הוא קורא אם האנרגיה חוזרת ולא רק 'מבצע טכניקה'.", "הוא מסוגל לשאת מבוכה קטנה.", "הוא מבין שרצון אינו לחץ."], "leave": "עוברים הלאה כשהוא מסוגל לבטא עניין ברמה בסיסית ולקרוא תגובה. אם אין Perspective בסיסי — חוזרים אליו לפני שמעלים עוצמה.", "next": "Exposure אחד שבו המטרה אינה מספר/דייט אלא מיקרו־סיכון ברור + קריאת תגובה."}, {"title": "Perspective והובלה", "purpose": "לפתח יכולת לקרוא את האדם שמולו, להבחין בהשקעה והדדיות, ולהציע צעד הבא בלי לחכות לוודאות מוחלטת. במקביל, להחזיר ללקוח את העובדה שגם הוא בוחר — לא רק נבחר.", "understand": ["איך הוא מפרש סימני עניין או חוסר עניין.", "האם הוא נשען על סימן יחיד או על דפוס.", "כמה הוא מחכה שהצד השני יוביל.", "איך הוא מגיב לעמימות.", "האם הוא בודק מה הוא עצמו רוצה."], "questions": ["מה מבחינתך אומר שמישהי בעניין?", "מה נחשב השקעה מצידה?", "איך אתה מבדיל בין נימוס לבין עניין?", "מה אתה עושה כשיש סימנים מעורבים?", "מה אתה רוצה שיקרה עכשיו באינטראקציה?", "אם אתה רוצה לראות אותה שוב — מה עוצר אותך מלבקש מספר?", "למה מספר ולא אינסטגרם? ומה קורה אם היא מעדיפה אינסטגרם?", "מה אתה עושה אם היא אומרת 'נראה' או 'אולי'?", "כמה זמן אתה ממשיך כשהאנרגיה יורדת?", "קרה שקראת מצב לא נכון? איך תיקנת?", "אתה רוצה אותה — או רוצה שהיא תרצה אותך?", "מתי לאחרונה אתה היית זה שבחר לא להמשיך?"], "look": ["סימן יחיד שמפורש כהוכחה.", "צורך בוודאות מלאה לפני הובלה.", "רדיפה אחרי עמימות.", "התמקדות ב'האם היא רוצה אותי' במקום 'האם יש כאן הדדיות'.", "חוסר Repair אחרי קריאה לא נכונה."], "exercises": ["Calibration Loop: פעולה → תגובה → פירוש → התאמה.", "תרגול בקשת מספר בכמה סגנונות טבעיים.", "תרגול תגובה ל'נראה / אולי / עמוסה השבוע'.", "Repair: 'קראתי את זה לא נכון' / הורדת הילוך בלי קריסה.", "תרגול בחירה: לזהות מקרה שבו הלקוח עצמו לא רוצה להמשיך."], "progress": ["הוא מזהה השקעה כדפוס, לא כסימן קסם.", "הוא מסוגל להציע צעד הבא בלי 100% ודאות.", "הוא יודע לשחרר כשאין תנועה בחזרה.", "הוא מסוגל לתקן קריאה לא נכונה.", "הוא זוכר שגם הרצון שלו חשוב."], "leave": "עוברים הלאה כשהלקוח יכול להוביל צעד קטן, לקרוא תגובה ולשחרר כשצריך. אם הוא עדיין לא מבצע בעולם — Route ל־Exposure ולא לעוד הסבר.", "next": "Exposure עם צעד ממשי: בקשת מספר, הצעת דייט, או בחירה לא להמשיך. Evidence צריך לתעד גם את תגובת הצד השני וגם את הכיול שלו."}, {"title": "דייט ואינטימיות", "purpose": "לעזור לאדם להיות בדייט באופן רומנטי ונוכח, להביע משיכה ולתת לקרבה להיבנות בצורה הדדית וברורה. אינטימיות אינה יעד שצריך להשיג אלא אזור שדורש יותר הקשבה, בהירות ויכולת לעצור.", "understand": ["איך דייט נראה אצלו בפועל.", "האם הוא הופך אותו לראיון או למבחן.", "כמה הוא מחובר לרצון שלו מול לחץ 'להתקדם'.", "איך הוא קורא נוחות, הדדיות וגבולות.", "מה סקס או נשיקה מסמלים עבור הערך העצמי שלו."], "questions": ["איך נראה דייט טיפוסי שלך מתחילתו ועד סופו?", "מתי בדרך כלל ברור שיש משיכה?", "מה קורה לך בגוף כשיש קרבה פיזית?", "מה אתה חושב שאתה 'אמור' לעשות בדייט?", "מה אתה עושה אם אתה רוצה להתקרב ולא בטוח שהיא רוצה?", "איך אתה יודע שהצד השני נוח?", "מה סקס או נשיקה אומרים לך על ההצלחה של הדייט?", "אם הדייט טוב אבל לא מתקדם פיזית — הוא עדיין נחשב טוב?", "עד כמה קל לך להגיד מה אתה רוצה בצורה ישירה?", "מה קורה אם היא אומרת לא או נראית לא בטוחה?", "אתה מסוגל לעצור בלי להרגיש שנכשלת?", "אתה בכלל בודק אם אתה רוצה את הקרבה הזו או רק אם אתה יכול להשיג אותה?"], "look": ["דייט כראיון בלי מתח רומנטי.", "אינטימיות כמדד לערך או הצלחה.", "לחץ להתקדם בגלל 'מה שצריך'.", "פחד מכל יוזמה פיזית גם כשיש הדדיות.", "חוסר קריאה של עמימות או קושי לעצור."], "exercises": ["סימולציית דייט עם מעבר מנייטרלי לרומנטי.", "'יש עוד צעד?' — מה אני רוצה ומה אני צריך לראות לפני שאני עושה אותו.", "תרגול בהירות מילולית סביב רצון וגבולות.", "Repair אחרי קריאה לא נכונה או רגע מביך."], "progress": ["הוא מסוגל להביע משיכה בלי להפוך אותה ליעד.", "הוא קורא הדדיות לפני העלאת עוצמה.", "הוא מסוגל לעצור בלי קריסה.", "הוא פחות עסוק ב'איך הדייט אמור להסתיים'."], "leave": "עוברים הלאה כשהאינטימיות כבר אינה מנוהלת רק על ידי פחד או הישגיות. אם עולה מצוקה עמוקה או חומר מחוץ למסגרת coaching — לא מנסים 'לפתור' אותו כאן.", "next": "דייט עם KPI התנהגותי: נוכחות, ביטוי משיכה, קריאת הדדיות, וכבוד מלא לעצירה."}, {"title": "דחייה והתאוששות", "purpose": "ללמד את הלקוח להפוך דחייה מאירוע שמגדיר אותו למידע שהוא מסוגל לעבד ולחזור ממנו לחיים. המטרה אינה שלא יכאב — אלא שהכאב לא ינהל את הזהות או יוביל להרס עצמי.", "understand": ["איזה סיפור הוא מספר לעצמו מיד אחרי דחייה.", "כמה זמן לוקח לו להתאושש.", "האם הוא מחפש הסבר שאין לו דרך לדעת.", "האם דחייה גורמת להימנעות, כעס או חיפוש אישור חדש.", "האם יש דפוס חוזר שבאמת שווה ללמוד ממנו."], "questions": ["מה הדבר הראשון שסיפרת לעצמך אחרי הדחייה?", "מה אתה יודע בוודאות ומה אתה רק מנחש?", "מה לדעתך הדחייה אומרת עליך?", "מה היית אומר לחבר טוב שהיה במצב הזה?", "אתה חושב שקראת את הסיטואציה טוב?", "האם יש פה משהו שחוזר בכמה מקרים או שזה אירוע בודד?", "כמה זמן לוקח לך לחזור לעצמך?", "מה אתה עושה מיד אחרי — נעלם, מנתח, מחפש מישהי אחרת, כועס?", "אתה מחפש הסבר כי יש באמת מה ללמוד או כי קשה לך להישאר באי־ודאות?", "מה הדבר הבריא הבא שאתה יכול לעשות בלי להוכיח שום דבר?", "מה השתנה בדחיות היום לעומת לפני כמה חודשים?", "מה היית רוצה שהדחייה לא תיקח ממך?"], "look": ["'אני לא מספיק' כהסקה אוטומטית.", "חיפוש אשמה או הסבר מוחלט.", "ריצה לאישור חיצוני חדש.", "היעלמות ארוכה מהעולם.", "כעס או עוינות כלפי נשים.", "עיבוד אינסופי שמתחפש ללמידה."], "exercises": ["עובדה / פרשנות / זהות.", "Debrief מוגבל ל־5–10 דקות.", "בחירת פעולה הבאה רק אחרי שהרגש מתיישב.", "השוואת זמן Recovery בין אירועים.", "תרגול 'אני לא יודע למה, וזה בסדר' כשאין מידע."], "progress": ["דחייה עדיין מבאסת אבל פחות מוחקת.", "הוא מסוגל לומר 'אני לא יודע למה'.", "זמן Recovery מתקצר.", "הוא מזהה אם יש דפוס אמיתי בלי להמציא אחד.", "הוא חוזר לפעולה בלי נקמה או הוכחה."], "leave": "עוברים הלאה כשדחייה כבר לא חוסמת שבועות של פעולה. לא צריך לגרום ללקוח 'לא להיפגע'. אם יש קריסה משמעותית או ירידה בתפקוד — Re-screen.", "next": "Exposure שמתאים לרמתו + מדידת Recovery. Evidence כולל גם מה קרה אחרי האירוע, לא רק את הדחייה עצמה."}, {"title": "אינטגרציה ועצמאות", "purpose": "לחבר את הדרך שעבר הלקוח ולבדוק מה באמת נהיה שלו. המטרה אינה לסכם ידע אלא לבדוק האם הוא מסוגל לזהות Bottleneck, לבחור פעולה, לבצע, לקרוא את התוצאה ולתקן — בלי שאתה מחזיק עבורו את התהליך.", "understand": ["אילו מיומנויות כבר יציבות גם בלי הכנה.", "איפה עדיין יש תלות במאמן.", "האם הלקוח יודע לבצע Debrief עצמאי.", "האם הוא מסוגל לבחור Exposure בעצמו.", "האם יש צורך ב־Fade, Pause, Maintenance או המשך עבודה."], "questions": ["מה אתה עושה היום שלא עשית בתחילת הדרך?", "מה מפחיד אותך פחות?", "איזה משהו שפעם דרש מאמץ נהיה יותר טבעי?", "איפה אתה עדיין מרגיש אותו אדם בדיוק?", "כשאתה נמנע היום — אתה מזהה את זה בזמן?", "מה אתה עושה אחרי דחייה היום?", "כשאתה לא יודע מה להגיד — מה אתה עושה?", "כשאתה רוצה משהו — אתה יודע לתת לו צורה?", "איזה Bottleneck היית מזהה לעצמך עכשיו?", "איזה Exposure היית בונה לעצמך השבוע?", "מה אתה יודע לעשות לבד היום שלא היית יודע לעשות בתחילת התהליך?", "אם לא הייתי פה מחר — איפה עדיין היית צריך עזרה?"], "look": ["פעולה שקיימת רק כשהמאמן מציב משימה.", "תלות ב־Debrief שלך.", "קושי לבחור קושי מתאים לבד.", "מיומנות מרכזית אחת שעדיין לא עברה לעולם.", "המשך תהליך רק כי 'עוד לא סיימנו את כל הנושאים'."], "exercises": ["הלקוח מאמן את עצמו על סיטואציה אמיתית.", "חזרה לתרגיל המראה מהמפגש הראשון.", "הלקוח בונה Exposure לבד ומנמק למה בחר אותו.", "Cold Check של Skill מרכזי בלי הכנה.", "בניית תוכנית 30 יום עצמאית."], "progress": ["הוא יוזם בלי דחיפה.", "הוא מזהה Bottleneck ומציע צעד מתאים.", "הוא יודע לעשות Debrief בלי למחוק את עצמו.", "הוא מסוגל לבחור לא להמשיך אינטראקציה.", "הוא יוצר הזדמנויות ולא מחכה להן.", "הוא יודע מתי לפעול, מתי להעמיק ומתי לשחרר."], "leave": "התהליך לא מסתיים כי 'עברנו את שמונה התחנות'. הוא מסתיים כשהלקוח מסוגל להחזיק את הלולאה בעצמו או כשאין יותר הצדקה מקצועית להמשך במסגרת הנוכחית.", "next": "Fade, Pause או תוכנית 30 יום. אפשר לקבוע Follow-up מאוחר יותר במקום להמשיך פגישות רק מתוך אינרציה."}];
+const SKILLS=[
+['presence','נוכחות / ויסות'],['appearance','נראות / סטייל'],['initiative','יוזמה'],
+['conversation','שיחה / ביטוי עצמי'],['perspective','Perspective'],['interest','הבעת עניין'],
+['leadership','הובלה'],['rejection','דחייה / Recovery'],['texting','טקסטינג'],
+['intimacy','אינטימיות'],['repair','Repair'],['relationship','מיומנויות קשר']
+].map(x=>({id:x[0],name:x[1]}));
 
-let DB=JSON.parse(localStorage.getItem('baderech_coach_os')||'null')||{clients:{},active:null};
+const PLAYBOOKS=[{"title": "מיפוי ונקודת פתיחה", "purpose": "לבנות תמונת מצב מספיק טובה כדי לבחור איפה להתחיל להזיז. לא להבין את האדם עד הסוף — אלא לזהות מה כרגע מגביל פעולה.", "questions": ["אם בעוד שלושה חודשים התהליך עובד — מה שונה?", "מה הדבר שהכי מתסכל אותך כרגע?", "איפה אתה יודע מה לעשות אבל לא עושה?", "מתי בפעם האחרונה רצית לפעול ונמנעת?", "מה אמרת לעצמך רגע לפני?", "איפה בחיים אתה דווקא כן בטוח בעצמך?", "עד כמה תגובה של אישה משנה איך אתה מרגיש לגבי עצמך?", "מה לדעתך הדבר המרכזי שעוצר אותך כרגע?"], "look": ["הימנעות שמתחפשת להיגיון", "פער בין ידיעה לביצוע", "נשים כמדד לערך", "פער בין תיאור עצמי לבין מה שנראה בחדר"], "exercises": ["תרגיל המראה", "מפת חוזקות", "ראיתי → חשבתי → הרגשתי → עשיתי", "מיקרו־פעולה"], "progress": "יש 1–3 Bottlenecks אפשריים, חוזקה אחת ברורה ופעולה ראשונה שאפשר לבדוק בעולם."}, {"title": "נראות ונוכחות", "purpose": "לבדוק אם האופן שבו האדם מופיע מבחוץ תומך בזהות שהוא רוצה להביא, או מסתיר אותה.", "questions": ["מה אתה רואה ראשון כשאתה מסתכל במראה?", "מה אתה אוהב בנראות שלך ומה פחות?", "אתה לובש מה שאתה אוהב או מה שלא מושך תשומת לב?", "מה היית רוצה שאדם ירגיש כשהוא פוגש אותך?", "מה הגוף שלך עושה כשאתה נכנס למקום לא מוכר?", "מה קורה לקשר העין שלך כשמישהי מוצאת חן בעיניך?", "הטלפון משמש אותך כמקום לברוח אליו?", "מתי אתה מרגיש הכי נוכח?"], "look": ["פחד מלהיות נראה", "סטייל כברירת מחדל", "התכווצות במרחב", "קצב דיבור גבוה", "תלות באישור חיצוני"], "exercises": ["כניסה מחדש לחדר", "שתי נוכחויות", "קשר עין שקט", "בחירת לוק שמרגיש 'אני'"], "progress": "יש שינוי פרקטי אחד בנראות ותרגול אחד של נוכחות בעולם."}, {"title": "שיחה והבאת עצמי", "purpose": "לעבור משיחה כראיון או ביצוע לשיחה שבה הוא מגיב, משתף, מביע דעה ובודק אם הוא עצמו נהנה.", "questions": ["על מה אתה חושב בזמן שיחה?", "אתה מקשיב או מכין את הדבר הבא?", "מה קורה לך בשתיקה?", "אתה מרגיש אחראי להיות מעניין?", "כמה אתה שואל לעומת משתף?", "עד כמה קל לך לא להסכים?", "מה אתה רוצה שהיא תחשוב עליך?", "עם חברים טובים — מה יוצא ממך שלא יוצא בדייט?", "אתה בודק אם אתה בכלל נהנה?"], "look": ["ראיון במקום מפגש", "Performance", "ריצוי", "חוסר סבילות לשתיקה", "עיסוק עצמי גבוה"], "exercises": ["3 דקות בלי שאלות", "אי־הסכמה קטנה", "אותו סיפור בשתי גרסאות", "סיום יזום של שיחה שלא מעניינת אותו"], "progress": "פחות חיפוש 'מה להגיד', יותר תגובה, דעה וביטוי עצמי."}, {"title": "פלירטוט והבעת עניין", "purpose": "לעזור לאדם להיות ברור יותר לגבי רצון ומשיכה בלי להתנצל ובלי להפעיל לחץ.", "questions": ["מה יקרה אם יהיה ברור שאתה מעוניין?", "מה מביך אותך בלהראות משיכה?", "מה יותר מפחיד — לא, או שהיא תדע שאתה רוצה?", "איך אתה מראה עניין היום?", "כמה ודאות אתה צריך לפני צעד קטן?", "מה אתה עושה אם היא לא מחזירה אנרגיה?", "מה הצעד הכי קטן שהיה הופך את הכוונה שלך לברורה יותר?"], "look": ["בושה סביב רצון", "Nice Guy pattern", "ניטרליות מוגזמת", "חיפוש ודאות מלאה", "טכניקה במקום נוכחות"], "exercises": ["קשר עין + שתיקה", "מחמאה ספציפית", "ניטרלי / אישי / פלרטטני", "מיקרו־סיכון"], "progress": "הוא מסוגל להביע עניין קטן, לקרוא תגובה ולשאת מבוכה בלי להיסגר."}, {"title": "Perspective והובלה", "purpose": "לקרוא הדדיות, להבין מה חוזר מהצד השני, ולהציע צעד הבא בלי לחכות לוודאות מוחלטת.", "questions": ["מה מבחינתך אומר שמישהי בעניין?", "מה נחשב השקעה מצידה?", "איך אתה מבדיל בין נימוס לעניין?", "מה אתה עושה בסימנים מעורבים?", "מה אתה רוצה שיקרה עכשיו?", "אם אתה רוצה לראות אותה שוב — מה עוצר אותך מלבקש מספר?", "מה אתה עושה עם 'נראה / אולי'?", "אתה רוצה אותה או רוצה שהיא תרצה אותך?", "מתי לאחרונה אתה בחרת לא להמשיך?"], "look": ["סימן יחיד במקום דפוס", "צורך בוודאות מלאה", "רדיפה אחרי עמימות", "שכחת הבחירה שלו", "חוסר Repair"], "exercises": ["Calibration Loop", "בקשת מספר", "תגובה לעמימות", "Repair", "תרגול בחירה לא להמשיך"], "progress": "הוא מזהה השקעה, מציע צעד הבא, משחרר כשאין תנועה ויודע לתקן."}, {"title": "דייט ואינטימיות", "purpose": "לבנות דייט שיש בו נוכחות, משיכה ובהירות, בלי להפוך קרבה או סקס ליעד שצריך להשיג.", "questions": ["איך נראה דייט טיפוסי שלך?", "מתי אתה מביע משיכה?", "מה קורה לך בקרבה פיזית?", "מה אתה חושב שאתה 'אמור' לעשות?", "איך אתה יודע שהצד השני נוח?", "מה נשיקה או סקס אומרים על ההצלחה של הדייט?", "מה קורה אם הדייט טוב ולא מתקדם?", "עד כמה קל לך להגיד מה אתה רוצה?", "מה קורה כשיש לא או חוסר ודאות?"], "look": ["דייט כראיון", "אינטימיות כמדד לערך", "לחץ להתקדם", "פחד מכל יוזמה", "חוסר קריאת גבול"], "exercises": ["סימולציית דייט", "'יש עוד צעד?'", "בהירות מילולית", "Repair"], "progress": "הוא מביע רצון, קורא הדדיות, יודע לעצור ולא מודד הצלחה רק לפי תוצאה פיזית."}, {"title": "דחייה והתאוששות", "purpose": "להפוך דחייה ממידע שמגדיר את האדם למידע שאפשר לעבד, ללמוד ממנו ולחזור ממנו לפעולה.", "questions": ["מה הדבר הראשון שסיפרת לעצמך אחרי הדחייה?", "מה אתה יודע ומה אתה רק מנחש?", "מה הדחייה אומרת עליך בעיניך?", "מה היית אומר לחבר?", "האם יש פה דפוס או אירוע בודד?", "כמה זמן לוקח לך לחזור לעצמך?", "מה אתה עושה מיד אחרי?", "אתה מחפש הסבר או מתקשה לשאת אי־ודאות?", "מה הדבר הבריא הבא שאתה יכול לעשות?"], "look": ["'אני לא מספיק'", "חיפוש אשמה", "ריצה לאישור חדש", "היעלמות", "כעס", "עיבוד אינסופי"], "exercises": ["עובדה / פרשנות / זהות", "Debrief מוגבל", "מדידת Recovery", "'אני לא יודע למה'"], "progress": "הדחייה עדיין מבאסת, אבל פחות מוחקת; Recovery מתקצר והוא חוזר לפעולה בלי הוכחה או נקמה."}, {"title": "אינטגרציה ועצמאות", "purpose": "לבדוק מה באמת נהיה שלו והאם הוא מסוגל לזהות Bottleneck, לבחור פעולה, לבצע, לקרוא תוצאה ולתקן בלי שאתה מחזיק עבורו את הלולאה.", "questions": ["מה אתה עושה היום שלא עשית בהתחלה?", "מה נהיה טבעי יותר?", "איפה אתה עדיין אותו אדם?", "כשאתה נמנע — אתה מזהה את זה?", "איזה Bottleneck היית מזהה לעצמך עכשיו?", "איזה Exposure היית בונה לעצמך?", "מה אתה יודע לעשות לבד היום?", "אם לא הייתי פה מחר — איפה עדיין היית צריך עזרה?"], "look": ["תלות במשימות מהמאמן", "תלות ב־Debrief", "קושי לבחור קושי לבד", "מיומנות שלא עבר לעולם", "המשך רק כי 'עוד לא סיימנו את הנושאים'"], "exercises": ["הלקוח מאמן את עצמו", "חזרה לתרגיל המראה", "בניית Exposure עצמאי", "Cold Check", "תוכנית 30 יום"], "progress": "הוא יוזם, מזהה Bottleneck, בונה Exposure, עושה Debrief ויודע מתי לפעול, להעמיק או לשחרר."}];
+
+let DB=JSON.parse(localStorage.getItem('baderech_v4')||'null')||{clients:{},active:null,predictions:[]};
+
 const uid=()=>Math.random().toString(36).slice(2,10);
-
-function seed(name='עידן'){
+function newClient(){
+  const name=prompt('שם הלקוח');if(!name)return;
   const id=uid();
-  DB.clients[id]={id,name,bottleneck:'initiative',screening:{status:'Green',note:'',rescreen:'',eth:[false,false,false,false,false]},metrics:{opp:0,assigned:0,done:0,latency:'',recovery:'',practice:''},evidence:[],routes:[],fields:{}};
+  DB.clients[id]={id,name,bottleneck:'initiative',screening:'Unknown',rescreen:'',eth:[false,false,false,false,false]};
   DB.active=id;save();
 }
-if(!DB.active||!DB.clients[DB.active])seed();
+if(!DB.active||!DB.clients[DB.active]){const id=uid();DB.clients[id]={id,name:'עידן',bottleneck:'initiative',screening:'Unknown',rescreen:'',eth:[false,false,false,false,false]};DB.active=id;localStorage.setItem('baderech_v4',JSON.stringify(DB));}
 function c(){return DB.clients[DB.active]}
-function save(){localStorage.setItem('baderech_coach_os',JSON.stringify(DB));refresh()}
+function save(){localStorage.setItem('baderech_v4',JSON.stringify(DB));renderAll()}
 
 document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
-  document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
-  document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
-  b.classList.add('active');document.getElementById(b.dataset.page).classList.add('active');
+ document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ b.classList.add('active');document.getElementById(b.dataset.page).classList.add('active');
 });
 
-function levelFor(id){
-  const ev=c().evidence.filter(e=>e.skill===id);
-  if(!ev.length)return 0;
-  for(let l=4;l>=1;l--){
-    const a=ev.filter(e=>+e.performance>=l),ctx=new Set(a.map(e=>e.context).filter(Boolean)),obs=a.filter(e=>e.observed).length;
-    if(a.length>=3&&ctx.size>=2&&obs>=1)return l;
-  }
-  return Math.min(1,Math.max(...ev.map(e=>+e.performance)));
+function fillSelect(el){
+ el.innerHTML='';SKILLS.forEach(s=>el.add(new Option(s.name,s.id)));
 }
 function renderClients(){
-  clientSelect.innerHTML='';
-  Object.values(DB.clients).forEach(x=>{const o=document.createElement('option');o.value=x.id;o.textContent=x.name;o.selected=x.id===DB.active;clientSelect.appendChild(o)});
-  clientSelect.onchange=e=>{DB.active=e.target.value;save()};
+ clientSelect.innerHTML='';
+ Object.values(DB.clients).forEach(x=>{const o=new Option(x.name,x.id);o.selected=x.id===DB.active;clientSelect.add(o)});
+ clientSelect.onchange=e=>{DB.active=e.target.value;save()};
 }
-function newClient(){const n=prompt('שם הלקוח');if(!n)return;seed(n)}
+function ethicsState(){
+ const arr=c().eth||[];
+ if(arr.every(Boolean)) return 'OK';
+ if(arr.every(v=>v===false)) return 'Unknown';
+ return 'Partial';
+}
 function renderTop(){
-  const s=SKILLS.find(x=>x.id===c().bottleneck);topBottleneck.textContent=s?s.name:'—';
-  const st=c().screening.status;topScreening.innerHTML=`<span class="dot ${st.toLowerCase()}"></span>${st}`;
-  topOpp.textContent=c().metrics.opp||0;
-  const a=+c().metrics.assigned||0,d=+c().metrics.done||0;topCompletion.textContent=a?Math.round(d/a*100)+'%':'—';
+ const s=SKILLS.find(x=>x.id===c().bottleneck);topBottleneck.textContent=s?s.name:'—';
+ const st=c().screening||'Unknown';
+ topבדיקת התאמה.innerHTML=`<span class="dot ${st==='Green'?'green':st==='Yellow'?'yellow':st==='Red'?'red':'gray'}"></span>${st==='Unknown'?'לא הוערך':st}`;
+ const es=ethicsState();
+ topEthics.innerHTML=`<span class="dot ${es==='OK'?'green':es==='Partial'?'yellow':'gray'}"></span>${es==='OK'?'תקין':es==='Partial'?'חלקי':'לא הוערך'}`;
 }
-function renderSkills(){
-  skills.innerHTML='';
-  SKILLS.forEach(s=>{
-    const l=levelFor(s.id),n=c().evidence.filter(e=>e.skill===s.id).length,d=document.createElement('div');
-    d.className='skill';
-    d.innerHTML=`<b>${s.name}</b><br><span class="level ${l>=2?'good':''}">${LEVELS[l]}</span><div class="tiny">${n} רשומות Evidence</div>`;
-    d.onclick=()=>{document.querySelector('[data-page="evidence"]').click();evSkill.value=s.id;renderEvidence(s.id)};
-    skills.appendChild(d);
-  });
+function loadSafety(){
+ screenStatus.value=c().screening||'Unknown';rescreen.value=c().rescreen||'';
+ [eth1,eth2,eth3,eth4,eth5].forEach((el,i)=>el.checked=!!(c().eth||[])[i]);
 }
-function fillSkills(){
-  [evSkill,bottleneckSelect].forEach(el=>{el.innerHTML='';SKILLS.forEach(s=>el.add(new Option(s.name,s.id)))});
-  bottleneckSelect.value=c().bottleneck;
+function saveSafety(){
+ c().screening=screenStatus.value;c().rescreen=rescreen.value;c().eth=[eth1.checked,eth2.checked,eth3.checked,eth4.checked,eth5.checked];save();
 }
-function addEvidence(){
-  c().evidence.push({id:uid(),skill:evSkill.value,date:new Date().toISOString(),context:evContext.value.trim(),observed:evObserved.value==='true',note:evNote.value.trim(),performance:+evPerformance.value,arousal:+evArousal.value});
-  evContext.value='';evNote.value='';save();
+function renderRouteSafety(){
+ const e=ethicsState();
+ routeSafetySummary.innerHTML=`בדיקת התאמה: <b>${c().screening==='Unknown'?'לא הוערך':c().screening}</b> · גבולות בסיס: <b>${e==='OK'?'תקין':e==='Partial'?'חלקי':'לא הוערך'}</b>`;
 }
-function renderEvidence(filter=null){
-  evidenceList.innerHTML='';
-  let arr=[...c().evidence].reverse();
-  if(filter)arr=arr.filter(e=>e.skill===filter);
-  if(!arr.length){evidenceList.innerHTML='<p class="note">עדיין אין Evidence.</p>';return}
-  arr.forEach(e=>{
-    const d=document.createElement('div');d.className='ev';
-    const s=SKILLS.find(x=>x.id===e.skill);
-    d.innerHTML=`<div class="tiny">${new Date(e.date).toLocaleDateString('he-IL')} · ${s?s.name:''} · ${e.observed?'נצפה':'דיווח עצמי'} · Arousal ${e.arousal}/10</div><b>${LEVELS[e.performance]}</b><div>${e.context||'ללא הקשר'}</div><div class="note">${e.note||''}</div>`;
-    evidenceList.appendChild(d);
-  });
+function routeComplete(){
+ return rOpp.value&&rRoom.value&&rField.value&&rהעמקה.value&&rWant.value&&rרמת לחץ.value!=='';
 }
-function safety(){return{screen:c().screening.status,ethicsOk:(c().screening.eth||[]).every(Boolean)}}
-function routeInputsComplete(){return rOpp.value&&rRoom.value&&rField.value&&rDepth.value&&rArousal.value!==''}
-function renderRouteSafety(){const s=safety();routeSafetySummary.innerHTML=`Screening: <b>${s.screen}</b> · Ethical Floor: <b>${s.ethicsOk?'תקין':'לא תקין'}</b>`}
 function computeRoute(){
-  if(!routeInputsComplete()){routeResult.innerHTML='<div class="warning">צריך לענות על כל הקלטים.</div>';return null}
-  const s=safety(),ar=+rArousal.value;let route,why;
-  if(!s.ethicsOk){route='STOP / Ethical Review';why='הרצפה האתית קודמת לכל חשיפה.'}
-  else if(s.screen==='Red'){route='STOP / Scope Boundary';why='המסגרת אינה מתאימה כרגע לעבודה רגילה.'}
-  else if(s.screen==='Yellow'){route='Low-intensity Track';why='E2–E3 + Re-screen.'}
-  else if(rOpp.value==='no'){route='Opportunity + Interactive Exposure';why='מגדילים הזדמנויות בלי להחליף חשיפה.'}
-  else if(rRoom.value==='no'){route='Teach + Practice';why='המיומנות עדיין לא יציבה בחדר.'}
-  else if(rField.value==='no'&&ar>=7){route='Regulation + Low Exposure';why='היכולת קיימת בחדר, העוררות גבוהה בשטח.'}
-  else if(rField.value==='no'){route='Field / Exposure';why='היכולת לא עוברת לעולם.'}
-  else if(rDepth.value==='yes'){route='Depth';why='דפוס עמוק ממשיך לחסום.'}
-  else{route='Calibration / Raise Complexity / Fade';why='היכולת מתבצעת; בודקים עצמאות ומורכבות.'}
-  routeResult.innerHTML=`<div class="route-result"><b>${route}</b><br>${why}</div>`;return route;
+ if(!routeComplete()){routeResult.innerHTML='<div class="warning">צריך לענות על כל שאלות הניתוב.</div>';return null}
+ const eth=ethicsState(),st=c().screening,ar=+rרמת לחץ.value;
+ let route='',why='';
+ if(st==='Unknown'||eth!=='OK'){route='עצירה — השלמת בדיקת מסגרת';why='אי אפשר להתקדם לתרגול או לחשיפה לפני שהשלמנו את בדיקת ההתאמה והגבולות.'}
+ else if(st==='Red'){route='עצירה — מחוץ למסגרת';why='כרגע לא נכון להמשיך כרגיל במסגרת של בדרך.'}
+ else if(st==='Yellow'){route='מסלול בעצימות נמוכה';why='עובדים בעדינות יותר, עם חשיפות קלות יותר ובדיקה מחודשת בהמשך.'}
+ else if(rWant.value==='yes'){route='בדיקה מחדש של המטרה';why='הוא כבר יודע לבצע; עכשיו בודקים אם זו בכלל עדיין המטרה שלו.'}
+ else if(rOpp.value==='no'){route='הגדלת הזדמנויות + חשיפה אמיתית';why='מייצרים יותר מצבים אמיתיים להתנסות, בלי להישאר רק בתיאוריה.'}
+ else if(rRoom.value==='no'){route='לימוד + תרגול';why='קודם צריך לבנות את היכולת בתרגול לפני שמצפים שתופיע בשטח.'}
+ else if(rField.value==='no'&&ar>=7){route='ויסות + חשיפה קלה יותר';why='הוא יודע מה לעשות, אבל ברגע האמת הלחץ גבוה מדי; מורידים את רמת הקושי.'}
+ else if(rField.value==='no'){route='יציאה לשטח / חשיפה';why='הוא יודע לבצע כאן, אבל עדיין לא עושה את זה בעולם האמיתי.'}
+ else if(rהעמקה.value==='yes'){route='העמקה';why='יש דפוס שחוזר שוב ושוב למרות תרגול ופעולה, ולכן שווה להבין אותו קצת יותר לעומק.'}
+ else{route='כיול / העלאת קושי / מעבר לעצמאות';why='היכולת כבר קיימת; עכשיו בודקים דיוק, מצבים מורכבים יותר או פחות תלות בך.'}
+ routeResult.innerHTML=`<div class="route-result"><b>${route}</b><br>${why}</div>`;
+ return route;
 }
-function saveRouteDecision(){
-  const route=computeRoute();if(!route)return;
-  c().bottleneck=bottleneckSelect.value;
-  c().routes.push({id:uid(),date:new Date().toISOString(),bottleneck:c().bottleneck,hypothesis:hypothesis.value,prediction:prediction.value,practice:practicePlan.value,exposure:exposurePlan.value,route,outcome:null});
-  save();
+function decisionComplete(){
+ return bottleneck.value&&evDemos.value!==''&&evContexts.value!==''&&evObserved.value&&evמיומנות.value&&hypothesis.value.trim()&&prediction.value.trim()&&nextAction.value.trim();
 }
-function setOutcome(id,o){const r=c().routes.find(x=>x.id===id);if(r){r.outcome=o;save()}}
+function saveDecision(){
+ const route=computeRoute();if(!route)return;
+ if(!decisionComplete()){saveMsg.textContent='חסרים שדות בהחלטת העבודה';return}
+ c().bottleneck=bottleneck.value;
+ DB.predictions.push({
+   id:uid(),clientId:c().id,clientName:c().name,date:new Date().toISOString(),
+   bottleneck:bottleneck.value,route,
+   evidence:{skill:evמיומנות.value,demos:+evDemos.value,contexts:+evContexts.value,observed:evObserved.value==='yes'},
+   hypothesis:hypothesis.value.trim(),prediction:prediction.value.trim(),nextAction:nextAction.value.trim(),outcome:null
+ });
+ hypothesis.value='';prediction.value='';nextAction.value='';evDemos.value='';evContexts.value='';evObserved.value='';
+ saveMsg.textContent='נשמר';save();
+}
+function setOutcome(id,val){
+ const p=DB.predictions.find(x=>x.id===id);if(p){p.outcome=val;save()}
+}
 function renderPredictions(){
-  predictionLog.innerHTML='';
-  const closed=c().routes.filter(r=>r.outcome),hits=closed.filter(r=>r.outcome==='hit').length;
-  predictionAccuracy.textContent=closed.length?`Accuracy: ${Math.round(hits/closed.length*100)}% (${hits}/${closed.length})`:'Accuracy: —';
-  [...c().routes].reverse().forEach(r=>{
-    const d=document.createElement('div');d.className='ev';const s=SKILLS.find(x=>x.id===r.bottleneck);
-    d.innerHTML=`<div class="tiny">${new Date(r.date).toLocaleDateString('he-IL')} · ${s?s.name:''} · ${r.outcome==='hit'?'פגע':r.outcome==='miss'?'החטיא':'פתוח'}</div><b>${r.route}</b><div class="note">השערה: ${r.hypothesis||'—'}</div><div class="note">תחזית: ${r.prediction||'—'}</div><div class="row" style="margin-top:8px"><button class="btn secondary hit">פגע</button><button class="btn secondary miss">החטיא</button></div>`;
-    d.querySelector('.hit').onclick=()=>setOutcome(r.id,'hit');d.querySelector('.miss').onclick=()=>setOutcome(r.id,'miss');predictionLog.appendChild(d);
-  });
+ predList.innerHTML='';
+ const closed=DB.predictions.filter(p=>p.outcome==='hit'||p.outcome==='miss'),hits=closed.filter(p=>p.outcome==='hit').length;
+ accuracy.textContent=closed.length?`${Math.round(hits/closed.length*100)}% (${hits}/${closed.length})`:'—';
+ [...DB.predictions].reverse().forEach(p=>{
+   const s=SKILLS.find(x=>x.id===p.bottleneck),ev=SKILLS.find(x=>x.id===p.evidence.skill);
+   const d=document.createElement('div');d.className='pred';
+   d.innerHTML=`<div class="tiny">${new Date(p.date).toLocaleDateString('he-IL')} · ${p.clientName} · ${s?s.name:''} · ${p.outcome==='hit'?'פגע':p.outcome==='miss'?'החטיא':'פתוח'}</div>
+   <b>${p.route}</b>
+   <div class="note" style="margin-top:6px">בסיס להחלטה: ${ev?ev.name:''} · ${p.evidence.demos} הדגמות · ${p.evidence.contexts} הקשרים · ${p.evidence.observed?'נצפה':'לא נצפה'}</div>
+   <div style="margin-top:8px"><b>השערה:</b> ${p.hypothesis}</div>
+   <div><b>תחזית:</b> ${p.prediction}</div>
+   <div><b>צעד הבא:</b> ${p.nextAction}</div>
+   <div class="row" style="margin-top:10px"><button class="btn secondary hit">פגע</button><button class="btn secondary miss">החטיא</button></div>`;
+   d.querySelector('.hit').onclick=()=>setOutcome(p.id,'hit');d.querySelector('.miss').onclick=()=>setOutcome(p.id,'miss');predList.appendChild(d);
+ });
 }
-function saveScreening(){c().screening={status:screeningStatus.value,rescreen:rescreenDate.value,note:screeningNote.value,eth:[eth1.checked,eth2.checked,eth3.checked,eth4.checked,eth5.checked]};save()}
-function loadScreening(){const s=c().screening;screeningStatus.value=s.status;rescreenDate.value=s.rescreen||'';screeningNote.value=s.note||'';[eth1,eth2,eth3,eth4,eth5].forEach((e,i)=>e.checked=!!s.eth[i])}
-function saveMetrics(){c().metrics={opp:mOpp.value,assigned:mAssigned.value,done:mDone.value,latency:mLatency.value,recovery:mRecovery.value,practice:mPractice.value};save()}
-function loadMetrics(){const m=c().metrics;mOpp.value=m.opp||0;mAssigned.value=m.assigned||0;mDone.value=m.done||0;mLatency.value=m.latency||'';mRecovery.value=m.recovery||'';mPractice.value=m.practice||''}
-function bindFields(){document.querySelectorAll('[data-field]').forEach(el=>{el.value=c().fields[el.dataset.field]||'';el.oninput=()=>{c().fields[el.dataset.field]=el.value;localStorage.setItem('baderech_coach_os',JSON.stringify(DB))}})}
-function renderPlaybook(){
-  playbookList.innerHTML='';
-  PLAYBOOKS.forEach((p,i)=>{
-    const d=document.createElement('details');
-    d.className='playbook';
-    d.innerHTML=`
-      <summary>${i+1}. ${p.title}</summary>
-      <div style="padding-top:12px;line-height:1.65">
-        <h3 style="margin-bottom:6px">לשם מה נפגשים</h3>
-        <p class="note" style="font-size:14px;color:var(--ink)">${p.purpose}</p>
-
-        <h3 style="margin-bottom:6px">מה אני רוצה להבין</h3>
-        <ul>${p.understand.map(x=>`<li>${x}</li>`).join('')}</ul>
-
-        <h3 style="margin-bottom:6px">שאלות מנחות</h3>
-        <ul>${p.questions.map(x=>`<li>${x}</li>`).join('')}</ul>
-
-        <h3 style="margin-bottom:6px">מה אני מחפש בתשובות</h3>
-        <ul>${p.look.map(x=>`<li>${x}</li>`).join('')}</ul>
-
-        <h3 style="margin-bottom:6px">תרגילים אפשריים</h3>
-        <ul>${p.exercises.map(x=>`<li>${x}</li>`).join('')}</ul>
-
-        <h3 style="margin-bottom:6px">מה נחשב התקדמות</h3>
-        <ul>${p.progress.map(x=>`<li>${x}</li>`).join('')}</ul>
-
-        <h3 style="margin-bottom:6px">מתי לא להישאר בנושא</h3>
-        <p class="note" style="font-size:14px;color:var(--ink)">${p.leave}</p>
-
-        <h3 style="margin-bottom:6px">הצעד הבא</h3>
-        <p class="note" style="font-size:14px;color:var(--ink)">${p.next}</p>
-      </div>`;
-    playbookList.appendChild(d);
-  });
+function checkGate(){
+ const ok=g1.checked&&g2.checked&&g3.checked&&g4.checked;
+ gateResult.innerHTML=ok?'<div class="route-result"><b>השער עבר.</b><br>יש מספיק בסיס לשקול עליית רמה.</div>':'<div class="warning">עדיין אין מספיק בסיס. אל תעלה רמה רק מתוך תחושה.</div>';
 }
-function exportData(){const b=new Blob([JSON.stringify(DB,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(b);a.download='baderech-backup-'+new Date().toISOString().slice(0,10)+'.json';a.click()}
-function importData(e){const f=e.target.files[0];if(!f)return;if(!confirm('ייבוא יחליף את הנתונים המקומיים. להמשיך?'))return;exportData();const r=new FileReader();r.onload=()=>{try{const x=JSON.parse(r.result);if(!x.clients)throw 0;DB=x;save()}catch{alert('קובץ לא תקין')}};r.readAsText(f)}
-function refresh(){renderClients();renderTop();renderSkills();fillSkills();renderEvidence();loadScreening();loadMetrics();renderPredictions();bindFields();renderPlaybook();renderRouteSafety()}
-refresh();
+function renderמפתח דרכים(){
+ playbookList.innerHTML='';
+ PLAYBOOKS.forEach((p,i)=>{
+   const d=document.createElement('details');d.className='playbook';
+   d.innerHTML=`<summary>${i+1}. ${p.title}</summary><div class="body">
+   <h3>לשם מה</h3><p>${p.purpose}</p>
+   <h3>שאלות מנחות</h3><ul>${p.questions.map(x=>`<li>${x}</li>`).join('')}</ul>
+   <h3>מה לחפש</h3><ul>${p.look.map(x=>`<li>${x}</li>`).join('')}</ul>
+   <h3>תרגילים</h3><ul>${p.exercises.map(x=>`<li>${x}</li>`).join('')}</ul>
+   <h3>מה נחשב התקדמות</h3><p>${p.progress}</p></div>`;
+   playbookList.appendChild(d);
+ });
+}
+function renderAll(){
+ renderClients();fillSelect(bottleneck);fillSelect(evמיומנות);fillSelect(gateמיומנות);
+ bottleneck.value=c().bottleneck;renderTop();loadSafety();renderRouteSafety();renderPredictions();renderמפתח דרכים();
+}
+renderAll();
 </script>
 </body>
 </html>
