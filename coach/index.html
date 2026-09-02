@@ -240,7 +240,9 @@ document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
 });
 
 function fillSelect(el){
- el.innerHTML='';SKILLS.forEach(s=>el.add(new Option(s.name,s.id)));
+ if(!el) return;
+ el.innerHTML='';
+ SKILLS.forEach(s=>el.add(new Option(s.name,s.id)));
 }
 function renderClients(){
  clientSelect.innerHTML='';
@@ -332,23 +334,72 @@ function checkGate(){
  gateResult.innerHTML=ok?'<div class="route-result"><b>השער עבר.</b><br>יש מספיק בסיס לשקול עליית רמה.</div>':'<div class="warning">עדיין אין מספיק בסיס. אל תעלה רמה רק מתוך תחושה.</div>';
 }
 function renderPlaybook(){
- playbookList.innerHTML='';
+ const container=document.getElementById('playbookList');
+ if(!container) return;
+ container.innerHTML='';
  PLAYBOOKS.forEach((p,i)=>{
-   const d=document.createElement('details');d.className='playbook';
-   d.innerHTML=`<summary>${i+1}. ${p.title}</summary><div class="body">
-   <h3>לשם מה</h3><p>${p.purpose}</p>
-   <h3>שאלות מנחות</h3><ul>${p.questions.map(x=>`<li>${x}</li>`).join('')}</ul>
-   <h3>מה לחפש</h3><ul>${p.look.map(x=>`<li>${x}</li>`).join('')}</ul>
-   <h3>תרגילים</h3><ul>${p.exercises.map(x=>`<li>${x}</li>`).join('')}</ul>
-   <h3>מה נחשב התקדמות</h3><p>${p.progress}</p></div>`;
-   playbookList.appendChild(d);
+   const d=document.createElement('details');
+   d.className='playbook';
+
+   const summary=document.createElement('summary');
+   summary.textContent=(i+1)+'. '+p.title;
+   d.appendChild(summary);
+
+   const body=document.createElement('div');
+   body.className='body';
+
+   const sections=[
+     ['לשם מה', p.purpose, false],
+     ['שאלות מנחות', p.questions, true],
+     ['מה לחפש', p.look, true],
+     ['תרגילים', p.exercises, true],
+     ['מה נחשב התקדמות', p.progress, false]
+   ];
+
+   sections.forEach(([title,content,isList])=>{
+     const h=document.createElement('h3');
+     h.textContent=title;
+     body.appendChild(h);
+
+     if(isList){
+       const ul=document.createElement('ul');
+       (content||[]).forEach(item=>{
+         const li=document.createElement('li');
+         li.textContent=item;
+         ul.appendChild(li);
+       });
+       body.appendChild(ul);
+     } else {
+       const pEl=document.createElement('p');
+       pEl.textContent=content||'';
+       body.appendChild(pEl);
+     }
+   });
+
+   d.appendChild(body);
+   container.appendChild(d);
  });
 }
-function renderAll(){
- renderClients();fillSelect(bottleneck);fillSelect(evSkill);fillSelect(gateSkill);
- bottleneck.value=c().bottleneck;renderTop();loadSafety();renderRouteSafety();renderPredictions();renderPlaybook();
+function safeRun(fn){
+ try{ fn(); }catch(err){ console.error(err); }
 }
-renderAll();
+function renderAll(){
+ safeRun(renderPlaybook);
+ safeRun(renderClients);
+ safeRun(()=>fillSelect(document.getElementById('bottleneck')));
+ safeRun(()=>fillSelect(document.getElementById('evSkill')));
+ safeRun(()=>fillSelect(document.getElementById('gateSkill')));
+ safeRun(()=>{document.getElementById('bottleneck').value=c().bottleneck;});
+ safeRun(renderTop);
+ safeRun(loadSafety);
+ safeRun(renderRouteSafety);
+ safeRun(renderPredictions);
+}
+if(document.readyState==='loading'){
+ document.addEventListener('DOMContentLoaded',renderAll);
+}else{
+ renderAll();
+}
 </script>
 </body>
 </html>
