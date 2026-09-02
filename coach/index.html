@@ -31,7 +31,7 @@ details.guide[open] summary{border-bottom:1px solid var(--line)}.guide-body{padd
 .guide-body ul{padding-right:22px;line-height:1.75}.back{display:inline-block;margin-top:14px}
 .pred{border-top:1px solid var(--line);padding:12px 0}.pred:first-child{border-top:0}
 .compact{max-width:750px}.hidden{display:none!important}
-@media(max-width:760px){header{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}.switch{width:100%}.switch button{flex:1}}
+@media(max-width:760px){header{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}.switch{width:100%}.switch button{flex:1;white-space:nowrap}}
 </style>
 </head>
 <body>
@@ -41,86 +41,121 @@ details.guide[open] summary{border-bottom:1px solid var(--line)}.guide-body{padd
  <div class="switch">
    <button id="decisionTab" class="active" onclick="showMode('decision')">מה עושים עכשיו?</button>
    <button id="guideTab" onclick="showMode('guide')">מפתח דרכים</button>
+   <button type="button" onclick="window.location.href='/playbook'">הפלייבוק המלא</button>
  </div>
 </header>
 
+
 <section id="decisionPage" class="page active">
- <h1>מה עושים עכשיו?</h1>
- <p class="note">שלוש דקות לפני פגישה. האקסל מחזיק את הסיפור; כאן אתה בוחר את הכיוון.</p>
-
- <div class="grid" style="margin-top:14px">
-  <div class="card">
-   <div class="row" style="justify-content:space-between">
-    <h2>הלקוח והכיוון</h2>
-    <div class="row"><select id="clientSelect" style="width:auto;min-width:130px"></select><button class="btn secondary" onclick="newClient()">+ לקוח</button></div>
-   </div>
-
-   <span class="label">מה צוואר הבקבוק כרגע?</span>
-   <select id="bottleneck"></select>
-   <div id="exitHint" class="exit-line"></div>
-
-   <span class="label">יש לו מספיק הזדמנויות אמיתיות להתאמן?</span>
-   <select id="rOpp"><option value="">לא נענה</option><option value="yes">כן</option><option value="no">לא</option></select>
-
-   <span class="label">אם נעשה סימולציה כאן — הוא יודע מה לעשות?</span>
-   <select id="rRoom"><option value="">לא נענה</option><option value="yes">כן</option><option value="no">לא</option></select>
-
-   <span class="label">בעולם האמיתי — הוא באמת עושה את זה?</span>
-   <select id="rField"><option value="">לא נענה</option><option value="yes">כן</option><option value="no">לא</option></select>
-
-   <span class="label">כמה לחץ יש ברגע האמת? 0–10</span>
-   <input id="rArousal" type="number" min="0" max="10" placeholder="למשל 7">
-
-   <span class="label">יש דפוס שחוזר גם אחרי תרגול וחשיפה?</span>
-   <select id="rDepth"><option value="">לא נענה</option><option value="no">לא</option><option value="yes">כן</option></select>
-
-   <span class="label">הוא כבר יודע לבצע — אבל אולי בכלל לא רוצה את היעד?</span>
-   <select id="rWant"><option value="">לא נענה</option><option value="no">לא</option><option value="yes">כן</option></select>
-
-   <button class="btn" style="margin-top:14px" onclick="computeRoute()">תן לי כיוון</button>
-   <div id="routeResult"></div>
+ <div class="row" style="justify-content:space-between;align-items:flex-end">
+  <div>
+   <h1>מה עושים עכשיו?</h1>
+   <p class="note">45 שניות לפני פגישה. מתארים מה קרה בפועל ומקבלים כיוון.</p>
   </div>
-
-  <div class="card">
-   <h2>החלטה קצרה</h2>
-   <div id="safetyLine" class="safety"></div>
-   <button class="btn secondary" onclick="toggleSafety()">עדכון התאמה וגבולות</button>
-
-   <div id="safetyPanel" class="hidden" style="margin-top:10px">
-    <span class="label">בדיקת התאמה</span>
-    <select id="screening"><option value="Unknown">לא הוערך</option><option>Green</option><option>Yellow</option><option>Red</option></select>
-    <span class="label">גבולות בסיס — סמן רק מה שבאמת הוערך</span>
-    <label><input type="checkbox" id="eth1" style="width:auto"> מכבד “לא” בלי שכנוע</label><br><br>
-    <label><input type="checkbox" id="eth2" style="width:auto"> אין הטעיה לגבי כוונה</label><br><br>
-    <label><input type="checkbox" id="eth3" style="width:auto"> אין תוכן מיני לא מבוקש</label><br><br>
-    <label><input type="checkbox" id="eth4" style="width:auto"> אין לחץ במצב שקשה לעזוב</label><br><br>
-    <label><input type="checkbox" id="eth5" style="width:auto"> מסוגל לקחת אחריות ולתקן</label><br>
-    <button class="btn secondary" style="margin-top:10px" onclick="saveSafety()">שמור</button>
-   </div>
-
-   <span class="label">על מה אני נשען?</span>
-   <div class="tiny">לא תיעוד — רק בדיקה שההחלטה לא מגיעה מהבטן בלבד.</div>
-   <label><input type="checkbox" id="e1" style="width:auto"> ראיתי את זה בעצמי לפחות פעם אחת</label><br><br>
-   <label><input type="checkbox" id="e2" style="width:auto"> זה קרה יותר מפעם אחת</label><br><br>
-   <label><input type="checkbox" id="e3" style="width:auto"> זה קרה ביותר מסיטואציה אחת</label>
-
-   <span class="label">ההשערה שלי</span>
-   <textarea id="hypothesis" placeholder="מה אני חושב שעוצר אותו?"></textarea>
-
-   <span class="label">התחזית שלי</span>
-   <textarea id="prediction" placeholder="אם נעשה X, אני מצפה לראות Y..."></textarea>
-
-   <span class="label">מה עושים עכשיו?</span>
-   <textarea id="nextAction" placeholder="התרגול או החשיפה הבאים"></textarea>
-
-   <button class="btn" onclick="saveDecision()">שמור החלטה</button>
-   <span id="saveMsg" class="tiny"></span>
+  <div class="row">
+   <select id="clientSelect" style="width:auto;min-width:140px"></select>
+   <button class="btn secondary" onclick="newClient()">+ לקוח</button>
   </div>
  </div>
 
- <details class="card" style="margin-top:14px">
+ <div class="card compact" style="margin-top:14px">
+   <div class="row" style="justify-content:space-between">
+    <div>
+      <div class="tiny">צוואר בקבוק נוכחי</div>
+      <b id="currentBottleneckLabel" style="font-size:18px"></b>
+    </div>
+    <div id="topSafetyStatus" class="row"></div>
+   </div>
+
+   <div class="row" style="margin-top:12px">
+     <button class="btn secondary" onclick="continueCurrent()">ממשיכים עם זה</button>
+     <button class="btn secondary" onclick="toggleBottleneckChange()">שנה נושא</button>
+     <button class="btn secondary" onclick="toggleSafety()">עדכון התאמה וגבולות</button>
+   </div>
+
+   <div id="bottleneckChange" class="hidden" style="margin-top:10px">
+     <span class="label">בחר צוואר בקבוק אחר</span>
+     <select id="bottleneck"></select>
+     <div id="exitHint" class="exit-line"></div>
+   </div>
+
+   <div id="safetyPanel" class="hidden" style="margin-top:12px">
+     <span class="label">בדיקת התאמה</span>
+     <select id="screening"><option value="Unknown">לא הוערך</option><option>Green</option><option>Yellow</option><option>Red</option></select>
+     <span class="label">גבולות בסיס — סמן רק מה שבאמת הוערך</span>
+     <label><input type="checkbox" id="eth1" style="width:auto"> מכבד “לא” בלי שכנוע</label><br><br>
+     <label><input type="checkbox" id="eth2" style="width:auto"> אין הטעיה לגבי כוונה</label><br><br>
+     <label><input type="checkbox" id="eth3" style="width:auto"> אין תוכן מיני לא מבוקש</label><br><br>
+     <label><input type="checkbox" id="eth4" style="width:auto"> אין לחץ במצב שקשה לעזוב</label><br><br>
+     <label><input type="checkbox" id="eth5" style="width:auto"> מסוגל לקחת אחריות ולתקן</label><br>
+     <button class="btn secondary" style="margin-top:10px" onclick="saveSafety()">שמור</button>
+   </div>
+ </div>
+
+ <div id="eventQuestions" class="card compact hidden" style="margin-top:14px">
+   <h2>מה קרה בפועל?</h2>
+
+   <span class="label">כשהוא מנסה את זה מולך בחדר — הוא מצליח?</span>
+   <select id="rRoom"><option value="">לא נענה</option><option value="yes">כן</option><option value="no">לא</option></select>
+
+   <span class="label">בפעם האחרונה שהיה צריך לעשות את זה בעולם האמיתי — הוא עשה?</span>
+   <select id="rField" onchange="updateConditionalQuestions()"><option value="">לא נענה</option><option value="yes">כן</option><option value="no">לא</option></select>
+
+   <span class="label">כמה הוא לחוץ ברגע עצמו? 0–10</span>
+   <input id="rArousal" type="number" min="0" max="10" placeholder="למשל 7">
+
+   <span class="label">כמה הזדמנויות אמיתיות היו לו בשבוע האחרון?</span>
+   <input id="rOppCount" type="number" min="0" placeholder="למשל 3">
+
+   <div id="depthQuestion" class="hidden">
+     <span class="label">יש משהו שחוזר גם אחרי שתרגלנו ויצאנו לשטח?</span>
+     <select id="rDepth"><option value="">לא נענה</option><option value="no">לא</option><option value="yes">כן</option></select>
+   </div>
+
+   <div id="wantQuestion" class="hidden">
+     <span class="label">הוא כבר יודע לבצע — אבל אולי בכלל לא רוצה את היעד הזה?</span>
+     <select id="rWant"><option value="">לא נענה</option><option value="no">לא</option><option value="yes">כן</option></select>
+   </div>
+
+   <button class="btn" style="margin-top:14px" onclick="computeRoute()">תן לי כיוון</button>
+   <div id="routeResult"></div>
+   <div id="overridePanel" class="card hidden" style="margin-top:12px;background:#f7f3ec">
+     <h2>אני בוחר אחרת</h2>
+     <p class="note">אם ההמלצה לא מתאימה למה שאתה רואה, בחר כיוון אחר. הדריסה תישמר ביומן.</p>
+     <select id="overrideChoice">
+       <option value="">בחר כיוון</option>
+       <option>עוד תרגול בחדר</option>
+       <option>לצאת לשטח</option>
+       <option>להוריד את רמת הקושי</option>
+       <option>צריך לייצר יותר הזדמנויות</option>
+       <option>שווה להעמיק</option>
+       <option>אפשר להתקדם</option>
+       <option>לבדוק מחדש את המטרה</option>
+     </select>
+     <div class="row" style="margin-top:10px">
+       <button class="btn" id="confirmOverrideBtn" type="button">בחר את הכיוון הזה</button>
+       <button class="btn secondary" id="cancelOverrideBtn" type="button">ביטול</button>
+     </div>
+   </div>
+ </div>
+
+ <div id="decisionNotes" class="card compact hidden" style="margin-top:14px">
+   <h2>סוגרים את ההחלטה</h2>
+   <span class="label">מה אני חושב שקורה?</span>
+   <textarea id="hypothesis" placeholder="משפט אחד"></textarea>
+   <span class="label">מה אני מצפה לראות עד הפעם הבאה?</span>
+   <textarea id="prediction" placeholder="משפט אחד"></textarea>
+   <span class="label">מה נעשה עכשיו?</span>
+   <textarea id="nextAction" placeholder="התרגול או החשיפה"></textarea>
+   <button class="btn" onclick="saveDecision()">שמור החלטה</button>
+   <span id="saveMsg" class="tiny"></span>
+ </div>
+
+ <details class="card compact" style="margin-top:14px">
    <summary style="cursor:pointer;font-weight:700">יומן תחזיות</summary>
-   <div class="row" style="justify-content:space-between;margin-top:12px"><span class="note">דיוק חוצה לקוחות</span><b id="accuracy">—</b></div>
+   <div class="row" style="justify-content:space-between;margin-top:12px">
+     <span class="note">דיוק חוצה לקוחות</span><b id="accuracy">—</b>
+   </div>
    <div id="predList"></div>
  </details>
 </section>
@@ -140,9 +175,11 @@ const SKILLS=[{"id": "presence", "name": "נוכחות / ויסות", "guide": "
 let DB=JSON.parse(localStorage.getItem('baderech_unified')||'null')||{clients:{},active:null,predictions:[]};
 
 const uid=()=>Math.random().toString(36).slice(2,10);
+
 function ensureClient(){
  if(DB.active&&DB.clients[DB.active])return;
- const id=uid();DB.clients[id]={id,name:'עידן',bottleneck:'initiative',screening:'Unknown',eth:[false,false,false,false,false]};
+ const id=uid();
+ DB.clients[id]={id,name:'עידן',bottleneck:'initiative',screening:'Unknown',eth:[false,false,false,false,false]};
  DB.active=id;persist();
 }
 function persist(){localStorage.setItem('baderech_unified',JSON.stringify(DB));}
@@ -150,97 +187,244 @@ function c(){return DB.clients[DB.active]}
 ensureClient();
 
 function showMode(mode){
- decisionPage.classList.toggle('active',mode==='decision');guidePage.classList.toggle('active',mode==='guide');
- decisionTab.classList.toggle('active',mode==='decision');guideTab.classList.toggle('active',mode==='guide');
+ decisionPage.classList.toggle('active',mode==='decision');
+ guidePage.classList.toggle('active',mode==='guide');
+ decisionTab.classList.toggle('active',mode==='decision');
+ guideTab.classList.toggle('active',mode==='guide');
  location.hash=mode==='guide'?'playbook':'';
 }
+
 function renderClients(){
  clientSelect.innerHTML='';
- Object.values(DB.clients).forEach(x=>{let o=new Option(x.name,x.id);o.selected=x.id===DB.active;clientSelect.add(o)});
+ Object.values(DB.clients).forEach(x=>{
+  let o=new Option(x.name,x.id);o.selected=x.id===DB.active;clientSelect.add(o);
+ });
  clientSelect.onchange=e=>{DB.active=e.target.value;persist();renderAll();};
 }
 function newClient(){
  const name=prompt('שם הלקוח');if(!name)return;
- const id=uid();DB.clients[id]={id,name,bottleneck:'initiative',screening:'Unknown',eth:[false,false,false,false,false]};
+ const id=uid();
+ DB.clients[id]={id,name,bottleneck:'initiative',screening:'Unknown',eth:[false,false,false,false,false]};
  DB.active=id;persist();renderAll();
 }
+
 function fillSkills(){
  bottleneck.innerHTML='';
  SKILLS.forEach(s=>bottleneck.add(new Option(s.name,s.id)));
  bottleneck.value=c().bottleneck;
- bottleneck.onchange=()=>{c().bottleneck=bottleneck.value;persist();renderExitHint();};
+ bottleneck.onchange=()=>{
+  c().bottleneck=bottleneck.value;persist();renderCurrentBottleneck();renderExitHint();
+ };
 }
 function guideForSkill(skillId){
- const s=SKILLS.find(x=>x.id===skillId);return s?GUIDES.find(g=>g.id===s.guide):null;
+ const s=SKILLS.find(x=>x.id===skillId);
+ return s?GUIDES.find(g=>g.id===s.guide):null;
+}
+function renderCurrentBottleneck(){
+ const s=SKILLS.find(x=>x.id===c().bottleneck);
+ currentBottleneckLabel.textContent=s?s.name:'—';
 }
 function renderExitHint(){
- const g=guideForSkill(bottleneck.value);
- exitHint.innerHTML=g?'<b>מתי לא להישאר כאן:</b> '+g.leave:'';
+ const g=guideForSkill(c().bottleneck);
+ if(exitHint) exitHint.innerHTML=g?'<b>מתי לא להישאר כאן:</b> '+g.leave:'';
+}
+function continueCurrent(){
+ eventQuestions.classList.remove('hidden');
+ bottleneckChange.classList.add('hidden');
+}
+function toggleBottleneckChange(){
+ bottleneckChange.classList.toggle('hidden');
+ eventQuestions.classList.remove('hidden');
 }
 function ethicsState(){
- const a=c().eth||[];if(a.every(Boolean))return 'תקין';if(a.every(v=>!v))return 'לא הוערך';return 'חלקי';
+ const a=c().eth||[];
+ if(a.every(Boolean))return 'תקין';
+ if(a.every(v=>!v))return 'לא הוערך';
+ return 'חלקי';
 }
 function renderSafety(){
  const st=c().screening||'Unknown',es=ethicsState();
- safetyLine.innerHTML='<span class="badge">התאמה: '+(st==='Unknown'?'לא הוערך':st)+'</span><span class="badge">גבולות: '+es+'</span>';
- screening.value=st;[eth1,eth2,eth3,eth4,eth5].forEach((x,i)=>x.checked=!!(c().eth||[])[i]);
+ topSafetyStatus.innerHTML='<span class="badge">התאמה: '+(st==='Unknown'?'לא הוערך':st)+'</span><span class="badge">גבולות: '+es+'</span>';
+ screening.value=st;
+ [eth1,eth2,eth3,eth4,eth5].forEach((x,i)=>x.checked=!!(c().eth||[])[i]);
 }
 function toggleSafety(){safetyPanel.classList.toggle('hidden');}
 function saveSafety(){
- c().screening=screening.value;c().eth=[eth1.checked,eth2.checked,eth3.checked,eth4.checked,eth5.checked];persist();renderSafety();safetyPanel.classList.add('hidden');
+ c().screening=screening.value;
+ c().eth=[eth1.checked,eth2.checked,eth3.checked,eth4.checked,eth5.checked];
+ persist();renderSafety();safetyPanel.classList.add('hidden');
 }
-function complete(){return rOpp.value&&rRoom.value&&rField.value&&rDepth.value&&rWant.value&&rArousal.value!=='';}
+
+function updateConditionalQuestions(){
+ const room=rRoom.value,field=rField.value;
+ const show=room==='yes'&&field==='yes';
+ depthQuestion.classList.toggle('hidden',!show);
+ wantQuestion.classList.toggle('hidden',!show);
+}
+rRoom.addEventListener('change',updateConditionalQuestions);
+
+function routeReady(){
+ if(!rRoom.value||!rField.value||rArousal.value===''||rOppCount.value==='') return false;
+ if(rRoom.value==='yes'&&rField.value==='yes'){
+  if(!rDepth.value||!rWant.value) return false;
+ }
+ return true;
+}
+
 function computeRoute(){
- if(!complete()){routeResult.innerHTML='<div class="exit-line">ענה על כל השאלות כדי לקבל כיוון.</div>';return null;}
- const st=c().screening,eth=ethicsState(),ar=+rArousal.value;let route='',why='';
- if(st==='Unknown'||eth!=='תקין'){route='עצירה — השלמת בדיקת מסגרת';why='לפני תרגול או חשיפה צריך להשלים את בדיקת ההתאמה והגבולות.';}
- else if(st==='Red'){route='עצירה — מחוץ למסגרת';why='כרגע לא נכון להמשיך כרגיל במסגרת של בדרך.';}
- else if(st==='Yellow'){route='מסלול בעצימות נמוכה';why='עובדים בעדינות יותר, עם חשיפות קלות ובדיקה מחודשת.';}
- else if(rWant.value==='yes'){route='בדיקה מחדש של המטרה';why='הוא כבר יודע לבצע; עכשיו בודקים אם זו בכלל עדיין המטרה שלו.';}
- else if(rOpp.value==='no'){route='הגדלת הזדמנויות + חשיפה אמיתית';why='צריך לייצר יותר מצבים אמיתיים להתנסות.';}
- else if(rRoom.value==='no'){route='לימוד + תרגול';why='קודם בונים את היכולת בחדר לפני שמצפים שתופיע בשטח.';}
- else if(rField.value==='no'&&ar>=7){route='ויסות + חשיפה קלה יותר';why='הוא יודע מה לעשות, אבל ברגע האמת הלחץ גבוה מדי.';}
- else if(rField.value==='no'){route='יציאה לשטח / חשיפה';why='הוא יודע לבצע כאן, אבל עדיין לא עושה את זה בעולם.';}
- else if(rDepth.value==='yes'){route='העמקה';why='יש דפוס שחוזר למרות תרגול ופעולה, ולכן שווה להבין אותו יותר.';}
- else{route='כיול / העלאת קושי / מעבר לעצמאות';why='היכולת כבר קיימת; עכשיו בודקים דיוק, מורכבות או פחות תלות בך.';}
- const g=guideForSkill(bottleneck.value);
- routeResult.innerHTML='<div class="route-result"><b>'+route+'</b><p>'+why+'</p><button class="btn" id="openGuideBtn">פתח '+(g?g.title:'את מפתח הדרכים')+'</button></div>';
- document.getElementById('openGuideBtn').onclick=()=>openGuideForSkill(bottleneck.value);
+ if(!routeReady()){
+  routeResult.innerHTML='<div class="exit-line">חסרה תשובה אחת או יותר.</div>';
+  return null;
+ }
+ const st=c().screening,eth=ethicsState(),ar=+rArousal.value,opp=+rOppCount.value;
+ let route='',why='';
+
+ if(st==='Unknown'||eth!=='תקין'){
+  route='עצירה — השלמת בדיקת מסגרת';
+  why='לפני תרגול או חשיפה צריך להשלים את בדיקת ההתאמה והגבולות.';
+ } else if(st==='Red'){
+  route='עצירה — מחוץ למסגרת';
+  why='כרגע לא נכון להמשיך כרגיל במסגרת של בדרך.';
+ } else if(st==='Yellow'){
+  route='מסלול בעצימות נמוכה';
+  why='עובדים בזהירות רבה יותר ובודקים שוב בהמשך.';
+ } else if(opp===0){
+  route='צריך לייצר יותר הזדמנויות';
+  why='אין כרגע מספיק מצבים אמיתיים כדי לדעת אם הבעיה היא יכולת או פשוט חוסר הזדמנות.';
+ } else if(rRoom.value==='no'){
+  route='עוד תרגול בחדר';
+  why='אם הוא עוד לא מצליח מולך, השטח לא יפתור את זה.';
+ } else if(rField.value==='no'&&ar>=7){
+  route='להוריד את רמת הקושי';
+  why='היכולת קיימת, אבל ברגע האמת הלחץ גבוה מדי.';
+ } else if(rField.value==='no'){
+  route='לצאת לשטח';
+  why='הוא יודע לבצע מולך, אבל עדיין לא עושה את זה בעולם האמיתי.';
+ } else if(rWant.value==='yes'){
+  route='לבדוק מחדש את המטרה';
+  why='הוא כבר יודע לבצע; עכשיו צריך לבדוק אם זו בכלל עדיין המטרה שלו.';
+ } else if(rDepth.value==='yes'){
+  route='שווה להעמיק';
+  why='יש משהו שחוזר גם אחרי תרגול ופעולה, ולכן עוד מאותו דבר כנראה לא יספיק.';
+ } else {
+  route='אפשר להתקדם';
+  why='הוא מצליח מולך, מבצע בעולם, ורמת הלחץ לא חוסמת אותו.';
+ }
+
+ const g=guideForSkill(c().bottleneck);
+ let gate='';
+ if(route==='אפשר להתקדם'){
+  gate='<div class="exit-line"><b>לפני מעבר:</b> 3 הדגמות, 2 הקשרים, לפחות אחת נצפתה.</div>';
+ }
+ routeResult.innerHTML='<div class="route-result"><b>'+route+'</b><p>'+why+'</p>'+gate+
+ '<div class="row" style="margin-top:10px">'+
+ '<button class="btn" id="openGuideBtn">פתח '+(g?g.title:'את מפתח הדרכים')+'</button>'+
+ '<button class="btn secondary" id="overrideBtn">אני בוחר אחרת</button></div></div>';
+
+ openGuideBtn.onclick=()=>openGuideForSkill(c().bottleneck);
+ overrideBtn.onclick=()=>overrideRoute(route);
+ decisionNotes.classList.remove('hidden');
+ nextAction.value=route;
  return route;
 }
+
+function overrideRoute(originalRoute){
+ overridePanel.classList.remove('hidden');
+ overrideChoice.value='';
+ overridePanel.dataset.originalRoute=originalRoute;
+ overridePanel.scrollIntoView({behavior:'smooth',block:'nearest'});
+}
+function confirmOverride(){
+ const chosen=overrideChoice.value;
+ if(!chosen) return;
+ nextAction.value=chosen;
+ nextAction.dataset.override='true';
+ nextAction.dataset.originalRoute=overridePanel.dataset.originalRoute||'';
+ overridePanel.classList.add('hidden');
+ decisionNotes.classList.remove('hidden');
+}
+function cancelOverride(){
+ overridePanel.classList.add('hidden');
+}
+
+function saveDecision(){
+ const route=computeRoute();if(!route)return;
+ if(!hypothesis.value.trim()||!prediction.value.trim()||!nextAction.value.trim()){
+  saveMsg.textContent='חסרים השערה, תחזית או צעד הבא';
+  return;
+ }
+ c().bottleneck=bottleneck.value||c().bottleneck;
+ DB.predictions.push({
+  id:uid(),date:new Date().toISOString(),clientId:c().id,clientName:c().name,
+  bottleneck:c().bottleneck,route,
+  chosenAction:nextAction.value.trim(),
+  overridden:nextAction.dataset.override==='true',
+  originalRoute:nextAction.dataset.originalRoute||route,
+  hypothesis:hypothesis.value.trim(),
+  prediction:prediction.value.trim(),
+  outcome:null
+ });
+ persist();
+ hypothesis.value='';prediction.value='';nextAction.value='';
+ delete nextAction.dataset.override;delete nextAction.dataset.originalRoute;
+ saveMsg.textContent='נשמר';renderPredictions();
+}
+
+function setOutcome(id,outcome){
+ const p=DB.predictions.find(x=>x.id===id);
+ if(p){p.outcome=outcome;persist();renderPredictions();}
+}
+function renderPredictions(){
+ predList.innerHTML='';
+ const closed=DB.predictions.filter(p=>p.outcome),hits=closed.filter(p=>p.outcome==='hit').length;
+ accuracy.textContent=closed.length?Math.round(hits/closed.length*100)+'% ('+hits+'/'+closed.length+')':'—';
+ [...DB.predictions].reverse().forEach(p=>{
+  const s=SKILLS.find(x=>x.id===p.bottleneck),d=document.createElement('div');
+  d.className='pred';
+  d.innerHTML='<div class="tiny">'+new Date(p.date).toLocaleDateString('he-IL')+' · '+p.clientName+' · '+(s?s.name:'')+
+  (p.overridden?' · דריסה':'')+' · '+(p.outcome==='hit'?'פגע':p.outcome==='miss'?'החטיא':'פתוח')+'</div>'+
+  '<b>'+p.route+'</b>'+
+  (p.overridden?'<div><b>בחרתי במקום:</b> '+(p.chosenAction||'')+'</div>':'')+
+  '<div><b>השערה:</b> '+p.hypothesis+'</div><div><b>תחזית:</b> '+p.prediction+'</div>'+
+  '<div class="row" style="margin-top:8px"><button class="btn secondary hit">פגע</button><button class="btn secondary miss">החטיא</button></div>';
+  d.querySelector('.hit').onclick=()=>setOutcome(p.id,'hit');
+  d.querySelector('.miss').onclick=()=>setOutcome(p.id,'miss');
+  predList.appendChild(d);
+ });
+}
+
 function openGuideForSkill(skillId){
  const g=guideForSkill(skillId);showMode('guide');renderGuides();
  if(!g)return;
- const el=document.getElementById('guide-'+g.id);if(el){el.open=true;setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),50);}
-}
-function saveDecision(){
- const route=computeRoute();if(!route)return;
- if(!hypothesis.value.trim()||!prediction.value.trim()||!nextAction.value.trim()){saveMsg.textContent='חסרים השערה, תחזית או צעד הבא';return;}
- c().bottleneck=bottleneck.value;
- DB.predictions.push({id:uid(),date:new Date().toISOString(),clientId:c().id,clientName:c().name,bottleneck:bottleneck.value,route,
- evidence:{observed:e1.checked,repeated:e2.checked,multi:e3.checked},
- hypothesis:hypothesis.value.trim(),prediction:prediction.value.trim(),nextAction:nextAction.value.trim(),outcome:null});
- persist();hypothesis.value='';prediction.value='';nextAction.value='';e1.checked=e2.checked=e3.checked=false;saveMsg.textContent='נשמר';renderPredictions();
-}
-function setOutcome(id,outcome){const p=DB.predictions.find(x=>x.id===id);if(p){p.outcome=outcome;persist();renderPredictions();}}
-function renderPredictions(){
- predList.innerHTML='';const closed=DB.predictions.filter(p=>p.outcome),hits=closed.filter(p=>p.outcome==='hit').length;
- accuracy.textContent=closed.length?Math.round(hits/closed.length*100)+'% ('+hits+'/'+closed.length+')':'—';
- [...DB.predictions].reverse().forEach(p=>{
-  const s=SKILLS.find(x=>x.id===p.bottleneck),d=document.createElement('div');d.className='pred';
-  d.innerHTML='<div class="tiny">'+new Date(p.date).toLocaleDateString('he-IL')+' · '+p.clientName+' · '+(s?s.name:'')+' · '+(p.outcome==='hit'?'פגע':p.outcome==='miss'?'החטיא':'פתוח')+'</div><b>'+p.route+'</b><div><b>השערה:</b> '+p.hypothesis+'</div><div><b>תחזית:</b> '+p.prediction+'</div><div><b>צעד:</b> '+p.nextAction+'</div><div class="row" style="margin-top:8px"><button class="btn secondary hit">פגע</button><button class="btn secondary miss">החטיא</button></div>';
-  d.querySelector('.hit').onclick=()=>setOutcome(p.id,'hit');d.querySelector('.miss').onclick=()=>setOutcome(p.id,'miss');predList.appendChild(d);
- });
+ const el=document.getElementById('guide-'+g.id);
+ if(el){el.open=true;setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),50);}
 }
 function renderGuides(){
  guideList.innerHTML='';
  GUIDES.forEach(g=>{
   const d=document.createElement('details');d.className='guide';d.id='guide-'+g.id;
-  d.innerHTML='<summary>'+g.title+'</summary><div class="guide-body"><h3>לשם מה</h3><p>'+g.purpose+'</p><h3>שאלות מנחות</h3><ul>'+g.questions.map(x=>'<li>'+x+'</li>').join('')+'</ul><h3>מה לחפש</h3><ul>'+g.look.map(x=>'<li>'+x+'</li>').join('')+'</ul><h3>תרגילים</h3><ul>'+g.exercises.map(x=>'<li>'+x+'</li>').join('')+'</ul><h3>מה נחשב התקדמות</h3><p>'+g.progress+'</p><h3>מתי לא להישאר בנושא</h3><p>'+g.leave+'</p><button class="btn secondary back">חזרה להחלטה</button></div>';
-  d.querySelector('.back').onclick=()=>showMode('decision');guideList.appendChild(d);
+  d.innerHTML='<summary>'+g.title+'</summary><div class="guide-body"><h3>לשם מה</h3><p>'+g.purpose+'</p>'+
+  '<h3>שאלות מנחות</h3><ul>'+g.questions.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
+  '<h3>מה לחפש</h3><ul>'+g.look.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
+  '<h3>תרגילים</h3><ul>'+g.exercises.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
+  '<h3>מה נחשב התקדמות</h3><p>'+g.progress+'</p>'+
+  '<h3>מתי לא להישאר בנושא</h3><p>'+g.leave+'</p>'+
+  '<button class="btn secondary back">חזרה להחלטה</button></div>';
+  d.querySelector('.back').onclick=()=>showMode('decision');
+  guideList.appendChild(d);
  });
 }
-function renderAll(){renderClients();fillSkills();renderExitHint();renderSafety();renderPredictions();renderGuides();}
+
+
+function bindStaticActions(){
+ const confirm=document.getElementById('confirmOverrideBtn');
+ const cancel=document.getElementById('cancelOverrideBtn');
+ if(confirm) confirm.onclick=confirmOverride;
+ if(cancel) cancel.onclick=cancelOverride;
+}
+function renderAll(){
+ renderClients();fillSkills();renderCurrentBottleneck();renderExitHint();renderSafety();renderPredictions();renderGuides();bindStaticActions();
+}
 renderAll();
 if(location.hash==='#playbook')showMode('guide');
 </script>
