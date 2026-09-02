@@ -3,429 +3,456 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>בדרך — מאמן</title>
+<title>בדרך — Coach OS v3</title>
 <style>
-:root{--bg:#f4f1ea;--panel:#fffdf8;--ink:#1d1d1b;--muted:#77736b;--line:#ddd6ca;--green:#214d3b;--soft:#ece7de;--yellow:#a77b26;--red:#9c463d}
-*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font-family:Arial,sans-serif}
-.wrap{max-width:1050px;margin:auto;padding:22px 18px 60px}
-header{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:18px}
-.brand{font-size:27px;font-weight:800}.brand small{font-size:12px;color:var(--muted);font-weight:400;display:block;margin-top:3px}
-.switch{display:flex;background:#e7e1d7;border-radius:12px;padding:4px;gap:4px}
-.switch button{border:0;background:transparent;padding:9px 14px;border-radius:9px;cursor:pointer;font-weight:700}
-.switch button.active{background:white;box-shadow:0 2px 10px #0000000d}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:15px;padding:16px}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}.page{display:none}.page.active{display:block}
-h1{margin:5px 0 4px;font-size:28px}h2{font-size:18px;margin:0 0 12px}h3{font-size:15px;margin:18px 0 6px}
-.note,.tiny{color:var(--muted);font-size:12px;line-height:1.55}.label{display:block;color:var(--muted);font-size:12px;font-weight:700;margin:12px 0 6px}
-select,input,textarea{font:inherit;width:100%;padding:10px;border:1px solid var(--line);border-radius:9px;background:#fff}
-textarea{min-height:78px;resize:vertical;line-height:1.45}
-.btn{border:0;border-radius:9px;background:var(--green);color:#fff;font-weight:700;padding:10px 13px;cursor:pointer}
-.btn.secondary{background:var(--soft);color:var(--ink)}.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-.safety{display:flex;gap:8px;align-items:center;margin:10px 0 14px;font-size:12px}.badge{padding:6px 9px;border-radius:999px;background:var(--soft)}
-.route-result{margin-top:14px;background:#173c2e;color:#fff;border-radius:13px;padding:16px}.route-result p{margin:6px 0 12px;line-height:1.5}
-.route-result .btn{background:#fff;color:#173c2e}
-.exit-line{margin-top:10px;padding:10px;background:#f2ede4;border-radius:9px;font-size:12px;line-height:1.45}
-details.guide{background:#fff;border:1px solid var(--line);border-radius:12px;margin:9px 0;overflow:hidden}
-details.guide summary{cursor:pointer;padding:15px;font-weight:700}
-details.guide[open] summary{border-bottom:1px solid var(--line)}.guide-body{padding:0 16px 16px;line-height:1.65}
-.guide-body ul{padding-right:22px;line-height:1.75}.back{display:inline-block;margin-top:14px}
-.pred{border-top:1px solid var(--line);padding:12px 0}.pred:first-child{border-top:0}
-.compact{max-width:750px}.hidden{display:none!important}
-@media(max-width:760px){header{align-items:flex-start;flex-direction:column}.grid{grid-template-columns:1fr}.switch{width:100%}.switch button{flex:1;white-space:nowrap}}
+:root{
+  --bg:#f4f1ea;--panel:#fffdf8;--ink:#1d1d1b;--muted:#77736b;--line:#ddd6ca;
+  --green:#214d3b;--green2:#dfe9e3;--yellow:#9d7a37;--red:#9f4940;--soft:#ede8df;
+}
+*{box-sizing:border-box} body{margin:0;font-family:Arial,"Helvetica Neue",sans-serif;background:var(--bg);color:var(--ink)}
+.app{display:grid;grid-template-columns:250px 1fr;min-height:100vh}
+aside{background:#eae5dc;border-left:1px solid var(--line);padding:24px 18px;position:sticky;top:0;height:100vh}
+.brand{font-weight:800;font-size:28px}.sub{font-size:12px;color:var(--muted);margin:4px 0 22px}
+.client-switch{display:grid;gap:8px;margin-bottom:18px}
+select,input,textarea,button{font:inherit} select,input,textarea{
+  width:100%;padding:10px 11px;border:1px solid var(--line);border-radius:10px;background:#fff;color:var(--ink)
+}
+textarea{min-height:90px;resize:vertical;line-height:1.55}
+nav button{width:100%;border:0;background:transparent;text-align:right;padding:11px;border-radius:10px;cursor:pointer;margin:2px 0}
+nav button.active{background:var(--panel);font-weight:700;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+main{padding:28px 34px 60px;max-width:1250px;width:100%;margin:auto}
+.topbar{display:grid;grid-template-columns:1.3fr repeat(3,.6fr);gap:12px;margin-bottom:20px}
+.topcard,.card{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:16px;box-shadow:0 8px 24px rgba(0,0,0,.04)}
+.topcard small,.muted{color:var(--muted);font-size:12px}.topcard b{display:block;margin-top:5px;font-size:16px}
+.flag{display:inline-flex;align-items:center;gap:7px}.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.dot.green{background:var(--green)}.dot.yellow{background:var(--yellow)}.dot.red{background:var(--red)}
+.page{display:none}.page.active{display:block} h1{margin:0 0 18px;font-size:30px} h2{margin:0 0 14px;font-size:18px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.skills{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.skill{background:#fff;border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer}
+.skill:hover{border-color:#b9b0a0}.skill-title{font-weight:700}.level{display:inline-block;margin-top:7px;padding:5px 8px;border-radius:999px;background:var(--soft);font-size:12px}
+.level.good{background:var(--green2);color:var(--green)}
+.evidence-count{font-size:12px;color:var(--muted);margin-top:6px}
+.btn{border:0;background:var(--green);color:white;padding:10px 14px;border-radius:10px;cursor:pointer;font-weight:700}
+.btn.secondary{background:var(--soft);color:var(--ink)} .btn.danger{background:var(--red)}
+.row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}.label{display:block;font-size:12px;color:var(--muted);font-weight:700;margin:12px 0 6px}
+.router-q{border-top:1px solid var(--line);padding:14px 0}.router-q:first-child{border-top:0}
+.route-result{background:#173c2e;color:white;padding:18px;border-radius:14px;margin-top:14px;line-height:1.55}
+.route-result small{color:#cad8d1}
+.ev{border:1px solid var(--line);border-radius:12px;padding:12px;margin:9px 0;background:#fff}.ev .meta{font-size:11px;color:var(--muted);margin-bottom:5px}
+.warning{padding:12px;border-radius:10px;background:#fff3da;border:1px solid #ead3a0;font-size:13px}
+.redbox{padding:12px;border-radius:10px;background:#f8e5e3;border:1px solid #e6b9b4;font-size:13px}
+.playbook-item{border:1px solid var(--line);border-radius:12px;padding:14px;margin:9px 0;background:#fff}.playbook-item summary{cursor:pointer;font-weight:700}
+.kpi{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.metric{background:#fff;border:1px solid var(--line);border-radius:12px;padding:12px}
+.note{font-size:13px;color:var(--muted);line-height:1.6}.tiny{font-size:11px;color:var(--muted)} .pill{display:inline-block;padding:6px 9px;border-radius:999px;background:var(--soft);font-size:12px}
+@media(max-width:900px){.app{grid-template-columns:1fr}aside{position:relative;height:auto;border-left:0;border-bottom:1px solid var(--line)}nav{display:flex;overflow:auto}nav button{min-width:max-content}.topbar,.grid,.skills,.kpi{grid-template-columns:1fr}main{padding:20px 14px}}
 </style>
 </head>
 <body>
-<div class="wrap">
-<header>
- <div class="brand">בדרך.<small>מאמן — החלטה וחומר עבודה במקום אחד</small></div>
- <div class="switch">
-   <button id="decisionTab" class="active" onclick="showMode('decision')">מה עושים עכשיו?</button>
-   <button id="guideTab" onclick="showMode('guide')">מפתח דרכים</button>
-   <button type="button" onclick="window.location.href='/playbook'">הפלייבוק המלא</button>
- </div>
-</header>
+<div class="app">
+<aside>
+  <div class="brand">בדרך.</div>
+  <div class="sub">Coach OS v3 — Bottleneck first</div>
 
-
-<section id="decisionPage" class="page active">
- <div class="row" style="justify-content:space-between;align-items:flex-end">
-  <div>
-   <h1>מה עושים עכשיו?</h1>
-   <p class="note">45 שניות לפני פגישה. מתארים מה קרה בפועל ומקבלים כיוון.</p>
-  </div>
-  <div class="row">
-   <select id="clientSelect" style="width:auto;min-width:140px"></select>
-   <button class="btn secondary" onclick="newClient()">+ לקוח</button>
-  </div>
- </div>
-
- <div class="card compact" style="margin-top:14px">
-   <div class="row" style="justify-content:space-between">
-    <div>
-      <div class="tiny">צוואר בקבוק נוכחי</div>
-      <b id="currentBottleneckLabel" style="font-size:18px"></b>
+  <div class="client-switch">
+    <label class="tiny">לקוח פעיל</label>
+    <select id="clientSelect"></select>
+    <div class="row">
+      <button class="btn secondary" onclick="newClient()">+ לקוח</button>
+      <button class="btn secondary" onclick="exportData()">ייצוא</button>
+      <label class="btn secondary" style="cursor:pointer">ייבוא<input id="importFile" type="file" accept=".json" hidden onchange="importData(event)"></label>
     </div>
-    <div id="topSafetyStatus" class="row"></div>
-   </div>
+  </div>
 
-   <div class="row" style="margin-top:12px">
-     <button class="btn secondary" onclick="continueCurrent()">ממשיכים עם זה</button>
-     <button class="btn secondary" onclick="toggleBottleneckChange()">שנה נושא</button>
-     <button class="btn secondary" onclick="toggleSafety()">עדכון התאמה וגבולות</button>
-   </div>
+  <nav>
+    <button class="active" data-page="home">מפת מיומנויות</button>
+    <button data-page="route">מה עושים עכשיו?</button>
+    <button data-page="evidence">Evidence</button>
+    <button data-page="review">מבט לאחור</button>
+    <button data-page="screening">Screening & Ethics</button>
+    <button data-page="metrics">מדדים</button>
+    <button data-page="playbook">עיון ב־Playbook</button>
+  </nav>
+</aside>
 
-   <div id="bottleneckChange" class="hidden" style="margin-top:10px">
-     <span class="label">בחר צוואר בקבוק אחר</span>
-     <select id="bottleneck"></select>
-     <div id="exitHint" class="exit-line"></div>
-   </div>
+<main>
+  <div class="topbar">
+    <div class="topcard"><small>צוואר בקבוק נוכחי</small><b id="topBottleneck">—</b></div>
+    <div class="topcard"><small>Screening</small><b id="topScreening" class="flag"></b></div>
+    <div class="topcard"><small>הזדמנויות / 7 ימים</small><b id="topOpp">0</b></div>
+    <div class="topcard"><small>ביצוע משימות</small><b id="topCompletion">—</b></div>
+  </div>
 
-   <div id="safetyPanel" class="hidden" style="margin-top:12px">
-     <span class="label">בדיקת התאמה</span>
-     <select id="screening"><option value="Unknown">לא הוערך</option><option>Green</option><option>Yellow</option><option>Red</option></select>
-     <span class="label">גבולות בסיס — סמן רק מה שבאמת הוערך</span>
-     <label><input type="checkbox" id="eth1" style="width:auto"> מכבד “לא” בלי שכנוע</label><br><br>
-     <label><input type="checkbox" id="eth2" style="width:auto"> אין הטעיה לגבי כוונה</label><br><br>
-     <label><input type="checkbox" id="eth3" style="width:auto"> אין תוכן מיני לא מבוקש</label><br><br>
-     <label><input type="checkbox" id="eth4" style="width:auto"> אין לחץ במצב שקשה לעזוב</label><br><br>
-     <label><input type="checkbox" id="eth5" style="width:auto"> מסוגל לקחת אחריות ולתקן</label><br>
-     <button class="btn secondary" style="margin-top:10px" onclick="saveSafety()">שמור</button>
-   </div>
- </div>
+  <section id="home" class="page active">
+    <h1>מפת מיומנויות</h1>
+    <div class="warning">הרמות כאן נגזרות מרשומות Evidence, לא נבחרות ידנית. לחץ על מיומנות כדי לראות ראיות ולהוסיף חדשות.</div>
+    <div id="skills" class="skills" style="margin-top:14px"></div>
+  </section>
 
- <div id="eventQuestions" class="card compact hidden" style="margin-top:14px">
-   <h2>מה קרה בפועל?</h2>
+  <section id="route" class="page">
+    <h1>מה עושים עכשיו?</h1>
+    <div class="grid">
+      <div class="card">
+        <h2>Routing — 5 שאלות</h2>
+        <div class="router-q"><b>1. Safety source of truth</b><div class="note" id="routeSafetySummary"></div></div>
+        <div class="router-q"><b>2. האם יש מספיק הזדמנויות?</b><select id="rOpp"><option value="">לא נענה</option><option value="yes">כן</option><option value="no">לא</option></select></div>
+        <div class="router-q"><b>3. האם הלקוח מצליח להדגים בחדר?</b><select id="rRoom"><option value="">לא נענה</option><option value="yes">כן</option><option value="no">לא</option></select></div>
+        <div class="router-q"><b>4. האם הוא מבצע בעולם האמיתי?</b><select id="rField"><option value="">לא נענה</option><option value="yes">כן</option><option value="no">לא</option></select></div>
+        <div class="router-q"><b>5. עוררות בזמן פעולה</b><input id="rArousal" type="number" min="0" max="10" placeholder="0–10"></div>
+        <div class="router-q"><b>Depth trigger פעיל?</b><select id="rDepth"><option value="">לא נענה</option><option value="no">לא</option><option value="yes">כן</option></select></div>
+        <button class="btn" onclick="computeRoute()">הפק Route</button>
+        <div id="routeResult"></div>
+      </div>
 
-   <span class="label">כשהוא מנסה את זה מולך בחדר — הוא מצליח?</span>
-   <select id="rRoom"><option value="">לא נענה</option><option value="yes">כן</option><option value="no">לא</option></select>
+      <div class="card">
+        <h2>החלטת עבודה</h2>
+        <span class="label">Current Bottleneck</span>
+        <select id="bottleneckSelect"></select>
+        <span class="label">ההשערה שלי</span>
+        <textarea id="hypothesis" placeholder="מה אני חושב שעוצר אותו כרגע?"></textarea>
+        <span class="label">מה אני מצפה שיקרה</span>
+        <textarea id="prediction" placeholder="אם נעשה X, אני מצפה לראות Y בתוך..."></textarea>
+        <span class="label">Practice</span>
+        <textarea id="practicePlan" placeholder="לפחות 3 ניסיונות, וריאציה מהניסיון השני..."></textarea>
+        <span class="label">Exposure הבא</span>
+        <textarea id="exposurePlan" placeholder="חשיפה אינטראקטיבית אמיתית — גם אם E1"></textarea>
+        <div class="row"><button class="btn" onclick="saveRouteDecision()">שמור החלטה</button><span class="tiny" id="routeValidationMsg"></span></div>
+      </div>
+    </div>
+  </section>
 
-   <span class="label">בפעם האחרונה שהיה צריך לעשות את זה בעולם האמיתי — הוא עשה?</span>
-   <select id="rField" onchange="updateConditionalQuestions()"><option value="">לא נענה</option><option value="yes">כן</option><option value="no">לא</option></select>
+  <section id="evidence" class="page">
+    <h1>Evidence</h1>
+    <div class="grid">
+      <div class="card">
+        <h2>הוסף ראיה</h2>
+        <span class="label">Skill</span><select id="evSkill"></select>
+        <span class="label">הקשר</span><input id="evContext" placeholder="למשל: בר / דייט / אפליקציה / שיחה בעבודה">
+        <span class="label">מקור</span><select id="evObserved"><option value="true">נצפה / הוקלט</option><option value="false">דיווח עצמי</option></select>
+        <span class="label">מה קרה</span><textarea id="evNote" placeholder="הקשר והתנהגות בלבד — בלי שמות או פרטים מזהים."></textarea>
+        <span class="label">רמת ביצוע באירוע</span><select id="evPerformance"><option value="0">נמנע</option><option value="1">עם תמיכה</option><option value="2">מבצע לבד</option><option value="3">מכייל</option><option value="4">עצמאי</option></select>
+        <span class="label">Arousal 0–10</span><input id="evArousal" type="number" min="0" max="10" value="5">
+        <button class="btn" onclick="addEvidence()">שמור Evidence</button>
+      </div>
+      <div class="card">
+        <h2>היסטוריה</h2>
+        <div id="evidenceList"></div>
+      </div>
+    </div>
+  </section>
 
-   <span class="label">כמה הוא לחוץ ברגע עצמו? 0–10</span>
-   <input id="rArousal" type="number" min="0" max="10" placeholder="למשל 7">
+  <section id="review" class="page">
+    <h1>מבט לאחור — עם הלקוח</h1>
+    <div class="grid">
+      <div class="card">
+        <span class="label">מה אתה מרגיש שעבדנו עליו עד עכשיו?</span><textarea data-client-field="review1"></textarea>
+        <span class="label">מה באמת השתנה אצלך?</span><textarea data-client-field="review2"></textarea>
+        <span class="label">איפה אתה מרגיש שלא זזנו מספיק?</span><textarea data-client-field="review3"></textarea>
+        <span class="label">על מה דיברנו הרבה אבל עשינו מעט?</span><textarea data-client-field="review4"></textarea>
+        <span class="label">אם היית צריך להמשיך לבד מחר — איפה היית הכי פחות בטוח?</span><textarea data-client-field="review5"></textarea>
+      </div>
+      <div class="card">
+        <span class="label">הפער בין מה שאני חשבתי למה שהוא חווה</span><textarea data-client-field="coachGap"></textarea>
+        <span class="label">מה לא צריך לפתוח כרגע</span><textarea data-client-field="dontOpen"></textarea>
+      </div>
+    </div>
+  </section>
 
-   <span class="label">כמה הזדמנויות אמיתיות היו לו בשבוע האחרון?</span>
-   <input id="rOppCount" type="number" min="0" placeholder="למשל 3">
+  <section id="screening" class="page">
+    <h1>Screening & Ethics</h1>
+    <div class="grid">
+      <div class="card">
+        <h2>Screening</h2>
+        <span class="label">מצב</span>
+        <select id="screeningStatus"><option>Green</option><option>Yellow</option><option>Red</option></select>
+        <span class="label">תאריך Re-screen</span><input id="rescreenDate" type="date">
+        <span class="label">מה נצפה</span><textarea id="screeningNote" placeholder="תיאור התנהגותי בלבד. לא אבחנה."></textarea>
+        <div class="warning">Yellow = עבודה מוגבלת וזהירה. Red = גבול מסגרת; לא ממשיכים כאילו זה רק coaching.</div>
+      </div>
+      <div class="card">
+        <h2>Ethical Floor</h2>
+        <label><input type="checkbox" id="eth1"> מכבד “לא” בלי שכנוע</label><br><br>
+        <label><input type="checkbox" id="eth2"> אין הטעיה לגבי כוונה</label><br><br>
+        <label><input type="checkbox" id="eth3"> אין תוכן מיני לא מבוקש</label><br><br>
+        <label><input type="checkbox" id="eth4"> אין לחץ במצב שבו קשה לצד השני לעזוב</label><br><br>
+        <label><input type="checkbox" id="eth5"> מסוגל לקחת אחריות ולתקן</label>
+        <div class="redbox" style="margin-top:16px">אם יש הפרה מהותית של הרצפה האתית — המנוע נעצר לפני Practice/Exposure.</div>
+        <button class="btn" style="margin-top:14px" onclick="saveScreening()">שמור</button>
+      </div>
+    </div>
+  </section>
 
-   <div id="depthQuestion" class="hidden">
-     <span class="label">יש משהו שחוזר גם אחרי שתרגלנו ויצאנו לשטח?</span>
-     <select id="rDepth"><option value="">לא נענה</option><option value="no">לא</option><option value="yes">כן</option></select>
-   </div>
+  <section id="metrics" class="page">
+    <h1>מדדים</h1>
+    <div class="kpi">
+      <div class="metric"><div class="tiny">הזדמנויות ריאליות / שבוע</div><input id="mOpp" type="number" min="0"></div>
+      <div class="metric"><div class="tiny">משימות שנקבעו</div><input id="mAssigned" type="number" min="0"></div>
+      <div class="metric"><div class="tiny">משימות שבוצעו</div><input id="mDone" type="number" min="0"></div>
+      <div class="metric"><div class="tiny">זמן השהיה עד יוזמה (שניות)</div><input id="mLatency" type="number" min="0"></div>
+      <div class="metric"><div class="tiny">זמן Recovery אחרי דחייה (שעות)</div><input id="mRecovery" type="number" min="0"></div>
+      <div class="metric"><div class="tiny">דקות Practice בפגישה האחרונה</div><input id="mPractice" type="number" min="0"></div>
+    </div>
+    <div class="row" style="margin-top:14px"><button class="btn" onclick="saveMetrics()">שמור מדדים</button></div>
 
-   <div id="wantQuestion" class="hidden">
-     <span class="label">הוא כבר יודע לבצע — אבל אולי בכלל לא רוצה את היעד הזה?</span>
-     <select id="rWant"><option value="">לא נענה</option><option value="no">לא</option><option value="yes">כן</option></select>
-   </div>
+    <div class="card" style="margin-top:18px">
+      <div class="row" style="justify-content:space-between">
+        <h2>Prediction Log</h2>
+        <div class="pill" id="predictionAccuracy">Accuracy: —</div>
+      </div>
+      <div id="predictionLog"></div>
+    </div>
+  </section>
 
-   <button class="btn" style="margin-top:14px" onclick="computeRoute()">תן לי כיוון</button>
-   <div id="routeResult"></div>
-   <div id="overridePanel" class="card hidden" style="margin-top:12px;background:#f7f3ec">
-     <h2>אני בוחר אחרת</h2>
-     <p class="note">אם ההמלצה לא מתאימה למה שאתה רואה, בחר כיוון אחר. הדריסה תישמר ביומן.</p>
-     <select id="overrideChoice">
-       <option value="">בחר כיוון</option>
-       <option>עוד תרגול בחדר</option>
-       <option>לצאת לשטח</option>
-       <option>להוריד את רמת הקושי</option>
-       <option>צריך לייצר יותר הזדמנויות</option>
-       <option>שווה להעמיק</option>
-       <option>אפשר להתקדם</option>
-       <option>לבדוק מחדש את המטרה</option>
-     </select>
-     <div class="row" style="margin-top:10px">
-       <button class="btn" id="confirmOverrideBtn" type="button">בחר את הכיוון הזה</button>
-       <button class="btn secondary" id="cancelOverrideBtn" type="button">ביטול</button>
-     </div>
-   </div>
- </div>
-
- <div id="decisionNotes" class="card compact hidden" style="margin-top:14px">
-   <h2>סוגרים את ההחלטה</h2>
-   <span class="label">מה אני חושב שקורה?</span>
-   <textarea id="hypothesis" placeholder="משפט אחד"></textarea>
-   <span class="label">מה אני מצפה לראות עד הפעם הבאה?</span>
-   <textarea id="prediction" placeholder="משפט אחד"></textarea>
-   <span class="label">מה נעשה עכשיו?</span>
-   <textarea id="nextAction" placeholder="התרגול או החשיפה"></textarea>
-   <button class="btn" onclick="saveDecision()">שמור החלטה</button>
-   <span id="saveMsg" class="tiny"></span>
- </div>
-
- <details class="card compact" style="margin-top:14px">
-   <summary style="cursor:pointer;font-weight:700">יומן תחזיות</summary>
-   <div class="row" style="justify-content:space-between;margin-top:12px">
-     <span class="note">דיוק חוצה לקוחות</span><b id="accuracy">—</b>
-   </div>
-   <div id="predList"></div>
- </details>
-</section>
-
-<section id="guidePage" class="page">
- <div class="row" style="justify-content:space-between;align-items:flex-start">
-  <div><h1>מפתח דרכים</h1><p class="note">נכנסים לכאן כדי להתכונן או אחרי שהכיוון נקבע.</p></div>
-  <button class="btn secondary" onclick="showMode('decision')">חזרה להחלטה</button>
- </div>
- <div id="guideList" style="margin-top:14px"></div>
-</section>
+  <section id="playbook" class="page">
+    <h1>עיון ב־Playbook</h1>
+    <p class="note">זה ספר העיון שלך, לא המסילה של התהליך. נכנסים לכאן כשצריך שאלות, תרגילים או חומר בנושא.</p>
+    <div id="playbookList"></div>
+  </section>
+</main>
 </div>
 
 <script>
-const GUIDES=[{"id": "mapping", "title": "מיפוי ונקודת פתיחה", "purpose": "לבנות תמונת מצב מספיק טובה כדי לבחור איפה להתחיל להזיז. לא להבין את האדם עד הסוף — אלא לזהות מה כרגע מגביל פעולה.", "questions": ["אם בעוד שלושה חודשים התהליך עובד — מה שונה?", "מה הדבר שהכי מתסכל אותך כרגע?", "איפה אתה יודע מה לעשות אבל לא עושה?", "מתי בפעם האחרונה רצית לפעול ונמנעת?", "מה אמרת לעצמך רגע לפני?", "איפה בחיים אתה דווקא כן בטוח בעצמך?", "עד כמה תגובה של אישה משנה איך אתה מרגיש לגבי עצמך?", "מה לדעתך הדבר המרכזי שעוצר אותך כרגע?"], "look": ["הימנעות שמתחפשת להיגיון", "פער בין ידיעה לביצוע", "נשים כמדד לערך", "פער בין תיאור עצמי לבין מה שנראה בחדר"], "exercises": ["תרגיל המראה", "מפת חוזקות", "ראיתי → חשבתי → הרגשתי → עשיתי", "מיקרו־פעולה"], "progress": "יש 1–3 צווארי בקבוק אפשריים, חוזקה אחת ברורה ופעולה ראשונה שאפשר לבדוק בעולם.", "leave": "לא נשארים במיפוי רק כדי להבין עוד. ברגע שיש השערה שאפשר לבדוק — עוברים לפעולה."}, {"id": "presence", "title": "נראות ונוכחות", "purpose": "לבדוק אם האופן שבו האדם מופיע מבחוץ תומך בזהות שהוא רוצה להביא, או מסתיר אותה.", "questions": ["מה אתה רואה ראשון כשאתה מסתכל במראה?", "מה אתה אוהב בנראות שלך ומה פחות?", "אתה לובש מה שאתה אוהב או מה שלא מושך תשומת לב?", "מה היית רוצה שאדם ירגיש כשהוא פוגש אותך?", "מה הגוף שלך עושה כשאתה נכנס למקום לא מוכר?", "מה קורה לקשר העין שלך כשמישהי מוצאת חן בעיניך?", "הטלפון משמש אותך כמקום לברוח אליו?", "מתי אתה מרגיש הכי נוכח?"], "look": ["פחד מלהיות נראה", "סטייל כברירת מחדל", "התכווצות במרחב", "קצב דיבור גבוה", "תלות באישור חיצוני"], "exercises": ["כניסה מחדש לחדר", "שתי נוכחויות", "קשר עין שקט", "בחירת לוק שמרגיש 'אני'"], "progress": "יש שינוי פרקטי אחד בנראות ותרגול אחד של נוכחות בעולם.", "leave": "אם הנראות כבר לא מגבילה פעולה, לא ממשיכים לשפץ אותה במקום לעבוד על המיומנות שבאמת תקועה."}, {"id": "initiative", "title": "יוזמה וחשיפה", "purpose": "להפוך רצון לפעולה. לזהות מה קורה בין הרגע שבו הלקוח רוצה לעשות משהו לבין הרגע שבו הוא נמנע, ולבנות חזרות בעולם בקושי שמתאים לו.", "questions": ["מה קורה בשניות שלפני שאתה מחליט לא לגשת?", "מה אתה מחכה להרגיש לפני שאתה פועל?", "מה אתה חושב שאתה חייב לדעת לפני שאתה מתחיל?", "כמה הזדמנויות אמיתיות היו לך השבוע?", "מה רמת הקושי של יוזמה קטנה לעומת יוזמה שמרגישה משמעותית?", "מה נחשב בעיניך 'הצלחה' ביוזמה?", "האם אתה מסוגל לפעול גם כשהלחץ עדיין שם?", "מה החשיפה הכי קטנה שעדיין נחשבת פעולה אמיתית?"], "look": ["המתנה לביטחון לפני פעולה", "מטרה גדולה מדי לכל אינטראקציה", "מעט מדי הזדמנויות אמיתיות", "חשיבה ארוכה שמגדילה לחץ", "הימנעות שמתחפשת ל'לא היה הרגע הנכון'"], "exercises": ["סימולציה של 5 השניות הראשונות", "כלל צעד קטן: פתיחה בלי יעד המשך", "3 חזרות עם וריאציה", "בניית סולם חשיפה מקל לקשה", "תרגול התאוששות מיוזמה שלא התפתחה"], "progress": "זמן ההשהיה מתקצר, מספר היוזמות עולה והלקוח מסוגל לפעול גם בלי להרגיש מוכן לגמרי.", "leave": "אם הוא כבר יוזם באופן עקבי אבל השיחות לא מתפתחות, עוברים לשיחה/פלירטוט/כיול ולא ממשיכים למדוד רק כמות יוזמות."}, {"id": "conversation", "title": "שיחה והבאת עצמי", "purpose": "לעבור משיחה כראיון או ביצוע לשיחה שבה הוא מגיב, משתף, מביע דעה ובודק אם הוא עצמו נהנה.", "questions": ["על מה אתה חושב בזמן שיחה?", "אתה מקשיב או מכין את הדבר הבא?", "מה קורה לך בשתיקה?", "אתה מרגיש אחראי להיות מעניין?", "כמה אתה שואל לעומת משתף?", "עד כמה קל לך לא להסכים?", "מה אתה רוצה שהיא תחשוב עליך?", "עם חברים טובים — מה יוצא ממך שלא יוצא בדייט?", "אתה בודק אם אתה בכלל נהנה?"], "look": ["ראיון במקום מפגש", "ניסיון להרשים", "ריצוי", "חוסר סבילות לשתיקה", "עיסוק עצמי גבוה"], "exercises": ["3 דקות בלי שאלות", "אי־הסכמה קטנה", "אותו סיפור בשתי גרסאות", "סיום יזום של שיחה שלא מעניינת אותו"], "progress": "פחות חיפוש 'מה להגיד', יותר תגובה, דעה וביטוי עצמי.", "leave": "כששיחה בסיסית זורמת מספיק כדי לאפשר כוונה, לא נשארים בליטוש שיחה במקום לעבור להבעת עניין."}, {"id": "interest", "title": "פלירטוט והבעת עניין", "purpose": "לעזור לאדם להיות ברור יותר לגבי רצון ומשיכה בלי להתנצל ובלי להפעיל לחץ.", "questions": ["מה יקרה אם יהיה ברור שאתה מעוניין?", "מה מביך אותך בלהראות משיכה?", "מה יותר מפחיד — לא, או שהיא תדע שאתה רוצה?", "איך אתה מראה עניין היום?", "כמה ודאות אתה צריך לפני צעד קטן?", "מה אתה עושה אם היא לא מחזירה אנרגיה?", "מה הצעד הכי קטן שהיה הופך את הכוונה שלך לברורה יותר?"], "look": ["בושה סביב רצון", "רצון מוסתר", "ניטרליות מוגזמת", "חיפוש ודאות מלאה", "טכניקה במקום נוכחות"], "exercises": ["קשר עין + שתיקה", "מחמאה ספציפית", "ניטרלי / אישי / פלרטטני", "מיקרו־סיכון"], "progress": "הוא מסוגל להביע עניין קטן, לקרוא תגובה ולשאת מבוכה בלי להיסגר.", "leave": "אם הוא מביע עניין אבל לא יודע לקרוא מה חוזר אליו, עוברים לכיול ולא מוסיפים עוד עוצמה."}, {"id": "calibration", "title": "Perspective, כיול והובלה", "purpose": "לקרוא הדדיות, להבין מה חוזר מהצד השני, ולהציע צעד הבא בלי לחכות לוודאות מוחלטת.", "questions": ["מה מבחינתך אומר שמישהי בעניין?", "מה נחשב השקעה מצידה?", "איך אתה מבדיל בין נימוס לעניין?", "מה אתה עושה בסימנים מעורבים?", "מה אתה רוצה שיקרה עכשיו?", "אם אתה רוצה לראות אותה שוב — מה עוצר אותך מלבקש מספר?", "מה אתה עושה עם 'נראה / אולי'?", "אתה רוצה אותה או רוצה שהיא תרצה אותך?", "מתי לאחרונה אתה בחרת לא להמשיך?"], "look": ["סימן יחיד במקום דפוס", "צורך בוודאות מלאה", "רדיפה אחרי עמימות", "שכחת הבחירה שלו", "חוסר תיקון אחרי קריאה לא נכונה"], "exercises": ["לולאת כיול: פעולה → תגובה → התאמה", "בקשת מספר", "תגובה לעמימות", "תיקון אחרי קריאה לא נכונה", "תרגול בחירה לא להמשיך"], "progress": "הוא מזהה השקעה, מציע צעד הבא, משחרר כשאין תנועה ויודע לתקן.", "leave": "אם הכיול טוב אבל אין ביצוע בעולם, חוזרים לחשיפה; אם הביצוע והכיול טובים, מעלים מורכבות או מפחיתים תלות."}, {"id": "intimacy", "title": "דייט ואינטימיות", "purpose": "לבנות דייט שיש בו נוכחות, משיכה ובהירות, בלי להפוך קרבה או סקס ליעד שצריך להשיג.", "questions": ["איך נראה דייט טיפוסי שלך?", "מתי אתה מביע משיכה?", "מה קורה לך בקרבה פיזית?", "מה אתה חושב שאתה 'אמור' לעשות?", "איך אתה יודע שהצד השני נוח?", "מה נשיקה או סקס אומרים על ההצלחה של הדייט?", "מה קורה אם הדייט טוב ולא מתקדם?", "עד כמה קל לך להגיד מה אתה רוצה?", "מה קורה כשיש לא או חוסר ודאות?"], "look": ["דייט כראיון", "אינטימיות כמדד לערך", "לחץ להתקדם", "פחד מכל יוזמה", "חוסר קריאת גבול"], "exercises": ["סימולציית דייט", "'יש עוד צעד?'", "בהירות מילולית", "תיקון אחרי רגע מביך"], "progress": "הוא מביע רצון, קורא הדדיות, יודע לעצור ולא מודד הצלחה רק לפי תוצאה פיזית.", "leave": "אם עולה חומר שחורג מהיכולת שלך כמאמן או מצוקה משמעותית, לא ממשיכים להעמיק במסגרת של בדרך."}, {"id": "rejection", "title": "דחייה והתאוששות", "purpose": "להפוך דחייה ממידע שמגדיר את האדם למידע שאפשר לעבד, ללמוד ממנו ולחזור ממנו לפעולה.", "questions": ["מה הדבר הראשון שסיפרת לעצמך אחרי הדחייה?", "מה אתה יודע ומה אתה רק מנחש?", "מה הדחייה אומרת עליך בעיניך?", "מה היית אומר לחבר?", "האם יש פה דפוס או אירוע בודד?", "כמה זמן לוקח לך לחזור לעצמך?", "מה אתה עושה מיד אחרי?", "אתה מחפש הסבר או מתקשה לשאת אי־ודאות?", "מה הדבר הבריא הבא שאתה יכול לעשות?"], "look": ["'אני לא מספיק'", "חיפוש אשמה", "ריצה לאישור חדש", "היעלמות", "כעס", "עיבוד אינסופי"], "exercises": ["עובדה / פרשנות / זהות", "סיכום מוגבל בזמן", "מדידת זמן התאוששות", "'אני לא יודע למה'"], "progress": "הדחייה עדיין מבאסת, אבל פחות מוחקת; ההתאוששות מתקצרת והוא חוזר לפעולה בלי הוכחה או נקמה.", "leave": "אם דחייה גורמת לקריסה משמעותית או ירידה בתפקוד, עושים בדיקת התאמה מחודשת ולא פשוט מעלים חשיפה."}, {"id": "relationship", "title": "קשר, עצמאות ואינטגרציה", "purpose": "לבדוק מה באמת נהיה שלו — גם אם כבר נכנס לקשר — והאם הוא מסוגל לבחור, לתקשר צרכים ולהחזיק את הלולאה בלי המאמן.", "questions": ["מה אתה עושה היום שלא עשית בהתחלה?", "מה נהיה טבעי יותר?", "איפה אתה עדיין תלוי באישור?", "איך אתה מביע צורך או גבול בקשר?", "כשאתה נמנע — אתה מזהה את זה?", "איזה צוואר בקבוק היית מזהה לעצמך עכשיו?", "איזה צעד היית בונה לעצמך?", "אם לא הייתי פה מחר — איפה עדיין היית צריך עזרה?"], "look": ["תלות במשימות מהמאמן", "קושי להביע צרכים", "הצלחה חיצונית בלי עצמאות פנימית", "המשך רק כי 'עוד לא סיימנו את הנושאים'"], "exercises": ["הלקוח מאמן את עצמו", "בניית צעד עצמאי", "שיחה קשה בסימולציה", "בדיקה קרה של מיומנות מרכזית", "תוכנית 30 יום"], "progress": "הוא מזהה צוואר בקבוק, בונה פעולה, עושה סיכום לעצמו ויודע מתי לפעול, להעמיק או לשחרר.", "leave": "התהליך מסתיים כשהלקוח מסוגל להחזיק את הלולאה בעצמו — לא כשעברנו על כל הפרקים."}];
-const SKILLS=[{"id": "presence", "name": "נוכחות / ויסות", "guide": "presence"}, {"id": "appearance", "name": "נראות / סטייל", "guide": "presence"}, {"id": "initiative", "name": "יוזמה", "guide": "initiative"}, {"id": "conversation", "name": "שיחה / ביטוי עצמי", "guide": "conversation"}, {"id": "perspective", "name": "Perspective / כיול", "guide": "calibration"}, {"id": "interest", "name": "הבעת עניין", "guide": "interest"}, {"id": "leadership", "name": "הובלה", "guide": "calibration"}, {"id": "rejection", "name": "דחייה / התאוששות", "guide": "rejection"}, {"id": "texting", "name": "טקסטינג / יצירת הזדמנויות", "guide": "initiative"}, {"id": "intimacy", "name": "אינטימיות", "guide": "intimacy"}, {"id": "repair", "name": "תיקון אחרי טעות", "guide": "calibration"}, {"id": "relationship", "name": "מיומנויות קשר", "guide": "relationship"}];
-let DB=JSON.parse(localStorage.getItem('baderech_unified')||'null')||{clients:{},active:null,predictions:[]};
+const SKILLS=[
+ {id:"presence",name:"נוכחות / ויסות"},
+ {id:"appearance",name:"נראות / סטייל"},
+ {id:"initiative",name:"יוזמה"},
+ {id:"conversation",name:"שיחה / ביטוי עצמי"},
+ {id:"perspective",name:"Perspective"},
+ {id:"interest",name:"הבעת עניין"},
+ {id:"leadership",name:"הובלה"},
+ {id:"rejection",name:"דחייה / Recovery"},
+ {id:"texting",name:"טקסטינג"},
+ {id:"intimacy",name:"אינטימיות"},
+ {id:"repair",name:"Repair"},
+ {id:"relationship",name:"מיומנויות קשר"}
+];
+const LEVELS=["נמנע","עם תמיכה","מבצע לבד","מכייל","עצמאי"];
 
-const uid=()=>Math.random().toString(36).slice(2,10);
+const PLAYBOOKS=[
+ {t:"מיפוי ונקודת פתיחה",q:["מה היית רוצה שייראה אחרת בעוד שלושה חודשים?","איפה אתה יודע מה לעשות אבל לא עושה?","מה קורה בראש אחרי דחייה?","איך אתה מרגיש לגבי איך שאתה מופיע בעולם?"],ex:["תרגיל המראה","מפת חוזקות","פירוק הימנעות","מיקרו־פעולה"]},
+ {t:"נראות ונוכחות",q:["מה אתה אוהב בנראות שלך?","מה הגוף עושה כשאתה נכנס למקום?","מה קורה לקשר העין כשמישהי מוצאת חן בעיניך?"],ex:["כניסה לחדר","שתי נוכחויות","קשר עין","סטייל כמראה לזהות"]},
+ {t:"שיחה והבאת עצמי",q:["על מה אתה חושב בזמן שיחה?","מה קורה בשתיקה?","אתה באמת מקשיב?","האם אתה בכלל נהנה?"],ex:["3 דקות בלי שאלות","אי־הסכמה","אותו סיפור בשתי גרסאות"]},
+ {t:"פלירטוט והבעת עניין",q:["מה יקרה אם יהיה ברור שאתה מעוניין?","מה מביך אותך בלהראות משיכה?","כמה ודאות אתה מחפש?"],ex:["קשר עין ושתיקה","מחמאה","מיקרו־סיכון"]},
+ {t:"Perspective והובלה",q:["מה נחשב השקעה?","איך אתה יודע שהיא רק מנומסת?","מה אתה רוצה שיקרה עכשיו?","האם אתה בכלל רוצה אותה?"],ex:["Calibration Loop","בקשת מספר","תגובה לעמימות","Repair"]},
+ {t:"אפליקציות וטקסטינג",q:["מה עובר לך בראש לפני שאתה שולח הודעה?","אתה כותב כמו שאתה באמת מדבר?","איך אתה יודע שהיא משקיעה בשיחה?","מתי נכון להציע להיפגש?","אתה גם בודק אם אתה נהנה לדבר איתה?"],ex:["5 הודעות אמיתיות","Message Lens: מקור → אני → משחק → תגובה → כוונה","אותה הודעה בשלוש גרסאות","סימולציה עד הצעת דייט","לזהות מתי נכון לא לשלוח עוד הודעה"]},
+ {t:"דייט / אינטימיות",q:["איך נראה דייט טיפוסי?","מה קורה בקרבה פיזית?","מה סקס אומר על הערך שלך?"],ex:["דייט סימולטיבי","יש עוד צעד?","בהירות מילולית"]},
+ {t:"דחייה והתאוששות",q:["מה הדבר הראשון שסיפרת לעצמך?","מה אתה יודע ומה אתה מנחש?","כמה זמן לוקח לחזור לעצמך?"],ex:["עובדה/פרשנות/זהות","Debrief מוגבל בזמן"]},
+ {t:"אינטגרציה ועצמאות",q:["מה אתה עושה היום שלא עשית לפני?","מה נהיה טבעי?","אם לא הייתי פה מחר, מה היית יודע לעשות לבד?"],ex:["הלקוח מאמן את עצמו","תוכנית 30 יום"]}
+];
 
-function ensureClient(){
- if(DB.active&&DB.clients[DB.active])return;
- const id=uid();
- DB.clients[id]={id,name:'עידן',bottleneck:'initiative',screening:'Unknown',eth:[false,false,false,false,false]};
- DB.active=id;persist();
+function baseData(){
+ return {clients:{},activeClient:null};
 }
-function persist(){localStorage.setItem('baderech_unified',JSON.stringify(DB));}
-function c(){return DB.clients[DB.active]}
+let DB=JSON.parse(localStorage.getItem("baderech_v3")||"null")||baseData();
+
+function saveDB(){ localStorage.setItem("baderech_v3",JSON.stringify(DB)); refresh(); }
+function uid(){return Math.random().toString(36).slice(2,10)}
+function client(){
+ if(!DB.activeClient) return null;
+ return DB.clients[DB.activeClient];
+}
+function ensureClient(){
+ if(DB.activeClient && DB.clients[DB.activeClient]) return;
+ const id=uid();
+ DB.clients[id]={id,name:"עידן",bottleneck:"initiative",screening:{status:"Green",note:"",rescreen:"",eth:[true,true,true,true,true]},metrics:{opp:0,assigned:0,done:0,latency:"",recovery:"",practice:""},evidence:[],routeDecisions:[],fields:{}};
+ DB.activeClient=id; localStorage.setItem("baderech_v3",JSON.stringify(DB));
+}
 ensureClient();
 
-function showMode(mode){
- decisionPage.classList.toggle('active',mode==='decision');
- guidePage.classList.toggle('active',mode==='guide');
- decisionTab.classList.toggle('active',mode==='decision');
- guideTab.classList.toggle('active',mode==='guide');
- location.hash=mode==='guide'?'playbook':'';
+document.querySelectorAll('nav button').forEach(b=>b.onclick=()=>{
+ document.querySelectorAll('nav button').forEach(x=>x.classList.remove('active'));
+ document.querySelectorAll('.page').forEach(x=>x.classList.remove('active'));
+ b.classList.add('active');document.getElementById(b.dataset.page).classList.add('active');
+});
+
+function levelFor(skillId){
+ const c=client(); if(!c) return 0;
+ const ev=c.evidence.filter(e=>e.skill===skillId);
+ if(!ev.length) return 0;
+ const contexts=new Set(ev.map(e=>e.context.trim()).filter(Boolean));
+ const observed=ev.filter(e=>e.observed).length;
+ const perf=ev.map(e=>+e.performance);
+ // conservative evidence-derived rule
+ for(let lvl=4;lvl>=1;lvl--){
+   const at=ev.filter(e=>+e.performance>=lvl);
+   const ctx=new Set(at.map(e=>e.context.trim()).filter(Boolean));
+   const obs=at.filter(e=>e.observed).length;
+   if(at.length>=3 && ctx.size>=2 && obs>=1) return lvl;
+ }
+ return Math.min(1,Math.max(...perf));
 }
 
 function renderClients(){
- clientSelect.innerHTML='';
- Object.values(DB.clients).forEach(x=>{
-  let o=new Option(x.name,x.id);o.selected=x.id===DB.active;clientSelect.add(o);
+ const s=document.getElementById("clientSelect");s.innerHTML="";
+ Object.values(DB.clients).forEach(c=>{
+  const o=document.createElement("option");o.value=c.id;o.textContent=c.name;o.selected=c.id===DB.activeClient;s.appendChild(o);
  });
- clientSelect.onchange=e=>{DB.active=e.target.value;persist();renderAll();};
+ s.onchange=e=>{DB.activeClient=e.target.value;saveDB()};
 }
 function newClient(){
- const name=prompt('שם הלקוח');if(!name)return;
- const id=uid();
- DB.clients[id]={id,name,bottleneck:'initiative',screening:'Unknown',eth:[false,false,false,false,false]};
- DB.active=id;persist();renderAll();
+ const name=prompt("שם הלקוח"); if(!name)return;
+ const id=uid();DB.clients[id]={id,name,bottleneck:"presence",screening:{status:"Green",note:"",rescreen:"",eth:[true,true,true,true,true]},metrics:{opp:0,assigned:0,done:0,latency:"",recovery:"",practice:""},evidence:[],routeDecisions:[],fields:{}};
+ DB.activeClient=id;saveDB();
 }
-
-function fillSkills(){
- bottleneck.innerHTML='';
- SKILLS.forEach(s=>bottleneck.add(new Option(s.name,s.id)));
- bottleneck.value=c().bottleneck;
- bottleneck.onchange=()=>{
-  c().bottleneck=bottleneck.value;persist();renderCurrentBottleneck();renderExitHint();
- };
+function renderTop(){
+ const c=client(); if(!c)return;
+ const skill=SKILLS.find(s=>s.id===c.bottleneck);document.getElementById("topBottleneck").textContent=skill?skill.name:"—";
+ const st=c.screening.status;document.getElementById("topScreening").innerHTML=`<span class="dot ${st.toLowerCase()}"></span>${st}`;
+ document.getElementById("topOpp").textContent=c.metrics.opp||0;
+ const a=+c.metrics.assigned||0,d=+c.metrics.done||0;
+ document.getElementById("topCompletion").textContent=a?Math.round(d/a*100)+"%":"—";
 }
-function guideForSkill(skillId){
- const s=SKILLS.find(x=>x.id===skillId);
- return s?GUIDES.find(g=>g.id===s.guide):null;
+function renderSkills(){
+ const box=document.getElementById("skills");box.innerHTML="";
+ SKILLS.forEach(s=>{
+  const lvl=levelFor(s.id), n=client().evidence.filter(e=>e.skill===s.id).length;
+  const d=document.createElement("div");d.className="skill";
+  d.innerHTML=`<div class="skill-title">${s.name}</div><span class="level ${lvl>=2?'good':''}">${LEVELS[lvl]}</span><div class="evidence-count">${n} רשומות Evidence</div>`;
+  d.onclick=()=>{document.querySelector('[data-page="evidence"]').click();document.getElementById("evSkill").value=s.id;renderEvidence(s.id)};
+  box.appendChild(d);
+ });
 }
-function renderCurrentBottleneck(){
- const s=SKILLS.find(x=>x.id===c().bottleneck);
- currentBottleneckLabel.textContent=s?s.name:'—';
+function fillSkillSelects(){
+ ["evSkill","bottleneckSelect"].forEach(id=>{
+  const el=document.getElementById(id); el.innerHTML="";
+  SKILLS.forEach(s=>{const o=document.createElement("option");o.value=s.id;o.textContent=s.name;el.appendChild(o)});
+ });
+ document.getElementById("bottleneckSelect").value=client().bottleneck;
 }
-function renderExitHint(){
- const g=guideForSkill(c().bottleneck);
- if(exitHint) exitHint.innerHTML=g?'<b>מתי לא להישאר כאן:</b> '+g.leave:'';
+function addEvidence(){
+ const c=client();
+ c.evidence.push({id:uid(),skill:evSkill.value,date:new Date().toISOString(),context:evContext.value.trim(),observed:evObserved.value==="true",note:evNote.value.trim(),performance:+evPerformance.value,arousal:+evArousal.value});
+ evContext.value="";evNote.value="";saveDB();renderEvidence();
 }
-function continueCurrent(){
- eventQuestions.classList.remove('hidden');
- bottleneckChange.classList.add('hidden');
+function renderEvidence(skillFilter=null){
+ const box=document.getElementById("evidenceList");box.innerHTML="";
+ let arr=[...client().evidence].reverse(); if(skillFilter)arr=arr.filter(e=>e.skill===skillFilter);
+ if(!arr.length){box.innerHTML='<p class="note">עדיין אין Evidence.</p>';return}
+ arr.forEach(e=>{
+  const s=SKILLS.find(x=>x.id===e.skill);const d=document.createElement("div");d.className="ev";
+  d.innerHTML=`<div class="meta">${new Date(e.date).toLocaleDateString('he-IL')} · ${s?s.name:""} · ${e.observed?"נצפה":"דיווח עצמי"} · Arousal ${e.arousal}/10</div><b>${LEVELS[e.performance]}</b><div>${e.context||"ללא הקשר"}</div><div class="note">${e.note||""}</div>`;
+  box.appendChild(d);
+ });
 }
-function toggleBottleneckChange(){
- bottleneckChange.classList.toggle('hidden');
- eventQuestions.classList.remove('hidden');
+function safetyState(){
+ const c=client();
+ const ethicsOk=(c.screening.eth||[]).every(Boolean);
+ return {screen:c.screening.status||"Green", ethicsOk};
 }
-function ethicsState(){
- const a=c().eth||[];
- if(a.every(Boolean))return 'תקין';
- if(a.every(v=>!v))return 'לא הוערך';
- return 'חלקי';
+function renderRouteSafety(){
+ const s=safetyState();
+ const el=document.getElementById("routeSafetySummary");
+ if(!el) return;
+ el.innerHTML=`Screening: <b>${s.screen}</b> · Ethical Floor: <b>${s.ethicsOk?"תקין":"לא תקין"}</b>`;
 }
-function renderSafety(){
- const st=c().screening||'Unknown',es=ethicsState();
- topSafetyStatus.innerHTML='<span class="badge">התאמה: '+(st==='Unknown'?'לא הוערך':st)+'</span><span class="badge">גבולות: '+es+'</span>';
- screening.value=st;
- [eth1,eth2,eth3,eth4,eth5].forEach((x,i)=>x.checked=!!(c().eth||[])[i]);
+function routeInputsComplete(){
+ const ar=rArousal.value;
+ return rOpp.value && rRoom.value && rField.value && rDepth.value && ar!=="" && +ar>=0 && +ar<=10;
 }
-function toggleSafety(){safetyPanel.classList.toggle('hidden');}
-function saveSafety(){
- c().screening=screening.value;
- c().eth=[eth1.checked,eth2.checked,eth3.checked,eth4.checked,eth5.checked];
- persist();renderSafety();safetyPanel.classList.add('hidden');
-}
-
-function updateConditionalQuestions(){
- const room=rRoom.value,field=rField.value;
- const show=room==='yes'&&field==='yes';
- depthQuestion.classList.toggle('hidden',!show);
- wantQuestion.classList.toggle('hidden',!show);
-}
-rRoom.addEventListener('change',updateConditionalQuestions);
-
-function routeReady(){
- if(!rRoom.value||!rField.value||rArousal.value===''||rOppCount.value==='') return false;
- if(rRoom.value==='yes'&&rField.value==='yes'){
-  if(!rDepth.value||!rWant.value) return false;
- }
- return true;
-}
-
 function computeRoute(){
- if(!routeReady()){
-  routeResult.innerHTML='<div class="exit-line">חסרה תשובה אחת או יותר.</div>';
-  return null;
+ const safety=safetyState(),opp=rOpp.value,room=rRoom.value,field=rField.value,ar=+rArousal.value,depth=rDepth.value;
+ const msg=document.getElementById("routeValidationMsg");
+ if(!routeInputsComplete()){
+   routeResult.innerHTML='<div class="warning">אי אפשר להפיק Route לפני שכל הקלטים נענו.</div>';
+   if(msg) msg.textContent="חסרים קלטים";
+   return null;
  }
- const st=c().screening,eth=ethicsState(),ar=+rArousal.value,opp=+rOppCount.value;
- let route='',why='';
-
- if(st==='Unknown'||eth!=='תקין'){
-  route='עצירה — השלמת בדיקת מסגרת';
-  why='לפני תרגול או חשיפה צריך להשלים את בדיקת ההתאמה והגבולות.';
- } else if(st==='Red'){
-  route='עצירה — מחוץ למסגרת';
-  why='כרגע לא נכון להמשיך כרגיל במסגרת של בדרך.';
- } else if(st==='Yellow'){
-  route='מסלול בעצימות נמוכה';
-  why='עובדים בזהירות רבה יותר ובודקים שוב בהמשך.';
- } else if(opp===0){
-  route='צריך לייצר יותר הזדמנויות';
-  why='אין כרגע מספיק מצבים אמיתיים כדי לדעת אם הבעיה היא יכולת או פשוט חוסר הזדמנות.';
- } else if(rRoom.value==='no'){
-  route='עוד תרגול בחדר';
-  why='אם הוא עוד לא מצליח מולך, השטח לא יפתור את זה.';
- } else if(rField.value==='no'&&ar>=7){
-  route='להוריד את רמת הקושי';
-  why='היכולת קיימת, אבל ברגע האמת הלחץ גבוה מדי.';
- } else if(rField.value==='no'){
-  route='לצאת לשטח';
-  why='הוא יודע לבצע מולך, אבל עדיין לא עושה את זה בעולם האמיתי.';
- } else if(rWant.value==='yes'){
-  route='לבדוק מחדש את המטרה';
-  why='הוא כבר יודע לבצע; עכשיו צריך לבדוק אם זו בכלל עדיין המטרה שלו.';
- } else if(rDepth.value==='yes'){
-  route='שווה להעמיק';
-  why='יש משהו שחוזר גם אחרי תרגול ופעולה, ולכן עוד מאותו דבר כנראה לא יספיק.';
- } else {
-  route='אפשר להתקדם';
-  why='הוא מצליח מולך, מבצע בעולם, ורמת הלחץ לא חוסמת אותו.';
- }
-
- const g=guideForSkill(c().bottleneck);
- let gate='';
- if(route==='אפשר להתקדם'){
-  gate='<div class="exit-line"><b>לפני מעבר:</b> 3 הדגמות, 2 הקשרים, לפחות אחת נצפתה.</div>';
- }
- routeResult.innerHTML='<div class="route-result"><b>'+route+'</b><p>'+why+'</p>'+gate+
- '<div class="row" style="margin-top:10px">'+
- '<button class="btn" id="openGuideBtn">פתח '+(g?g.title:'את מפתח הדרכים')+'</button>'+
- '<button class="btn secondary" id="overrideBtn">אני בוחר אחרת</button></div></div>';
-
- openGuideBtn.onclick=()=>openGuideForSkill(c().bottleneck);
- overrideBtn.onclick=()=>overrideRoute(route);
- decisionNotes.classList.remove('hidden');
- nextAction.value=route;
+ if(msg) msg.textContent="";
+ let route="",why="";
+ if(!safety.ethicsOk){route="STOP / Ethical Review";why="הרצפה האתית קודמת לכל Practice או Exposure."}
+ else if(safety.screen==="Red"){route="STOP / Scope Boundary";why="המסגרת כרגע אינה מתאימה לעבודה רגילה."}
+ else if(safety.screen==="Yellow"){route="Low-intensity Track";why="חשיפות עד E2–E3, תדירות נמוכה יותר ו-Re-screen."}
+ else if(opp==="no"){route="Opportunity + Interactive Exposure";why="מגדילים הזדמנויות, אבל לא מחליפים חשיפה אינטראקטיבית."}
+ else if(room==="no"){route="Teach + Practice";why="אם הוא לא מסוגל להדגים בחדר, עדיין חסרה רכישה בסיסית."}
+ else if(field==="no" && ar>=7){route="Regulation + Low Exposure";why="היכולת קיימת בחדר, אבל העוררות גבוהה מדי בשטח."}
+ else if(field==="no"){route="Field / Exposure";why="היכולת קיימת בחדר אך לא עוברת לעולם."}
+ else if(depth==="yes"){route="Depth";why="יש ביצוע, אבל דפוס עמוק ממשיך לחסום או לייצר חבלה עצמית."}
+ else {route="Calibration / Raise Complexity / Fade";why="היכולת מתבצעת; בודקים כיול, מורכבות או עצמאות."}
+ routeResult.innerHTML=`<div class="route-result"><small>ROUTE</small><h2 style="margin:4px 0 8px">${route}</h2>${why}</div>`;
  return route;
 }
-
-function overrideRoute(originalRoute){
- overridePanel.classList.remove('hidden');
- overrideChoice.value='';
- overridePanel.dataset.originalRoute=originalRoute;
- overridePanel.scrollIntoView({behavior:'smooth',block:'nearest'});
-}
-function confirmOverride(){
- const chosen=overrideChoice.value;
- if(!chosen) return;
- nextAction.value=chosen;
- nextAction.dataset.override='true';
- nextAction.dataset.originalRoute=overridePanel.dataset.originalRoute||'';
- overridePanel.classList.add('hidden');
- decisionNotes.classList.remove('hidden');
-}
-function cancelOverride(){
- overridePanel.classList.add('hidden');
-}
-
-function saveDecision(){
- const route=computeRoute();if(!route)return;
- if(!hypothesis.value.trim()||!prediction.value.trim()||!nextAction.value.trim()){
-  saveMsg.textContent='חסרים השערה, תחזית או צעד הבא';
-  return;
- }
- c().bottleneck=bottleneck.value||c().bottleneck;
- DB.predictions.push({
-  id:uid(),date:new Date().toISOString(),clientId:c().id,clientName:c().name,
-  bottleneck:c().bottleneck,route,
-  chosenAction:nextAction.value.trim(),
-  overridden:nextAction.dataset.override==='true',
-  originalRoute:nextAction.dataset.originalRoute||route,
-  hypothesis:hypothesis.value.trim(),
-  prediction:prediction.value.trim(),
-  outcome:null
+function saveRouteDecision(){
+ const route=computeRoute();
+ if(!route) return;
+ const c=client(); c.bottleneck=bottleneckSelect.value;
+ c.routeDecisions.push({
+   id:uid(),
+   date:new Date().toISOString(),
+   bottleneck:c.bottleneck,
+   hypothesis:hypothesis.value,
+   prediction:prediction.value,
+   practice:practicePlan.value,
+   exposure:exposurePlan.value,
+   route,
+   outcome:null
  });
- persist();
- hypothesis.value='';prediction.value='';nextAction.value='';
- delete nextAction.dataset.override;delete nextAction.dataset.originalRoute;
- saveMsg.textContent='נשמר';renderPredictions();
+ saveDB();
 }
-
-function setOutcome(id,outcome){
- const p=DB.predictions.find(x=>x.id===id);
- if(p){p.outcome=outcome;persist();renderPredictions();}
+function setPredictionOutcome(id,outcome){
+ const r=client().routeDecisions.find(x=>x.id===id);
+ if(!r) return;
+ r.outcome=outcome;
+ saveDB();
 }
 function renderPredictions(){
- predList.innerHTML='';
- const closed=DB.predictions.filter(p=>p.outcome),hits=closed.filter(p=>p.outcome==='hit').length;
- accuracy.textContent=closed.length?Math.round(hits/closed.length*100)+'% ('+hits+'/'+closed.length+')':'—';
- [...DB.predictions].reverse().forEach(p=>{
-  const s=SKILLS.find(x=>x.id===p.bottleneck),d=document.createElement('div');
-  d.className='pred';
-  d.innerHTML='<div class="tiny">'+new Date(p.date).toLocaleDateString('he-IL')+' · '+p.clientName+' · '+(s?s.name:'')+
-  (p.overridden?' · דריסה':'')+' · '+(p.outcome==='hit'?'פגע':p.outcome==='miss'?'החטיא':'פתוח')+'</div>'+
-  '<b>'+p.route+'</b>'+
-  (p.overridden?'<div><b>בחרתי במקום:</b> '+(p.chosenAction||'')+'</div>':'')+
-  '<div><b>השערה:</b> '+p.hypothesis+'</div><div><b>תחזית:</b> '+p.prediction+'</div>'+
-  '<div class="row" style="margin-top:8px"><button class="btn secondary hit">פגע</button><button class="btn secondary miss">החטיא</button></div>';
-  d.querySelector('.hit').onclick=()=>setOutcome(p.id,'hit');
-  d.querySelector('.miss').onclick=()=>setOutcome(p.id,'miss');
-  predList.appendChild(d);
+ const box=document.getElementById("predictionLog");box.innerHTML="";
+ const rows=[...client().routeDecisions].reverse();
+ const closed=client().routeDecisions.filter(r=>r.outcome==="hit"||r.outcome==="miss");
+ const hits=closed.filter(r=>r.outcome==="hit").length;
+ document.getElementById("predictionAccuracy").textContent=closed.length?`Accuracy: ${Math.round(hits/closed.length*100)}% (${hits}/${closed.length})`:"Accuracy: —";
+ rows.forEach(r=>{
+  const s=SKILLS.find(x=>x.id===r.bottleneck);const d=document.createElement("div");d.className="ev";
+  const status=r.outcome==="hit"?"פגע":r.outcome==="miss"?"החטיא":"פתוח";
+  d.innerHTML=`<div class="meta">${new Date(r.date).toLocaleDateString('he-IL')} · ${s?s.name:""} · ${status}</div>
+  <b>${r.route}</b>
+  <div class="note"><b>השערה:</b> ${r.hypothesis||"—"}</div>
+  <div class="note"><b>תחזית:</b> ${r.prediction||"—"}</div>
+  <div class="row" style="margin-top:10px">
+    <button class="btn secondary pred-hit">פגע</button>
+    <button class="btn secondary pred-miss">החטיא</button>
+  </div>`;
+  d.querySelector(".pred-hit").onclick=()=>setPredictionOutcome(r.id,"hit");
+  d.querySelector(".pred-miss").onclick=()=>setPredictionOutcome(r.id,"miss");
+  box.appendChild(d);
  });
 }
-
-function openGuideForSkill(skillId){
- const g=guideForSkill(skillId);showMode('guide');renderGuides();
- if(!g)return;
- const el=document.getElementById('guide-'+g.id);
- if(el){el.open=true;setTimeout(()=>el.scrollIntoView({behavior:'smooth',block:'start'}),50);}
+function saveScreening(){
+ const c=client();c.screening.status=screeningStatus.value;c.screening.rescreen=rescreenDate.value;c.screening.note=screeningNote.value;c.screening.eth=[eth1.checked,eth2.checked,eth3.checked,eth4.checked,eth5.checked];saveDB();renderRouteSafety();
 }
-function renderGuides(){
- guideList.innerHTML='';
- GUIDES.forEach(g=>{
-  const d=document.createElement('details');d.className='guide';d.id='guide-'+g.id;
-  d.innerHTML='<summary>'+g.title+'</summary><div class="guide-body"><h3>לשם מה</h3><p>'+g.purpose+'</p>'+
-  '<h3>שאלות מנחות</h3><ul>'+g.questions.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
-  '<h3>מה לחפש</h3><ul>'+g.look.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
-  '<h3>תרגילים</h3><ul>'+g.exercises.map(x=>'<li>'+x+'</li>').join('')+'</ul>'+
-  '<h3>מה נחשב התקדמות</h3><p>'+g.progress+'</p>'+
-  '<h3>מתי לא להישאר בנושא</h3><p>'+g.leave+'</p>'+
-  '<button class="btn secondary back">חזרה להחלטה</button></div>';
-  d.querySelector('.back').onclick=()=>showMode('decision');
-  guideList.appendChild(d);
+function loadScreening(){
+ const s=client().screening;screeningStatus.value=s.status;rescreenDate.value=s.rescreen||"";screeningNote.value=s.note||"";
+ [eth1,eth2,eth3,eth4,eth5].forEach((el,i)=>el.checked=s.eth?.[i]!==false);
+}
+function saveMetrics(){
+ const m=client().metrics;m.opp=mOpp.value;m.assigned=mAssigned.value;m.done=mDone.value;m.latency=mLatency.value;m.recovery=mRecovery.value;m.practice=mPractice.value;saveDB();
+}
+function loadMetrics(){
+ const m=client().metrics;mOpp.value=m.opp||0;mAssigned.value=m.assigned||0;mDone.value=m.done||0;mLatency.value=m.latency||"";mRecovery.value=m.recovery||"";mPractice.value=m.practice||"";
+}
+function bindFields(){
+ document.querySelectorAll("[data-client-field]").forEach(el=>{
+  el.value=client().fields[el.dataset.clientField]||"";
+  el.oninput=()=>{client().fields[el.dataset.clientField]=el.value;localStorage.setItem("baderech_v3",JSON.stringify(DB))}
  });
 }
-
-
-function bindStaticActions(){
- const confirm=document.getElementById('confirmOverrideBtn');
- const cancel=document.getElementById('cancelOverrideBtn');
- if(confirm) confirm.onclick=confirmOverride;
- if(cancel) cancel.onclick=cancelOverride;
+function renderPlaybook(){
+ const box=document.getElementById("playbookList");box.innerHTML="";
+ PLAYBOOKS.forEach((p,i)=>{
+  const d=document.createElement("details");d.className="playbook-item";
+  d.innerHTML=`<summary>${i+1}. ${p.t}</summary><h4>שאלות מנחות</h4><ul>${p.q.map(x=>`<li>${x}</li>`).join("")}</ul><h4>תרגילים</h4><ul>${p.ex.map(x=>`<li>${x}</li>`).join("")}</ul>`;
+  box.appendChild(d)
+ })
 }
-function renderAll(){
- renderClients();fillSkills();renderCurrentBottleneck();renderExitHint();renderSafety();renderPredictions();renderGuides();bindStaticActions();
+function exportData(){
+ const blob=new Blob([JSON.stringify(DB,null,2)],{type:"application/json"});const a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download="baderech-backup-"+new Date().toISOString().slice(0,10)+".json";a.click();URL.revokeObjectURL(a.href);
 }
-renderAll();
-if(location.hash==='#playbook')showMode('guide');
+function importData(event){
+ const f=event.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{DB=JSON.parse(r.result);saveDB()}catch(e){alert("קובץ לא תקין")}};r.readAsText(f);
+}
+function refresh(){
+ renderClients();renderTop();renderSkills();fillSkillSelects();renderEvidence();loadScreening();loadMetrics();renderPredictions();bindFields();renderPlaybook();renderRouteSafety();
+}
+refresh();
 </script>
-</body></html>
+</body>
+</html>
