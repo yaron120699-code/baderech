@@ -3,22 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>בדרך. — לא צריך להיות מושלמים כדי להתחיל להשתנות</title>
+<title>בדרך. | לא צריך להיות מושלמים כדי להתחיל להשתנות</title>
 <meta name="description" content="תהליך אישי אחד על אחד למי שמרגיש שהגיע הזמן לעצור, להכיר את עצמו ולבחור מחדש.">
 <meta name="theme-color" content="#F7F6F1">
 
-<!-- Favicon -->
 <link rel="icon" href="/favicon.ico" sizes="any">
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
 <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png">
 <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
 
-<!-- Open Graph / social preview -->
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://baderech.vercel.app/">
 <meta property="og:locale" content="he_IL">
-<meta property="og:title" content="בדרך. — לא צריך להיות מושלמים כדי להתחיל להשתנות">
+<meta property="og:title" content="בדרך. | לא צריך להיות מושלמים כדי להתחיל להשתנות">
 <meta property="og:description" content="תהליך אישי אחד על אחד למי שמרגיש שהגיע הזמן לעצור, להכיר את עצמו ולבחור מחדש.">
 <meta property="og:image" content="https://baderech.vercel.app/images/og-image.png?v=2">
 <meta property="og:image:secure_url" content="https://baderech.vercel.app/images/og-image.png?v=2">
@@ -26,13 +24,14 @@
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="בדרך. — לא צריך להיות מושלמים כדי להתחיל להשתנות">
+<meta name="twitter:title" content="בדרך. | לא צריך להיות מושלמים כדי להתחיל להשתנות">
 <meta name="twitter:description" content="תהליך אישי אחד על אחד למי שמרגיש שהגיע הזמן לעצור, להכיר את עצמו ולבחור מחדש.">
 <meta name="twitter:image" content="https://baderech.vercel.app/images/og-image.png?v=2">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@300;400;500;700&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
 <noscript>
   <style>
     .reveal, .reveal-pop{ opacity:1 !important; transform:none !important; }
@@ -40,12 +39,24 @@
 </noscript>
 
 <link rel="stylesheet" href="css/style.css">
+
+<!-- Mobile fix: in the stacked "אז / היום" layout, show a clear downward arrow. -->
+<style>
+@media (max-width: 760px){
+  .real__arrow{
+    transform:none !important;
+    font-size:0 !important;
+    justify-self:center;
+  }
+  .real__arrow::before{
+    content:"↓";
+    font-size:1.5rem;
+  }
+}
+</style>
 </head>
 <body>
 
-<!-- GREETING — a single quiet moment before the site itself. Not a page,
-     not a step: the door opening before the room. Shown once per browser
-     session; a tap anywhere continues to the site underneath. -->
 <div id="greeting" class="greeting" role="button" tabindex="0" aria-label="להמשיך אל בדרך.">
   <p class="greeting__lead">לפני שמתחילים, זה אני.</p>
   <div class="greeting__photo">
@@ -54,18 +65,17 @@
   <p class="greeting__sig">ירון פסי</p>
   <p class="greeting__hint" aria-hidden="true">להמשיך</p>
 </div>
+
 <script>
-  // Runs immediately (before paint) so a returning visitor within the same
-  // session never sees a flash of the greeting before it's hidden again.
-  (function(){
-    try{
-      if(sessionStorage.getItem('baderech_greeted')){
-        document.getElementById('greeting').style.display = 'none';
-      } else {
-        document.documentElement.classList.add('greeting-active');
-      }
-    }catch(e){}
-  })();
+(function(){
+  try{
+    if(sessionStorage.getItem('baderech_greeted')){
+      document.getElementById('greeting').style.display = 'none';
+    } else {
+      document.documentElement.classList.add('greeting-active');
+    }
+  }catch(e){}
+})();
 </script>
 
 <a class="skip-link" href="#main">דלג לתוכן</a>
@@ -83,12 +93,11 @@
 
 <main id="main">
 
-<!-- 1. HERO -->
   <section class="hero" id="hero">
     <div class="wrap hero__inner">
       <div class="eyebrow">ליווי אישי 1:1 לגברים</div>
       <h1>לבנות ביטחון ונוכחות. בלי להפוך למישהו שאתה לא.</h1>
-      <p class="lede">בדרך הוא תהליך אישי לגברים שרוצים להרגיש בטוחים ובהירים יותר מול עצמם, מול נשים ובמערכות יחסים. בתהליך נעבוד על הזהות, האמונות, התקשורת והדרך שבה אתה מביא את עצמך לעולם. המסגרת: 12 שבועות, 6 מפגשי 1:1, והחיים עצמם ביניהם.</p>
+      <p class="lede">בדרך הוא תהליך אישי לגברים שרוצים להרגיש בטוחים ובהירים יותר מול עצמם, מול נשים ובמערכות יחסים. בתהליך נעבוד על הזהות, האמונות, התקשורת והדרך שבה אתה מביא את עצמך לעולם. המסגרת: כ־4 חודשים, 8 מפגשי 1:1, והחיים עצמם ביניהם.</p>
       <div class="hero__actions">
         <a href="/fit" class="btn">בוא נבדוק אם זה מתאים לי</a>
         <a href="#process" class="textlink">איך התהליך עובד</a>
@@ -97,7 +106,6 @@
     <div class="hero__scroll">לגלול הלאה</div>
   </section>
 
-  <!-- 2. IDENTIFICATION -->
   <section class="id" id="identify">
     <div class="wrap wrap-narrow">
       <div class="reveal">
@@ -113,7 +121,6 @@
     </div>
   </section>
 
-  <!-- 3. THE FOUR MOVEMENTS — what we work on -->
   <section class="movements" id="movements">
     <div class="wrap wrap-narrow">
       <div class="reveal">
@@ -137,11 +144,10 @@
           <span class="movements__desc">לפגוש אנשים, להתמודד עם תגובות, ולהמשיך בכוחות עצמי.</span>
         </div>
       </div>
-      <p class="movements__close reveal">אני לא מנסה להביא את כולם לאותו מקום.<br>אני בונה אצל כל אדם את היכולת למצוא את המקום שלו — ולהחזיק בו.</p>
+      <p class="movements__close reveal">אני לא מנסה להביא את כולם לאותו מקום.<br>אני בונה אצל כל אדם את היכולת למצוא את המקום שלו ולהחזיק בו.</p>
     </div>
   </section>
 
-  <!-- 4. DIFFERENCE -->
   <section class="different" id="different">
     <div class="wrap wrap-narrow">
       <div class="reveal">
@@ -159,18 +165,17 @@
     </div>
   </section>
 
-  <!-- 5. PROCESS -->
   <section class="process on-alt" id="process">
     <div class="wrap wrap-narrow">
       <div class="reveal">
         <div class="eyebrow">איך זה נראה בפועל</div>
-        <h2>12 שבועות. 6 מפגשים. החיים עצמם ביניהם.</h2>
-        <p class="lede" style="margin-top:16px;">יש למסגרת התחלה, אמצע וסוף — אבל הדרך עצמה נבנית סביב האדם שמולי. הסדר והעומק משתנים לפי מי שאתה, מה אתה מביא ומה שאתה צריך לפגוש בדרך.</p>
+        <h2>כ־4 חודשים. 8 מפגשים. החיים עצמם ביניהם.</h2>
+        <p class="lede" style="margin-top:16px;">יש למסגרת התחלה, אמצע וסוף, אבל הדרך עצמה נבנית סביב האדם שמולי. הסדר והעומק משתנים לפי מי שאתה, מה אתה מביא ומה שאתה צריך לפגוש בדרך.</p>
       </div>
 
       <div class="process__facts reveal">
-        <div class="process__fact"><span class="process__fact-num">12</span><span class="process__fact-label">שבועות</span></div>
-        <div class="process__fact"><span class="process__fact-num">6</span><span class="process__fact-label">מפגשי 1:1</span></div>
+        <div class="process__fact"><span class="process__fact-num">כ־4</span><span class="process__fact-label">חודשים</span></div>
+        <div class="process__fact"><span class="process__fact-num">8</span><span class="process__fact-label">מפגשי 1:1</span></div>
         <div class="process__fact"><span class="process__fact-num">2</span><span class="process__fact-label">שבועות בין מפגש למפגש</span></div>
       </div>
       <p class="process__facts-note reveal">כל מפגש נמשך לרוב 1.5–2 שעות. בין המפגשים ממשיכים לעבוד בתוך החיים עצמם.</p>
@@ -190,7 +195,7 @@
         </div>
         <div class="feature-item">
           <div class="feature-item__title">לצאת לעולם</div>
-          <p class="feature-item__desc">תקשורת, אינטראקציות, דייטינג ונוכחות — לא רק לדבר עליהם, אלא לפגוש אותם בזמן אמת.</p>
+          <p class="feature-item__desc">תקשורת, אינטראקציות, דייטינג ונוכחות. לא רק לדבר עליהם, אלא לפגוש אותם בזמן אמת.</p>
         </div>
         <div class="feature-item">
           <div class="feature-item__title">להבין ולנסות שוב</div>
@@ -198,7 +203,7 @@
         </div>
         <div class="feature-item">
           <div class="feature-item__title">להמשיך בכוחות עצמך</div>
-          <p class="feature-item__desc">לבנות דרך שאתה יודע להחזיק גם אחרי שהתהליך נגמר — בלי להיות תלוי בי כדי לזוז.</p>
+          <p class="feature-item__desc">לבנות דרך שאתה יודע להחזיק גם אחרי שהתהליך נגמר, בלי להיות תלוי בי כדי לזוז.</p>
         </div>
       </div>
 
@@ -223,7 +228,6 @@
     </div>
   </section>
 
-  <!-- 6. STORY — who I am and why -->
   <section class="story" id="story">
     <div class="wrap">
       <div class="reveal">
@@ -251,11 +255,10 @@
           </div>
         </div>
       </div>
-      <p class="real__reflection reveal">בין שתי התמונות האלה לא השתנה רק איך אני נראה — <strong>השתנתה הדרך שבה אני רואה את עצמי ואת העולם</strong>. לא ברגע אחד גדול, אלא דרך בחירות קטנות, טעויות, נפילות ותנועה קדימה.</p>
+      <p class="real__reflection reveal">בין שתי התמונות האלה לא השתנה רק איך אני נראה. <strong>השתנתה הדרך שבה אני רואה את עצמי ואת העולם</strong>. לא ברגע אחד גדול, אלא דרך בחירות קטנות, טעויות, נפילות ותנועה קדימה.</p>
     </div>
   </section>
 
-  <!-- RESULTS -->
   <section class="id" id="results">
     <div class="wrap wrap-narrow">
       <div class="reveal">
@@ -265,7 +268,7 @@
       </div>
       <div class="id__lines reveal">
         <div class="id__line">להיכנס לשיחה או לדייט בלי להסתכל על עצמך כל הזמן מבחוץ.</div>
-        <div class="id__line">לדעת לפעול גם כשאתה לא בטוח — לגשת, לדבר, לבחור ולנסות בלי לחכות שהפחד ייעלם.</div>
+        <div class="id__line">לדעת לפעול גם כשאתה לא בטוח, לגשת, לדבר, לבחור ולנסות בלי לחכות שהפחד ייעלם.</div>
         <div class="id__line">לקבל דחייה בלי להפוך אותה להוכחה שמשהו בך לא בסדר.</div>
         <div class="id__line">להכיר את עצמך מספיק כדי לבחור יותר מתוך רצון, ופחות מתוך פחד.</div>
       </div>
@@ -273,7 +276,6 @@
     </div>
   </section>
 
-  <!-- 7. FIT & BOUNDARIES -->
   <section class="who" id="who">
     <div class="wrap">
       <div class="reveal">
@@ -308,13 +310,12 @@
           <h3>חשוב לדעת</h3>
           <p>הליווי אינו טיפול נפשי, פסיכולוגי או רפואי, והוא בתשלום.</p>
           <p>אני לא מטפל, לא פסיכולוג ולא פסיכיאטר. אני לא מאבחן ולא מבטיח לרפא כאב, חרדה או טראומה.</p>
-          <p>אם המצב דורש טיפול מקצועי, האחריות שלי היא לומר את זה בכנות — ולא להמשיך ליווי במקום שלא מתאים לו.</p>
+          <p>אם המצב דורש טיפול מקצועי, האחריות שלי היא לומר את זה בכנות ולא להמשיך ליווי במקום שלא מתאים לו.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- 8. FAQ -->
   <section class="faq on-alt" id="faq">
     <div class="wrap wrap-narrow">
       <div class="reveal">
@@ -328,11 +329,11 @@
         </details>
         <details class="faq-item">
           <summary>איך נראים המפגשים?</summary>
-          <div class="faq-a">המפגשים הם אחד על אחד. חלקם שיחות עומק, חלקם עבודה מעשית — וחלק קבוע מהם הוא לצאת ולתרגל בעולם האמיתי, בזמן אמת, לא רק לדבר על זה.</div>
+          <div class="faq-a">המפגשים הם אחד על אחד. חלקם שיחות עומק, חלקם עבודה מעשית, וחלק קבוע מהם הוא לצאת ולתרגל בעולם האמיתי, בזמן אמת, לא רק לדבר על זה.</div>
         </details>
         <details class="faq-item">
           <summary>כמה זמן נמשך תהליך?</summary>
-          <div class="faq-a">המסגרת היא 12 שבועות ו־6 מפגשי 1:1, בדרך כלל אחת לשבועיים. יש כיוון ברור לתהליך, אבל הסדר והעומק של העבודה משתנים מאדם לאדם.</div>
+          <div class="faq-a">המסגרת היא כ־4 חודשים ו־8 מפגשי 1:1, בדרך כלל אחת לשבועיים. יש כיוון ברור לתהליך, אבל הסדר והעומק של העבודה משתנים מאדם לאדם.</div>
         </details>
         <details class="faq-item">
           <summary>מה קורה אחרי שאני פונה?</summary>
@@ -340,26 +341,26 @@
         </details>
         <details class="faq-item">
           <summary>מה אם אני לא יודע מה אני רוצה?</summary>
-          <div class="faq-a">זו לא בעיה — זו יכולה להיות נקודת ההתחלה. לא חייבים להגיע עם תשובה; צריך רק נכונות להסתכל בכנות.</div>
+          <div class="faq-a">זו לא בעיה. זו יכולה להיות נקודת ההתחלה. לא חייבים להגיע עם תשובה; צריך רק נכונות להסתכל בכנות.</div>
         </details>
       </div>
     </div>
   </section>
 
-  <!-- 9. CLOSING & CONTACT -->
   <section class="contact" id="contact">
     <div class="wrap">
       <div class="eyebrow reveal">מה אני באמת רוצה שתקבל מהתהליך</div>
       <h2 class="reveal">שיגיע יום שתעצור, תסתכל אחורה, ותרגיש שהתקדמת. לא למישהו אחר. אליך.</h2>
       <p class="reveal">לא צריך לדעת בדיוק לאן זה הולך. הצעד הראשון הוא רק לבדוק אם נכון לנו לצאת לדרך יחד.</p>
       <div class="contact__actions reveal">
-        <a href="/fit" class="btn">בדיקת התאמה קצרה — הצעד הבא</a>
+        <a href="/fit" class="btn">בדיקת התאמה קצרה · הצעד הבא</a>
       </div>
       <p class="contact__micro reveal">כשתי דקות, בלי התחייבות.</p>
       <div class="contact__links reveal">
         <a href="https://calendar.app.google/wmWEFsbg8ei6jcTp9" target="_blank" rel="noopener">לקביעת שיחת התאמה ישירות</a>
-        <a href="https://wa.me/972505494326?text=%D7%94%D7%99%D7%99%20%D7%99%D7%A8%D7%95%D7%9F%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8" target="_blank" rel="noopener">וואטסאפ — 050-5494326</a>
-        <a href="https://instagram.com/baderech_" target="_blank" rel="noopener">אינסטגרם — _baderech</a>      </div>
+        <a href="https://wa.me/972505494326?text=%D7%94%D7%99%D7%99%20%D7%99%D7%A8%D7%95%D7%9F%2C%20%D7%94%D7%92%D7%A2%D7%AA%D7%99%20%D7%93%D7%A8%D7%9A%20%D7%94%D7%90%D7%AA%D7%A8" target="_blank" rel="noopener">וואטסאפ · 050-5494326</a>
+        <a href="https://instagram.com/baderech_" target="_blank" rel="noopener">אינסטגרם · _baderech</a>
+      </div>
       <div class="contact__micro reveal">בלי מכירה · בלי לחץ · רק שיחה כנה</div>
     </div>
   </section>
@@ -371,7 +372,7 @@
     <div class="footer__brand">בדרך<span>.</span></div>
     <div>הולך לצידך, לא לפני ולא מאחורי.</div>
     <div><a href="https://instagram.com/baderech_" target="_blank" rel="noopener" style="color:inherit;">אינסטגרם</a> · <a href="https://wa.me/972505494326" target="_blank" rel="noopener" style="color:inherit;">וואטסאפ</a></div>
-    <div>© 2026 — עדיין בדרך</div>
+    <div>© 2026 · עדיין בדרך</div>
   </div>
 </footer>
 
