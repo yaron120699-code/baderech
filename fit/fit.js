@@ -232,10 +232,6 @@
   });
 
   // ---------- scoring ----------
-  // Kept intentionally small: only the three questions that actually
-  // distinguish fit (real process vs. quick fix, in-person openness,
-  // willingness to invest). The other questions inform the WhatsApp
-  // message but don't need to move the score.
   var SCORES = {
     q4: { q4_1: 2, q4_2: 2, q4_3: -1, q4_4: -2, q4_5: 0 },
     q5: { q5_1: 2, q5_2: 1, q5_3: -3 },
@@ -275,6 +271,13 @@
       q2_4: 'אני חוזר שוב ושוב לאותם דפוסים',
       q2_5: 'אני עדיין לא יודע להגדיר'
     },
+    q3: {
+      q3_1: 'הביטחון העצמי שלי במצבים חברתיים',
+      q3_2: 'איך אני מתנהל בזוגיות או בדייטינג',
+      q3_3: 'היכולת שלי לפעול, לא רק לחשוב',
+      q3_4: 'התחושה הכללית שיש לי כלפי עצמי',
+      q3_5: 'קשה לי לבחור אחת. זה קצת מהכול'
+    },
     q4: {
       q4_1: 'תהליך אישי שדורש ממני להשתתף ולעבוד',
       q4_2: 'כלים פרקטיים ותרגול במציאות',
@@ -301,22 +304,33 @@
 
   function buildWhatsAppMessage(){
     var q1text = Array.isArray(answers.q1) && answers.q1.length
-      ? answers.q1.map(function(v){ return label('q1', v); }).join('; ')
+      ? answers.q1.map(function(v){ return label('q1', v); }).join(' • ')
       : '—';
-    var q3text = (answers.q3 && answers.q3.trim()) ? answers.q3.trim() : '—';
 
     var lines = [
       'היי ירון, הגעתי דרך בדיקת ההתאמה של בדרך.',
       '',
-      'מה הביא אותי לכאן: ' + q1text,
-      'איפה אני מרגיש הכי תקוע: ' + label('q2', answers.q2),
-      'מה הייתי רוצה שישתנה: ' + q3text,
-      'מה אני מחפש: ' + label('q4', answers.q4),
-      'התאמה למפגשים פנים מול פנים: ' + label('q5', answers.q5),
-      'מוכנות להשקיע בתהליך: ' + label('q6', answers.q6),
+      '*מה הביא אותי לכאן?*',
+      q1text,
+      '',
+      '*איפה אני מרגיש הכי תקוע?*',
+      label('q2', answers.q2),
+      '',
+      '*אם משהו אחד היה משתנה, מה הייתי רוצה שייראה אחרת?*',
+      label('q3', answers.q3),
+      '',
+      '*מה אני מחפש כרגע?*',
+      label('q4', answers.q4),
+      '',
+      '*איך מרגיש לי להיפגש פנים מול פנים?*',
+      label('q5', answers.q5),
+      '',
+      '*המוכנות שלי להשקיע בתהליך:*',
+      label('q6', answers.q6),
       '',
       'אשמח לבדוק איתך אם יש התאמה לשיחה.'
     ];
+
     return lines.join('\n');
   }
 
@@ -326,17 +340,10 @@
     document.querySelectorAll('.fit__whatsapp-link').forEach(function(a){
       a.setAttribute('href', url);
     });
-    // Hand the same message forward for the landing page's own WhatsApp
-    // buttons, in case the visitor reads the page first (the primary path)
-    // and only messages from there. One-time use: js/script.js reads this
-    // once on load and removes it immediately.
     try{ sessionStorage.setItem(WA_BRIDGE_KEY, message); }catch(e){}
   }
 
   // ---------- finish ----------
-  // No processing screen: the result appears right after the last answer.
-  // Pretending to "analyze" the answers for a few seconds is exactly the
-  // algorithmic feeling we want to avoid here.
   function finishQuiz(){
     persistCurrentStep();
     var bucket = resultBucket(computeScore());
