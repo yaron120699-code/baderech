@@ -4,16 +4,16 @@ var CAL="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0
 var CHANNEL="https://instagram.com/baderech_";
 
 var Q=[
- {id:"stage",stage:"מתחילים",note:"נקודת התחלה. לא ציון.",q:"באיזה שלב חיים אתה נמצא כרגע?",
+ {id:"stage",stage:"מתחילים",note:"נקודת התחלה. לא ציון.",q:"באיזה שלב חיים אתה נמצא כרגע?",multi:true,hint:"אפשר לבחור יותר מתשובה אחת.",
   o:["רווק, לא בזוגיות כרגע","יצאתי לאחרונה מזוגיות ארוכה או מגירושין","בזוגיות, אבל יש דברים שהייתי רוצה לשנות בעצמי","עובר תקופת שינוי משמעותית (עבודה, מקום מגורים, סגנון חיים)","אחר"]},
- {id:"why",stage:"מה הביא אותך",note:"מה באמת. לא מה שנשמע טוב.",q:"מה הביא אותך לכאן עכשיו?",max:2,hint:"אפשר לבחור עד שתי תשובות.",
+ {id:"why",stage:"מה הביא אותך",note:"מה באמת. לא מה שנשמע טוב.",q:"מה הביא אותך לכאן עכשיו?",multi:true,hint:"אפשר לבחור יותר מתשובה אחת.",
   o:["אני מרגיש תקוע למרות שאני יודע שיש בי יותר","חסר לי ביטחון מול אנשים או בדייטינג","קשה לי ליזום, להוביל או לבטא עניין","אני רוצה שינוי רחב יותר בדרך שבה אני מחזיק את עצמי","בעיקר סקרנות"]},
- {id:"stuck",stage:"איפה זה נתקע",note:"התשובה הראשונה בדרך כלל מדויקת.",q:"איפה אתה מרגיש הכי תקוע?",
+ {id:"stuck",stage:"איפה זה נתקע",note:"התשובה הראשונה בדרך כלל מדויקת.",q:"איפה אתה מרגיש הכי תקוע?",multi:true,hint:"אפשר לבחור יותר מתשובה אחת.",
   o:["אני יודע מה לעשות, אבל לא מצליח לפעול","אני חושב יותר מדי ומאבד את הרגע","אני תלוי באישור מאחרים","אני חוזר שוב ושוב לאותם דפוסים","אני עדיין לא יודע להגדיר"]},
  {pause:true},
- {id:"change",stage:"מה ישתנה",note:"משהו אחד. לא הכול.",q:"אם משהו אחד היה משתנה, מה היית רוצה שייראה אחרת?",
+ {id:"change",stage:"מה ישתנה",note:"מה הכי חשוב לך.",q:"מה היית רוצה שייראה אחרת?",multi:true,hint:"אפשר לבחור יותר מתשובה אחת.",
   o:["הביטחון העצמי שלי במצבים חברתיים","איך אני מתנהל בזוגיות או בדייטינג","היכולת שלי לפעול, לא רק לחשוב","התחושה הכללית שיש לי כלפי עצמי","קשה לי לבחור אחת. זה קצת מהכול"]},
- {id:"seek",stage:"מה אתה מחפש",note:"כנות חוסכת לשנינו זמן.",q:"מה אתה מחפש כרגע?",
+ {id:"seek",stage:"מה אתה מחפש",note:"כנות חוסכת לשנינו זמן.",q:"מה אתה מחפש כרגע?",multi:true,hint:"אפשר לבחור יותר מתשובה אחת.",
   o:["תהליך אישי שדורש ממני להשתתף ולעבוד","כלים פרקטיים ותרגול במציאות","מישהו שיגיד לי בדיוק מה לעשות בכל מצב","פתרון מהיר או כמה טיפים","עדיין לא בטוח"]},
  {id:"f2f",stage:"איך נפגשים",note:"כן, באמת פנים מול פנים.",q:"המפגשים ב״בדרך״ מתקיימים פנים מול פנים. איך זה מרגיש לך?",
   o:["זה אפילו חשוב לי","מתאים לי, אם ארגיש שיש התאמה","אני מעדיף תהליך אונליין בלבד"]},
@@ -59,7 +59,7 @@ function renderQ(){
   document.getElementById('progTxt').textContent='שאלה '+n+' מתוך '+TOTAL;
   document.getElementById('progStage').textContent=q.stage;
   document.getElementById('barFill').style.width=((n-1)/TOTAL*100)+'%';
-  var multi=!!q.max, sel=A[q.id]||[];
+  var multi=!!(q.max||q.multi), sel=A[q.id]||[];
   var html='<div class="in screen fade"><span class="hand qnote">'+esc(q.note)+'</span><h2 id="qh">'+esc(q.q)+'</h2>'+(q.hint?'<p class="qhint">'+esc(q.hint)+'</p>':'')+
     '<fieldset aria-labelledby="qh"><legend>'+esc(q.q)+'</legend>';
   q.o.forEach(function(t,i){
@@ -75,7 +75,7 @@ function renderQ(){
   function sync(){
     var v=inputs.filter(function(x){return x.checked}).map(function(x){return +x.value});
     A[q.id]=v; nx.disabled=!v.length;
-    if(multi){inputs.forEach(function(x){var off=!x.checked&&v.length>=q.max;x.disabled=off;x.parentNode.classList.toggle('dis',off)})}
+    if(q.max){inputs.forEach(function(x){var off=!x.checked&&v.length>=q.max;x.disabled=off;x.parentNode.classList.toggle('dis',off)})}
   }
   inputs.forEach(function(x){x.addEventListener('change',function(){sync(); if(!multi && !last){setTimeout(function(){},0)}})});
   sync();
