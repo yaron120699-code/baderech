@@ -1,390 +1,151 @@
 (function(){
-  "use strict";
+var WA="972505494326";
+var CAL="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0ofP-cRwZhCKLFa0pnLG4Ib2WAyO6t5vIcJPsrCWzk4PzxktiDKDWdj4BuDzzyIKh5W39e9tZA";
+var CHANNEL="https://instagram.com/baderech_";
 
-  var STORAGE_KEY = 'baderech_fit_v1';
-  var WHATSAPP_NUMBER = '972505494326';
-  var WA_BRIDGE_KEY = 'baderech_wa_prefill';
+var Q=[
+ {id:"stage",stage:"מתחילים",note:"נקודת התחלה. לא ציון.",q:"באיזה שלב חיים אתה נמצא כרגע?",
+  o:["רווק, לא בזוגיות כרגע","יצאתי לאחרונה מזוגיות ארוכה או מגירושין","בזוגיות, אבל יש דברים שהייתי רוצה לשנות בעצמי","עובר תקופת שינוי משמעותית (עבודה, מקום מגורים, סגנון חיים)","אחר"]},
+ {id:"why",stage:"מה הביא אותך",note:"מה באמת. לא מה שנשמע טוב.",q:"מה הביא אותך לכאן עכשיו?",max:2,hint:"אפשר לבחור עד שתי תשובות.",
+  o:["אני מרגיש תקוע למרות שאני יודע שיש בי יותר","חסר לי ביטחון מול אנשים או בדייטינג","קשה לי ליזום, להוביל או לבטא עניין","אני רוצה שינוי רחב יותר בדרך שבה אני מחזיק את עצמי","בעיקר סקרנות"]},
+ {id:"stuck",stage:"איפה זה נתקע",note:"התשובה הראשונה בדרך כלל מדויקת.",q:"איפה אתה מרגיש הכי תקוע?",
+  o:["אני יודע מה לעשות, אבל לא מצליח לפעול","אני חושב יותר מדי ומאבד את הרגע","אני תלוי באישור מאחרים","אני חוזר שוב ושוב לאותם דפוסים","אני עדיין לא יודע להגדיר"]},
+ {pause:true},
+ {id:"change",stage:"מה ישתנה",note:"משהו אחד. לא הכול.",q:"אם משהו אחד היה משתנה, מה היית רוצה שייראה אחרת?",
+  o:["הביטחון העצמי שלי במצבים חברתיים","איך אני מתנהל בזוגיות או בדייטינג","היכולת שלי לפעול, לא רק לחשוב","התחושה הכללית שיש לי כלפי עצמי","קשה לי לבחור אחת. זה קצת מהכול"]},
+ {id:"seek",stage:"מה אתה מחפש",note:"כנות חוסכת לשנינו זמן.",q:"מה אתה מחפש כרגע?",
+  o:["תהליך אישי שדורש ממני להשתתף ולעבוד","כלים פרקטיים ותרגול במציאות","מישהו שיגיד לי בדיוק מה לעשות בכל מצב","פתרון מהיר או כמה טיפים","עדיין לא בטוח"]},
+ {id:"f2f",stage:"איך נפגשים",note:"כן, באמת פנים מול פנים.",q:"המפגשים ב״בדרך״ מתקיימים פנים מול פנים. איך זה מרגיש לך?",
+  o:["זה אפילו חשוב לי","מתאים לי, אם ארגיש שיש התאמה","אני מעדיף תהליך אונליין בלבד"]},
+ {id:"commit",stage:"לפני הסוף",note:"שאלה לא נוחה. חשובה.",q:"האם אתה מוכן להשקיע בתהליך משמעותי זמן, נוכחות ומשאבים?",
+  o:["כן, אם אבין שזה מדויק לי","אולי, אני צריך לשמוע ולהבין יותר","כרגע אני מחפש משהו חינמי או נקודתי"]}
+];
+var questions=Q.filter(function(x){return !x.pause});
+var TOTAL=questions.length;
+var app=document.getElementById('app'), actIn=document.getElementById('actIn'), prog=document.getElementById('prog');
+var step=-1; // -1 intro, 0..Q.length-1, Q.length = result
+var A={};
 
-  var QUESTION_STEPS = ['q1','q2','q3','q4','q5','q6'];
+function esc(s){return s.replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+function qIndex(i){var n=0;for(var k=0;k<=i;k++){if(!Q[k].pause)n++}return n}
+function setDark(on){document.body.classList.toggle('dark',!!on)}
+function focusHead(){var h=app.querySelector('h1,h2');if(h){h.setAttribute('tabindex','-1');h.focus({preventScroll:true})}window.scrollTo(0,0)}
 
-  var steps = Array.prototype.slice.call(document.querySelectorAll('.fit__step'));
-  var stepNames = steps.map(function(s){ return s.dataset.step; });
-  var current = 0;
+function renderIntro(){
+  setDark(false);prog.hidden=true;
+  app.innerHTML='<div class="in screen center intro fade">'+
+    '<span class="label">בדיקת התאמה</span>'+
+    '<h1>לפני שמדברים, בוא נבדוק אם זה בכלל <span class="strike">מתאים<span class="fix">מדויק</span></span>.</h1>'+
+    '<p class="sub">כמה שאלות קצרות. <span class="mark">בלי ציונים ובלי התחייבות.</span></p>'+
+    '<div class="meta"><span>7 שאלות</span><span>כ-2 דקות</span><span>התשובות נשארות אצלך</span></div>'+
+  '</div>';
+  actIn.innerHTML='<button class="btn solo" id="go">מתחילים <span class="arr">←</span></button>';
+  document.getElementById('go').onclick=function(){go(0)};
+  focusHead();
+}
 
-  var progressWrap = document.querySelector('.fit__progress');
-  var progressFill = document.querySelector('.fit__progress-fill');
-  var progressLabel = document.querySelector('.fit__progress-label');
+function renderPause(){
+  setDark(true);prog.hidden=true;
+  app.innerHTML='<div class="in screen center pause fade"><span class="label">רגע לנשום</span><h2>אין כאן תשובה נכונה.</h2><span class="hand">רק ניסיון להבין אם זה מדויק לך עכשיו.</span></div>';
+  actIn.innerHTML='<button class="link" id="bk">חזרה</button><button class="btn light" id="nx">להמשיך <span class="arr">←</span></button>';
+  document.getElementById('bk').onclick=function(){go(step-1)};
+  document.getElementById('nx').onclick=function(){go(step+1)};
+  focusHead();
+}
 
-  // ---------- storage ----------
-  function loadAnswers(){
-    try{
-      var raw = sessionStorage.getItem(STORAGE_KEY);
-      return raw ? JSON.parse(raw) : {};
-    }catch(e){ return {}; }
-  }
-  function saveAnswers(){
-    try{ sessionStorage.setItem(STORAGE_KEY, JSON.stringify(answers)); }catch(e){}
-  }
-  function clearAnswers(){
-    try{ sessionStorage.removeItem(STORAGE_KEY); }catch(e){}
-  }
-
-  var answers = loadAnswers();
-
-  // ---------- navigation ----------
-  var stepEnteredAt = 0;
-  function showStep(index){
-    steps.forEach(function(s){ s.classList.remove('is-active'); });
-    steps[index].classList.add('is-active');
-    current = index;
-    stepEnteredAt = Date.now();
-    updateProgress();
-    var heading = steps[index].querySelector('h1, h2');
-    if(heading){ heading.focus({ preventScroll: true }); }
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  }
-
-  // Qualitative progress instead of an exact "X out of Y" count, so the
-  // visitor isn't invited to calculate whether finishing is "worth it".
-  function progressCaption(qIndex, total){
-    var pct = (qIndex + 1) / total;
-    if(qIndex === 0) return 'מתחילים';
-    if(pct <= 0.5) return 'בתנועה';
-    if(qIndex < total - 1) return 'כמעט שם';
-    return 'שאלה אחרונה';
-  }
-
-  function updateProgress(){
-    var name = stepNames[current];
-    var qIndex = QUESTION_STEPS.indexOf(name);
-    if(qIndex === -1){
-      progressWrap.style.display = 'none';
-    } else {
-      progressWrap.style.display = '';
-      var pct = ((qIndex + 1) / QUESTION_STEPS.length) * 100;
-      progressFill.style.width = pct + '%';
-      progressLabel.textContent = progressCaption(qIndex, QUESTION_STEPS.length);
-    }
-  }
-
-  // ---------- option styling / selection ----------
-  function refreshOptionStyles(name){
-    document.querySelectorAll('input[name="' + name + '"]').forEach(function(inp){
-      var card = inp.closest('.fit__option');
-      if(card){ card.classList.toggle('is-selected', inp.checked); }
-    });
-  }
-
-  document.querySelectorAll('.fit__options').forEach(function(group){
-    var firstInput = group.querySelector('input');
-    if(!firstInput) return;
-    var name = firstInput.name;
-    var max = parseInt(group.dataset.max || '1', 10);
-
-    group.addEventListener('change', function(e){
-      if(e.target.type === 'checkbox'){
-        var checked = Array.prototype.slice.call(group.querySelectorAll('input:checked'));
-        if(checked.length > max){ e.target.checked = false; }
-      }
-      refreshOptionStyles(name);
-      persistCurrentStep();
-      validateCurrentStep();
-    });
+function renderQ(){
+  var q=Q[step]; setDark(false); prog.hidden=false;
+  var n=qIndex(step);
+  document.getElementById('progTxt').textContent='שאלה '+n+' מתוך '+TOTAL;
+  document.getElementById('progStage').textContent=q.stage;
+  document.getElementById('barFill').style.width=((n-1)/TOTAL*100)+'%';
+  var multi=!!q.max, sel=A[q.id]||[];
+  var html='<div class="in screen fade"><span class="hand qnote">'+esc(q.note)+'</span><h2 id="qh">'+esc(q.q)+'</h2>'+(q.hint?'<p class="qhint">'+esc(q.hint)+'</p>':'')+
+    '<fieldset aria-labelledby="qh"><legend>'+esc(q.q)+'</legend>';
+  q.o.forEach(function(t,i){
+    var id='o_'+q.id+'_'+i, ch=sel.indexOf(i)>-1;
+    html+='<label class="opt '+(multi?'check':'radio')+'" for="'+id+'"><input type="'+(multi?'checkbox':'radio')+'" name="'+q.id+'" id="'+id+'" value="'+i+'"'+(ch?' checked':'')+'><span class="box" aria-hidden="true"></span><span>'+esc(t)+'</span></label>';
   });
-
-  document.querySelectorAll('textarea').forEach(function(ta){
-    ta.addEventListener('input', function(){
-      persistCurrentStep();
-      validateCurrentStep();
-      var counter = ta.parentElement.querySelector('.fit__counter');
-      if(counter && ta.maxLength > 0){
-        counter.textContent = ta.value.length + ' / ' + ta.maxLength;
-      }
-    });
-  });
-
-  // ---------- persistence per step ----------
-  function persistCurrentStep(){
-    var step = steps[current];
-    var name = step.dataset.step;
-    if(QUESTION_STEPS.indexOf(name) === -1) return;
-
-    var checkboxes = step.querySelectorAll('input[type="checkbox"]');
-    var radios = step.querySelectorAll('input[type="radio"]');
-    var textarea = step.querySelector('textarea');
-
-    if(checkboxes.length){
-      answers[name] = Array.prototype.slice.call(step.querySelectorAll('input:checked')).map(function(i){ return i.value; });
-    } else if(radios.length){
-      var checked = step.querySelector('input:checked');
-      answers[name] = checked ? checked.value : undefined;
-    } else if(textarea){
-      answers[name] = textarea.value;
-    }
-    saveAnswers();
+  html+='</fieldset></div>';
+  app.innerHTML=html;
+  var last=(step===Q.length-1);
+  actIn.innerHTML='<button class="link" id="bk">חזרה</button><button class="btn" id="nx"'+(sel.length?'':' disabled')+'>'+(last?'לסיום':'המשך')+' <span class="arr">←</span></button>';
+  var nx=document.getElementById('nx');
+  var inputs=[].slice.call(app.querySelectorAll('input'));
+  function sync(){
+    var v=inputs.filter(function(x){return x.checked}).map(function(x){return +x.value});
+    A[q.id]=v; nx.disabled=!v.length;
+    if(multi){inputs.forEach(function(x){var off=!x.checked&&v.length>=q.max;x.disabled=off;x.parentNode.classList.toggle('dis',off)})}
   }
+  inputs.forEach(function(x){x.addEventListener('change',function(){sync(); if(!multi && !last){setTimeout(function(){},0)}})});
+  sync();
+  document.getElementById('bk').onclick=function(){go(step-1)};
+  nx.onclick=function(){if(!nx.disabled)go(step+1)};
+  focusHead();
+}
 
-  function validateStep(step){
-    var name = step.dataset.step;
-    if(QUESTION_STEPS.indexOf(name) === -1) return true;
-    var required = step.dataset.required !== 'false';
-    if(!required) return true;
-    var val = answers[name];
-    if(Array.isArray(val)) return val.length > 0;
-    if(typeof val === 'string') return val.trim().length > 0;
-    return !!val;
+function has(id,i){return (A[id]||[]).indexOf(i)>-1}
+function verdict(){
+  if(has('commit',2)||has('f2f',2)) return 'no';
+  var unsure=0;
+  if(has('commit',1)) unsure++;
+  if(has('seek',2)||has('seek',3)) unsure++;
+  if(has('seek',4)) unsure+=.5;
+  if((A.why||[]).length===1 && has('why',4)) unsure++;
+  if(has('stuck',4)) unsure+=.5;
+  return unsure>=1?'maybe':'yes';
+}
+function summary(){
+  return questions.map(function(q){var v=(A[q.id]||[]).map(function(i){return q.o[i]});return v.length?{q:q.q,a:v.join(' · ')}:null}).filter(Boolean);
+}
+function waLink(kind){
+  var msg = kind==='ask' ? 'היי ירון, מילאתי את בדיקת ההתאמה באתר ויש לי שאלה:' : 'היי ירון, מילאתי את בדיקת ההתאמה באתר ואשמח לדבר.';
+  return 'https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
+}
+
+function renderResult(){
+  setDark(false); prog.hidden=false;
+  document.getElementById('progTxt').textContent='סיימת';
+  document.getElementById('progStage').textContent='התוצאה';
+  document.getElementById('barFill').style.width='100%';
+  var v=verdict(), s=summary(), html='<div class="in screen res fade"><span class="label">התוצאה</span>';
+  if(v==='no'){
+    html+='<div class="verdict"><h2>כרגע זה כנראה לא הפורמט הנכון בשבילך. <span class="hand" style="font-size:.8em">וזה בסדר.</span></h2>'+
+      '<p class="body">״בדרך״ הוא תהליך פנים מול פנים שדורש זמן והשקעה, ומהתשובות שלך זה לא נשמע כמו מה שאתה מחפש עכשיו. אבל אני לא רוצה שתצא מכאן בידיים ריקות.</p></div>'+
+      '<div class="heard" style="background:var(--paper-2)"><span class="label">צידה לדרך, ממני אליך</span><p class="body" style="font-size:16px">שלושה דברים שכולם יודעים, אבל לא תמיד באמת עושים.</p>'+
+      '<div class="tips">'+
+        '<div class="tip"><span class="t">בפעם הבאה</span><p>תדבר קצת יותר לאט. ואל תסביר את אותו דבר פעמיים.</p></div>'+
+        '<div class="tip"><span class="t">בפעם הבאה</span><p>תחזיק <span class="mark">קשר עין עוד רגע אחד</span> לפני שאתה מסתכל הצידה.</p></div>'+
+        '<div class="tip"><span class="t">בפעם הבאה</span><p>תשאל שאלת המשך על מילה אחת שהצד השני אמר.</p></div>'+
+      '</div></div>'+
+      '<div class="ctas"><a class="btn ghost" href="'+CHANNEL+'" target="_blank" rel="noopener">לאינסטגרם, שם אני כותב <span class="arr">←</span></a>'+
+      '<a class="btn ghost" href="'+waLink('ask')+'" target="_blank" rel="noopener">בכל זאת, אני רוצה לשאול משהו <span class="arr">←</span></a></div>';
+  } else {
+    var head = v==='yes' ? '<h2>נראה שיש <span class="mark">בסיס טוב</span> לשיחה.</h2>' : '<h2>יכול להיות שיש כאן התאמה. <span class="hand" style="font-size:.78em">כדאי לדבר.</span></h2>';
+    var body = v==='yes' ? 'מהתשובות שלך עולה שאתה לא מחפש רק טיפ נקודתי, אלא שינוי שדורש עבודה אמיתית.' : 'יש כמה דברים שכדאי להבין יחד לפני שמחליטים, וזה בדיוק בשביל זה שיחת ההיכרות קיימת.';
+    html+='<div class="verdict">'+head+'<p class="body">'+body+'</p></div>'+
+      '<div class="heard"><span class="label">מה שמעתי ממך</span><ul>'+s.map(function(x){return '<li>'+esc(x.a)+'</li>'}).join('')+'</ul></div>'+
+      '<div class="ctas"><a class="btn" href="'+waLink('send')+'" target="_blank" rel="noopener">לשלוח לירון בוואטסאפ <span class="arr">←</span></a>'+
+      '<a class="btn ghost" href="'+CAL+'" target="_blank" rel="noopener">או לקבוע שיחת התאמה ישירות <span class="arr">←</span></a>'+
+      '<p class="small">נפתחת הודעה קצרה בוואטסאפ. אפשר לשנות אותה לפני ששולחים.</p></div>';
   }
+  html+='<button class="reset" id="reset">למחוק את התשובות ולהתחיל מחדש</button></div>';
+  app.innerHTML=html;
+  actIn.innerHTML='';document.getElementById('actions').hidden=true;
+  document.getElementById('reset').onclick=function(){A={};go(-1)};
+  focusHead();
+}
 
-  function validateCurrentStep(){
-    var step = steps[current];
-    var btn = step.querySelector('.fit__btn-continue');
-    if(!btn) return;
-    var valid = validateStep(step);
-    btn.disabled = !valid;
-    btn.setAttribute('aria-disabled', String(!valid));
-  }
-
-  // ---------- restore previously entered answers (survive refresh) ----------
-  function restoreInputs(){
-    Object.keys(answers).forEach(function(name){
-      var val = answers[name];
-      if(Array.isArray(val)){
-        val.forEach(function(v){
-          var el = document.querySelector('input[name="' + name + '"][value="' + v + '"]');
-          if(el) el.checked = true;
-        });
-      } else if(val !== undefined && val !== null){
-        var textarea = document.querySelector('textarea[name="' + name + '"]');
-        if(textarea){
-          textarea.value = val;
-          var counter = textarea.parentElement.querySelector('.fit__counter');
-          if(counter && textarea.maxLength > 0){ counter.textContent = textarea.value.length + ' / ' + textarea.maxLength; }
-        } else {
-          var radio = document.querySelector('input[name="' + name + '"][value="' + val + '"]');
-          if(radio) radio.checked = true;
-        }
-      }
-      refreshOptionStyles(name);
-    });
-  }
-
-  function firstUnansweredQuestionIndex(){
-    var hasAnyAnswer = Object.keys(answers).length > 0;
-    if(!hasAnyAnswer) return stepNames.indexOf('q1');
-    for(var i = 0; i < QUESTION_STEPS.length; i++){
-      var step = steps[stepNames.indexOf(QUESTION_STEPS[i])];
-      if(!validateStep(step)) return stepNames.indexOf(QUESTION_STEPS[i]);
-    }
-    return stepNames.indexOf(QUESTION_STEPS[QUESTION_STEPS.length - 1]);
-  }
-
-  // ---------- nav buttons ----------
-  document.querySelectorAll('.fit__btn-continue[data-action="start"]').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      showStep(firstUnansweredQuestionIndex());
-      validateCurrentStep();
-    });
-  });
-
-  steps.forEach(function(step){
-    var continueBtn = step.querySelector('.fit__btn-continue');
-    if(continueBtn && continueBtn.dataset.action !== 'start'){
-      continueBtn.addEventListener('click', function(){
-        if(continueBtn.disabled) return;
-        if(continueBtn.dataset.action === 'finish'){
-          finishQuiz();
-        } else {
-          showStep(current + 1);
-          validateCurrentStep();
-        }
-      });
-    }
-    var backBtn = step.querySelector('.fit__btn-back');
-    if(backBtn){
-      backBtn.addEventListener('click', function(){
-        showStep(Math.max(0, current - 1));
-        validateCurrentStep();
-      });
-    }
-  });
-
-  // ---------- passthrough screen (the single reflection screen: tap anywhere) ----------
-  document.querySelectorAll('.fit__step[data-passthrough="true"]').forEach(function(step){
-    function advance(){
-      if(!step.classList.contains('is-active')) return;
-      if(Date.now() - stepEnteredAt < 350) return;
-      showStep(current + 1);
-      validateCurrentStep();
-    }
-    function goBack(){
-      if(!step.classList.contains('is-active')) return;
-      showStep(Math.max(0, current - 1));
-      validateCurrentStep();
-    }
-    step.addEventListener('click', function(e){
-      if(e.target.closest('.fit__reflect-back')){ goBack(); return; }
-      advance();
-    });
-    step.addEventListener('keydown', function(e){
-      if(e.target.closest('.fit__reflect-back')) return;
-      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); advance(); }
-    });
-  });
-
-  // ---------- scoring ----------
-  var SCORES = {
-    q4: { q4_1: 2, q4_2: 2, q4_3: -1, q4_4: -2, q4_5: 0 },
-    q5: { q5_1: 2, q5_2: 1, q5_3: -3 },
-    q6: { q6_1: 2, q6_2: 0, q6_3: -2 }
-  };
-
-  function computeScore(){
-    var total = 0;
-    ['q4','q5','q6'].forEach(function(q){
-      var val = answers[q];
-      if(val !== undefined && SCORES[q][val] !== undefined){
-        total += SCORES[q][val];
-      }
-    });
-    return total;
-  }
-
-  function resultBucket(score){
-    if(score >= 4) return 'result-a';
-    if(score >= 0) return 'result-b';
-    return 'result-c';
-  }
-
-  // ---------- human-readable labels (for the WhatsApp summary only) ----------
-  var LABELS = {
-    q1: {
-      q1_1: 'אני מרגיש תקוע למרות שאני יודע שיש בי יותר',
-      q1_2: 'חסר לי ביטחון מול אנשים או בדייטינג',
-      q1_3: 'קשה לי ליזום, להוביל או לבטא עניין',
-      q1_4: 'אני רוצה שינוי רחב יותר בדרך שבה אני מחזיק את עצמי',
-      q1_5: 'בעיקר סקרנות'
-    },
-    q2: {
-      q2_1: 'אני יודע מה לעשות, אבל לא מצליח לפעול',
-      q2_2: 'אני חושב יותר מדי ומאבד את הרגע',
-      q2_3: 'אני תלוי באישור מאחרים',
-      q2_4: 'אני חוזר שוב ושוב לאותם דפוסים',
-      q2_5: 'אני עדיין לא יודע להגדיר'
-    },
-    q3: {
-      q3_1: 'הביטחון העצמי שלי במצבים חברתיים',
-      q3_2: 'איך אני מתנהל בזוגיות או בדייטינג',
-      q3_3: 'היכולת שלי לפעול, לא רק לחשוב',
-      q3_4: 'התחושה הכללית שיש לי כלפי עצמי',
-      q3_5: 'קשה לי לבחור אחת. זה קצת מהכול'
-    },
-    q4: {
-      q4_1: 'תהליך אישי שדורש ממני להשתתף ולעבוד',
-      q4_2: 'כלים פרקטיים ותרגול במציאות',
-      q4_3: 'מישהו שיגיד לי בדיוק מה לעשות בכל מצב',
-      q4_4: 'פתרון מהיר או כמה טיפים',
-      q4_5: 'עדיין לא בטוח'
-    },
-    q5: {
-      q5_1: 'זה אפילו חשוב לי',
-      q5_2: 'מתאים לי, אם ארגיש שיש התאמה',
-      q5_3: 'אני מעדיף תהליך אונליין בלבד'
-    },
-    q6: {
-      q6_1: 'כן, אם אבין שזה מדויק לי',
-      q6_2: 'אולי, אני צריך לשמוע ולהבין יותר',
-      q6_3: 'כרגע אני מחפש משהו חינמי או נקודתי'
-    }
-  };
-
-  function label(q, val){
-    if(!val) return '—';
-    return (LABELS[q] && LABELS[q][val]) || val;
-  }
-
-  function buildWhatsAppMessage(){
-    var q1text = Array.isArray(answers.q1) && answers.q1.length
-      ? answers.q1.map(function(v){ return label('q1', v); }).join(' • ')
-      : '—';
-
-    var lines = [
-      'היי ירון, הגעתי דרך בדיקת ההתאמה של בדרך.',
-      '',
-      '*מה הביא אותי לכאן?*',
-      q1text,
-      '',
-      '*איפה אני מרגיש הכי תקוע?*',
-      label('q2', answers.q2),
-      '',
-      '*אם משהו אחד היה משתנה, מה הייתי רוצה שייראה אחרת?*',
-      label('q3', answers.q3),
-      '',
-      '*מה אני מחפש כרגע?*',
-      label('q4', answers.q4),
-      '',
-      '*איך מרגיש לי להיפגש פנים מול פנים?*',
-      label('q5', answers.q5),
-      '',
-      '*המוכנות שלי להשקיע בתהליך:*',
-      label('q6', answers.q6),
-      '',
-      'אשמח לבדוק איתך אם יש התאמה לשיחה.'
-    ];
-
-    return lines.join('\n');
-  }
-
-  function prepareWhatsAppLinks(){
-    var message = buildWhatsAppMessage();
-    var url = 'https://wa.me/' + WHATSAPP_NUMBER + '?text=' + encodeURIComponent(message);
-    document.querySelectorAll('.fit__whatsapp-link').forEach(function(a){
-      a.setAttribute('href', url);
-    });
-    try{ sessionStorage.setItem(WA_BRIDGE_KEY, message); }catch(e){}
-  }
-
-  // ---------- finish ----------
-  function finishQuiz(){
-    persistCurrentStep();
-    var bucket = resultBucket(computeScore());
-    prepareWhatsAppLinks();
-    showStep(stepNames.indexOf(bucket));
-    clearAnswers();
-    answers = {};
-  }
-
-  // ---------- restart ----------
-  function resetQuiz(){
-    clearAnswers();
-    answers = {};
-    document.querySelectorAll('input[type="radio"], input[type="checkbox"]').forEach(function(i){ i.checked = false; });
-    document.querySelectorAll('textarea').forEach(function(t){
-      t.value = '';
-      var counter = t.parentElement.querySelector('.fit__counter');
-      if(counter && t.maxLength > 0){ counter.textContent = '0 / ' + t.maxLength; }
-    });
-    document.querySelectorAll('.fit__option').forEach(function(c){ c.classList.remove('is-selected'); });
-    document.querySelectorAll('.fit__btn-continue:not([data-action])').forEach(function(btn){
-      btn.disabled = true;
-      btn.setAttribute('aria-disabled', 'true');
-    });
-    showStep(0);
-  }
-
-  document.querySelectorAll('.fit__restart-link').forEach(function(btn){
-    btn.addEventListener('click', resetQuiz);
-  });
-
-  // ---------- init ----------
-  restoreInputs();
-  showStep(0);
-  steps.forEach(function(step){
-    var btn = step.querySelector('.fit__btn-continue');
-    if(btn && btn.dataset.action !== 'start'){
-      var valid = validateStep(step);
-      btn.disabled = !valid;
-      btn.setAttribute('aria-disabled', String(!valid));
-    }
-  });
-
+function go(i){
+  document.getElementById('actions').hidden=false;
+  step=Math.max(-1,Math.min(i,Q.length));
+  if(step===-1) renderIntro();
+  else if(step===Q.length) renderResult();
+  else if(Q[step].pause) renderPause();
+  else renderQ();
+}
+document.addEventListener('keydown',function(e){
+  if(e.key==='Enter'&&e.target.tagName==='INPUT'){var nx=document.getElementById('nx');if(nx&&!nx.disabled){e.preventDefault();nx.click()}}
+});
+go(-1);
 })();
