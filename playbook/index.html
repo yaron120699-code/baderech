@@ -8,27 +8,104 @@
 <title>הפלייבוק של בדרך.</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;900&family=Heebo:wght@400;500;700&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
 <style>
-:root{--paper:#F7F6F1;--paper2:#FFFEFA;--ink:#1B1A17;--ink2:#44423C;--muted:#7A776E;--rule:#DFDCD2;--slate:#33505E;--green:#3F6B4F;--red:#9E3B34;--wash:#EFEDE5}
-*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:78px}body{margin:0;background:var(--paper);color:var(--ink);font-family:'Heebo',sans-serif;font-size:17px;line-height:1.72}.wrap{max-width:1050px;margin:auto;padding:0 24px}.bar{position:sticky;top:0;z-index:20;background:rgba(247,246,241,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}.bar .wrap{height:60px;display:flex;align-items:center;gap:18px}.brand{font-family:'Frank Ruhl Libre',serif;font-size:20px;font-weight:700}.brand span{font-family:'Heebo';font-size:13px;font-weight:400;color:var(--muted);margin-inline-start:8px}.hot{margin-inline-start:auto;display:flex;gap:6px}.hot a{font-size:13px;text-decoration:none;color:var(--slate);padding:5px 10px;border:1px solid var(--rule);background:var(--paper2)}.hero{padding:68px 0 42px;border-bottom:1px solid var(--rule)}.eyebrow{font-size:12px;letter-spacing:.15em;color:var(--muted);margin-bottom:12px}.hero h1,h1,h2{font-family:'Frank Ruhl Libre',serif}.hero h1{font-size:clamp(44px,8vw,70px);line-height:1;margin:0 0 12px;font-weight:900}.hero .sub{font-family:'Frank Ruhl Libre',serif;font-size:clamp(23px,4vw,31px);margin:0 0 22px;color:var(--ink2)}.hero .lead{max-width:760px;font-size:18px;color:var(--ink2)}.manifesto{margin-top:32px;padding:24px 26px;background:var(--ink);color:var(--paper);font-family:'Frank Ruhl Libre',serif;font-size:clamp(21px,3vw,28px);line-height:1.45}.map{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--rule);margin-top:34px;border:1px solid var(--rule)}.map a{background:var(--paper2);padding:14px;text-decoration:none;color:var(--ink);min-height:92px}.map b{display:block;font-family:'Frank Ruhl Libre';font-size:17px}.map small{color:var(--muted)}.cols{display:grid;grid-template-columns:220px 1fr;gap:58px;padding:46px 0 100px}.toc{position:sticky;top:82px}.toc .t{font-size:11px;letter-spacing:.14em;color:var(--muted);margin-bottom:10px}.toc a{display:block;text-decoration:none;color:var(--ink2);font-size:14px;padding:5px 0;border-inline-start:2px solid transparent;padding-inline-start:12px;margin-inline-start:-14px}.toc a:hover{color:var(--ink);border-color:var(--slate)}main{min-width:0}section{padding-top:12px;margin-bottom:68px}section>h1{font-size:35px;line-height:1.15;margin:0 0 8px;padding-top:26px;border-top:2px solid var(--ink)}section:first-child>h1{border:0;padding-top:0}.purpose{font-family:'Frank Ruhl Libre';font-style:italic;color:var(--ink2);font-size:18px;margin-bottom:28px}h2{font-size:24px;line-height:1.25;margin:34px 0 12px}p{margin:0 0 14px}ul{padding-inline-start:23px;margin:0 0 18px}li{margin-bottom:7px}blockquote{margin:22px 0;padding:17px 21px;background:var(--wash);border-inline-start:3px solid var(--slate)}blockquote p{font-family:'Frank Ruhl Libre';font-size:20px;line-height:1.5;margin:0}.cards{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:20px 0}.card{border:1px solid var(--rule);background:var(--paper2);padding:18px}.card b{display:block;margin-bottom:5px}.good{border-top:3px solid var(--green)}.bad{border-top:3px solid var(--red)}.loop{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0}.loop span{padding:8px 12px;background:var(--paper2);border:1px solid var(--rule);font-weight:500}.loop i{font-style:normal;color:var(--muted);align-self:center}.table{overflow:auto;border:1px solid var(--rule);background:var(--paper2);margin:20px 0}table{width:100%;border-collapse:collapse;min-width:580px;font-size:15px}th,td{text-align:right;vertical-align:top;padding:11px 14px;border-bottom:1px solid var(--rule)}th{background:var(--wash);font-size:13px;color:var(--ink2)}tr:last-child td{border:0}.callout{padding:18px 20px;border:1px dashed #C9C5B8;background:var(--paper2);margin:20px 0}.callout .label{font-size:11px;letter-spacing:.14em;color:var(--muted);display:block;margin-bottom:6px}.red{color:var(--red)}.footer{border-top:1px solid var(--rule);padding:35px 0 60px;color:var(--muted);font-size:14px}@media(max-width:900px){.hot{display:none}.cols{grid-template-columns:1fr;gap:10px}.toc{position:static;border-bottom:1px solid var(--rule);padding-bottom:22px}.map{grid-template-columns:1fr 1fr}.cards{grid-template-columns:1fr}.hero{padding-top:44px}}@media(max-width:540px){.map{grid-template-columns:1fr}.hero h1{font-size:48px}}
+/* בדרך · יומן שטח — פלייבוק */
+:root{--paper:#F7F6F1;--paper2:#FBFAF6;--ink:#1C1B18;--ink2:#3B3A35;--gr:#5E5D56;--line:#D8D5CB;--forest:#1F3D2B;--on:#F7F6F1;--on2:#B9C7BB;--sand:#ECE8DD;--mk:#EBCBB0;--red:#8E3B32;
+--display:"Frank Ruhl Libre","David Libre",serif;--body:"Heebo","Assistant",Arial,sans-serif;--hand:"Amatic SC","Heebo",cursive}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:84px}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);font-size:17px;line-height:1.72;-webkit-font-smoothing:antialiased}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--forest);outline-offset:3px}
+.wrap{max-width:1080px;margin:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.mark{background:var(--mk);padding:0 .18em;border-radius:.12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.strike{position:relative;display:inline-block;color:rgba(28,27,24,.38);white-space:nowrap}
+.strike::after{content:"";position:absolute;right:-3%;left:-3%;top:54%;height:.075em;background:var(--ink);transform:rotate(-2.5deg);border-radius:2px}
+.strike .fix{position:absolute;bottom:68%;right:6%;font-family:var(--hand);font-weight:700;color:var(--forest);font-size:.72em;white-space:nowrap;transform:rotate(-4deg);line-height:1}
+.hand{font-family:var(--hand);font-weight:700;color:var(--forest);line-height:1.05}
+/* bar */
+.bar{position:sticky;top:0;z-index:20;background:rgba(247,246,241,.94);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar .wrap{height:64px;display:flex;align-items:center;gap:18px}
+.brand{font-family:var(--display);font-size:22px;font-weight:700}
+.brand span{font-family:var(--body);font-size:13px;font-weight:500;color:var(--gr);margin-inline-start:10px;letter-spacing:.06em}
+.hot{margin-inline-start:auto;display:flex;gap:6px}
+.hot a{font-size:13px;font-weight:500;text-decoration:none;color:var(--ink);padding:6px 11px;border:1px solid var(--line);border-radius:2px;background:var(--paper2)}
+.hot a:hover{border-color:var(--ink)}
+/* hero */
+.hero{padding:72px 0 48px;border-bottom:1px solid var(--line)}
+.eyebrow{font-size:13px;font-weight:500;letter-spacing:.06em;color:var(--gr);margin-bottom:14px;display:flex;align-items:center;gap:12px}
+.eyebrow::before{content:"";width:28px;height:1px;background:currentColor}
+h1,h2,.sub{font-family:var(--display);text-wrap:balance}
+.hero h1{font-size:clamp(46px,8vw,78px);line-height:1.3;margin:0 0 14px;font-weight:900}
+.hero .sub{font-size:clamp(22px,3.6vw,30px);margin:0 0 22px;color:var(--ink2);font-weight:700;line-height:1.35}
+.hero .lead{max-width:62ch;font-size:18px;color:var(--ink2);margin:0}
+.manifesto{margin-top:34px;padding:28px 30px;background:var(--forest);color:var(--on);font-family:var(--display);font-weight:900;font-size:clamp(22px,3vw,30px);line-height:1.4}
+/* layout */
+.cols{display:grid;grid-template-columns:220px minmax(0,1fr);gap:58px;padding:48px 0 100px}
+.toc{position:sticky;top:88px;align-self:start}
+.toc .t{font-size:13px;font-weight:500;letter-spacing:.06em;color:var(--gr);margin-bottom:12px}
+.toc a{display:block;text-decoration:none;color:var(--ink2);font-size:14.5px;padding:6px 0 6px 0;padding-inline-start:12px;border-inline-start:2px solid var(--line)}
+.toc a:hover{color:var(--ink);border-color:var(--forest)}
+.toc .hand{display:block;font-size:26px;margin-top:22px;transform:rotate(-2deg)}
+main{min-width:0}
+section{margin-bottom:72px}
+section>h1{font-size:clamp(30px,3.6vw,40px);line-height:1.15;margin:0 0 10px;padding-top:28px;border-top:3px solid var(--ink);font-weight:900}
+section:first-child>h1{border:0;padding-top:0}
+.purpose{font-family:var(--display);font-weight:700;color:var(--ink);font-size:19px;line-height:1.5;margin:0 0 30px}
+h2{font-size:23px;line-height:1.25;margin:38px 0 12px;font-weight:700}
+p{margin:0 0 14px;color:var(--ink2)}
+ul{padding-inline-start:22px;margin:0 0 18px;color:var(--ink2)}
+li{margin-bottom:7px}
+li::marker{color:var(--forest)}
+blockquote{margin:22px 0;padding:20px 24px;background:var(--sand);border:0}
+blockquote p{font-family:var(--display);font-weight:700;font-size:21px;line-height:1.45;margin:0;color:var(--ink)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:0;margin:22px 0;border-top:2px solid var(--ink)}
+.card{padding:16px 0 18px;border-bottom:1px solid var(--line);color:var(--ink2);min-width:0}
+.cards .card:nth-child(odd){padding-inline-end:22px}
+.cards .card:nth-child(even){padding-inline-start:22px;border-inline-start:1px solid var(--line)}
+.card b{display:block;margin-bottom:4px;font-family:var(--display);font-weight:700;font-size:18px;color:var(--ink)}
+.card.good b::before{content:"✓ ";color:var(--forest)}
+.card.bad{border:0;border-top:3px solid var(--red);background:var(--paper2);padding:18px 20px;margin-top:8px}
+.card.bad b{color:var(--red)}
+.loop{display:flex;flex-wrap:wrap;gap:8px 6px;margin:22px 0;align-items:center}
+.loop span{padding:8px 14px;background:var(--paper2);border:1px solid var(--ink);border-radius:2px;font-weight:500;font-size:15px}
+.loop i{font-style:normal;color:var(--gr)}
+.table{overflow-x:auto;margin:20px 0;border-top:2px solid var(--ink)}
+table{width:100%;border-collapse:collapse;min-width:580px;font-size:15px}
+th,td{text-align:right;vertical-align:top;padding:12px 14px;border-bottom:1px solid var(--line);color:var(--ink2)}
+th{font-size:13px;font-weight:500;letter-spacing:.04em;color:var(--gr)}
+td:first-child{font-family:var(--display);font-weight:700;color:var(--ink);font-size:16px}
+.callout{padding:18px 22px;border:1.5px solid var(--ink);background:var(--paper2);margin:22px 0;border-radius:2px}
+.callout .label{font-size:12px;font-weight:700;letter-spacing:.06em;color:var(--ink);display:block;margin-bottom:6px}
+.callout .label.red{color:var(--red)}
+.callout strong{font-family:var(--display);font-size:18px;color:var(--ink)}
+details.more{margin:26px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+details.more>summary{cursor:pointer;list-style:none;padding:16px 0;display:flex;justify-content:space-between;align-items:center;font-family:var(--display);font-weight:700;font-size:19px}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::after{content:"+";font-family:var(--body);font-weight:400;font-size:24px;color:var(--gr)}
+details.more[open]>summary::after{content:"−"}
+details.more>summary small{font-family:var(--body);font-weight:500;font-size:13px;color:var(--gr);margin-inline-start:10px}
+details.more .inner{padding:0 0 18px}
+.footer{border-top:1px solid var(--line);padding:36px 0 60px;color:var(--gr);font-size:14px}
+@media(max-width:900px){.hot{display:none}.cols{grid-template-columns:1fr;gap:12px}.toc{position:static;border-bottom:1px solid var(--line);padding-bottom:22px}.cards{grid-template-columns:1fr}.cards .card:nth-child(n){padding-inline:0;border-inline-start:0}.hero{padding-top:48px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 </style>
 </head>
 <body>
-<div class="bar"><div class="wrap"><div class="brand">בַּדֶּרֶךְ.<span>Playbook</span></div><div class="hot"><a href="/coach">המאמן</a><a href="#dna">DNA</a><a href="#method">השיטה</a><a href="#process">התהליך</a><a href="#content">תוכן</a></div></div></div>
+<div class="bar"><div class="wrap"><div class="brand">בַּדֶּרֶךְ.<span>פלייבוק</span></div><div class="hot"><a href="/coach">המאמן</a><a href="#dna">DNA</a><a href="#method">השיטה</a><a href="#process">התהליך</a><a href="#content">תוכן</a></div></div></div>
 <header class="hero"><div class="wrap">
 <div class="eyebrow">מסמך ההפעלה של בדרך · V3</div>
-<h1>להביא את עצמך לעולם.</h1>
+<h1>להביא את <span class="strike">הדמות<span class="fix">עצמך</span></span> לעולם.</h1>
 <p class="sub">לא לבנות דמות. לא ללמוד טריקים. ללמוד לפגוש את החיים כמו שאתה.</p>
 <p class="lead">בדרך הוא תהליך לגברים שרוצים לפתח נוכחות, ביטחון ושיקול דעת בעולם האמיתי. דייטינג הוא אחת הזירות המרכזיות שלנו — כי שם פחד, ערך עצמי, תקשורת, משיכה, גבולות והצורך באישור נחשפים מהר. אבל המטרה גדולה יותר מנשים: לעזור לאדם להביא יותר מעצמו לעולם, עד שהוא יודע להמשיך בלעדיי.</p>
 <div class="manifesto">אנחנו לא מתכוננים לחיים. אנחנו עובדים בתוכם.</div>
-<div class="map"><a href="#dna"><b>01 · המצפן</b><small>מי אנחנו ומה אנחנו מסרבים לייצר</small></a><a href="#client"><b>02 · האדם</b><small>מי מגיע ומה באמת יושב מתחת לבקשה</small></a><a href="#method"><b>03 · השיטה</b><small>אבחון, שטח, ניסוי ופידבק</small></a><a href="#process"><b>04 · התהליך</b><small>איך העבודה נראית בפועל</small></a><a href="#tools"><b>05 · הכלים</b><small>סטייל, נוכחות, תקשורת ודייטינג</small></a><a href="#success"><b>06 · הצלחה</b><small>איך נראה אדם שכבר לא צריך אותי</small></a><a href="#risks"><b>07 · הסכנות</b><small>מתי הצלחה הופכת למסכה</small></a><a href="#content"><b>08 · תוכן וצמיחה</b><small>איך ה-DNA הופך למותג</small></a></div>
 </div></header>
 <div class="wrap cols">
-<nav class="toc"><div class="t">תוכן העניינים</div><a href="#dna">01 · המצפן של בדרך</a><a href="#client">02 · האדם שלנו</a><a href="#method">03 · המתודולוגיה</a><a href="#process">04 · מבנה התהליך</a><a href="#tools">05 · כלי העבודה</a><a href="#success">06 · מה נחשב הצלחה</a><a href="#risks">07 · סכנות וגבולות</a><a href="#content">08 · תוכן וצמיחה</a><a href="#sales">09 · שיחת התאמה</a><a href="#learning">10 · מערכת למידה</a></nav>
+<nav class="toc"><div class="t">תוכן העניינים</div><a href="#dna">01 · המצפן של בדרך</a><a href="#client">02 · האדם שלנו</a><a href="#method">03 · המתודולוגיה</a><a href="#process">04 · מבנה התהליך</a><a href="#tools">05 · כלי העבודה</a><a href="#success">06 · מה נחשב הצלחה</a><a href="#risks">07 · סכנות וגבולות</a><a href="#content">08 · תוכן וצמיחה</a><a href="#sales">09 · שיחת התאמה</a><a href="#learning">10 · מערכת למידה</a><span class="hand">הפלייבוק אינו תורה.</span></nav>
 <main>
 <section id="dna"><h1>01 · המצפן של בדרך</h1><p class="purpose">לפני כל כלי, מפגש, ריל או החלטה: מה אנחנו מנסים לעשות כאן?</p>
-<h2>התזה</h2><blockquote><p>בדרך עוזרת לגברים להביא את עצמם לעולם.</p></blockquote><p>לא להפוך למישהו אחר כדי להיות ראוי. לא לבנות פרסונה כריזמטית. לא לחכות לגרסה עתידית ומושלמת של עצמך לפני שמתחילים לחיות. אנחנו עובדים על הפער שבין האדם שכבר נמצא בפנים לבין הדרך שבה הוא מצליח — או לא מצליח — לבטא אותו בחוץ.</p>
+<h2>התזה</h2><blockquote><p>בדרך עוזרת לגברים <span class="mark">להביא את עצמם לעולם.</span></p></blockquote><p>לא להפוך למישהו אחר כדי להיות ראוי. לא לבנות פרסונה כריזמטית. לא לחכות לגרסה עתידית ומושלמת של עצמך לפני שמתחילים לחיות. אנחנו עובדים על הפער שבין האדם שכבר נמצא בפנים לבין הדרך שבה הוא מצליח — או לא מצליח — לבטא אותו בחוץ.</p>
 <h2>למה דייטינג?</h2><p>כי דייטינג הוא מעבדה צפופה לחיים. תוך דקות הוא יכול לחשוף פחד מדחייה, צורך באישור, שפת גוף, יכולת להוביל, כנות, גבולות, משיכה, הקשבה, ערך עצמי ויכולת להתמודד עם אי-ודאות. אנחנו לא מבטלים את הרצון להצליח עם נשים. אנחנו לוקחים אותו ברצינות — ובודקים מה האדם מבקש מההצלחה הזאת לתת לו.</p>
 <h2>ששת העקרונות</h2><div class="cards"><div class="card"><b>להבין לפני שדוחפים</b>״לא בא לי״ הוא לא סוף השיחה. הוא מידע. מה מחזיק אותך עכשיו?</div><div class="card"><b>חוויה לפני תיאוריה</b>לא לומדים את החיים ואז יוצאים אליהם. לומדים מתוך מה שקורה עכשיו.</div><div class="card"><b>לא אומרים לך מה לרצות</b>סטוץ, זוגיות, היכרות או חופש — הבחירה שלך. התפקיד שלנו הוא להבין למה ומה המחיר.</div><div class="card"><b>לא בונים דמות</b>כריזמה שאינה מחוברת לאדם היא עוד מסכה. המטרה היא פחות הופעה ויותר נוכחות.</div><div class="card"><b>הצלחה אינה ערך עצמי</b>״כן״ יכול להיות כיף. ״לא״ יכול לכאוב. אף אחד מהם לא אמור להפוך לפסק דין על מי שאתה.</div><div class="card"><b>איתי, עד שבלעדיי</b>התהליך מצליח כשהלקוח יודע לראות, לפרש, לבחור ולתת לעצמו פידבק.</div></div>
 <h2>האנטי-תוצאה</h2><div class="card bad"><b>הגבר שאנחנו מסרבים לייצר</b>נרקיסיסט כריזמטי שרץ אחרי האישור הבא; מתייחס לנשים כהישגים; משתמש במניפולציות; עושה דברים בצורה לא כנה; משחק דמות של גבר בטוח במקום לפתח שקט פנימי ושיקול דעת.</div></section>
@@ -39,17 +116,17 @@
 <div class="callout"><span class="label">עיקרון אבחוני</span>לא כל פחד מגישה הוא ״פחד מדחייה״. לפעמים הבחור פשוט לא יודע מה לומר. לפעמים הוא לא יודע לזהות עניין. לפעמים הוא לא אוהב איך שהוא נראה. אנחנו לא מכריחים סיפור פסיכולוגי במקום שבו חסרה מיומנות — ולא מלמדים מיומנות במקום שבו הפצע מנהל אותה.</div></section>
 
 <section id="method"><h1>03 · המתודולוגיה</h1><p class="purpose">בדרך היא לולאת למידה, לא סילבוס.</p>
-<div class="loop"><span>מבינים</span><i>←</i><span>יוצאים</span><i>←</i><span>מנסים</span><i>←</i><span>טועים</span><i>←</i><span>מפרקים</span><i>←</i><span>משנים</span><i>←</i><span>חוזרים לעולם</span></div>
+<div class="loop"><span>1 · מבינים</span><i>←</i><span>2 · יוצאים</span><i>←</i><span>3 · מנסים</span><i>←</i><span>4 · מפרקים</span><i>←</i><span>5 · חוזרים</span></div>
 <h2>1. מבינים</h2><p>מגדירים יחד מה האדם רוצה, למה, ומה הפער שמפריע לו כרגע. אין תכנית זהה לכולם.</p><h2>2. יוצאים</h2><p>עוברים מהשיחה לסביבה שבה החיים באמת קורים: רחוב, בר, חנות, דייט, מפגש חברתי או כל זירה רלוונטית.</p><h2>3. מנסים</h2><p>לא מחכים להרגיש מוכנים. בוחרים ניסוי קטן שאפשר ללמוד ממנו. אם הוא קופא, לא ישר דוחפים: ״מה מחזיק אותך? פחד לקבל לא? אתה לא יודע מה להגיד? רוצה שאראה לך שהשד לא כזה נורא?״</p><h2>4. מפרקים</h2><p>מה ראית? מה הרגשת? מה היא שידרה? מה רצית? איפה היית אתה ואיפה התחלת להופיע? הפידבק נשען על הסיטואציה, לא על חוקים מוחלטים.</p><h2>5. חוזרים</h2><p>עוד ניסיון, עם שינוי אחד. המטרה היא לא ערב מושלם אלא בניית שיקול דעת דרך חזרות אמיתיות.</p></section>
 
 <section id="process"><h1>04 · מבנה התהליך</h1><p class="purpose">המסגרת קיימת כדי להחזיק את התהליך. היא לא אמורה לכלוא את האדם.</p>
-<div class="table"><table><thead><tr><th>שלב</th><th>המטרה</th><th>מה יכול לקרות</th><th>השאלה המובילה</th></tr></thead><tbody><tr><td>פתיחה ואבחון</td><td>להבין את האדם, המוטיבציה והפער</td><td>עבר, מטרות, אמונות, סטייל, דייטינג, מערכות יחסים</td><td>מה אתה באמת רוצה לקבל מהתהליך?</td></tr><tr><td>בסיס ונוכחות</td><td>ליישר בין האדם לבין איך שהוא מופיע</td><td>סטייל, טיפוח, יציבה, קול, קשר עין, אנרגיה</td><td>מה העולם פוגש כשאתה נכנס לחדר?</td></tr><tr><td>שטח ראשון</td><td>לראות את הדפוסים בזמן אמת</td><td>שיחות, גישות, תצפית, הדגמה, פידבק</td><td>מה באמת קורה לך ברגע האמת?</td></tr><tr><td>תקשורת ומשיכה</td><td>לפתח יכולת לקרוא ולהוביל אינטראקציה</td><td>שפת גוף, עניין, חוסר עניין, פלירטוט, גבולות, כנות</td><td>האם אתה פוגש אדם או מנסה להשיג תוצאה?</td></tr><tr><td>אינטגרציה</td><td>להפוך ידע לשיקול דעת עצמאי</td><td>דייטים, סיטואציות מורכבות, ניתוח עצמי</td><td>מה אתה כבר יודע לראות בלי לשאול אותי?</td></tr><tr><td>יציאה לעצמאות</td><td>לצמצם תלות במלווה</td><td>מפת המשך, הרגלי רפלקציה, מטרות אישיות</td><td>איך אתה ממשיך בדרך בלעדיי?</td></tr></tbody></table></div>
-<p><strong>הערה:</strong> השלבים אינם בהכרח שישה מפגשים נפרדים. לקוח יכול להזדקק ליותר שטח, יותר עבודה על סטייל, או כמעט בכלל לא. התהליך מותאם לאדם.</p></section>
+<div class="table"><table><thead><tr><th>שלב</th><th>המטרה</th><th>מה יכול לקרות</th><th>השאלה המובילה</th></tr></thead><tbody><tr><td>01 · מיפוי</td><td>להבין את האדם, המוטיבציה והפער</td><td>עבר, מטרות, אמונות, סטייל, דייטינג, מערכות יחסים</td><td>מה אתה באמת רוצה לקבל מהתהליך?</td></tr><tr><td>02 · זהות</td><td>ליישר בין האדם לבין איך שהוא מופיע</td><td>סטייל, טיפוח, יציבה, קול, קשר עין, אנרגיה</td><td>מה העולם פוגש כשאתה נכנס לחדר?</td></tr><tr><td>03 · נוכחות</td><td>לראות את הדפוסים בזמן אמת, ולפתח יכולת לקרוא ולהוביל אינטראקציה</td><td>שיחות, גישות, תצפית, הדגמה, פידבק; שפת גוף, עניין, חוסר עניין, פלירטוט, גבולות, כנות</td><td>מה באמת קורה לך ברגע האמת? האם אתה פוגש אדם או מנסה להשיג תוצאה?</td></tr><tr><td>04 · התנסות</td><td>להפוך ידע לשיקול דעת עצמאי</td><td>דייטים, סיטואציות מורכבות, ניתוח עצמי</td><td>מה אתה כבר יודע לראות בלי לשאול אותי?</td></tr><tr><td>05 · עצמאות</td><td>לצמצם תלות במלווה</td><td>מפת המשך, הרגלי רפלקציה, מטרות אישיות</td><td>איך אתה ממשיך בדרך בלעדיי?</td></tr></tbody></table></div>
+<p><strong>הערה:</strong> המסגרת היא 8 מפגשים, אחת לשבועיים, אבל השלבים אינם מפגשים קבועים. לקוח יכול להזדקק ליותר שטח, יותר עבודה על סטייל, או כמעט בכלל לא. התהליך מותאם לאדם.</p></section>
 
 <section id="tools"><h1>05 · כלי העבודה</h1><p class="purpose">כל כלי הוא אמצעי להביא יותר מהאדם החוצה — לא עוד ציון שהוא צריך להשיג.</p>
 <div class="cards"><div class="card"><b>סטייל וטיפוח</b>לא ״איך להתלבש כדי להשיג נשים״, אלא איך החוץ מתחיל לבטא את האדם שאתה רוצה להיות.</div><div class="card"><b>שפת גוף ונוכחות</b>יציבה, מבט, קול, קצב ותנועה — וגם היכולת לקרוא את האדם שמולך בלי להפוך כל מחווה לנוסחה.</div><div class="card"><b>תקשורת</b>סקרנות, הקשבה, הומור, פלירטוט, הובלה, יכולת לומר מה אתה רוצה ולהישאר קשוב למה שהצד השני רוצה.</div><div class="card"><b>אפליקציות וטקסטינג</b>להביא אישיות גם דרך מסך, לקרוא השקעה ולהתקדם מהתכתבות למפגש אמיתי — בלי להפוך כל הודעה למבחן.</div><div class="card"><b>אמונות ופחד</b>לזהות מתי מחשבה מגבילה אותך ומתי היא פשוט מצביעה על מיומנות שעוד לא פיתחת.</div><div class="card"><b>גבולות והסכמה</b>אפשר לבדוק גבולות בצורה מכבדת; סימנים של חוסר עניין הם מידע, לא אתגר שצריך לנצח.</div><div class="card"><b>רפלקציה</b>אחרי סיטואציה: מה ראיתי, מה רציתי, מה עשיתי, מה למדתי, ומה אנסה אחרת בפעם הבאה.</div></div>
 
-<h2>אפליקציות וטקסטינג</h2>
+<details class="more"><summary><span>אפליקציות וטקסטינג<small>פרופיל, הודעה טובה, עדשת ההודעה, תרגול</small></span></summary><div class="inner">
 <blockquote><p>המטרה של אפליקציה אינה לבנות קשר בתוך המסך. היא לייצר מספיק עניין, ביטוי עצמי והדדיות כדי לעבור למפגש אמיתי.</p></blockquote>
 <p>טקסטינג הוא לא תחום נפרד מהשיטה. אותם דפוסים שאנחנו רואים פנים מול פנים מופיעים גם במסך: חרדת ביצוע, ריצוי, ניסיון להרשים, פחד להביע עניין, צורך בוודאות ורדיפה אחרי עמימות. ההבדל הוא שהמסך נותן לאובר־ת׳ינקינג יותר זמן לעבוד.</p>
 
@@ -60,7 +137,7 @@
 <ul><li>ספציפית אליה ולא גנרית.</li><li>קצרה יחסית.</li><li>יש בה משהו ממני.</li><li>יכולה להיות משחקית בלי לנסות להיות מצחיקה בכוח.</li><li>קלה וכיפית לתגובה.</li><li>לא מרגישה כמו ראיון.</li><li>יכולה לכלול סיכון קטן או כוונה.</li></ul>
 <div class="callout"><span class="label">עיקרון</span><strong>אל תנסה להיות מצחיק. תן לעצמך לשחק.</strong></div>
 
-<h2>The Message Lens</h2>
+<h2>עדשת ההודעה</h2>
 <div class="table"><table><thead><tr><th>עדשה</th><th>השאלה</th></tr></thead><tbody>
 <tr><td>מקור</td><td>מאיפה בפרופיל או בשיחה זה הגיע?</td></tr>
 <tr><td>אני</td><td>מה יש פה ממני?</td></tr>
@@ -73,16 +150,17 @@
 <ul><li>אובר־ת׳ינקינג על כל הודעה.</li><li>ראיון במקום מפגש.</li><li>פתיחים גנריים או ניסיון להיות מעניין בכוח.</li><li>משחקי אדישות וזמני תגובה.</li><li>השקעת יתר מול מעט השקעה.</li><li>פחד להציע מפגש.</li><li>התכתבות ארוכה שמשמשת כהימנעות מהעולם האמיתי.</li></ul>
 
 <h2>איך מתרגלים</h2>
-<ul><li>עוברים יחד על הודעות אמיתיות ומזהים את הדפוס, לא רק מתקנים ניסוח.</li><li>מנסחים אותה הודעה בשלוש גרסאות: גנרית, מנסה להרשים, ובאמת שלו.</li><li>משתמשים ב־Message Lens כ־scaffolding, לא כתסריט.</li><li>עושים סימולציה של שיחה עד הצעת מפגש.</li><li>מתרגלים גם את היכולת לזהות מתי נכון לא לשלוח עוד הודעה.</li></ul>
+<ul><li>עוברים יחד על הודעות אמיתיות ומזהים את הדפוס, לא רק מתקנים ניסוח.</li><li>מנסחים אותה הודעה בשלוש גרסאות: גנרית, מנסה להרשים, ובאמת שלו.</li><li>משתמשים ב־עדשת ההודעה כפיגום, לא כתסריט.</li><li>עושים סימולציה של שיחה עד הצעת מפגש.</li><li>מתרגלים גם את היכולת לזהות מתי נכון לא לשלוח עוד הודעה.</li></ul>
 <p>בהתחלה אפשר לתת דוגמאות, מבנים והדגמות. המטרה אינה לשנן נוסחים אלא להפוך בהדרגה את הבחירה לאינטואיטיבית ואישית.</p>
 
-<div class="callout"><span class="label">KPI</span><strong>הוא מסוגל לכתוב בלי להיתקע, האישיות שלו עוברת גם במסך, הוא מזהה הדדיות, והוא יודע להעביר שיחה מהמסך למציאות בלי לחץ.</strong></div>
+</div></details>
+<div class="callout"><span class="label">מדד הצלחה</span><strong>הוא מסוגל לכתוב בלי להיתקע, האישיות שלו עוברת גם במסך, הוא מזהה הדדיות, והוא יודע להעביר שיחה מהמסך למציאות בלי לחץ.</strong></div>
 </section>
 
 <section id="success"><h1>06 · מה נחשב הצלחה</h1><p class="purpose">לא כמה הוא השיג. מי הוא הפך להיות בזמן שניסה.</p>
 <h2>איך הוא נראה חצי שנה אחרי</h2><p>יש משהו באנרגיה שלו. בדרך שבה הוא עומד, מדבר ומתלבש. תחושה של רעננות. לא יהירות אלא שקט פנימי. הוא מסוגל לרצות מאוד מישהי בלי שהתגובה שלה תקבע את הערך שלו.</p>
 <div class="cards"><div class="card good"><b>כשאומרים לו כן</b>הוא נהנה, מתרגש וממשיך לבדוק אם גם הוא באמת מעוניין בה. הוא לא עף לשמיים כאילו קיבל הוכחה שהוא סוף סוף שווה.</div><div class="card good"><b>כשאומרים לו לא</b>זה יכול לבאס. הוא נשאר במקום. הוא לא הופך את הדחייה לזהות ולא חייב לברוח מיד לאישור הבא.</div><div class="card good"><b>בתוך אינטראקציה</b>הוא קורא שפת גוף והקשר, מרשה לעצמו לבדוק גבולות בכבוד, מתקשר בכנות ולא מחפש רק את המהלך ״הנכון״.</div><div class="card good"><b>אחרי האינטראקציה</b>הוא לא צריך לשלוח לי ״איך הייתי?״. הוא יודע לנתח את עצמו בלי להלקות את עצמו.</div></div>
-<blockquote><p>ה-KPI העליון: הוא כבר לא צריך את הפידבק שלי, כי הוא למד לתת אותו לעצמו.</p></blockquote></section>
+<blockquote><p><span class="mark">המדד העליון:</span> הוא כבר לא צריך את הפידבק שלי, כי הוא למד לתת אותו לעצמו.</p></blockquote></section>
 
 <section id="risks"><h1>07 · סכנות וגבולות</h1><p class="purpose">גם הצלחה יכולה להפוך למנגנון הרסני אם לא שמים לב למה היא משרתת.</p>
 <h2>מתי ההצלחה מתחילה לנהל אותו?</h2><ul><li>הוא מודד ערב לפי כמה נשים דיברו איתו.</li><li>הוא מחפש את הבחורה הבאה לפני שבכלל פגש את זו שמולו.</li><li>נשים הופכות להוכחה לערך או לסטטוס.</li><li>הוא מתחיל להשתמש במניפולציות כי התוצאה חשובה יותר מהכנות.</li><li>הוא משחק דמות שהוא חושב שנשים רוצות.</li><li>ה״כן״ הבא ממלא חור — ואז מיד נפתח עוד אחד.</li></ul>
