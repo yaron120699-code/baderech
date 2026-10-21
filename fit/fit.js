@@ -2,6 +2,10 @@
 var WA="972505494326";
 var CAL="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0ofP-cRwZhCKLFa0pnLG4Ib2WAyO6t5vIcJPsrCWzk4PzxktiDKDWdj4BuDzzyIKh5W39e9tZA";
 var CHANNEL="https://instagram.com/baderech_";
+// כתובת ה-Web App של Google Apps Script שכותב לגיליון (אותה כתובת ששימשה את /research).
+// לפני שזה עולה לאוויר צריך להחליף את קוד הסקריפט לפי fit/SETUP-FIT.md, אחרת השורות ייכתבו לעמודות הישנות.
+// אם תרוקן את הכתובת, השאלון ימשיך לעבוד ופשוט לא ישלח כלום.
+var SUBMIT_ENDPOINT='https://script.google.com/macros/s/AKfycbxUD-hCW7uz_E2x5xx_E9TetLvUUJUKOz9MjZCM_uilDU96KihyvS0_tC3ZkT_KF25Y7Q/exec';
 
 var Q=[
  {id:"stage",stage:"מתחילים",note:"נקודת התחלה. לא ציון.",q:"באיזה שלב חיים אתה נמצא כרגע?",multi:true,hint:"אפשר לבחור יותר מתשובה אחת.",
@@ -98,6 +102,47 @@ function verdict(){
 function summary(){
   return questions.map(function(q){var v=(A[q.id]||[]).map(function(i){return q.o[i]});return v.length?{q:q.q,a:v.join(' · ')}:null}).filter(Boolean);
 }
+// ---------- שליחה לגיליון ----------
+var VERDICT_LABEL={yes:'מתאים',maybe:'אולי',no:'לא מתאים'};
+var sent=false;
+function anonId(){
+  var key='baderech_fit_anon_id';
+  try{
+    var id=localStorage.getItem(key);
+    if(!id){id='f_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8);localStorage.setItem(key,id)}
+    return id;
+  }catch(e){return 'f_'+Date.now().toString(36)}
+}
+function answerText(id){
+  var q=questions.filter(function(x){return x.id===id})[0];
+  return (A[id]||[]).map(function(i){return q.o[i]}).join('; ');
+}
+function submitFit(v){
+  if(sent||!SUBMIT_ENDPOINT) return;
+  sent=true;
+  var p={
+    id:anonId(),
+    submitted_at:new Date().toISOString(),
+    verdict:VERDICT_LABEL[v]||v,
+    stage:answerText('stage'),
+    why:answerText('why'),
+    stuck:answerText('stuck'),
+    change:answerText('change'),
+    seek:answerText('seek'),
+    f2f:answerText('f2f'),
+    commit:answerText('commit'),
+    source:(new URLSearchParams(window.location.search)).get('src')||''
+  };
+  try{
+    fetch(SUBMIT_ENDPOINT,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, // בלי preflight מול Apps Script, כמו ב-/research
+      body:JSON.stringify(p),
+      keepalive:true // שהשליחה תסתיים גם אם לוחצים מיד על וואטסאפ ויוצאים מהדף
+    }).catch(function(){});
+  }catch(e){}
+}
+
 function waLink(kind){
   var msg = kind==='ask' ? 'היי ירון, מילאתי את בדיקת ההתאמה באתר ויש לי שאלה:' : 'היי ירון, מילאתי את בדיקת ההתאמה באתר ואשמח לדבר.';
   return 'https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
@@ -109,6 +154,7 @@ function renderResult(){
   document.getElementById('progStage').textContent='התוצאה';
   document.getElementById('barFill').style.width='100%';
   var v=verdict(), s=summary(), html='<div class="in screen res fade"><span class="label">התוצאה</span>';
+  submitFit(v);
   if(v==='no'){
     html+='<div class="verdict"><h2>כרגע זה כנראה לא הפורמט הנכון בשבילך. <span class="hand" style="font-size:.8em">וזה בסדר.</span></h2>'+
       '<p class="body">״בדרך״ הוא תהליך פנים מול פנים שדורש זמן והשקעה, ומהתשובות שלך זה לא נשמע כמו מה שאתה מחפש עכשיו. אבל אני לא רוצה שתצא מכאן בידיים ריקות.</p></div>'+
@@ -132,7 +178,7 @@ function renderResult(){
   html+='<button class="reset" id="reset">למחוק את התשובות ולהתחיל מחדש</button></div>';
   app.innerHTML=html;
   actIn.innerHTML='';document.getElementById('actions').hidden=true;
-  document.getElementById('reset').onclick=function(){A={};go(-1)};
+  document.getElementById('reset').onclick=function(){A={};sent=false;go(-1)};
   focusHead();
 }
 
