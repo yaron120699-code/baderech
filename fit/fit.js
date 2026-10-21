@@ -112,7 +112,7 @@ function anonId(){
     return id;
   }catch(e){return 'f_'+Date.now().toString(36)}
 }
-// קוד קצר לכל מילוי. מופיע בגיליון ובהודעת הוואטסאפ, כדי לחבר בין שיחה לתשובות.
+// קוד קצר לכל מילוי. מזהה את השורה בגיליון, כדי שהלחיצות ייכנסו לשורה הנכונה.
 // בלי אותיות וספרות שקל לבלבל ביניהן (O/0, I/1/L).
 function newCode(){
   var abc='ABCDEFGHJKMNPQRSTUVWXYZ23456789', c='';
@@ -177,8 +177,7 @@ function trackClick(action){
 }
 
 function waLink(kind){
-  var tag = CODE ? ' (#'+CODE+')' : '';
-  var msg = kind==='ask' ? 'היי ירון, מילאתי את בדיקת ההתאמה באתר'+tag+' ויש לי שאלה:' : 'היי ירון, מילאתי את בדיקת ההתאמה באתר'+tag+' ואשמח לדבר.';
+  var msg = kind==='ask' ? 'היי ירון, מילאתי את בדיקת ההתאמה באתר ויש לי שאלה:' : 'היי ירון, מילאתי את בדיקת ההתאמה באתר ואשמח לדבר.';
   return 'https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
 }
 
