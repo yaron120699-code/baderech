@@ -40,7 +40,7 @@ function renderIntro(){
     '<span class="label">בדיקת התאמה</span>'+
     '<h1>לפני שמדברים, בוא נבדוק אם זה בכלל <span class="strike">מתאים<span class="fix">מדויק</span></span>.</h1>'+
     '<p class="sub">כמה שאלות קצרות. <span class="mark">בלי ציונים ובלי התחייבות.</span></p>'+
-    '<div class="meta"><span>7 שאלות</span><span>כ-2 דקות</span><span>התשובות נשארות אצלך</span></div>'+
+    '<div class="meta"><span>7 שאלות</span><span>כ-2 דקות</span><span>התשובות מגיעות רק אליי</span></div>'+
   '</div>';
   actIn.innerHTML='<button class="btn solo" id="go">מתחילים <span class="arr">←</span></button>';
   document.getElementById('go').onclick=function(){go(0)};
@@ -103,7 +103,7 @@ function summary(){
 }
 // ---------- שליחה לגיליון ----------
 var VERDICT_LABEL={yes:'מתאים',maybe:'אולי',no:'לא מתאים'};
-var sent=false;
+var sent=false, CODE='';
 function anonId(){
   var key='baderech_fit_anon_id';
   try{
@@ -112,14 +112,52 @@ function anonId(){
     return id;
   }catch(e){return 'f_'+Date.now().toString(36)}
 }
+// קוד קצר לכל מילוי. מופיע בגיליון ובהודעת הוואטסאפ, כדי לחבר בין שיחה לתשובות.
+// בלי אותיות וספרות שקל לבלבל ביניהן (O/0, I/1/L).
+function newCode(){
+  var abc='ABCDEFGHJKMNPQRSTUVWXYZ23456789', c='';
+  for(var i=0;i<4;i++) c+=abc.charAt(Math.floor(Math.random()*abc.length));
+  return c;
+}
+// מאיפה הגיע: קודם ?src= מהקישור, אחרת לפי האתר הקודם, אחרת direct.
+function sourceOf(){
+  var src=(new URLSearchParams(window.location.search)).get('src');
+  if(src) return src;
+  try{
+    if(!document.referrer) return 'direct';
+    var h=new URL(document.referrer).hostname.replace(/^www\./,'');
+    if(h===window.location.hostname) return 'site';
+    if(/instagram\.com$/.test(h)) return 'instagram';
+    if(/facebook\.com$|fb\.com$/.test(h)) return 'facebook';
+    if(/whatsapp\.com$|wa\.me$/.test(h)) return 'whatsapp';
+    if(/(^|\.)google\./.test(h)) return 'google';
+    if(/^t\.co$|twitter\.com$|x\.com$/.test(h)) return 'x';
+    if(/linkedin\.com$|lnkd\.in$/.test(h)) return 'linkedin';
+    return h;
+  }catch(e){return 'direct'}
+}
 function answerText(id){
   var q=questions.filter(function(x){return x.id===id})[0];
   return (A[id]||[]).map(function(i){return q.o[i]}).join('; ');
 }
+function post(p){
+  if(!SUBMIT_ENDPOINT) return;
+  try{
+    fetch(SUBMIT_ENDPOINT,{
+      method:'POST',
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, // בלי preflight מול Apps Script
+      body:JSON.stringify(p),
+      keepalive:true // שהשליחה תסתיים גם אם יוצאים מהדף מיד
+    }).catch(function(){});
+  }catch(e){}
+}
 function submitFit(v){
-  if(sent||!SUBMIT_ENDPOINT) return;
+  if(sent) return;
   sent=true;
-  var p={
+  CODE=newCode();
+  post({
+    type:'result',
+    code:CODE,
     id:anonId(),
     submitted_at:new Date().toISOString(),
     verdict:VERDICT_LABEL[v]||v,
@@ -130,20 +168,17 @@ function submitFit(v){
     seek:answerText('seek'),
     f2f:answerText('f2f'),
     commit:answerText('commit'),
-    source:(new URLSearchParams(window.location.search)).get('src')||''
-  };
-  try{
-    fetch(SUBMIT_ENDPOINT,{
-      method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'}, // בלי preflight מול Apps Script
-      body:JSON.stringify(p),
-      keepalive:true // שהשליחה תסתיים גם אם לוחצים מיד על וואטסאפ ויוצאים מהדף
-    }).catch(function(){});
-  }catch(e){}
+    source:sourceOf()
+  });
+}
+// רושם בגיליון על מה לחצו במסך התוצאה (וואטסאפ, יומן, אינסטגרם).
+function trackClick(action){
+  if(CODE) post({type:'click', code:CODE, action:action});
 }
 
 function waLink(kind){
-  var msg = kind==='ask' ? 'היי ירון, מילאתי את בדיקת ההתאמה באתר ויש לי שאלה:' : 'היי ירון, מילאתי את בדיקת ההתאמה באתר ואשמח לדבר.';
+  var tag = CODE ? ' (#'+CODE+')' : '';
+  var msg = kind==='ask' ? 'היי ירון, מילאתי את בדיקת ההתאמה באתר'+tag+' ויש לי שאלה:' : 'היי ירון, מילאתי את בדיקת ההתאמה באתר'+tag+' ואשמח לדבר.';
   return 'https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
 }
 
@@ -163,21 +198,22 @@ function renderResult(){
         '<div class="tip"><span class="t">בפעם הבאה</span><p>תחזיק <span class="mark">קשר עין עוד רגע אחד</span> לפני שאתה מסתכל הצידה.</p></div>'+
         '<div class="tip"><span class="t">בפעם הבאה</span><p>תשאל שאלת המשך על מילה אחת שהצד השני אמר.</p></div>'+
       '</div></div>'+
-      '<div class="ctas"><a class="btn ghost" href="'+CHANNEL+'" target="_blank" rel="noopener">לאינסטגרם, שם אני כותב <span class="arr">←</span></a>'+
-      '<a class="btn ghost" href="'+waLink('ask')+'" target="_blank" rel="noopener">בכל זאת, אני רוצה לשאול משהו <span class="arr">←</span></a></div>';
+      '<div class="ctas"><a class="btn ghost" data-track="instagram" href="'+CHANNEL+'" target="_blank" rel="noopener">לאינסטגרם, שם אני כותב <span class="arr">←</span></a>'+
+      '<a class="btn ghost" data-track="whatsapp" href="'+waLink('ask')+'" target="_blank" rel="noopener">בכל זאת, אני רוצה לשאול משהו <span class="arr">←</span></a></div>';
   } else {
     var head = v==='yes' ? '<h2>נראה שיש <span class="mark">בסיס טוב</span> לשיחה.</h2>' : '<h2>יכול להיות שיש כאן התאמה. <span class="hand" style="font-size:.78em">כדאי לדבר.</span></h2>';
     var body = v==='yes' ? 'מהתשובות שלך עולה שאתה לא מחפש רק טיפ נקודתי, אלא שינוי שדורש עבודה אמיתית.' : 'יש כמה דברים שכדאי להבין יחד לפני שמחליטים, וזה בדיוק בשביל זה שיחת ההיכרות קיימת.';
     html+='<div class="verdict">'+head+'<p class="body">'+body+'</p></div>'+
       '<div class="heard"><span class="label">מה שמעתי ממך</span><ul>'+s.map(function(x){return '<li>'+esc(x.a)+'</li>'}).join('')+'</ul></div>'+
-      '<div class="ctas"><a class="btn" href="'+waLink('send')+'" target="_blank" rel="noopener">לשלוח לירון בוואטסאפ <span class="arr">←</span></a>'+
-      '<a class="btn ghost" href="'+CAL+'" target="_blank" rel="noopener">או לקבוע שיחת התאמה ישירות <span class="arr">←</span></a>'+
+      '<div class="ctas"><a class="btn" data-track="whatsapp" href="'+waLink('send')+'" target="_blank" rel="noopener">לשלוח לירון בוואטסאפ <span class="arr">←</span></a>'+
+      '<a class="btn ghost" data-track="calendar" href="'+CAL+'" target="_blank" rel="noopener">או לקבוע שיחת התאמה ישירות <span class="arr">←</span></a>'+
       '<p class="small">נפתחת הודעה קצרה בוואטסאפ. אפשר לשנות אותה לפני ששולחים.</p></div>';
   }
   html+='<button class="reset" id="reset">למחוק את התשובות ולהתחיל מחדש</button></div>';
   app.innerHTML=html;
   actIn.innerHTML='';document.getElementById('actions').hidden=true;
-  document.getElementById('reset').onclick=function(){A={};sent=false;go(-1)};
+  document.getElementById('reset').onclick=function(){A={};sent=false;CODE='';go(-1)};
+  [].forEach.call(app.querySelectorAll('[data-track]'),function(a){a.addEventListener('click',function(){trackClick(a.getAttribute('data-track'))})});
   focusHead();
 }
 
