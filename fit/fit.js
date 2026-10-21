@@ -2,10 +2,9 @@
 var WA="972505494326";
 var CAL="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0ofP-cRwZhCKLFa0pnLG4Ib2WAyO6t5vIcJPsrCWzk4PzxktiDKDWdj4BuDzzyIKh5W39e9tZA";
 var CHANNEL="https://instagram.com/baderech_";
-// כתובת ה-Web App של Google Apps Script שכותב לגיליון (אותה כתובת ששימשה את /research).
-// לפני שזה עולה לאוויר צריך להחליף את קוד הסקריפט לפי fit/SETUP-FIT.md, אחרת השורות ייכתבו לעמודות הישנות.
+// כתובת ה-Web App של Google Apps Script שכותב לגיליון (גיליון בדרך - fit).
 // אם תרוקן את הכתובת, השאלון ימשיך לעבוד ופשוט לא ישלח כלום.
-var SUBMIT_ENDPOINT='https://script.google.com/macros/s/AKfycbxUD-hCW7uz_E2x5xx_E9TetLvUUJUKOz9MjZCM_uilDU96KihyvS0_tC3ZkT_KF25Y7Q/exec';
+var SUBMIT_ENDPOINT='https://script.google.com/macros/s/AKfycbxHb8v9OwSYn3RxBpwQewbEqruxgm-vFaaMdyYKgFZbwooa9_wr0cUqVIp-T1QLth_7/exec';
 
 var Q=[
  {id:"stage",stage:"מתחילים",note:"נקודת התחלה. לא ציון.",q:"באיזה שלב חיים אתה נמצא כרגע?",multi:true,hint:"אפשר לבחור יותר מתשובה אחת.",
@@ -136,7 +135,7 @@ function submitFit(v){
   try{
     fetch(SUBMIT_ENDPOINT,{
       method:'POST',
-      headers:{'Content-Type':'text/plain;charset=utf-8'}, // בלי preflight מול Apps Script, כמו ב-/research
+      headers:{'Content-Type':'text/plain;charset=utf-8'}, // בלי preflight מול Apps Script
       body:JSON.stringify(p),
       keepalive:true // שהשליחה תסתיים גם אם לוחצים מיד על וואטסאפ ויוצאים מהדף
     }).catch(function(){});
