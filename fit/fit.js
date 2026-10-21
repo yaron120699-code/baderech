@@ -177,7 +177,7 @@ function trackClick(action){
 }
 
 function waLink(kind){
-  var msg = kind==='ask' ? 'היי ירון, מילאתי את בדיקת ההתאמה באתר ויש לי שאלה:' : 'היי ירון, מילאתי את בדיקת ההתאמה באתר ואשמח לדבר.';
+  var msg = kind==='ask' ? 'היי ירון, מילאתי את שאלון ההתאמה ויש לי שאלה:' : 'היי ירון, מילאתי את שאלון ההתאמה ואשמח לדבר.';
   return 'https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
 }
 
