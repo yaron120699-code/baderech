@@ -158,7 +158,7 @@ header.site .btn{padding:11px 18px;font-size:15px}
 .fit ul{list-style:none;margin:0;padding:0}
 .fit li{padding:14px 0;border-bottom:1px solid var(--line);color:var(--ink-2);display:grid;grid-template-columns:26px 1fr;gap:6px}
 .fit .yes li::before{content:"✓";font-weight:700;color:var(--forest)}
-.fit .no li::before{content:"—";color:var(--graphite)}
+.fit .no li::before{content:"✕";color:var(--graphite)}
 .fit .no li{color:var(--graphite)}
 
 /* faq */
