@@ -111,3 +111,9 @@ body.dark .link{color:var(--on-forest)}
 @keyframes fade{from{opacity:.4;transform:translateY(6px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.fade{animation:none}.bar i,.btn,.opt,body{transition:none}}
 @media (min-width:700px){.screen{padding-block:48px 24px}}
+/* שם, לא חובה, במסך התוצאה */
+.who{display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--line);padding-top:18px}
+.who-row{display:flex;gap:10px}
+.who input{flex:1;min-width:0;font:400 17px/1.4 var(--body);color:var(--ink);background:var(--card);border:1px solid var(--line-2);border-radius:2px;padding:12px 14px}
+.who input:focus{outline:2px solid var(--forest);outline-offset:2px;border-color:var(--ink)}
+.who .btn{padding:12px 20px}

@@ -3,7 +3,7 @@
 // Deploy → Manage deployments → עיפרון → Version: New version → Deploy.
 // הוראות מלאות: fit/SETUP-FIT.md
 
-var HEADERS = ['code', 'submitted_at', 'verdict', 'clicked', 'stage', 'why', 'stuck', 'change', 'seek', 'f2f', 'commit', 'source', 'id'];
+var HEADERS = ['code', 'submitted_at', 'verdict', 'clicked', 'stage', 'why', 'stuck', 'change', 'seek', 'f2f', 'commit', 'source', 'id', 'name'];
 
 function sheetWithHeaders_() {
   var sheet = SpreadsheetApp.getActiveSpreadsheet().getSheets()[0];
@@ -39,6 +39,11 @@ function doPost(e) {
         var codes = sheet.getRange(2, codeCol, last - 1, 1).getValues();
         for (var i = codes.length - 1; i >= 0; i--) {
           if (String(codes[i][0]) === String(data.code)) {
+            // שם ממסך התוצאה: נכתב לעמודה name ולא נרשם כלחיצה.
+            if (data.action === 'name') {
+              sheet.getRange(i + 2, head.indexOf('name') + 1).setValue(String(data.name || '').slice(0, 60));
+              break;
+            }
             var cell = sheet.getRange(i + 2, clickCol);
             var now = String(cell.getValue() || '');
             var list = now ? now.split(', ') : [];

@@ -36,6 +36,23 @@
 <!-- Vercel Web Analytics (page views, no cookies) -->
 <script>
   window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
+  // מצב בדיקה של ירון: ?me=1 מסמן את הדפדפן, ?me=0 מבטל. בדפדפן מסומן לא נספרים ביקורים,
+  // ומילויים של בדיקת ההתאמה נרשמים בגיליון עם source שמתחיל ב-test.
+  (function () {
+    try {
+      var me = new URLSearchParams(location.search).get('me');
+      if (me === '1') localStorage.setItem('baderech_me', '1');
+      if (me === '0') localStorage.removeItem('baderech_me');
+      window.baderechMe = localStorage.getItem('baderech_me') === '1';
+    } catch (e) { window.baderechMe = false; }
+    window.va('beforeSend', function (event) { return window.baderechMe ? null : event; });
+    if (window.baderechMe) document.addEventListener('DOMContentLoaded', function () {
+      var b = document.createElement('div');
+      b.textContent = 'מצב בדיקה · לא נספר';
+      b.setAttribute('style', 'position:fixed;bottom:8px;left:8px;z-index:9999;font:12px/1.4 Heebo,sans-serif;padding:3px 8px;border-radius:6px;background:#2b2b2b;color:#fff;opacity:.75;pointer-events:none');
+      document.body.appendChild(b);
+    });
+  })();
 </script>
 <script defer src="/_vercel/insights/script.js"></script>
 </head>

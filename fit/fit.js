@@ -120,7 +120,12 @@ function newCode(){
   return c;
 }
 // מאיפה הגיע: קודם ?src= מהקישור, אחרת לפי האתר הקודם, אחרת direct.
+// מילוי מדפדפן שסומן ב-?me=1 נרשם עם test- לפני המקור, כדי להפריד אותו מלידים אמיתיים.
 function sourceOf(){
+  var s=rawSource();
+  return window.baderechMe ? 'test-'+s : s;
+}
+function rawSource(){
   var src=(new URLSearchParams(window.location.search)).get('src');
   if(src) return src;
   try{
@@ -175,9 +180,15 @@ function submitFit(v){
 function trackClick(action){
   if(CODE) post({type:'click', code:CODE, action:action});
 }
+// שם (לא חובה) ממסך התוצאה. נשלח כ-click כדי שגם גרסה ישנה של הסקריפט לא תיצור שורה חדשה.
+function saveName(name){
+  if(CODE) post({type:'click', code:CODE, action:'name', name:name});
+}
 
 function waLink(kind){
-  var msg = kind==='ask' ? 'היי ירון, מילאתי את שאלון ההתאמה ויש לי שאלה:' : 'היי ירון, מילאתי את שאלון ההתאמה ואשמח לדבר.';
+  // הקוד מחבר את ההודעה לשורה בגיליון.
+  var c = CODE ? ' (קוד: '+CODE+')' : '';
+  var msg = kind==='ask' ? 'היי ירון, מילאתי את שאלון ההתאמה'+c+' ויש לי שאלה:' : 'היי ירון, מילאתי את שאלון ההתאמה ואשמח לדבר.'+c;
   return 'https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
 }
 
@@ -208,11 +219,22 @@ function renderResult(){
       '<a class="btn ghost" data-track="calendar" href="'+CAL+'" target="_blank" rel="noopener">או לקבוע שיחת התאמה ישירות <span class="arr">←</span></a>'+
       '<p class="small">נפתחת הודעה קצרה בוואטסאפ. אפשר לשנות אותה לפני ששולחים.</p></div>';
   }
+  html+='<form class="who" id="who" novalidate><label class="label" for="whoName">רוצה שאדע מי מילא? לא חובה.</label>'+
+    '<div class="who-row"><input id="whoName" name="name" type="text" autocomplete="given-name" maxlength="60" placeholder="שם">'+
+    '<button class="btn ghost" type="submit">שמירה</button></div>'+
+    '<p class="small" id="whoMsg" role="status" hidden>תודה, שמרתי.</p></form>';
   html+='<button class="reset" id="reset">למחוק את התשובות ולהתחיל מחדש</button></div>';
   app.innerHTML=html;
   actIn.innerHTML='';document.getElementById('actions').hidden=true;
   document.getElementById('reset').onclick=function(){A={};sent=false;CODE='';go(-1)};
   [].forEach.call(app.querySelectorAll('[data-track]'),function(a){a.addEventListener('click',function(){trackClick(a.getAttribute('data-track'))})});
+  document.getElementById('who').onsubmit=function(e){
+    e.preventDefault();
+    var name=document.getElementById('whoName').value.trim().slice(0,60);
+    if(!name) return;
+    saveName(name);
+    document.getElementById('whoMsg').hidden=false;
+  };
   focusHead();
 }
 
