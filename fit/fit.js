@@ -186,9 +186,7 @@ function saveName(name){
 }
 
 function waLink(kind){
-  // הקוד מחבר את ההודעה לשורה בגיליון.
-  var c = CODE ? ' (קוד: '+CODE+')' : '';
-  var msg = kind==='ask' ? 'היי ירון, מילאתי את שאלון ההתאמה'+c+' ויש לי שאלה:' : 'היי ירון, מילאתי את שאלון ההתאמה ואשמח לדבר.'+c;
+  var msg = kind==='ask' ? 'היי ירון, מילאתי את שאלון ההתאמה ויש לי שאלה:' : 'היי ירון, מילאתי את שאלון ההתאמה ואשמח לדבר.';
   return 'https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
 }
 
