@@ -120,7 +120,12 @@ function newCode(){
   return c;
 }
 // מאיפה הגיע: קודם ?src= מהקישור, אחרת לפי האתר הקודם, אחרת direct.
+// מילוי מדפדפן שסומן ב-?me=1 נרשם עם test- לפני המקור, כדי להפריד אותו מלידים אמיתיים.
 function sourceOf(){
+  var s=rawSource();
+  return window.baderechMe ? 'test-'+s : s;
+}
+function rawSource(){
   var src=(new URLSearchParams(window.location.search)).get('src');
   if(src) return src;
   try{
@@ -177,7 +182,9 @@ function trackClick(action){
 }
 
 function waLink(kind){
-  var msg = kind==='ask' ? 'היי ירון, מילאתי את שאלון ההתאמה ויש לי שאלה:' : 'היי ירון, מילאתי את שאלון ההתאמה ואשמח לדבר.';
+  // הקוד מחבר את ההודעה לשורה בגיליון.
+  var c = CODE ? ' (קוד: '+CODE+')' : '';
+  var msg = kind==='ask' ? 'היי ירון, מילאתי את שאלון ההתאמה'+c+' ויש לי שאלה:' : 'היי ירון, מילאתי את שאלון ההתאמה ואשמח לדבר.'+c;
   return 'https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
 }
 
