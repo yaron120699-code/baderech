@@ -120,10 +120,30 @@ function newCode(){
   return c;
 }
 // מאיפה הגיע: קודם ?src= מהקישור, אחרת לפי האתר הקודם, אחרת direct.
-// מילוי מדפדפן שסומן ב-?me=1 נרשם עם test- לפני המקור, כדי להפריד אותו מלידים אמיתיים.
+// מילוי מדפדפן שסומן ב-?me=1 נרשם עם "בדיקה ·" לפני המקור, כדי להפריד אותו מלידים אמיתיים.
+// שמות בעברית לגיליון. בקישורים ממשיכים להשתמש בערכים באנגלית (?src=ig).
+// ערך שלא מופיע כאן נרשם כמו שהוא. אפשר להוסיף שורות.
+var SOURCE_HE={
+  'ig':'אינסטגרם · ביו',
+  'story':'אינסטגרם · סטורי',
+  'instagram':'אינסטגרם',
+  'meta':'ממומן',
+  'wa':'וואטסאפ · שלחתי',
+  'whatsapp':'וואטסאפ',
+  'site':'אתר',
+  'site-top':'אתר · תפריט',
+  'site-hero':'אתר · כותרת',
+  'site-bottom':'אתר · תחתית',
+  'qr-card':'כרטיס QR',
+  'google':'גוגל',
+  'facebook':'פייסבוק',
+  'linkedin':'לינקדאין',
+  'demo':'הדגמה',
+  'direct':'ישיר'
+};
 function sourceOf(){
-  var s=rawSource();
-  return window.baderechMe ? 'test-'+s : s;
+  var s=rawSource(), he=SOURCE_HE[s]||s;
+  return window.baderechMe ? 'בדיקה · '+he : he;
 }
 function rawSource(){
   var src=(new URLSearchParams(window.location.search)).get('src');
