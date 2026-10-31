@@ -125,8 +125,8 @@ const Q = [
 const FIT = "/fit?src=quiz";
 const IG = "https://www.instagram.com/baderech_/";
 
-// ---------- רישום לגיליון (אותו Apps Script של /fit, לשונית "מבדק") ----------
-const SUBMIT_ENDPOINT='https://script.google.com/macros/s/AKfycbxHb8v9OwSYn3RxBpwQewbEqruxgm-vFaaMdyYKgFZbwooa9_wr0cUqVIp-T1QLth_7/exec';
+// ---------- רישום לגיליון "בדרך - מבדק" (Apps Script נפרד, הקוד ב-quiz/apps-script.gs) ----------
+const SUBMIT_ENDPOINT='https://script.google.com/macros/s/AKfycbzE1Ll-8RAYuEgrylZ-oqWmVDduo7q9rgpg1B6SL81AOZVJaCkB9DQa_4W7u7cPklsP/exec';
 function anonId(){
   const key='baderech_quiz_anon_id';
   try{let id=localStorage.getItem(key); if(!id){id='q_'+Date.now().toString(36)+'_'+Math.random().toString(36).slice(2,8); localStorage.setItem(key,id)} return id}
