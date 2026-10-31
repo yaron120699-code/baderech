@@ -1,21 +1,18 @@
-# Baderech Coach OS
+# Coach OS · בדרך
 
-Copy the `coach/` folder into the root of the existing `baderech` repository.
+כלי העבודה הפנימי של המלווה. הוא נמצא בכתובת:
+https://baderech.vercel.app/coach/
 
-Expected structure:
+הקובץ היחיד הוא coach/index.html. אין שרת, אין בסיס נתונים ואין שלב build.
 
-baderech/
-├── index.html
-├── css/
-├── js/
-└── coach/
-    └── index.html
+שמירת נתונים:
+- נתוני המתלווים נשמרים בדפדפן בלבד (localStorage), בכל מכשיר בנפרד.
+- כדאי ללחוץ על Export באופן קבוע ולשמור את קובץ ה-JSON כגיבוי.
+- ניקוי נתוני הדפדפן מוחק את המידע. מה שלא גובה, הולך לאיבוד.
+- מעבירים נתונים למכשיר אחר דרך Export במכשיר הישן ו-Import בחדש.
 
-After commit/push, the page should be available at:
+פרטיות:
+- אלה פרטים אישיים של מתלווים. לא פותחים את Coach OS במחשב משותף.
+- מה שנאמר במפגשים נשאר בין המלווה למתלווה (מדריך המלווה, העיקרון השני).
 
-https://<your-domain>/coach/
-
-Notes:
-- Client data is stored locally in the browser via localStorage.
-- Use the Export button regularly to save a JSON backup.
-- No database or backend is required.
+הסבר מלא על המערכת והפילוסופיה שלה: README.md, פרק 3.
