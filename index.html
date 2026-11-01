@@ -30,8 +30,10 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@400;500;700&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;900&family=Heebo:wght@400;500;700&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
 
+<link rel="preload" as="image" href="/images/yaron-hero.jpg">
+<link rel="stylesheet" href="/css/tokens.css">
 <link rel="stylesheet" href="/css/site.css">
 <!-- Vercel Web Analytics (page views, no cookies) -->
 <script>
@@ -59,6 +61,7 @@
 <body>
 
 <a class="skip-link" href="#main">דלג לתוכן</a>
+<div class="metabar" aria-hidden="true"><div class="in"><span>יומן שטח · ליווי אישי 1:1 לגברים</span><span>מעט מתלווים בכל פעם</span></div></div>
 <header class="site" id="top">
   <div class="in">
     <a class="logo" href="#main" aria-label="בדרך, לראש העמוד">בַּדֶּרֶךְ.</a>
@@ -69,23 +72,30 @@
 
 <main id="main">
 <!-- HERO -->
-<section class="hero">
+<section class="hero ruled">
   <div class="in">
     <div class="txt">
       <span class="label">ליווי אישי 1:1 לגברים</span>
-      <h1>להביא את<br><span class="strike">הדמות<span class="fix">עצמך</span></span> לעולם.</h1>
+      <h1><span class="h1-line">להביא את</span> <span class="h1-line strike-line"><span class="strike" aria-hidden="true">הדמות<span class="fix">עצמך</span></span><span class="sr">עצמך</span> לעולם.</span></h1>
       <p class="lead">לא לבנות דמות. לא ללמוד טריקים. <span class="mark">ללמוד לפגוש את החיים כמו שאתה.</span></p>
       <p class="body">תהליך אישי לגברים שרוצים יותר נוכחות וביטחון, עם עצמם, עם נשים ובזוגיות. עובדים על זהות, אמונות, תקשורת ואיך שאתה מגיע לעולם.</p>
       <div class="ctas">
-        <a class="btn primary" href="/fit?src=site-hero">בוא נבדוק אם זה מתאים לי <span class="arr">←</span></a>
+        <a class="btn primary big" href="/fit?src=site-hero">בוא נבדוק אם זה מתאים לי <span class="arr">←</span></a>
         <a class="textlink" href="#process">איך התהליך עובד</a>
       </div>
-      <div class="facts" aria-label="התהליך במספרים">
-        <div><b>4</b>חודשי מסגרת</div>
-        <div><b>8</b>מפגשים אישיים</div>
-        <div><b>ממשיך</b>גם אחרי</div>
-      </div>
     </div>
+    <figure class="portrait">
+      <div class="frame"><img src="/images/yaron-hero.jpg" alt="ירון פסי" width="760" height="950" fetchpriority="high"></div>
+      <figcaption><span>ירון פסי</span></figcaption>
+    </figure>
+  </div>
+</section>
+
+<section class="factsband" aria-label="התהליך במספרים">
+  <div class="in facts">
+    <div><b>4</b><span>חודשי מסגרת</span></div>
+    <div><b>8</b><span>מפגשים אישיים</span></div>
+    <div><b>ממשיך</b><span>גם אחרי</span></div>
   </div>
 </section>
 
@@ -105,7 +115,7 @@
     </ol>
     <div class="after rv">
       <p>לא צריך לדעת לאן אתה הולך.</p>
-      <span class="hand" style="font-size:32px;transform:rotate(-2deg)">מספיק להבין איפה אתה עומד.</span>
+      <span class="hand">מספיק להבין איפה אתה עומד.</span>
     </div>
   </div>
 </section>
@@ -115,21 +125,20 @@
   <div class="in grid">
     <div class="head rv">
       <span class="label">איך אני עובד</span>
-      <h2>קודם עובדות. אחר כך סיפורים.</h2>
+      <h2>קודם עובדות.<br><span class="soft">אחר כך סיפורים.</span></h2>
       <p>רוב מה שעוצר אותנו הוא לא מה שקרה, אלא הסיפור שסיפרנו לעצמנו על מה שקרה. בתהליך לומדים להפריד בין השניים, ואז יוצאים לבדוק בעולם.</p>
     </div>
-    <div class="ff rv" aria-label="דוגמה: עובדה מול סיפור">
-      <div class="ffh"><span>יומן שטח · דוגמה</span><span>בַּדֶּרֶךְ.</span></div>
-      <div class="pair">
-        <div><b>עובדה</b><p>היא לא ענתה להודעה.</p></div>
-        <div><b>סיפור</b><p><span class="strike" style="white-space:normal">כי אני לא מספיק מעניין.</span></p></div>
-      </div>
-      <span class="hand note">עוד לא בדקת. אז בוא נבדוק.</span>
+    <div class="log rv" aria-label="דוגמה: עובדה מול סיפור">
+      <div class="logh"><span class="dot"></span><span>יומן שטח · דוגמה</span><span class="logo-s">בַּדֶּרֶךְ.</span></div>
+      <div class="logrow"><span class="k">עובדה</span><p class="v">היא לא ענתה להודעה.</p></div>
+      <div class="logrow"><span class="k">סיפור</span><p class="v"><span class="strike" aria-hidden="true">כי אני לא מספיק מעניין.</span><span class="sr">סיפור, מחוק: כי אני לא מספיק מעניין.</span></p></div>
+      <div class="logrow"><span class="k">הבדיקה הבאה</span><p class="v"><span class="hand">עוד לא בדקת. אז בוא נבדוק.</span></p></div>
+      <label class="done"><input type="checkbox" id="log-done"><span class="tick" aria-hidden="true"></span><span>עשיתי</span></label>
     </div>
-    <div class="principles rv">
-      <div><h3>אין תוכנית מדף</h3><p>אין שיטה אחת לכולם ואין הבטחה לתוצאה מהירה. התהליך נבנה סביבך.</p></div>
-      <div><h3>במפגשים ובחיים עצמם</h3><p>חלק מהעבודה קורה בשיחה, ורובה קורה בין המפגשים, בעולם האמיתי.</p></div>
-      <div><h3>מעט אנשים בכל פעם</h3><p>אני עובד עם מספר קטן של מתלווים, כדי שיהיה לי זמן באמת להיות שם.</p></div>
+    <div class="principles">
+      <div class="rv"><h3>אין תוכנית מדף</h3><p>אין שיטה אחת לכולם ואין הבטחה לתוצאה מהירה. התהליך נבנה סביבך.</p></div>
+      <div class="rv"><h3>במפגשים ובחיים עצמם</h3><p>חלק מהעבודה קורה בשיחה, ורובה קורה בין המפגשים, בעולם האמיתי.</p></div>
+      <div class="rv"><h3>מעט אנשים בכל פעם</h3><p>אני עובד עם מספר קטן של מתלווים, כדי שיהיה לי זמן באמת להיות שם.</p></div>
     </div>
   </div>
 </section>
@@ -143,21 +152,21 @@
         <h2>4 חודשים של מסגרת. תהליך שלא נגמר בהם.</h2>
         <p class="body">המסגרת נותנת קצב: 8 מפגשים, והחיים האמיתיים באמצע. אבל השינוי עצמו לא נעצר במפגש האחרון. המטרה היא שתצא עם הכלים להמשיך לבד.</p>
       </div>
-      <div class="stats rv">
-        <div><b>4</b><span>חודשי מסגרת</span></div>
-        <div><b>8</b><span>מפגשים אישיים</span></div>
-        <div><b>2</b><span>שבועות בין מפגש למפגש</span></div>
-        <div><b><bdi dir="ltr">1.5-2</bdi></b><span>שעות כל מפגש</span></div>
+      <div class="card rv" aria-label="המסגרת">
+        <div class="cardh"><span>המסגרת</span><span class="logo-s">בַּדֶּרֶךְ.</span></div>
+        <div class="crow"><span class="k">חודשי מסגרת</span><b>4</b></div>
+        <div class="crow"><span class="k">מפגשים אישיים</span><b>8</b></div>
+        <div class="crow"><span class="k">שבועות בין מפגש למפגש</span><b>2</b></div>
+        <div class="crow"><span class="k">שעות כל מפגש</span><b><bdi dir="ltr">1.5-2</bdi></b></div>
       </div>
     </div>
-    <div class="entries">
-      <div class="entry rv"><span class="n">שלב 01</span><h3>להבין איפה אתה עומד</h3><p>זהות, דפוסים, ערכים, והדרך שבה אתה מקבל החלטות.</p></div>
-      <div class="entry rv"><span class="n">שלב 02</span><h3>איך אתה מגיע לעולם</h3><p>מראה, שפת גוף, אנרגיה, ומה קורה כשאתה נכנס לחדר.</p></div>
-      <div class="entry rv"><span class="n">שלב 03</span><h3>מה מניע אותך</h3><p>אמונות, פחד מדחייה, ביקורת עצמית, והחסמים הפנימיים.</p></div>
-      <div class="entry out rv"><span class="n">שלב 04 · יומן שטח</span><h3>לצאת לעולם</h3><p>תקשורת, אינטראקציות, דייטינג ונוכחות. בדיקה אמיתית, לא תיאוריה.</p></div>
-      <div class="entry out rv"><span class="n">שלב 05 · יומן שטח</span><h3>ללמוד ולנסות שוב</h3><p>חוזרים עם מה שקרה בפועל, מפרידים עובדות מסיפורים, ומנסים שוב.</p></div>
-      <div class="entry rv"><span class="n">שלב 06</span><h3>להמשיך לבד</h3><p>המסגרת נגמרת, הדרך לא. יוצאים עם מה שצריך כדי להמשיך בלעדיי.</p></div>
-    </div>
+    <ol class="track" id="track">
+      <li><span class="node" aria-hidden="true"></span><span class="n">שלב 01</span><h3>מיפוי</h3><p>להבין את האדם, המוטיבציה והפער.</p></li>
+      <li><span class="node" aria-hidden="true"></span><span class="n">שלב 02</span><h3>זהות</h3><p>ליישר בין האדם לבין איך שהוא מופיע.</p></li>
+      <li><span class="node" aria-hidden="true"></span><span class="n">שלב 03</span><h3>נוכחות</h3><p>לראות את הדפוסים בזמן אמת, ולפתח יכולת לקרוא ולהוביל אינטראקציה.</p></li>
+      <li class="field"><span class="node" aria-hidden="true"></span><span class="n">שלב 04 · בשטח</span><h3>התנסות</h3><p>להפוך ידע לשיקול דעת עצמאי.</p></li>
+      <li><span class="node" aria-hidden="true"></span><span class="n">שלב 05</span><h3>עצמאות</h3><p>לצמצם תלות במלווה.</p></li>
+    </ol>
     <div class="between rv"><strong>לאורך כל הדרך:</strong><span>שיחות אישיות</span><span>תרגול בשטח</span><span>משימות ופידבק</span><span>זמינות בין המפגשים, במסגרת מוסכמת</span></div>
   </div>
 </section>
@@ -173,8 +182,8 @@
       <blockquote><span class="mark">טכניקה יכולה לפתוח דלת,</span> אבל היא לא בונה את מי שעומד מאחוריה.<cite>ירון פסי</cite></blockquote>
     </div>
     <div class="diptych rv">
-      <figure class="then"><div class="img" role="img" aria-label="ירון, אז"></div><figcaption class="hand">אז.</figcaption></figure>
-      <figure class="now"><div class="img" role="img" aria-label="ירון, היום"></div><figcaption class="hand">היום.</figcaption></figure>
+      <figure class="then"><img src="/images/then.jpg" alt="ירון, אז" loading="lazy" width="1000" height="1498"><figcaption class="hand">אז.</figcaption></figure>
+      <figure class="now"><img src="/images/now.jpg" alt="ירון, היום" loading="lazy" width="1000" height="1500"><figcaption class="hand">היום.</figcaption></figure>
       <p class="sub">בין שתי התמונות האלה לא השתנה רק איך שאני נראה. השתנתה הדרך שבה אני רואה את עצמי ואת העולם.</p>
     </div>
   </div>
@@ -256,8 +265,8 @@
       <span class="hand">שיחה. לא מכירה.</span>
     </div>
     <div class="acts rv">
-      <a class="btn light" href="/fit?src=site-bottom">לבדיקת התאמה קצרה <span class="arr">←</span></a>
-      <a class="btn line-light" href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0ofP-cRwZhCKLFa0pnLG4Ib2WAyO6t5vIcJPsrCWzk4PzxktiDKDWdj4BuDzzyIKh5W39e9tZA" target="_blank" rel="noopener">לקביעת שיחת התאמה ישירות <span class="arr">←</span></a>
+      <a class="btn light big" href="/fit?src=site-bottom">לבדיקת התאמה קצרה <span class="arr">←</span></a>
+      <a class="btn line-light big" href="https://calendar.google.com/calendar/u/0/appointments/schedules/AcZssZ0ofP-cRwZhCKLFa0pnLG4Ib2WAyO6t5vIcJPsrCWzk4PzxktiDKDWdj4BuDzzyIKh5W39e9tZA" target="_blank" rel="noopener">לקביעת שיחת התאמה ישירות <span class="arr">←</span></a>
       <div class="contact">
         <span>וואטסאפ: <a href="https://wa.me/972505494326">050-5494326</a></span>
         <span>אינסטגרם: <a href="https://instagram.com/baderech_"><bdi dir="ltr">@baderech_</bdi></a></span>
@@ -274,7 +283,7 @@
       <span class="links"><a href="https://instagram.com/baderech_">אינסטגרם</a><a href="https://wa.me/972505494326">וואטסאפ</a></span>
     </div>
     <p class="disc">הליווי הוא בתשלום, ואינו טיפול נפשי, פסיכולוגי או רפואי. אני לא מטפל, פסיכולוג או פסיכיאטר, לא מאבחן ולא מבטיח לרפא כאב, חרדה או טראומה. אם יידרש טיפול מקצועי, אגיד זאת ולא אמשיך בליווי.</p>
-    <div class="row"><span class="logo" style="font-size:22px">בַּדֶּרֶךְ.</span><span>© 2026 · עדיין בדרך</span></div>
+    <div class="row"><span class="logo">בַּדֶּרֶךְ.</span><span>© 2026 · עדיין בדרך</span></div>
   </div>
 </footer>
 
