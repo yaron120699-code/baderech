@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@700;900&family=Heebo:wght@400;500;700&family=Amatic+SC:wght@700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/css/tokens.css">
 <style>
 /* בדרך · יומן שטח - פלייבוק */
 :root{--paper:#F7F6F1;--paper2:#FBFAF6;--ink:#1C1B18;--ink2:#3B3A35;--gr:#5E5D56;--line:#D8D5CB;--forest:#1F3D2B;--on:#F7F6F1;--on2:#B9C7BB;--sand:#ECE8DD;--mk:#EBCBB0;--red:#8E3B32;
@@ -19,7 +20,7 @@ body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--body);f
 a{color:inherit}
 :focus-visible{outline:2px solid var(--forest);outline-offset:3px}
 .wrap{max-width:1080px;margin:auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
-.mark{background:var(--mk);padding:0 .18em;border-radius:.12em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+.mark{background:linear-gradient(101deg,transparent 0 .18em,var(--mk) .32em calc(100% - .3em),transparent calc(100% - .14em)) 0 62%/100% 74% no-repeat;padding:0 .22em;border-radius:.35em .15em .4em .2em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
 .strike{position:relative;display:inline-block;color:rgba(28,27,24,.38);white-space:nowrap}
 .strike::after{content:"";position:absolute;right:-3%;left:-3%;top:54%;height:.075em;background:var(--ink);transform:rotate(-2.5deg);border-radius:2px}
 .strike .fix{position:absolute;bottom:68%;right:6%;font-family:var(--hand);font-weight:700;color:var(--forest);font-size:.72em;white-space:nowrap;transform:rotate(-4deg);line-height:1}

@@ -117,3 +117,22 @@ body.dark .link{color:var(--on-forest)}
 .who input{flex:1;min-width:0;font:400 17px/1.4 var(--body);color:var(--ink);background:var(--card);border:1px solid var(--line-2);border-radius:2px;padding:12px 14px}
 .who input:focus{outline:2px solid var(--forest);outline-offset:2px;border-color:var(--ink)}
 .who .btn{padding:12px 20px}
+
+/* ===== גרסה 2 (נובמבר 2026): אותה שפה כמו דף הבית ===== */
+header .topbar{border-bottom:1px solid var(--ink)}
+body.dark header .topbar{border-color:rgba(247,246,241,.3)}
+.logo,.back-site{display:inline-flex;align-items:center;min-height:44px}
+.back-site{border-bottom:0;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:5px}
+main:has(.intro){background-image:repeating-linear-gradient(to bottom,transparent 0 39px,rgba(216,213,203,.55) 39px 40px)}
+.intro h1{line-height:1.5}
+.intro .strike .fix{bottom:76%}
+/* השאלה הבאה נכנסת משמאל: קדימה בעברית */
+.fade{animation:fwd var(--dur-3,320ms) var(--ease,ease) both}
+@keyframes fwd{from{opacity:.35;transform:translateX(-16px)}to{opacity:1;transform:none}}
+.btn:active{transform:translateY(1px)}
+.btn .arr{transition:transform var(--dur-2,200ms) var(--ease,ease)}
+.btn:not([disabled]):hover .arr{transform:translateX(-4px)}
+.opt:active{transform:scale(.995)}
+.opt{transition:border-color .15s,box-shadow var(--dur-2,200ms) var(--ease,ease),background .15s,transform var(--dur-1,120ms)}
+.bar i{transition:width 500ms var(--ease,ease)}
+@media (prefers-reduced-motion:reduce){.fade{animation:none}.opt,.btn .arr{transition:none}}

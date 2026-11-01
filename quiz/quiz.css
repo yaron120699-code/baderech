@@ -94,3 +94,59 @@ p{margin:0}
 .tease{font-family:var(--serif);font-weight:700;font-size:19px;line-height:1.5;color:var(--on)!important;border-bottom:1px solid rgba(247,246,241,.25);padding-bottom:14px}
 @media (max-width:440px){.cmp{grid-template-columns:1fr}}
 .foot{margin-top:40px;border-top:1px solid var(--line);padding-top:14px;display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--graphite)}
+
+/* ===== גרסה 2 (נובמבר 2026): אותה שפה כמו דף הבית ובדיקת ההתאמה ===== */
+header{border-bottom:1px solid var(--ink)}
+.logo,.back-site{display:inline-flex;align-items:center;min-height:44px}
+.back-site{border-bottom:0;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:5px}
+/* מרקר עם קצוות עקומים, כמו בכל האתר */
+.mk{background:linear-gradient(101deg,transparent 0 .18em,var(--clay) .32em calc(100% - .3em),transparent calc(100% - .14em)) 0 62%/100% 74% no-repeat;padding:0 .22em;border-radius:.35em .15em .4em .2em}
+/* מחיקה בקו מסובב, לא line-through */
+.st{text-decoration:none;position:relative;display:inline-block;color:rgba(28,27,24,.5)}
+.st::after{content:"";position:absolute;right:-2%;left:-2%;top:55%;height:1.5px;background:var(--ink);transform:rotate(-1.5deg)}
+/* תשובה: מסגרת דיו ופס חימר מימין, כמו בבדיקת ההתאמה */
+.opt{background:#FBFAF6;border-color:#CFCBC0;align-items:center;transition:border-color .15s,box-shadow 200ms ease,background .15s,transform 120ms}
+.opt::before{border-color:var(--ink);margin-top:0;width:18px;height:18px}
+.opt:hover{background:#FBFAF6;border-color:var(--graphite)}
+.opt:active{transform:scale(.995)}
+.opt.sel{border-color:var(--ink);background:#fff;box-shadow:inset -6px 0 0 var(--clay)}
+.opt.sel::before{background:var(--ink);border-color:var(--ink);box-shadow:inset 0 0 0 4px #fff}
+.screen{animation:fwd 320ms cubic-bezier(.2,.7,.2,1)}
+@keyframes fwd{from{opacity:.35;transform:translateX(-16px)}to{opacity:1;transform:none}}
+.prog i{border-radius:0;transition:background 300ms ease}
+.tool .n{color:var(--graphite)}
+.task{border-width:1.5px}
+.btn:active{transform:translateY(1px)}
+.chk input{transition:background 200ms ease}
+@media (prefers-reduced-motion:reduce){.screen{animation:none}.opt{transition:none}}
+
+/* ===== מסך התוצאה, גרסה 2: שלושה רכיבים בלבד ===== */
+/* 1. סקשן עם קו דיו (לרוב התוכן) · 2. מסגרת ״בדיקה בשטח״ · 3. סיום ירוק. חול רק לדוגמאות ולתחקיר. */
+.res{gap:40px}
+.res-h{gap:12px}
+.res-h .mirror{color:var(--body);font-size:17px}
+.res .second{margin:4px 0 0}
+.sec{display:grid;border-top:2px solid var(--ink)}
+.sec>.lab{padding:12px 0 6px}
+.r2{display:grid;grid-template-columns:88px minmax(0,1fr);gap:12px;padding:14px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.r2 .k{font-size:13px;font-weight:500;letter-spacing:.06em;color:var(--graphite)}
+.r2 p{color:var(--ink);font-size:16.5px}
+.r2 p.soft{color:var(--body)}
+.r2.with p{font-weight:500}
+.r2.with .k{color:var(--forest)}
+.sec .big{font-family:var(--serif);font-weight:700;font-size:21px;line-height:1.45;color:var(--ink);padding:10px 0 4px}
+.sec .tool{border-bottom:1px solid var(--line)}
+.sec .tool:last-child{border-bottom:0}
+.sec .tool .n{color:var(--graphite);font-size:26px}
+.task{border:1.5px solid var(--ink);gap:12px}
+.task-h b{font-size:19px}
+.meter{height:3px;background:var(--line)}
+.meter i{display:block;height:100%;background:var(--forest);transition:width 320ms cubic-bezier(.2,.7,.2,1)}
+.share{gap:10px}
+.share .card{border:1.5px solid var(--ink);margin:8px 0 6px}
+.green .btn{display:inline-flex;align-items:center;justify-content:space-between;gap:12px}
+.all{gap:6px}
+.all .link{text-align:right;min-height:44px}
+.res>*{animation:fwd 360ms cubic-bezier(.2,.7,.2,1) both}
+.res>*:nth-child(2){animation-delay:60ms}.res>*:nth-child(3){animation-delay:120ms}.res>*:nth-child(4){animation-delay:180ms}.res>*:nth-child(n+5){animation-delay:240ms}
+@media (prefers-reduced-motion:reduce){.res>*{animation:none}.meter i{transition:none}}

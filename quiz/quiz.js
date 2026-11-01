@@ -213,37 +213,40 @@ function result(main,sec,peek){
   const p=P[main];
   const K=KIT[main]; const doneKey="bd_days_"+main; const done=store.get(doneKey)||[];
   const secHtml = sec?`<p class="second">יצא לך באותה מידה גם <b>${P[sec].name}</b>: ${esc(P[sec].line)} <button class="link" id="seeSec">לקרוא גם עליו</button></p>`:"";
-  app.innerHTML = `<section class="screen">
+  app.innerHTML = `<section class="screen res">
     <div class="res-h">
       <span class="lab">${peek?'דפוס':'הדפוס שבלט אצלך'}</span>
       <span class="pattern">${p.name}</span>
       <h2>${esc(p.line)}</h2>
+      <p class="mirror">${esc(p.mirror)}</p>
+      ${peek?'':secHtml}
     </div>
-    <p>${esc(p.mirror)}</p>
-    ${peek?'':secHtml}
 
-    <p class="small">עובדה: ${esc(p.fact)}<br>סיפור: <span class="st">${esc(p.story)}</span></p>
+    <div class="sec">
+      <span class="lab">עובדה וסיפור</span>
+      <div class="r2"><span class="k">עובדה</span><p>${esc(p.fact)}</p></div>
+      <div class="r2"><span class="k">סיפור</span><p><span class="st">${esc(p.story)}</span></p></div>
+    </div>
 
-    <div class="stop">
+    <div class="sec">
       <span class="lab">הטעות להפסיק כבר השבוע</span>
-      <p>${esc(K.mistake)}</p>
+      <p class="big">${esc(K.mistake)}</p>
     </div>
 
-    <div class="block">
+    <div class="sec">
       <span class="lab">איך זה נשמע · ${esc(K.sit)}</span>
-      <div class="cmp">
-        <div><span class="tag">היום</span><p>${esc(K.today)}</p></div>
-        <div class="w"><span class="tag">עם הכלים</span><p>${esc(K.with)}</p></div>
-      </div>
+      <div class="r2"><span class="k">היום</span><p class="soft">${esc(K.today)}</p></div>
+      <div class="r2 with"><span class="k">עם הכלים</span><p>${esc(K.with)}</p></div>
     </div>
 
-    <div class="block">
+    <div class="sec">
       <span class="lab">שלושה כלים</span>
-      <div class="tools">${p.tools.map((t,k)=>`<div class="tool"><span class="n">${k+1}</span><div><b>${esc(t.t)}</b><p>${esc(t.d)}</p><p class="ex">${esc(t.ex)}</p></div></div>`).join("")}</div>
+      ${p.tools.map((t,k)=>`<div class="tool"><span class="n">${k+1}</span><div><b>${esc(t.t)}</b><p>${esc(t.d)}</p><p class="ex">${esc(t.ex)}</p></div></div>`).join("")}
     </div>
 
     <div class="task">
-      <div class="task-h"><b>שבעה ימים בשטח</b><span class="lab" id="cnt">${done.length}/7</span></div>
+      <div class="task-h"><b>בדיקה בשטח · שבעה ימים</b><span class="lab" id="cnt">${done.length}/7</span></div>
+      <div class="meter" aria-hidden="true"><i style="width:${Math.round(done.length/7*100)}%"></i></div>
       <p class="small">משימה קטנה ביום, מהקל לקשה. מסמנים כשעשית.</p>
       ${K.days.map((w,k)=>`<label class="chk"><input type="checkbox" id="d${main}${k}" data-k="${k}" ${done.includes(k)?'checked':''}><span><b class="day">יום ${k+1}</b> ${esc(w)}</span></label>`).join("")}
       <div class="debrief"><b>בסוף השבוע, שלוש שאלות:</b><ol>${DEBRIEF.map(d=>`<li>${esc(d)}</li>`).join("")}</ol></div>
@@ -252,24 +255,24 @@ function result(main,sec,peek){
     <p class="small">זה דפוס אפשרי, לא תווית. הדרך היחידה לדעת היא לבדוק.</p>
 
     ${peek?`<button class="btn ghost" id="backRes">חזרה לתוצאה שלי</button>`:`
-    <div class="share">
+    <div class="sec share">
       <span class="lab">לשתף</span>
       <div class="card"><span class="small">הדפוס שלי במבדק של בדרך</span><span class="hw">${p.name}</span><b style="color:var(--ink)">${esc(p.line)}</b></div>
       <button class="btn full" id="wa">שמור לעצמי את הערכה בוואטסאפ</button>
       <button class="btn ghost full" id="copy">העתק את התוצאה לשיתוף</button>
       <button class="btn ghost full" id="friend">יש לך חבר שזה בדיוק הוא? העתק קישור</button>
-      <p class="toast" id="toast"></p>
+      <p class="toast" id="toast" role="status"></p>
     </div>
 
     <div class="green">
       <p class="tease">${esc(K.tease)}</p>
       <h3>לבדוק את זה ביחד, לא רק לקרוא על זה?</h3>
       <p>כלים אפשר לקרוא. את הרגע שבו אתה קופא, רק מישהו שעומד לידך בשטח רואה.</p><p>בדרך הוא ליווי אישי של ארבעה חודשים, במפגשים בחוץ, על מה שתוקע אותך עם נשים, וגם בכל מקום אחר. מעט אנשים בכל פעם.</p>
-      <a class="btn" href="${FIT}" data-act="fit">בדיקת התאמה</a>
+      <a class="btn" href="${FIT}" data-act="fit">בדיקת התאמה <span class="arr">←</span></a>
       <p class="small" style="color:rgba(247,246,241,.7)">או פשוט תכתוב לי באינסטגרם מה יצא לך: <a href="${IG}" data-act="instagram" target="_blank" rel="noopener" style="color:var(--clay)">baderech_</a></p>
     </div>
 
-    <div class="all">
+    <div class="sec all">
       <span class="lab">שאר הדפוסים</span>
       ${ORDER.filter(k=>k!==main).map(k=>`<button class="link" data-peek="${k}">${P[k].name}: ${esc(P[k].line)}</button>`).join("")}
       <button class="link" id="again">לעשות את המבדק מחדש</button>
@@ -280,6 +283,7 @@ function result(main,sec,peek){
     const s=new Set(store.get(doneKey)||[]); const k=+cb.dataset.k;
     cb.checked?s.add(k):s.delete(k); const arr=[...s]; store.set(doneKey,arr);
     document.getElementById("cnt").textContent=arr.length+"/7";
+    const m=app.querySelector(".meter i"); if(m) m.style.width=Math.round(arr.length/7*100)+"%";
   });
   const toast=m=>{const t=document.getElementById("toast"); if(t){t.textContent=m; setTimeout(()=>t.textContent="",2600)}};
   const copy=(txt,okMsg)=>{
