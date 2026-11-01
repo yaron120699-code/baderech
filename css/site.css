@@ -286,6 +286,9 @@ footer.site .logo{font-size:22px}
 .js-motion .track .node{transform:scale(.4)}
 .js-motion .track li.lit .node{transform:none}
 .js-motion .lines li{transition:background var(--dur-2) var(--ease)}
+.js-motion .faq .a .w.go{animation:wordin 320ms var(--ease) both}
+@keyframes wordin{from{opacity:0;filter:blur(3px)}to{opacity:1;filter:none}}
+.js-motion .faq details[open] summary{color:var(--forest)}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   .faq details::details-content{transition:none}

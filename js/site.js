@@ -44,6 +44,31 @@
   },{threshold:.3,rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.mark,.rv').forEach(function(el){io.observe(el)});
 
+  /* שאלות נפוצות: התשובה נבנית מילה אחר מילה כשפותחים, כמו מישהו שכותב. עד חצי שנייה בסך הכול */
+  document.querySelectorAll('.faq details').forEach(function(d){
+    var words=null;
+    d.addEventListener('toggle',function(){
+      if(!d.open) return;
+      if(!words){
+        words=[];
+        d.querySelectorAll('.a p').forEach(function(p){
+          var parts=p.textContent.split(/(\s+)/);
+          p.textContent='';
+          parts.forEach(function(t){
+            if(/^\s+$/.test(t)||!t){p.appendChild(document.createTextNode(t));return}
+            var s=document.createElement('span'); s.className='w'; s.textContent=t; p.appendChild(s); words.push(s);
+          });
+        });
+      }
+      var step=Math.min(22,520/Math.max(words.length,1));
+      words.forEach(function(w,i){
+        w.classList.remove('go'); w.style.animationDelay=Math.round(i*step)+'ms';
+      });
+      void d.offsetHeight;
+      words.forEach(function(w){w.classList.add('go')});
+    });
+  });
+
   /* ציר השלבים: הקו מתמלא והשלבים נדלקים אחד אחרי השני */
   var track=document.getElementById('track');
   if(track){
