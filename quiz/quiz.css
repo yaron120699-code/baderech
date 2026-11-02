@@ -150,3 +150,49 @@ header{border-bottom:1px solid var(--ink)}
 .res>*{animation:fwd 800ms cubic-bezier(.16,1,.3,1) both}
 .res>*:nth-child(2){animation-delay:140ms}.res>*:nth-child(3){animation-delay:280ms}.res>*:nth-child(4){animation-delay:420ms}.res>*:nth-child(n+5){animation-delay:560ms}
 @media (prefers-reduced-motion:reduce){.res>*{animation:none}.meter i{transition:none}}
+
+/* ===== גרסה 3 (2.11.2026): תנועה רגועה, כמו בדף הבית ===== */
+@keyframes rise{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+@keyframes leave{to{opacity:0;transform:translateX(14px)}}
+@keyframes sweep{from{background-size:0% 74%}to{background-size:100% 74%}}
+@keyframes nowFill{from{background:var(--line)}to{background:var(--forest)}}
+@keyframes write{from{clip-path:inset(0 0 0 100%)}to{clip-path:inset(0 0 0 0)}}
+@keyframes drawLine{from{transform:rotate(-1.5deg) scaleX(0)}to{transform:rotate(-1.5deg) scaleX(1)}}
+/* הרכיבים נכנסים אחד אחרי השני, והתשובות אחריהם */
+.screen:not(.res){animation:none}
+.screen:not(.res)>*{animation:rise 800ms cubic-bezier(.16,1,.3,1) both}
+.screen:not(.res)>*:nth-child(2){animation-delay:90ms}
+.screen:not(.res)>*:nth-child(3){animation-delay:180ms}
+.screen:not(.res)>*:nth-child(4){animation-delay:270ms}
+.screen:not(.res)>*:nth-child(n+5){animation-delay:360ms}
+.screen .opts{animation:none!important}
+.screen .opts .opt{animation:rise 700ms cubic-bezier(.16,1,.3,1) both}
+.screen .opts .opt:nth-child(1){animation-delay:280ms}
+.screen .opts .opt:nth-child(2){animation-delay:350ms}
+.screen .opts .opt:nth-child(3){animation-delay:420ms}
+.screen .opts .opt:nth-child(4){animation-delay:490ms}
+/* יציאה: אחרי בחירה רואים את הסימון, ואז השאלה זזה אחורה ונעלמת */
+.screen.leaving{animation:leave 260ms cubic-bezier(.65,0,.35,1) forwards!important}
+.screen.leaving>*{animation:none}
+.prog i.now{animation:nowFill 700ms cubic-bezier(.16,1,.3,1) both}
+/* פתיחה: המרקר נמרח מימין */
+.mk{background-position:100% 62%}
+.screen:not(.res) .mk{animation:sweep 1000ms cubic-bezier(.65,0,.35,1) 900ms both}
+/* תוצאה: שם הדפוס נכתב, והקו נמשך על הסיפור */
+.res .pattern{animation:write 1100ms cubic-bezier(.65,0,.35,1) 150ms both}
+.st::after{transform-origin:right center}
+.res .st::after{animation:drawLine 800ms cubic-bezier(.65,0,.35,1) 900ms both}
+.opt{transition:border-color 200ms,box-shadow 400ms cubic-bezier(.16,1,.3,1),background 200ms,transform 120ms}
+/* בטלפון: בלי מצב hover שנתקע. בלי זה, אחרי בחירה התשובה באותו מקום בשאלה הבאה נראית מסומנת */
+@media (hover:none){
+  .opt:not(.sel):hover{background:#FBFAF6;border-color:#CFCBC0}
+  .btn:hover{background:var(--ink)}
+  .btn.ghost:hover{background:transparent}
+  .green .btn:hover{background:var(--on)}
+}
+@media (prefers-reduced-motion:reduce){
+  .screen:not(.res)>*,.screen .opts .opt,.screen.leaving,.prog i.now,.screen:not(.res) .mk,.res .pattern,.res .st::after{animation:none!important}
+}
+/* מי שכבר עשה את המבדק: קישור לתוצאה השמורה */
+.saved{border-top:1px solid var(--line);padding-top:14px;display:grid;gap:2px}
+.saved .link{justify-self:start;min-height:44px;color:var(--ink)}
