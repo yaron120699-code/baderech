@@ -127,12 +127,12 @@ main:has(.intro){background-image:repeating-linear-gradient(to bottom,transparen
 .intro h1{line-height:1.5}
 .intro .strike .fix{bottom:76%}
 /* השאלה הבאה נכנסת משמאל: קדימה בעברית */
-.fade{animation:fwd var(--dur-3,320ms) var(--ease,ease) both}
+.fade{animation:fwd 600ms var(--ease-enter,ease) both}
 @keyframes fwd{from{opacity:.35;transform:translateX(-16px)}to{opacity:1;transform:none}}
 .btn:active{transform:translateY(1px)}
 .btn .arr{transition:transform var(--dur-2,200ms) var(--ease,ease)}
 .btn:not([disabled]):hover .arr{transform:translateX(-4px)}
 .opt:active{transform:scale(.995)}
 .opt{transition:border-color .15s,box-shadow var(--dur-2,200ms) var(--ease,ease),background .15s,transform var(--dur-1,120ms)}
-.bar i{transition:width 500ms var(--ease,ease)}
+.bar i{transition:width 800ms var(--ease-enter,ease)}
 @media (prefers-reduced-motion:reduce){.fade{animation:none}.opt,.btn .arr{transition:none}}
