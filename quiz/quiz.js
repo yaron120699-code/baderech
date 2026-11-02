@@ -164,6 +164,7 @@ function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;
 function toTop(){window.scrollTo({top:0,behavior:"instant"in window?"instant":"auto"})}
 
 function intro(){
+  const saved=store.get("bd_result"); const has=saved&&P[saved.main];
   app.innerHTML = `<section class="screen">
     <span class="lab">מבדק · בדרך</span>
     <h1>מפחד, או פשוט לא יודע?</h1>
@@ -172,8 +173,11 @@ function intro(){
     <p class="hw">תענה מה שהיית עושה באמת.</p>
     <button class="btn full" id="go">בוא נתחיל</button>
     <p class="small">שבע שאלות · שלוש דקות · בלי הרשמה</p>
+    ${has?`<div class="saved"><span class="small">כבר עשית את המבדק. יצא לך <b>${P[saved.main].name}</b>.</span><button class="link" id="mine">לראות את התוצאה שלי והימים שסימנת</button></div>`:''}
   </section>`;
   document.getElementById("go").onclick = ()=>{state={i:0,ans:[],order:Q.map(()=>shuffle(ORDER)),result:null};question()};
+  const mine=document.getElementById("mine"); if(mine) mine.onclick=()=>{state.result=saved; result(saved.main,saved.sec)};
+  toTop();
 }
 
 function question(){
@@ -189,7 +193,10 @@ function question(){
   app.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{
     state.ans[i]=b.dataset.k;
     app.querySelectorAll(".opt").forEach(o=>{o.classList.toggle("sel",o===b);o.setAttribute("aria-checked",o===b)});
-    setTimeout(()=>{ if(i<Q.length-1){state.i++;question()} else finish() }, 220);
+    const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const sc=app.querySelector('.screen');
+    if(!reduce) setTimeout(()=>{ if(sc) sc.classList.add('leaving') }, 420);
+    setTimeout(()=>{ if(i<Q.length-1){state.i++;question()} else finish() }, reduce?220:680);
   });
   const back=document.getElementById("back"); if(back) back.onclick=()=>{state.i--;question()};
   toTop();
@@ -294,7 +301,7 @@ function result(main,sec,peek){
   const url=location.origin+"/quiz";
   const wa=document.getElementById("wa"); if(wa) wa.onclick=()=>{
     logClick('whatsapp_save');
-    const lines=[`הדפוס שלי: ${p.name}. ${p.line}`,'',`הטעות להפסיק: ${K.mistake}`,'','שלושה כלים:',...p.tools.map((t,k)=>`${k+1}. ${t.t}: ${t.ex}`),'','שבעה ימים בשטח:',...K.days.map((d,k)=>`יום ${k+1}: ${d}`),'','הערכה המלאה: '+url];
+    const lines=[`הדפוס שלי: ${p.name}. ${p.line}`,'',`הטעות להפסיק: ${K.mistake}`,'','שלושה כלים:',...p.tools.map((t,k)=>`${k+1}. ${t.t}: ${t.ex}`),'','שבעה ימים בשטח:',...K.days.map((d,k)=>`יום ${k+1}: ${d}`),'','הערכה המלאה: '+url+'#result'];
     window.open('https://wa.me/?text='+encodeURIComponent(lines.join('\n')),'_blank','noopener');
   };
   const c1=document.getElementById("copy"); if(c1) c1.onclick=()=>{logClick('copy');copy(`עשיתי את המבדק של בדרך. הדפוס שלי: ${p.name}. ${p.line}\n${url}`,"הועתק. אפשר להדביק בסטורי או בהודעה.")};
@@ -307,5 +314,7 @@ function result(main,sec,peek){
   toTop();
 }
 
+// תמיד נפתח מהמבדק. מי שכבר עשה אותו רואה בפתיחה קישור לתוצאה השמורה שלו.
+// קישור ישיר לתוצאה: /quiz#result
 const saved=store.get("bd_result");
-if(saved&&P[saved.main]){state.result=saved; result(saved.main,saved.sec)} else intro();
+if(location.hash==="#result"&&saved&&P[saved.main]){state.result=saved; result(saved.main,saved.sec)} else intro();

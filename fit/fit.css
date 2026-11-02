@@ -136,3 +136,45 @@ main:has(.intro){background-image:repeating-linear-gradient(to bottom,transparen
 .opt{transition:border-color .15s,box-shadow var(--dur-2,200ms) var(--ease,ease),background .15s,transform var(--dur-1,120ms)}
 .bar i{transition:width 800ms var(--ease-enter,ease)}
 @media (prefers-reduced-motion:reduce){.fade{animation:none}.opt,.btn .arr{transition:none}}
+
+/* ===== גרסה 3 (2.11.2026): תנועה רגועה, כמו בדף הבית ===== */
+@keyframes rise{from{opacity:0;transform:translateX(-14px)}to{opacity:1;transform:none}}
+@keyframes drawLine{from{transform:rotate(-2.5deg) scaleX(0)}to{transform:rotate(-2.5deg) scaleX(1)}}
+@keyframes inkToFaded{from{color:var(--ink)}to{color:rgba(28,27,24,.38)}}
+@keyframes fixIn{from{opacity:0;transform:rotate(-4deg) translateY(8px)}to{opacity:1;transform:rotate(-4deg)}}
+@keyframes sweep{from{background-size:0% 74%}to{background-size:100% 74%}}
+/* במקום שכל המסך זז כגוש, הרכיבים נכנסים אחד אחרי השני */
+.fade{animation:none}
+.screen.fade>*{animation:rise 800ms var(--ease-enter) both}
+.screen.fade>*:nth-child(2){animation-delay:90ms}
+.screen.fade>*:nth-child(3){animation-delay:180ms}
+.screen.fade>*:nth-child(4){animation-delay:270ms}
+.screen.fade>*:nth-child(n+5){animation-delay:360ms}
+.screen.fade fieldset{animation:none}
+.screen.fade fieldset .opt{animation:rise 700ms var(--ease-enter) both}
+.screen.fade fieldset .opt:nth-of-type(1){animation-delay:260ms}
+.screen.fade fieldset .opt:nth-of-type(2){animation-delay:330ms}
+.screen.fade fieldset .opt:nth-of-type(3){animation-delay:400ms}
+.screen.fade fieldset .opt:nth-of-type(4){animation-delay:470ms}
+.screen.fade fieldset .opt:nth-of-type(n+5){animation-delay:540ms}
+/* פתיחה: הקו נכתב על ״מתאים״, ״מדויק״ מופיע, ואז המרקר נמרח */
+.strike::after{transform-origin:right center}
+.intro .strike{animation:inkToFaded 800ms var(--ease) 700ms both}
+.intro .strike::after{animation:drawLine 800ms cubic-bezier(.65,0,.35,1) 700ms both}
+.intro .strike .fix{animation:fixIn 700ms var(--ease-enter) 1400ms both}
+.intro .mark{background-position:100% 62%;animation:sweep 1000ms cubic-bezier(.65,0,.35,1) 1900ms both}
+/* בחירה: פס החימר נכנס מימין, הסימון קופץ בעדינות */
+.opt{transition:border-color 200ms,box-shadow 400ms var(--ease-enter),background 200ms,transform 120ms}
+.opt .box::after{transition:transform 360ms cubic-bezier(.34,1.56,.64,1)}
+body{transition:background 700ms var(--ease-enter)}
+/* בטלפון: בלי מצב hover שנתקע אחרי נגיעה */
+@media (hover:none){
+  .opt:hover{border-color:var(--line-2)}
+  .opt:has(input:checked):hover{border-color:var(--ink)}
+  .btn:hover{transform:none}
+  .btn:not([disabled]):hover .arr{transform:none}
+  .link:hover{border-color:transparent}
+}
+@media (prefers-reduced-motion:reduce){
+  .screen.fade>*,.screen.fade fieldset .opt,.intro .strike,.intro .strike::after,.intro .strike .fix,.intro .mark{animation:none}
+}
