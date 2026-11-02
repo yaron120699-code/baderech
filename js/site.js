@@ -81,10 +81,10 @@
       entries.forEach(function(e){
         if(!e.isIntersecting) return;
         track.classList.add('seen');
-        steps.forEach(function(li,i){setTimeout(function(){li.classList.add('lit')},350+i*340)});
+        steps.forEach(function(li,i){setTimeout(function(){li.classList.add('lit')},250+i*480)});
         tio.disconnect();
       });
-    },{threshold:.25});
+    },{threshold:.35});
     tio.observe(track);
   }
 })();
