@@ -64,7 +64,7 @@
           });
         });
       }
-      var step=Math.min(34,800/Math.max(words.length,1));
+      var step=Math.min(60,1500/Math.max(words.length,1));
       words.forEach(function(w,i){
         w.classList.remove('go'); w.style.animationDelay=Math.round(i*step)+'ms';
       });
@@ -72,6 +72,23 @@
       words.forEach(function(w){w.classList.add('go')});
     });
   });
+
+  /* אז / היום: מחכים ששתי התמונות ייטענו, ואז חושפים */
+  var dip=document.getElementById('diptych');
+  if(dip){
+    var imgs=[].slice.call(dip.querySelectorAll('img'));
+    imgs.forEach(function(im){im.loading='eager'});
+    var ready=Promise.all(imgs.map(function(im){return im.decode?im.decode().catch(function(){}):Promise.resolve()}));
+    var dio=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(!e.isIntersecting) return;
+        dio.disconnect();
+        var go=function(){dip.classList.add('seen')};
+        ready.then(go); setTimeout(go,2500);
+      });
+    },{threshold:.3});
+    dio.observe(dip);
+  }
 
   /* ציר השלבים: הקו מתמלא והשלבים נדלקים אחד אחרי השני */
   var track=document.getElementById('track');

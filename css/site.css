@@ -51,6 +51,7 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .metabar .in{height:32px;display:flex;align-items:center;justify-content:space-between}
 header.site{position:sticky;top:env(safe-area-inset-top,0px);z-index:var(--z-header);background:rgba(247,246,241,.94);backdrop-filter:saturate(1.2) blur(8px);-webkit-backdrop-filter:saturate(1.2) blur(8px);border-bottom:1px solid var(--ink);transition:transform var(--dur-3) var(--ease)}
 header.site.away{transform:translateY(-100%)}
+header.site{transition:transform 500ms var(--ease-enter),border-color var(--dur-2) var(--ease)}
 header.site .in{display:flex;align-items:center;justify-content:space-between;gap:20px;height:68px}
 .logo{font-family:var(--display);font-weight:700;font-size:26px;text-decoration:none;color:var(--ink);line-height:1;display:inline-flex;align-items:center;min-height:44px}
 nav.main{display:flex;align-self:stretch;font-size:15px;font-weight:500}
@@ -161,10 +162,14 @@ header.site .btn{min-height:44px;padding:0 18px;font-size:15px}
 .story blockquote cite{display:block;font-family:var(--body);font-style:normal;font-weight:400;font-size:14px;color:var(--graphite);margin-top:12px}
 .diptych{display:grid;grid-template-columns:1fr 1fr;gap:12px;position:sticky;top:96px}
 .diptych figure{margin:0;display:flex;flex-direction:column;gap:10px;min-width:0}
-.diptych img{width:100%;height:auto;aspect-ratio:2/3;object-fit:cover}
+.diptych .ph{display:block;overflow:hidden;background:var(--paper-2);aspect-ratio:2/3}
+.diptych img{width:100%;height:100%;object-fit:cover;transition:transform 1400ms var(--ease-enter),filter 900ms var(--ease-enter)}
+.diptych figure:hover img{transform:scale(1.035)}
+.diptych .now:hover img{filter:saturate(1)}
+.diptych .then:hover img{filter:saturate(1)}
 .diptych .then img{filter:saturate(.85)}
 .diptych .now img{filter:saturate(.9)}
-.diptych figcaption{font-size:30px}
+.diptych figcaption{font-size:30px;transform:rotate(-2deg);transform-origin:right center}
 .diptych .sub{grid-column:1/-1;font-size:15px;color:var(--graphite);border-top:var(--rule);padding-top:12px}
 
 /* ---------- מה לוקחים ---------- */
@@ -197,9 +202,10 @@ header.site .btn{min-height:44px;padding:0 18px;font-size:15px}
 .faq summary{list-style:none;cursor:pointer;min-height:44px;padding:20px 0;display:flex;justify-content:space-between;gap:20px;align-items:center;font-family:var(--display);font-weight:700;font-size:clamp(19px,1.9vw,22px);transition:color var(--dur-1) var(--ease)}
 .faq summary:hover{color:var(--forest)}
 .faq summary::-webkit-details-marker{display:none}
-.faq summary::after{content:"+";font-family:var(--body);font-weight:400;font-size:26px;line-height:1;color:var(--graphite);transition:transform var(--dur-2) var(--ease)}
+.faq summary::after{content:"+";font-family:var(--body);font-weight:400;font-size:26px;line-height:1;color:var(--graphite);transition:transform 500ms var(--ease-enter)}
+.faq summary:focus-visible{outline:none;box-shadow:inset 0 -2px 0 var(--forest)}
 .faq details[open] summary::after{transform:rotate(45deg)}
-.faq details::details-content{block-size:0;overflow:hidden;transition:block-size var(--dur-3) var(--ease),content-visibility var(--dur-3) allow-discrete}
+.faq details::details-content{block-size:0;overflow:hidden;transition:block-size 700ms var(--ease-enter),content-visibility 700ms allow-discrete}
 .faq details[open]::details-content{block-size:auto}
 .faq .a{padding:0 0 24px;color:var(--ink-2);max-width:60ch;display:flex;flex-direction:column;gap:10px}
 
@@ -292,9 +298,9 @@ footer.site .logo{font-size:22px}
 .js-motion .hero .mark{transition-delay:2300ms}
 .js-motion .mark.seen{background-size:100% 74%}
 /* בגלילה: עלייה רכה ואיטית יותר, ואחים נכנסים אחד אחרי השני */
-.js-motion .rv{opacity:0;transform:translateY(18px);transition:opacity var(--dur-enter) var(--ease-enter),transform var(--dur-enter) var(--ease-enter)}
-.js-motion .rv+.rv{transition-delay:120ms}
-.js-motion .rv+.rv+.rv{transition-delay:240ms}
+.js-motion .rv{opacity:0;transform:translateY(24px);transition:opacity var(--dur-enter) var(--ease-enter),transform var(--dur-enter) var(--ease-enter)}
+.js-motion .rv+.rv{transition-delay:180ms}
+.js-motion .rv+.rv+.rv{transition-delay:360ms}
 .js-motion .rv.seen{opacity:1;transform:none}
 /* התהליך: הדרך נכתבת מימין לשמאל בקצב קבוע (2.4 שניות), וכל שלב נדלק בדיוק כשהקו מגיע אליו.
    הזמנים של הדלקה ב-js/site.js: 250 + 480 × מספר השלב. */
@@ -326,9 +332,23 @@ footer.site .logo{font-size:22px}
 .js-motion .between.seen>:nth-child(4){transition-delay:450ms}
 .js-motion .between.seen>:nth-child(5){transition-delay:600ms}
 .js-motion .lines li{transition:background var(--dur-2) var(--ease)}
-.js-motion .faq .a .w.go{animation:wordin 520ms var(--ease-enter) both}
-@keyframes wordin{from{opacity:0;filter:blur(4px)}to{opacity:1;filter:none}}
+.js-motion .faq .a .w.go{animation:wordin 900ms var(--ease-enter) both}
+@keyframes wordin{from{opacity:0;filter:blur(5px)}to{opacity:1;filter:none}}
 .js-motion .faq details[open] summary{color:var(--forest)}
+/* אז / היום: התמונות ״מתפתחות״ מלמטה למעלה, קודם אז ואחריה היום, ואז הכיתוב בכתב יד.
+   מתחיל רק אחרי ששתי התמונות נטענו, כדי שלא תהיה קפיצה. */
+.js-motion .diptych .ph{clip-path:inset(100% 0 0 0);transition:clip-path 1400ms cubic-bezier(.65,0,.35,1)}
+.js-motion .diptych .now .ph{transition-delay:450ms}
+.js-motion .diptych img{transform:scale(1.1)}
+.js-motion .diptych .now img{transition-delay:450ms}
+.js-motion .diptych figcaption{opacity:0;transform:rotate(-2deg) translateY(10px);transition:opacity 900ms var(--ease-enter) 1100ms,transform 900ms var(--ease-enter) 1100ms}
+.js-motion .diptych .now figcaption{transition-delay:1550ms}
+.js-motion .diptych .sub{opacity:0;transition:opacity 1000ms var(--ease-enter) 1900ms}
+.js-motion .diptych.seen .ph{clip-path:inset(0 0 0 0)}
+.js-motion .diptych.seen img{transform:none}
+.js-motion .diptych.seen figcaption{opacity:1;transform:rotate(-2deg)}
+.js-motion .diptych.seen .sub{opacity:1}
+.js-motion .diptych.seen figure:hover img{transform:scale(1.035);transition-delay:0ms}
 @media (max-width:960px){
   .js-motion .track::before{transition:height 2400ms linear 250ms}
   .js-motion .track::after{transform:translateY(-8px)}
