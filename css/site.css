@@ -62,16 +62,20 @@ nav.main a:last-child{border-left:1px solid var(--line)}
 header.site .btn{min-height:44px;padding:0 18px;font-size:15px}
 
 /* ---------- פתיחה ---------- */
-.ruled{background-image:repeating-linear-gradient(to bottom,transparent 0 39px,rgba(216,213,203,.55) 39px 40px)}
+/* שורות מחברת: המרווח (--u) שווה לגובה שורת טקסט, והקווים מיושרים לטקסט ב-js/rules.js */
+.ruled{--u:32px;position:relative;background-image:repeating-linear-gradient(to bottom,transparent 0 calc(var(--u) - 1px),rgba(216,213,203,.6) calc(var(--u) - 1px) var(--u));background-position:0 var(--rule-y,0px)}
+.ruled [data-rule]{position:relative}
+.hero .label{line-height:var(--u)}
+.hero .lead,.hero .body{line-height:var(--u)}
 .hero{padding-block:72px 72px}
-.hero .in{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:var(--s5);align-items:center}
+.hero .in{display:grid;grid-template-columns:minmax(0,7fr) minmax(0,4fr);gap:var(--s5);align-items:start}
 .hero .txt{display:flex;flex-direction:column;gap:28px;min-width:0}
-.hero h1{font-size:clamp(54px,7.4vw,112px);line-height:1.04;letter-spacing:-.02em}
+.hero h1{font-size:clamp(54px,7.4vw,112px);line-height:round(up,1.08em,var(--u));letter-spacing:-.02em}
 .h1-line{display:block}
-.strike-line{padding-top:.42em}
+.strike-line{padding-top:round(up,.36em,var(--u))}
 .hero .lead{max-width:34ch}
 .hero .ctas{display:flex;flex-wrap:wrap;gap:12px 28px;align-items:center}
-.portrait{margin:0;display:flex;flex-direction:column;gap:12px;min-width:0}
+.portrait{margin:0;display:flex;flex-direction:column;gap:12px;min-width:0;align-self:center}
 .portrait .frame{overflow:hidden;background:var(--paper-2)}
 .portrait img{width:100%;height:auto;aspect-ratio:4/5;object-fit:cover;object-position:center 30%;filter:saturate(.9)}
 .portrait figcaption{display:flex;justify-content:space-between;font-size:var(--fs-label);font-weight:500;letter-spacing:var(--track-label);color:var(--graphite)}
@@ -256,7 +260,8 @@ footer.site .logo{font-size:22px}
   .metabar .in span+span{display:none}
   header.site .in{height:60px}
   header.site .btn{padding:0 14px;font-size:14px}
-  .hero h1{font-size:clamp(46px,13.4vw,60px);line-height:1.08}
+  .hero h1{font-size:clamp(46px,13.4vw,60px);line-height:round(up,1.08em,var(--u))}
+  .ruled{--u:30px}
   .hero .ctas .btn{width:100%;justify-content:space-between}
   .hero .ctas{justify-content:center}
   .facts b{font-size:32px}
@@ -371,3 +376,5 @@ footer.site .logo{font-size:22px}
   .faq summary:hover{color:var(--forest)}
   .js-motion .diptych.seen figure:hover img{transform:scale(1.035);transition-delay:0ms}
 }
+/* בתוך שורות המחברת לא צריך קו מפריד נוסף, הוא נבלע בקווים */
+.ruled .quizline{border-top:0}

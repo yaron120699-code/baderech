@@ -37,18 +37,19 @@ function focusHead(){var h=app.querySelector('h1,h2');if(h){h.setAttribute('tabi
 function renderIntro(){
   setDark(false);prog.hidden=true;
   app.innerHTML='<div class="in screen center intro fade">'+
-    '<span class="label">בדיקת התאמה</span>'+
-    '<h1>לפני שמדברים, בוא נבדוק אם זה בכלל <span class="strike">מתאים<span class="fix">מדויק</span></span>.</h1>'+
-    '<p class="sub">כמה שאלות קצרות. <span class="mark">בלי ציונים ובלי התחייבות.</span></p>'+
-    '<div class="meta"><span>7 שאלות</span><span>כ-2 דקות</span><span>התשובות מגיעות רק אליי</span></div>'+
+    '<span class="label" data-rule>בדיקת התאמה</span>'+
+    '<h1 data-rule>לפני שמדברים, בוא נבדוק אם זה בכלל <span class="strike">מתאים<span class="fix">מדויק</span></span>.</h1>'+
+    '<p class="sub" data-rule>כמה שאלות קצרות. <span class="mark">בלי ציונים ובלי התחייבות.</span></p>'+
+    '<div class="meta" data-rule><span>7 שאלות</span><span>כ-2 דקות</span><span>התשובות מגיעות רק אליי</span></div>'+
   '</div>';
   actIn.innerHTML='<button class="btn solo" id="go">מתחילים <span class="arr">←</span></button>';
+  app.classList.add('ruled'); if(window.alignRules) requestAnimationFrame(function(){alignRules(app)});
   document.getElementById('go').onclick=function(){go(0)};
   focusHead();
 }
 
 function renderPause(){
-  setDark(true);prog.hidden=true;
+  setDark(true);prog.hidden=true;app.classList.remove('ruled');
   app.innerHTML='<div class="in screen center pause fade"><span class="label">רגע לנשום</span><h2>אין כאן תשובה נכונה.</h2><span class="hand">רק ניסיון להבין אם זה מדויק לך עכשיו.</span></div>';
   actIn.innerHTML='<button class="link" id="bk">חזרה</button><button class="btn light" id="nx">להמשיך <span class="arr">←</span></button>';
   document.getElementById('bk').onclick=function(){go(step-1)};
@@ -57,7 +58,7 @@ function renderPause(){
 }
 
 function renderQ(){
-  var q=Q[step]; setDark(false); prog.hidden=false;
+  var q=Q[step]; setDark(false); prog.hidden=false; app.classList.remove('ruled');
   var n=qIndex(step);
   document.getElementById('progTxt').textContent='שאלה '+n+' מתוך '+TOTAL;
   document.getElementById('progStage').textContent=q.stage;
@@ -191,7 +192,7 @@ function waLink(kind){
 }
 
 function renderResult(){
-  setDark(false); prog.hidden=false;
+  setDark(false); prog.hidden=false; app.classList.remove('ruled');
   document.getElementById('progTxt').textContent='סיימת';
   document.getElementById('progStage').textContent='התוצאה';
   document.getElementById('barFill').style.width='100%';
