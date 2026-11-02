@@ -183,3 +183,7 @@ body{transition:background 700ms var(--ease-enter)}
 @media (prefers-reduced-motion:reduce){
   .screen.fade>*,.screen.fade fieldset .opt,.intro .strike,.intro .strike::after,.intro .strike .fix,.intro .mark{animation:none}
 }
+
+/* QA 2026-11-02 */
+p,li{text-wrap:pretty}
+a[href*="instagram.com"]{unicode-bidi:plaintext}

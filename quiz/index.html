@@ -15,6 +15,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://baderech.vercel.app/quiz">
+<link rel="canonical" href="https://baderech.vercel.app/quiz">
 <meta property="og:locale" content="he_IL">
 <meta property="og:title" content="מפחד, או פשוט לא יודע?">
 <meta property="og:description" content="שבע סיטואציות, שלוש דקות. ובסוף ערכת שטח אישית לשבוע.">
@@ -31,6 +32,7 @@
 <link rel="stylesheet" href="/css/tokens.css">
 <link rel="stylesheet" href="/quiz/quiz.css">
 <script>
+  window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
   // מצב בדיקה של ירון: ?me=1 מסמן את הדפדפן, ?me=0 מבטל. מבדקים מדפדפן מסומן
   // נרשמים בגיליון עם source שמתחיל ב-test, כמו בבדיקת ההתאמה. הסימון משותף לכל האתר.
   (function () {
@@ -40,6 +42,7 @@
       if (me === '0') localStorage.removeItem('baderech_me');
       window.baderechMe = localStorage.getItem('baderech_me') === '1';
     } catch (e) { window.baderechMe = false; }
+    window.va('beforeSend', function (event) { return window.baderechMe ? null : event; });
     if (window.baderechMe) document.addEventListener('DOMContentLoaded', function () {
       var b = document.createElement('div');
       b.textContent = 'מצב בדיקה · לא נספר';
@@ -48,6 +51,7 @@
     });
   })();
 </script>
+<script defer src="/_vercel/insights/script.js"></script>
 </head>
 <body>
 <div class="wrap">
