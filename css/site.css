@@ -40,6 +40,12 @@ img{max-width:100%;display:block}
 .textlink{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);text-decoration:none;font-weight:500;
   background:linear-gradient(var(--ink),var(--ink)) 100% calc(100% - 8px)/100% 1.5px no-repeat;transition:background-size var(--dur-2) var(--ease)}
 section{scroll-margin-top:76px}
+/* קישור למבדק החינמי: שורה שקטה מתחת לכפתורים, לא כפתור שלישי */
+.quizline{display:inline-flex;align-items:center;flex-wrap:wrap;gap:4px 12px;min-height:44px;padding-top:14px;border-top:var(--rule);font-size:16px;font-weight:500;color:var(--ink);text-decoration:none;align-self:flex-start}
+.quizline .k{font-size:var(--fs-label);letter-spacing:var(--track-label);color:var(--forest)}
+.quizline .arr{font-family:var(--display);font-size:20px;line-height:0;transition:transform var(--dur-2) var(--ease)}
+.quizline.light{color:var(--on-forest);border-top-color:rgba(247,246,241,.22);align-self:stretch}
+.quizline.light .k{color:var(--marker)}
 
 /* ---------- שורת מטא + כותרת ---------- */
 body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:var(--z-safe-area);background:var(--paper)}
@@ -272,6 +278,7 @@ footer.site .logo{font-size:22px}
 .js-motion .hero .txt>:nth-child(3){transition-delay:420ms}
 .js-motion .hero .txt>:nth-child(4){transition-delay:540ms}
 .js-motion .hero .txt>:nth-child(5){transition-delay:660ms}
+.js-motion .hero .txt>:nth-child(6){transition-delay:780ms}
 .js-motion .hero.seen .txt>*{opacity:1;transform:none}
 .js-motion .hero .strike{color:var(--ink);transition:color 900ms var(--ease) 1000ms}
 .js-motion .hero .strike::after{transform:rotate(-2.5deg) scaleX(0);transition:transform 800ms cubic-bezier(.65,0,.35,1) 1000ms}
@@ -352,6 +359,7 @@ footer.site .logo{font-size:22px}
 
 /* מעבר עכבר רק במכשירים עם עכבר, כדי שבטלפון לא יישאר מצב ״תקוע״ אחרי נגיעה */
 @media (hover:hover){
+  .quizline:hover .arr{transform:translateX(-4px)}
   .btn:hover{transform:translateY(-1px)}
   .btn:hover .arr{transform:translateX(-4px)}
   .btn.line-light:hover{border-color:var(--paper)}
