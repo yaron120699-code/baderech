@@ -82,8 +82,8 @@ header.site .btn{min-height:44px;padding:0 18px;font-size:15px}
 
 .factsband{border-top:var(--rule-open);border-bottom:var(--rule)}
 .facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
-.facts div{display:flex;flex-direction:column;gap:4px;padding:22px 0}
-.facts div+div{border-right:var(--rule);padding-right:28px}
+.facts div{display:flex;flex-direction:column;align-items:center;text-align:center;gap:4px;padding:22px 0}
+.facts div+div{border-right:var(--rule)}
 .facts b{font-family:var(--display);font-weight:900;font-size:44px;line-height:1}
 .facts span{font-size:15px;color:var(--graphite)}
 
@@ -263,9 +263,8 @@ footer.site .logo{font-size:22px}
   .hero h1{font-size:clamp(46px,13.4vw,60px);line-height:round(up,1.08em,var(--u))}
   .ruled{--u:30px}
   .hero .ctas .btn{width:100%;justify-content:space-between}
-  .hero .ctas{justify-content:center}
+  .hero .ctas{justify-content:flex-start}
   .facts b{font-size:32px}
-  .facts div+div{padding-right:16px}
   .log{padding:22px 18px 16px}
   .logrow{grid-template-columns:minmax(0,1fr);gap:4px;padding:14px 0}
   .between{flex-direction:column;align-items:flex-start;gap:12px}
@@ -378,3 +377,9 @@ footer.site .logo{font-size:22px}
 }
 /* בתוך שורות המחברת לא צריך קו מפריד נוסף, הוא נבלע בקווים */
 .ruled .quizline{border-top:0}
+
+.ln{display:block;text-wrap:balance}
+/* QA 2026-11-02: שבירות שורה, שם אינסטגרם בכיוון הנכון */
+blockquote{text-wrap:balance}
+p,li{text-wrap:pretty}
+a[href*="instagram.com"]{unicode-bidi:plaintext}

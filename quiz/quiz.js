@@ -167,7 +167,7 @@ function intro(){
   const saved=store.get("bd_result"); const has=saved&&P[saved.main];
   app.innerHTML = `<section class="screen">
     <span class="lab">מבדק · בדרך</span>
-    <h1>מפחד, או פשוט לא יודע?</h1>
+    <h1><span class="ln">מפחד,</span> <span class="ln">או פשוט לא יודע?</span></h1>
     <p class="lead">רוב התוכן על דייטינג מניח שכולם תקועים באותו מקום. <span class="mk">זה לא נכון.</span></p>
     <p>יש מי שיודע בדיוק מה להגיד ולא אומר, ויש מי שפשוט לא יודע מה להגיד. שבע סיטואציות, רובן עם נשים וחלקן לא, יעזרו לך לראות איפה אתה, ובסוף תקבל שלושה כלים ומשימה אחת לשבוע.</p>
     <p class="hw">תענה מה שהיית עושה באמת.</p>
