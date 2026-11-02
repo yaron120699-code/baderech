@@ -6,12 +6,16 @@
   var header=document.querySelector('header.site');
 
   /* הכותרת העליונה מתחבאת בגלילה למטה וחוזרת בגלילה למעלה */
-  var lastY=window.scrollY, ticking=false;
+  var lastY=window.scrollY, ticking=false, quietUntil=0, dir=0, travel=0;
+  function quiet(){quietUntil=Date.now()+900}
   function onScroll(){
     var y=window.scrollY;
     if(header){
-      if(y>420 && y>lastY+6) header.classList.add('away');
-      else if(y<lastY-6 || y<420) header.classList.remove('away');
+      var d=y-lastY, nd=d>0?1:-1;
+      if(nd!==dir){dir=nd;travel=0}
+      travel+=Math.abs(d);
+      if(y<420) header.classList.remove('away');
+      else if(Date.now()>quietUntil && travel>40) header.classList.toggle('away',dir>0);
     }
     lastY=y; ticking=false;
   }
@@ -48,28 +52,37 @@
   },{threshold:.3,rootMargin:'0px 0px -8% 0px'});
   document.querySelectorAll('.mark,.rv').forEach(function(el){if(!el.closest('.hero')) io.observe(el)});
 
-  /* שאלות נפוצות: התשובה נבנית מילה אחר מילה כשפותחים, כמו מישהו שכותב. עד חצי שנייה בסך הכול */
+  /* שאלות נפוצות: הגובה נפתח ונסגר בהחלקה, ואז המילים מופיעות. כל שאלה מנוהלת לבד,
+     ואם לוחצים באמצע תנועה, התנועה הקודמת מתבטלת ולא נערמת. */
   document.querySelectorAll('.faq details').forEach(function(d){
-    var words=null;
-    d.addEventListener('toggle',function(){
-      if(!d.open) return;
-      if(!words){
-        words=[];
-        d.querySelectorAll('.a p').forEach(function(p){
-          var parts=p.textContent.split(/(\s+)/);
-          p.textContent='';
-          parts.forEach(function(t){
-            if(/^\s+$/.test(t)||!t){p.appendChild(document.createTextNode(t));return}
-            var s=document.createElement('span'); s.className='w'; s.textContent=t; p.appendChild(s); words.push(s);
-          });
+    var sum=d.querySelector('summary'), a=d.querySelector('.a'), words=null, anim=null, timers=[];
+    function split(){
+      words=[];
+      d.querySelectorAll('.a p').forEach(function(p){
+        var parts=p.textContent.split(/(\s+)/); p.textContent='';
+        parts.forEach(function(t){
+          if(!t||/^\s+$/.test(t)){p.appendChild(document.createTextNode(t));return}
+          var s=document.createElement('span'); s.className='w'; s.textContent=t; p.appendChild(s); words.push(s);
         });
-      }
-      var step=Math.min(60,1500/Math.max(words.length,1));
-      words.forEach(function(w,i){
-        w.classList.remove('go'); w.style.animationDelay=Math.round(i*step)+'ms';
       });
-      void d.offsetHeight;
-      words.forEach(function(w){w.classList.add('go')});
+    }
+    function clear(){timers.forEach(clearTimeout);timers=[];if(anim){anim.cancel();anim=null}}
+    sum.addEventListener('click',function(e){
+      e.preventDefault(); clear(); quiet();
+      if(!d.open || d.classList.contains('closing')){
+        d.classList.remove('closing'); d.classList.add('opening'); d.open=true;
+        if(!words) split();
+        words.forEach(function(w){w.classList.remove('go')});
+        var h=a.scrollHeight;
+        anim=a.animate([{height:'0px'},{height:h+'px'}],{duration:650,easing:'cubic-bezier(.16,1,.3,1)'});
+        anim.onfinish=function(){anim=null;d.classList.remove('opening')};
+        var step=Math.min(45,1100/Math.max(words.length,1));
+        words.forEach(function(w,k){timers.push(setTimeout(function(){w.classList.add('go')},120+k*step))});
+      } else {
+        d.classList.add('closing');
+        anim=a.animate([{height:a.offsetHeight+'px'},{height:'0px'}],{duration:450,easing:'cubic-bezier(.65,0,.35,1)'});
+        anim.onfinish=function(){anim=null;d.open=false;d.classList.remove('closing')};
+      }
     });
   });
 
