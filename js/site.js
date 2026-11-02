@@ -30,8 +30,12 @@
   /* הכותרת הראשית: הקו נכתב על ״הדמות״, ואז ״עצמך״. התמונה נחשפת מימין */
   var heroStrike=document.querySelector('.hero .strike'), portrait=document.querySelector('.portrait');
   requestAnimationFrame(function(){requestAnimationFrame(function(){
+    var hero=document.querySelector('.hero');
+    if(hero) hero.classList.add('seen');
     if(heroStrike) heroStrike.classList.add('seen');
     if(portrait) portrait.classList.add('seen');
+    var hm=document.querySelector('.hero .mark');
+    if(hm) hm.classList.add('seen');
   })});
 
   /* מרקר נמרח וסקשנים נכנסים, פעם אחת */
@@ -42,7 +46,7 @@
       io.unobserve(e.target);
     });
   },{threshold:.3,rootMargin:'0px 0px -8% 0px'});
-  document.querySelectorAll('.mark,.rv').forEach(function(el){io.observe(el)});
+  document.querySelectorAll('.mark,.rv').forEach(function(el){if(!el.closest('.hero')) io.observe(el)});
 
   /* שאלות נפוצות: התשובה נבנית מילה אחר מילה כשפותחים, כמו מישהו שכותב. עד חצי שנייה בסך הכול */
   document.querySelectorAll('.faq details').forEach(function(d){
@@ -60,7 +64,7 @@
           });
         });
       }
-      var step=Math.min(22,520/Math.max(words.length,1));
+      var step=Math.min(34,800/Math.max(words.length,1));
       words.forEach(function(w,i){
         w.classList.remove('go'); w.style.animationDelay=Math.round(i*step)+'ms';
       });
@@ -77,7 +81,7 @@
       entries.forEach(function(e){
         if(!e.isIntersecting) return;
         track.classList.add('seen');
-        steps.forEach(function(li,i){setTimeout(function(){li.classList.add('lit')},180+i*200)});
+        steps.forEach(function(li,i){setTimeout(function(){li.classList.add('lit')},350+i*340)});
         tio.disconnect();
       });
     },{threshold:.25});
