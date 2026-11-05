@@ -196,3 +196,14 @@ a[href*="instagram.com"]{unicode-bidi:plaintext}
 .bar::after{content:"";position:absolute;inset:0;z-index:1;background:repeating-linear-gradient(to left,transparent 0 calc(100% / var(--total,7) - 3px),var(--paper) calc(100% / var(--total,7) - 3px) calc(100% / var(--total,7)))}
 @keyframes segIn{from{transform:scaleX(0)}to{transform:none}}
 @media (prefers-reduced-motion:reduce){.bar::before{animation:none;transition:none}}
+
+/* ===== גרסה 4ב (5.11.2026): הרגעים שעוצרים ===== */
+@keyframes handWrite{from{clip-path:inset(-20% 0 -20% 100%)}to{clip-path:inset(-20% 0 -20% 0)}}
+/* ״רגע לנשום״: השורה בכתב יד נכתבת לאט, מימין לשמאל */
+.screen.fade.pause>.hand{animation:handWrite 1600ms cubic-bezier(.65,0,.35,1) 650ms both}
+/* התוצאה: המרקר נמרח על המשפט החשוב, וכתב היד (״וזה בסדר.״ / ״כדאי לדבר.״) נכתב אחריו */
+.res .mark{background-position:100% 62%;animation:sweep 1000ms cubic-bezier(.65,0,.35,1) 1000ms both}
+.res .verdict .hand{animation:handWrite 1100ms cubic-bezier(.65,0,.35,1) 1000ms both}
+@media (prefers-reduced-motion:reduce){
+  .screen.fade.pause>.hand,.res .mark,.res .verdict .hand{animation:none}
+}
