@@ -507,3 +507,18 @@ nav.main a.cur::after{transform:none}
   .cmp-knob,.track .node,.track li,.track h3,.track .n,nav.main a::after{transition:none}
 }
 .diptych.is-compare .sub{max-width:400px}
+
+/* ---------- 4ג (5.11.2026): איורים גם לשני העקרונות האחרים, באותו קו ----------
+   ״אין תוכנית מדף״: מדף עם שלוש קופסאות זהות, ולצידו אדם שקו חימר נכתב סביבו, פעם אחת (התהליך נבנה סביבך).
+   ״מעט אנשים בכל פעם״: שלושה אנשים, וכל אחד בתורו חושב על משהו. */
+.walk .floor{stroke:var(--on-forest-2);stroke-dasharray:2 7;opacity:.7}
+.walk .around{stroke:var(--marker);stroke-width:1.4}
+.walk.think .bubble rect{stroke:var(--marker)}
+.walk.think .t1,.walk.think .t3{opacity:0}
+/* מימין לשמאל, כמו בקריאה: קודם הימני (t3), אחר כך האמצעי, ואז השמאלי */
+.js-motion .walk.shelf .around{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1800ms cubic-bezier(.65,0,.35,1) 500ms}
+.js-motion .walk.shelf.drawn .around{stroke-dashoffset:0}
+@keyframes think{0%,4%{opacity:0;transform:translateY(3px)}10%,28%{opacity:1;transform:none}33%,100%{opacity:0;transform:none}}
+.js-motion .walk.think .bubble{opacity:0;animation:think 9s var(--ease) infinite}
+.js-motion .walk.think .t2{animation-delay:3s}
+.js-motion .walk.think .t1{animation-delay:6s}

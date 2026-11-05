@@ -232,9 +232,10 @@
     if(mq.addEventListener) mq.addEventListener('change',onMq); else if(mq.addListener) mq.addListener(onMq);
   }
 
-  /* האיור של השניים שהולכים: התנועה רצה רק כשהוא על המסך */
-  var walk=document.querySelector('.walk');
-  if(walk){
-    new IntersectionObserver(function(es){es.forEach(function(e){walk.classList.toggle('play',e.isIntersecting)})}).observe(walk);
-  }
+    /* האיורים בעקרונות: התנועה רצה רק כשהם על המסך. .drawn נשאר אחרי הפעם הראשונה (קו שנכתב פעם אחת) */
+  var wio=new IntersectionObserver(function(es){es.forEach(function(e){
+    e.target.classList.toggle('play',e.isIntersecting);
+    if(e.isIntersecting) e.target.classList.add('drawn');
+  })},{threshold:.4});
+  document.querySelectorAll('.walk').forEach(function(w){wio.observe(w)});
 })();
