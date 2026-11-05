@@ -63,6 +63,7 @@ function renderQ(){
   document.getElementById('progTxt').textContent='שאלה '+n+' מתוך '+TOTAL;
   document.getElementById('progStage').textContent=q.stage;
   document.getElementById('barFill').style.width=((n-1)/TOTAL*100)+'%';
+  prog.style.setProperty('--n',n); prog.style.setProperty('--total',TOTAL); /* גרסה 4: הקטע של השאלה הנוכחית בפס (תצוגה בלבד) */
   var multi=!!(q.max||q.multi), sel=A[q.id]||[];
   var html='<div class="in screen fade"><span class="hand qnote">'+esc(q.note)+'</span><h2 id="qh">'+esc(q.q)+'</h2>'+(q.hint?'<p class="qhint">'+esc(q.hint)+'</p>':'')+
     '<fieldset aria-labelledby="qh"><legend>'+esc(q.q)+'</legend>';

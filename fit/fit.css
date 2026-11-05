@@ -187,3 +187,12 @@ body{transition:background 700ms var(--ease-enter)}
 /* QA 2026-11-02 */
 p,li{text-wrap:pretty}
 a[href*="instagram.com"]{unicode-bidi:plaintext}
+
+/* ===== גרסה 4 (5.11.2026): פס של שבעה קטעים, אחד לכל שאלה ===== */
+/* הקטעים נוצרים מרווחים בצבע הרקע מעל הפס. מה שכבר ענית בדיו, השאלה הנוכחית נכתבת בירוק.
+   --n ו---total נקבעים ב-fit.js, באותה שורה שמעדכנת את ״שאלה N מתוך 7״. */
+.bar{height:4px}
+.bar::before{content:"";position:absolute;top:0;bottom:0;right:calc((var(--n,1) - 1) / var(--total,7) * 100%);width:calc(100% / var(--total,7));transition:right 600ms var(--ease-enter,ease);background:var(--forest);transform-origin:right center;animation:segIn 700ms var(--ease-enter,ease) 150ms both}
+.bar::after{content:"";position:absolute;inset:0;z-index:1;background:repeating-linear-gradient(to left,transparent 0 calc(100% / var(--total,7) - 3px),var(--paper) calc(100% / var(--total,7) - 3px) calc(100% / var(--total,7)))}
+@keyframes segIn{from{transform:scaleX(0)}to{transform:none}}
+@media (prefers-reduced-motion:reduce){.bar::before{animation:none;transition:none}}

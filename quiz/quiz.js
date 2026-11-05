@@ -311,7 +311,18 @@ function result(main,sec,peek){
   const ss=document.getElementById("seeSec"); if(ss) ss.onclick=()=>result(sec,null,true);
   const br=document.getElementById("backRes"); if(br) br.onclick=()=>result(state.result.main,state.result.sec);
   const ag=document.getElementById("again"); if(ag) ag.onclick=intro;
+  revealResult();
   toTop();
+}
+
+// גרסה 4: בתוצאה, כל מה שאחרי הפתיחה נכנס כשמגיעים אליו בגלילה (הכלים ושבעת הימים בהדרגה).
+// תצוגה בלבד: לא משנה תוכן, לחיצות או רישום. בלי IntersectionObserver או עם פחות תנועה, הכול גלוי מיד.
+function revealResult(){
+  const reduce=window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduce||!('IntersectionObserver' in window)) return;
+  const items=[...app.querySelectorAll('.res>*')].slice(1);
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}}),{threshold:.15,rootMargin:'0px 0px -6% 0px'});
+  items.forEach(el=>{el.classList.add('q-rv');io.observe(el)});
 }
 
 // תמיד נפתח מהמבדק. מי שכבר עשה אותו רואה בפתיחה קישור לתוצאה השמורה שלו.

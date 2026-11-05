@@ -201,3 +201,39 @@ header{border-bottom:1px solid var(--ink)}
 /* QA 2026-11-02 */
 p,li{text-wrap:pretty}
 a[href*="instagram.com"]{unicode-bidi:plaintext}
+
+/* ===== גרסה 4 (5.11.2026): התקדמות ברורה, ותוצאה שנחשפת בהדרגה ===== */
+/* פס ההתקדמות נשאר במקומו כשהשאלה יוצאת, ורק הקטע של השאלה הנוכחית נכתב מימין לשמאל */
+.screen:not(.res)>.prog{animation:none}
+.screen.leaving{animation:none!important}
+.screen.leaving>:not(.prog){animation:leave 260ms cubic-bezier(.65,0,.35,1) forwards!important}
+.prog{height:4px}
+.prog i{position:relative;overflow:hidden;height:4px}
+.prog i.now{animation:none;background:var(--line)}
+.prog i.now::after{content:"";position:absolute;inset:0;background:var(--forest);transform-origin:right center;animation:seg 700ms cubic-bezier(.16,1,.3,1) 120ms both}
+@keyframes seg{from{transform:scaleX(0)}to{transform:none}}
+/* התשובה שנבחרה: לפני שהשאלה יוצאת, גם הקטע בפס נסגר בדיו */
+.screen.leaving .prog i.now::after{background:var(--ink);transition:background 200ms}
+/* תוצאה: מה שמתחת לקו המסך נכנס כשמגיעים אליו. הכלים אחד אחרי השני, וימי המשימה כמו רשימה שנפרשת */
+.res>.q-rv{animation:none;opacity:0;transform:translateY(18px);transition:opacity 900ms cubic-bezier(.16,1,.3,1),transform 900ms cubic-bezier(.16,1,.3,1)}
+.res>.q-rv.in{opacity:1;transform:none}
+.res>.q-rv .tool,.res>.q-rv .chk,.res>.q-rv .debrief{opacity:0;transform:translateX(-12px);transition:opacity 700ms cubic-bezier(.16,1,.3,1),transform 700ms cubic-bezier(.16,1,.3,1)}
+.res>.q-rv.in .tool,.res>.q-rv.in .chk,.res>.q-rv.in .debrief{opacity:1;transform:none}
+.res>.q-rv.in .tool:nth-of-type(1){transition-delay:150ms}
+.res>.q-rv.in .tool:nth-of-type(2){transition-delay:400ms}
+.res>.q-rv.in .tool:nth-of-type(3){transition-delay:650ms}
+.res>.q-rv.in .chk:nth-of-type(1){transition-delay:250ms}
+.res>.q-rv.in .chk:nth-of-type(2){transition-delay:400ms}
+.res>.q-rv.in .chk:nth-of-type(3){transition-delay:550ms}
+.res>.q-rv.in .chk:nth-of-type(4){transition-delay:650ms}
+.res>.q-rv.in .chk:nth-of-type(5){transition-delay:750ms}
+.res>.q-rv.in .chk:nth-of-type(6){transition-delay:850ms}
+.res>.q-rv.in .chk:nth-of-type(7){transition-delay:950ms}
+.res>.q-rv.in .debrief{transition-delay:1150ms}
+.res>.q-rv .meter i{transform-origin:right center}
+.res>.q-rv:not(.in) .meter i{transform:scaleX(0)}
+.res>.q-rv.in .meter i{transform:none;transition:width 700ms cubic-bezier(.16,1,.3,1),transform 900ms cubic-bezier(.16,1,.3,1) 900ms}
+@media (prefers-reduced-motion:reduce){
+  .prog i.now::after{animation:none}
+  .res>.q-rv,.res>.q-rv .tool,.res>.q-rv .chk,.res>.q-rv .debrief,.res>.q-rv .meter i{opacity:1;transform:none;transition:none}
+}
