@@ -522,3 +522,14 @@ nav.main a.cur::after{transform:none}
 .js-motion .walk.think .bubble{opacity:0;animation:think 9s var(--ease) infinite}
 .js-motion .walk.think .t2{animation-delay:3s}
 .js-motion .walk.think .t1{animation-delay:6s}
+/* המדף: הקופסאות זזות קצת, כמו על פס ייצור. דף אחד, שונה מהקופסאות, עף לידיים של האדם, ורק אז הקו נכתב סביב שניהם */
+.walk .sheet path{stroke:var(--marker)}
+.walk .sheet line{stroke:var(--marker);stroke-width:1.2}
+@keyframes shuffle{0%,62%,100%{transform:none}70%,84%{transform:translateX(-2.5px)}}
+.js-motion .walk.shelf .box{animation:shuffle 5s cubic-bezier(.65,0,.35,1) infinite}
+.js-motion .walk.shelf .box:nth-of-type(2){animation-delay:.18s}
+.js-motion .walk.shelf .box:nth-of-type(3){animation-delay:.36s}
+.js-motion .walk.shelf .sheet{transform-box:view-box;transform-origin:54px 38px;opacity:0;transform:translate(46px,-14px) rotate(14deg);transition:opacity 500ms var(--ease-enter) 400ms,transform 1500ms cubic-bezier(.45,0,.2,1) 400ms}
+.js-motion .walk.shelf.drawn .sheet{opacity:1;transform:none}
+.js-motion .walk.shelf .around{transition-delay:1800ms}
+.walk .around{stroke-linecap:butt}
