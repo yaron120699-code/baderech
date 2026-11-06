@@ -533,3 +533,13 @@ nav.main a.cur::after{transform:none}
 .js-motion .walk.shelf.drawn .sheet{opacity:1;transform:none}
 .js-motion .walk.shelf .around{transition-delay:1800ms}
 .walk .around{stroke-linecap:butt}
+
+/* ---------- ״אם אתה כאן״: השורה שאתה קורא נדלקת (6.11.2026) ----------
+   לפני שהגעת אליה השורה בגרפיט, וכשקראת אותה היא בדיו וקו דק נמשך מתחתיה מימין לשמאל.
+   השורה שאתה עליה עכשיו: המספר בירוק. השליטה ב-site.js (.read, .lit, .now). */
+.js-motion .lines.read li{position:relative;color:var(--graphite);transition:color 700ms var(--ease-enter)}
+.js-motion .lines.read li span{transition:color 500ms var(--ease-enter),transform 500ms cubic-bezier(.34,1.56,.64,1);transform-origin:right center}
+.js-motion .lines.read li::after{content:"";position:absolute;right:0;left:0;bottom:-1px;height:1px;background:var(--ink);transform:scaleX(0);transform-origin:right center;transition:transform 900ms cubic-bezier(.65,0,.35,1) 150ms}
+.js-motion .lines.read li.lit{color:var(--ink)}
+.js-motion .lines.read li.lit::after{transform:none}
+.js-motion .lines.read li.now span{color:var(--forest);transform:scale(1.15)}

@@ -232,7 +232,41 @@
     if(mq.addEventListener) mq.addEventListener('change',onMq); else if(mq.addListener) mq.addListener(onMq);
   }
 
-    /* האיורים בעקרונות: התנועה רצה רק כשהם על המסך. .drawn נשאר אחרי הפעם הראשונה (קו שנכתב פעם אחת) */
+    /* ״אם אתה כאן״: השורה שאתה קורא נדלקת (6.11.2026).
+     בטלפון: לפי גלילה. שורה נדלקת כשהאמצע שלה עובר 60% מגובה המסך, ונשארת כהה (קראת אותה).
+     השורה האחרונה שנדלקה היא ״עכשיו״: המספר בירוק. כשכל הרשימה מאחוריך, אין ״עכשיו״.
+     במחשב: הרשימה ליד הכותרת וכולה במסך, אז השורות נדלקות אחת אחרי השנייה בזמן. */
+  var lines=document.querySelector('.problem .lines');
+  if(lines){
+    var rows=[].slice.call(lines.querySelectorAll('li'));
+    var lmq=window.matchMedia('(max-width:960px)'), lScrub=false, lPend=false, lTimers=[];
+    lines.classList.add('read');
+    var lNow=function(k){rows.forEach(function(li,i){li.classList.toggle('now',i===k)})};
+    var lAll=function(){lTimers.forEach(clearTimeout);lScrub=false;rows.forEach(function(li){li.classList.add('lit')});lNow(-1)};
+    var lRead=function(){
+      lPend=false; if(!lScrub) return;
+      var line=window.innerHeight*.6, cur=-1;
+      rows.forEach(function(li,i){var r=li.getBoundingClientRect();if(r.top+r.height/2<=line){li.classList.add('lit');cur=i}});
+      var last=rows[rows.length-1].getBoundingClientRect();
+      lNow(last.bottom<window.innerHeight*.3?-1:cur);
+    };
+    if(lmq.matches){
+      lScrub=true;
+      window.addEventListener('scroll',function(){if(!lPend){lPend=true;requestAnimationFrame(lRead)}},{passive:true});
+      lRead();
+    } else {
+      var lio=new IntersectionObserver(function(es){es.forEach(function(e){
+        if(!e.isIntersecting) return; lio.disconnect();
+        rows.forEach(function(li,i){lTimers.push(setTimeout(function(){li.classList.add('lit');lNow(i)},500+i*650))});
+        lTimers.push(setTimeout(function(){lNow(-1)},500+rows.length*650+900));
+      })},{threshold:.5});
+      lio.observe(lines);
+    }
+    var lMq=function(){lAll()};
+    if(lmq.addEventListener) lmq.addEventListener('change',lMq); else if(lmq.addListener) lmq.addListener(lMq);
+  }
+
+  /* האיורים בעקרונות: התנועה רצה רק כשהם על המסך. .drawn נשאר אחרי הפעם הראשונה (קו שנכתב פעם אחת) */
   var wio=new IntersectionObserver(function(es){es.forEach(function(e){
     e.target.classList.toggle('play',e.isIntersecting);
     if(e.isIntersecting) e.target.classList.add('drawn');
