@@ -553,13 +553,12 @@ nav.main a.cur::after{transform:none}
 .roadline .dot{position:absolute;top:-2px;right:0;width:7px;height:7px;border-radius:50%;background:var(--marker);box-shadow:0 0 0 1.5px var(--ink);transform:translateX(calc(var(--p) * -100vw + 3.5px));opacity:0;transition:opacity 300ms var(--ease)}
 .roadline.on .dot{opacity:1}
 
-/* ---------- 2. פס המספרים: נספרים, ו״ממשיך״ ממשיך לרוץ ---------- */
+/* ---------- 2. פס המספרים: נספרים, והקו של ״ממשיך״ נכתב פעם אחת ---------- */
 .facts div{position:relative}
 .facts b{font-variant-numeric:tabular-nums}
 .facts .run{position:absolute;bottom:10px;right:8%;left:0;height:2px;background:repeating-linear-gradient(to left,var(--ink) 0 8px,transparent 8px 16px);background-size:16px 2px;-webkit-mask:linear-gradient(to left,#000 60%,transparent);mask:linear-gradient(to left,#000 60%,transparent)}
 .js-motion .facts .run{clip-path:inset(0 0 0 100%);transition:clip-path 1400ms cubic-bezier(.65,0,.35,1) 900ms}
-.js-motion .factsband.seen .run{clip-path:inset(0 0 0 0);animation:run 900ms linear infinite}
-@keyframes run{to{background-position:-16px 0}}
+.js-motion .factsband.seen .run{clip-path:inset(0 0 0 0)}
 .js-motion .facts div{opacity:0;transform:translateY(14px);transition:opacity 800ms var(--ease-enter),transform 800ms var(--ease-enter)}
 .js-motion .factsband.seen .facts div{opacity:1;transform:none}
 .js-motion .factsband.seen .facts div:nth-child(2){transition-delay:150ms}
@@ -579,14 +578,4 @@ nav.main a.cur::after{transform:none}
 .circ path{fill:none;stroke:var(--marker);stroke-width:4;stroke-linecap:round;vector-effect:non-scaling-stroke}
 .js-motion .circ path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1100ms cubic-bezier(.65,0,.35,1) 500ms}
 .js-motion .cta .txt.seen .circ path{stroke-dashoffset:0}
-.js-motion .cta .btn.light .arr{display:inline-block;animation:nudge 2.8s var(--ease) 2.5s infinite}
-@keyframes nudge{0%,70%,100%{transform:none}80%{transform:translateX(-6px)}90%{transform:translateX(0)}}
 
-/* ---------- 6. למי זה מתאים: ✓ ו-✕ נכתבים אחד אחרי השני ---------- */
-.js-motion .fit li::before{opacity:0}
-.js-motion .fit .col.seen li::before{animation:tick 520ms cubic-bezier(.34,1.56,.64,1) both}
-.js-motion .fit .col.seen li:nth-child(1)::before{animation-delay:450ms}
-.js-motion .fit .col.seen li:nth-child(2)::before{animation-delay:700ms}
-.js-motion .fit .col.seen li:nth-child(3)::before{animation-delay:950ms}
-.js-motion .fit .col.seen li:nth-child(4)::before{animation-delay:1200ms}
-.js-motion .fit .col.seen li:nth-child(5)::before{animation-delay:1450ms}
