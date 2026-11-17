@@ -273,3 +273,80 @@
   })},{threshold:.4});
   document.querySelectorAll('.walk').forEach(function(w){wio.observe(w)});
 })();
+
+/* גרסה 5 (17.11.2026): קו הדרך, ספירה, משפטים שנצבעים בקריאה, עומק בתמונה. */
+(function(){
+  var reduce=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var road=document.querySelector('.roadline');
+  var inks=[].slice.call(document.querySelectorAll('[data-ink]'));
+  var pimg=document.querySelector('.portrait img');
+  var motion=!reduce&&('IntersectionObserver' in window);
+
+  /* פיצול למילים בלי לגעת בטקסט: כל מילה עוטפת את עצמה, הרווחים נשארים */
+  var groups=[];
+  if(motion) inks.forEach(function(el){
+    var words=[];
+    (function walk(n){
+      [].slice.call(n.childNodes).forEach(function(c){
+        if(c.nodeType===3){
+          var parts=c.textContent.split(/(\s+)/), f=document.createDocumentFragment();
+          parts.forEach(function(t){
+            if(!t) return;
+            if(/^\s+$/.test(t)){f.appendChild(document.createTextNode(t));return}
+            var s=document.createElement('span');s.className='w';s.textContent=t;f.appendChild(s);words.push(s);
+          });
+          c.parentNode.replaceChild(f,c);
+        } else if(c.nodeType===1&&c.tagName!=='CITE') walk(c);
+      });
+    })(el);
+    groups.push({el:el,words:words});
+  });
+
+  var pend=false;
+  function frame(){
+    pend=false;
+    var vh=window.innerHeight, de=document.documentElement;
+    if(road){
+      var max=de.scrollHeight-vh, p=max>0?Math.min(1,Math.max(0,window.scrollY/max)):0;
+      road.style.setProperty('--p',p.toFixed(4));
+      road.classList.toggle('on',p>0.01);
+    }
+    groups.forEach(function(g){
+      var r=g.el.getBoundingClientRect();
+      /* מתחיל כשהמשפט עובר 88% מגובה המסך, נגמר כשהוא מגיע ל-45% */
+      var t=(vh*0.88-r.top)/(vh*0.43+r.height*0.5); t=Math.min(1,Math.max(0,t));
+      var n=Math.round(t*g.words.length);
+      g.words.forEach(function(w,i){w.classList.toggle('on',i<n)});
+    });
+    if(motion&&pimg){
+      var fr=pimg.parentNode.getBoundingClientRect();
+      if(fr.bottom>0&&fr.top<vh){
+        var q=(fr.top+fr.height/2-vh/2)/vh; /* -1..1 */
+        pimg.style.setProperty('--py',(q*-28).toFixed(1)+'px');
+      }
+    }
+  }
+  function req(){if(!pend){pend=true;requestAnimationFrame(frame)}}
+  window.addEventListener('scroll',req,{passive:true});
+  window.addEventListener('resize',req);
+  req();
+
+  if(!motion) return;
+  /* פס המספרים: נכנס, ו-4 ו-8 נספרים מאפס */
+  var band=document.querySelector('.factsband');
+  if(band){
+    var nums=[].slice.call(band.querySelectorAll('[data-count]'));
+    nums.forEach(function(b){b.textContent='0'});
+    var bio=new IntersectionObserver(function(es){es.forEach(function(e){
+      if(!e.isIntersecting) return; bio.disconnect(); band.classList.add('seen');
+      nums.forEach(function(b,k){
+        var to=+b.getAttribute('data-count'), t0=null, d=900+to*60;
+        setTimeout(function(){requestAnimationFrame(function f(t){
+          if(t0===null) t0=t; var x=Math.min(1,(t-t0)/d), e2=1-Math.pow(1-x,3);
+          b.textContent=String(Math.round(e2*to)); if(x<1) requestAnimationFrame(f);
+        })},200+k*150);
+      });
+    })},{threshold:.4});
+    bio.observe(band);
+  }
+})();
