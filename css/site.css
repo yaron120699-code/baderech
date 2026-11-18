@@ -711,3 +711,20 @@ nav.main a.cur::after{transform:none}
 .track li{padding-inline:16px}
 @media (max-width:960px){ .track{grid-template-columns:minmax(0,1fr)} .track li,.track li:first-child{padding:0 24px 28px 0} .track li.field{padding:16px 24px 24px 16px} }
 @media (min-width:961px){ .track h3{font-size:clamp(20px,1.75vw,24px)} .track p{font-size:15px} }
+
+/* הצצה לחוברת CORE: שני עמודים מונחים זה על זה, בשפה של החוברת */
+.core-peek{margin:16px 0 0;display:flex;flex-direction:column;gap:14px}
+.core-peek .pages{position:relative;height:300px;max-width:440px}
+.core-peek .pg{position:absolute;width:62%;aspect-ratio:1/1.414;background:var(--card);border:1px solid var(--line-2);box-shadow:0 1px 0 var(--line);padding:18px 18px 14px;display:flex;flex-direction:column;gap:8px;font-size:13px;color:var(--ink-2)}
+.core-peek .pg.a{right:0;top:12px;transform:rotate(2deg)}
+.core-peek .pg.b{left:0;top:0;transform:rotate(-2.5deg);border-color:var(--ink)}
+.core-peek .pl{font-family:var(--display);font-weight:900;font-size:19px;line-height:1.15;color:var(--ink);padding-bottom:8px;border-bottom:2px solid var(--ink)}
+.core-peek .q{font-weight:500;color:var(--ink);margin-top:4px}
+.core-peek i{display:block;height:22px;background:repeating-linear-gradient(to bottom,transparent 0 10px,var(--line) 10px 11px)}
+.core-peek ol{margin:4px 0 0;padding:0 18px 0 0;display:flex;flex-direction:column;gap:10px;font-size:15px;color:var(--ink)}
+.core-peek .pn{margin-top:auto;font-size:10.5px;letter-spacing:var(--track-label);color:var(--graphite);align-self:flex-start}
+.core-peek figcaption{font-size:14px;color:var(--graphite);max-width:44ch}
+@media (max-width:560px){ .core-peek .pages{height:260px} .core-peek .pg{width:66%;padding:14px 14px 10px} .core-peek .pl{font-size:17px} }
+.core-peek .pages{height:270px;max-width:460px}
+.core-peek .pg{aspect-ratio:auto;height:240px;width:56%}
+@media (max-width:560px){ .core-peek .pages{height:250px} .core-peek .pg{height:225px;width:60%} }
