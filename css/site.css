@@ -745,3 +745,6 @@ nav.main a.cur::after{transform:none}
 @media (max-width:560px){ .core-peek .pages{height:362px} .core-peek .pg{height:334px} }
 /* תמונת הפתיחה החדשה (18.11, ערב): בטלפון הפנים כולן בתוך החיתוך */
 @media (max-width:960px){ .portrait img{object-position:center 32%} }
+/* בטלפון יש חיתוך נפרד (רחב, קרוב לפנים), אז הוא ממורכז */
+@media (max-width:960px){ .portrait img{object-position:center center} }
+.portrait picture{display:contents}
