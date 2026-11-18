@@ -28,6 +28,17 @@ function doPost(e) {
   lock.waitLock(10000);
   try {
     var data = JSON.parse(e.postData.contents);
+
+    // גרסה 6: אירועי מדידה (התחלת שאלון, לחיצות בדף הבית, הגעה לחלקים) נכתבים ללשונית נפרדת, ״אירועים״.
+    if (data.type === 'event') {
+      var ss = SpreadsheetApp.getActiveSpreadsheet();
+      var ev = ss.getSheetByName('אירועים') || ss.insertSheet('אירועים', ss.getNumSheets());
+      if (ev.getLastRow() === 0) ev.appendRow(['at', 'event', 'page', 'source', 'id', 'code']);
+      ev.appendRow([new Date(), String(data.event || '').slice(0, 60), String(data.page || '').slice(0, 60),
+        String(data.source || '').slice(0, 60), String(data.id || '').slice(0, 40), String(data.code || '').slice(0, 8)]);
+      return ContentService.createTextOutput('ok');
+    }
+
     var s = sheetWithHeaders_();
     var sheet = s.sheet, head = s.head;
 

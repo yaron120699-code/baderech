@@ -579,3 +579,65 @@ nav.main a.cur::after{transform:none}
 .js-motion .circ path{stroke-dasharray:1;stroke-dashoffset:1;transition:stroke-dashoffset 1100ms cubic-bezier(.65,0,.35,1) 500ms}
 .js-motion .cta .txt.seen .circ path{stroke-dashoffset:0}
 
+
+/* =====================================================================
+   גרסה 6 (18.11.2026): מבנה חדש לדף הבית. ״מי אני״ עולה, התהליך כמסלול,
+   ״למה ככה״ על רקע חימר (רגע הצבע היחיד החדש), ״מה כלול״ עם המחיר.
+   ===================================================================== */
+.hero .quizline{max-width:46ch;line-height:1.5}
+.facts b{white-space:nowrap}
+
+/* התהליך: היומן ליד הכותרת, במסגרת דיו כי הרקע כאן נייר */
+.process .top{align-items:start}
+.process .log{border:var(--frame)}
+.track .n{white-space:nowrap}
+
+/* ״למה ככה״: חימר מלא. טקסט בדיו, הדגשות האיורים בירוק */
+.why{background:var(--marker);color:var(--ink);padding-block:var(--s6)}
+.why .head{display:flex;flex-direction:column;gap:20px;margin-bottom:var(--s3)}
+.why .label{color:var(--ink-2)}
+.why h2{font-size:clamp(38px,5vw,72px);line-height:1.08;max-width:18ch}
+.why .principles{grid-template-columns:repeat(4,minmax(0,1fr));border-top:2px solid var(--ink);margin-top:0}
+.why .principles p{color:var(--ink-2)}
+.why .walk *{stroke:var(--ink)}
+.why .walk .ground,.why .walk .floor{stroke:var(--ink-2)}
+.why .walk .bubble path,.why .walk .around,.why .walk .sheet path,.why .walk .sheet line,.why .walk.think .bubble rect{stroke:var(--forest)}
+.why .walk .bubble circle{fill:var(--forest)}
+
+/* מה לוקחים: ״מה עשוי להשתנות״ עם ההסתייגות בגלוי */
+.outcomes .maybe{display:flex;flex-direction:column;gap:12px}
+.outcomes .maybe h3{display:flex;flex-direction:column;gap:6px}
+.outcomes .maybe h3 span{font-family:var(--body);font-weight:400;font-size:15px;color:var(--graphite)}
+.js-motion .outcomes ul.rv.seen li::before{background:var(--forest) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 14 14'%3E%3Cpath d='M3 7.4l2.6 2.6L11 4.4' fill='none' stroke='%23F7F6F1' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/12px no-repeat;border-color:var(--forest)}
+
+/* מה כלול */
+.included{padding-block:var(--s6);border-top:var(--rule)}
+.included .in{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:var(--s5);align-items:start}
+.included .head{display:flex;flex-direction:column;gap:20px}
+.crow b.t{font-family:var(--body);font-weight:500;font-size:16px}
+.crow.price{border-top:var(--rule-open);margin-top:6px;padding-top:16px}
+.crow.price b{color:var(--forest)}
+
+/* הצעד הבא: שלושה צעדים ממוספרים */
+.cta .steps{list-style:none;margin:0;padding:0;counter-reset:s;border-top:1px solid rgba(247,246,241,.22)}
+.cta .steps li{counter-increment:s;display:grid;grid-template-columns:36px 1fr;column-gap:8px;padding:12px 0;border-bottom:1px solid rgba(247,246,241,.22)}
+.cta .steps li::before{content:counter(s);grid-row:span 2;font-family:var(--display);font-weight:900;font-size:24px;line-height:1.2;color:var(--marker)}
+.cta .steps b{font-weight:500;color:var(--on-forest)}
+.cta .steps span{font-size:15px;color:var(--on-forest-2)}
+
+@media (max-width:1100px){ .why .principles{grid-template-columns:repeat(2,minmax(0,1fr))} }
+@media (max-width:960px){
+  .included .in{grid-template-columns:minmax(0,1fr)}
+  .why .principles{grid-template-columns:minmax(0,1fr)}
+}
+/* ״למי זה מתאים״ בתוך ״מה לוקחים מזה״ (במקום מקטע נפרד) */
+.fit.fitbox{grid-column:1/-1;padding:0;border:0;display:flex;flex-direction:column;gap:16px;margin-top:var(--s2)}
+.fitbox li{font-size:17px}
+.fitbox li::before{width:auto;height:auto;border:0;margin-top:0;background:none!important;animation:none!important}
+.fitbox .col h3{font-size:var(--fs-h3)}
+@media (max-width:560px){
+  :root{--s6:56px}
+  .process .between{flex-direction:row;flex-wrap:wrap;gap:8px 18px}
+  .process .between strong{flex-basis:100%}
+}
+@media (max-width:960px){ .portrait img{aspect-ratio:3/2;object-position:center 18%} }

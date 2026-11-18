@@ -41,10 +41,11 @@ function renderIntro(){
     '<h1 data-rule>לפני שמדברים, בוא נבדוק אם זה בכלל <span class="strike">מתאים<span class="fix">מדויק</span></span>.</h1>'+
     '<p class="sub" data-rule>כמה שאלות קצרות. <span class="mark">בלי ציונים ובלי התחייבות.</span></p>'+
     '<div class="meta" data-rule><span>7 שאלות</span><span>כ-2 דקות</span><span>התשובות מגיעות רק אליי</span></div>'+
+    '<p class="privacy" data-rule>התשובות נשמרות בגיליון פרטי שרק אני רואה. בלי שם ובלי טלפון, אלא אם תבחר להוסיף.</p>'+
   '</div>';
   actIn.innerHTML='<button class="btn solo" id="go">מתחילים <span class="arr">←</span></button>';
   app.classList.add('ruled'); if(window.alignRules) requestAnimationFrame(function(){alignRules(app)});
-  document.getElementById('go').onclick=function(){go(0)};
+  document.getElementById('go').onclick=function(){if(window.bdTrack)bdTrack('fit_start',{source:sourceOf()},true);go(0)};
   focusHead();
 }
 
@@ -189,6 +190,7 @@ function saveName(name){
 
 function waLink(kind){
   var msg = kind==='ask' ? 'היי ירון, מילאתי את שאלון ההתאמה ויש לי שאלה:' : 'היי ירון, מילאתי את שאלון ההתאמה ואשמח לדבר.';
+  if(CODE) msg += (kind==='ask' ? '\n\n' : ' ') + '(קוד: '+CODE+')';
   return 'https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
 }
 
@@ -199,6 +201,7 @@ function renderResult(){
   document.getElementById('barFill').style.width='100%';
   var v=verdict(), s=summary(), html='<div class="in screen res fade"><span class="label">התוצאה</span>';
   submitFit(v);
+  if(window.bdTrack) bdTrack('fit_complete',{code:CODE},true);
   if(v==='no'){
     html+='<div class="verdict"><h2>כרגע זה כנראה לא הפורמט הנכון בשבילך. <span class="hand" style="font-size:.8em">וזה בסדר.</span></h2>'+
       '<p class="body">״בדרך״ הוא תהליך פנים מול פנים שדורש זמן והשקעה, ומהתשובות שלך זה לא נשמע כמו מה שאתה מחפש עכשיו. אבל אני לא רוצה שתצא מכאן בידיים ריקות.</p></div>'+
@@ -214,9 +217,10 @@ function renderResult(){
     var head = v==='yes' ? '<h2>נראה שיש <span class="mark">בסיס טוב</span> לשיחה.</h2>' : '<h2>יכול להיות שיש כאן התאמה. <span class="hand" style="font-size:.78em">כדאי לדבר.</span></h2>';
     var body = v==='yes' ? 'מהתשובות שלך עולה שאתה לא מחפש רק טיפ נקודתי, אלא שינוי שדורש עבודה אמיתית.' : 'יש כמה דברים שכדאי להבין יחד לפני שמחליטים, וזה בדיוק בשביל זה שיחת ההיכרות קיימת.';
     html+='<div class="verdict">'+head+'<p class="body">'+body+'</p></div>'+
+      '<p class="next"><b>השלב הבא:</b> פגישת היכרות פנים מול פנים, 350&nbsp;₪, שיורדים מסכום הליווי אם ממשיכים. את מחיר הליווי המלא אשלח לך לפני שקובעים.</p>'+
       '<div class="heard"><span class="label">מה שמעתי ממך</span><ul>'+s.map(function(x){return '<li>'+esc(x.a)+'</li>'}).join('')+'</ul></div>'+
       '<div class="ctas"><a class="btn" data-track="whatsapp" href="'+waLink('send')+'" target="_blank" rel="noopener">לשלוח לירון בוואטסאפ <span class="arr">←</span></a>'+
-      '<a class="btn ghost" data-track="calendar" href="'+CAL+'" target="_blank" rel="noopener">או לקבוע שיחת התאמה ישירות <span class="arr">←</span></a>'+
+      '<a class="btn ghost" data-track="calendar" href="'+CAL+'" target="_blank" rel="noopener">או לקבוע פגישת היכרות ישירות <span class="arr">←</span></a>'+
       '<p class="small">נפתחת הודעה קצרה בוואטסאפ. אפשר לשנות אותה לפני ששולחים.</p></div>';
   }
   html+='<form class="who" id="who" novalidate><label class="label" for="whoName">רוצה שאדע מי מילא? לא חובה.</label>'+

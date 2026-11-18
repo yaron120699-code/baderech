@@ -207,3 +207,8 @@ a[href*="instagram.com"]{unicode-bidi:plaintext}
 @media (prefers-reduced-motion:reduce){
   .screen.fade.pause>.hand,.res .mark,.res .verdict .hand{animation:none}
 }
+
+/* גרסה 6 (18.11.2026): פרטיות במסך הפתיחה, והשלב הבא בתוצאה */
+.intro .privacy{font-size:14px;color:var(--graphite);max-width:46ch;line-height:1.6}
+.res .next{border:1px solid var(--ink);padding:14px 16px;font-size:15.5px;line-height:1.6;color:var(--ink-2);margin:4px 0 8px}
+.res .next b{color:var(--ink);font-weight:500}
