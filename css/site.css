@@ -690,3 +690,19 @@ nav.main a.cur::after{transform:none}
   .problem .after .btn{width:100%;justify-content:space-between;margin-top:8px}
   .freecard{padding:16px 18px 14px}
 }
+/* היומן ליד הכותרת בתהליך: הקו על ״הסיפור״ הוא קו אחד, אז המשפט לא נשבר לשתי שורות */
+.process .top{grid-template-columns:minmax(0,1fr) minmax(0,1.15fr)}
+.logrow .strike{white-space:nowrap}
+.process .logrow{grid-template-columns:96px minmax(0,1fr)}
+@media (max-width:960px){ .process .top{grid-template-columns:minmax(0,1fr)} }
+@media (max-width:560px){ .process .logrow{grid-template-columns:minmax(0,1fr)} }
+/* ״למה ככה״ חוזר לירוק של ״איך אני עובד״ הישן, עם האיורים בצבעים המקוריים שלהם */
+.why{background:var(--forest);color:var(--on-forest);border-top:0}
+.why h2,.why h3{color:var(--on-forest)}
+.why .label{color:var(--on-forest-2)}
+.why .principles{border-top:1px solid rgba(247,246,241,.22)}
+.why .principles p{color:var(--on-forest-2)}
+.why .walk *{stroke:var(--on-forest)}
+.why .walk .ground,.why .walk .floor{stroke:var(--on-forest-2)}
+.why .walk .bubble path,.why .walk .around,.why .walk .sheet path,.why .walk .sheet line,.why .walk.think .bubble rect{stroke:var(--marker)}
+.why .walk .bubble circle{fill:var(--marker)}
