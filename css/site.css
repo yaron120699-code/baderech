@@ -706,3 +706,8 @@ nav.main a.cur::after{transform:none}
 .why .walk .ground,.why .walk .floor{stroke:var(--on-forest-2)}
 .why .walk .bubble path,.why .walk .around,.why .walk .sheet path,.why .walk .sheet line,.why .walk.think .bubble rect{stroke:var(--marker)}
 .why .walk .bubble circle{fill:var(--marker)}
+/* שישה צעדים במסלול */
+.track{grid-template-columns:repeat(6,minmax(0,1fr))}
+.track li{padding-inline:16px}
+@media (max-width:960px){ .track{grid-template-columns:minmax(0,1fr)} .track li,.track li:first-child{padding:0 24px 28px 0} .track li.field{padding:16px 24px 24px 16px} }
+@media (min-width:961px){ .track h3{font-size:clamp(20px,1.75vw,24px)} .track p{font-size:15px} }
