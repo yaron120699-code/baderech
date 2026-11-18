@@ -217,7 +217,7 @@ function renderResult(){
     var head = v==='yes' ? '<h2>נראה שיש <span class="mark">בסיס טוב</span> לשיחה.</h2>' : '<h2>יכול להיות שיש כאן התאמה. <span class="hand" style="font-size:.78em">כדאי לדבר.</span></h2>';
     var body = v==='yes' ? 'מהתשובות שלך עולה שאתה לא מחפש רק טיפ נקודתי, אלא שינוי שדורש עבודה אמיתית.' : 'יש כמה דברים שכדאי להבין יחד לפני שמחליטים, וזה בדיוק בשביל זה שיחת ההיכרות קיימת.';
     html+='<div class="verdict">'+head+'<p class="body">'+body+'</p></div>'+
-      '<p class="next"><b>השלב הבא:</b> פגישת היכרות פנים מול פנים, 350&nbsp;₪, שיורדים מסכום הליווי אם ממשיכים. את מחיר הליווי המלא אשלח לך לפני שקובעים.</p>'+
+      '<p class="next"><b>השלב הבא:</b> פגישת היכרות בגוגל מיט, 350&nbsp;₪, שיורדים מסכום הליווי אם ממשיכים. את מחיר הליווי המלא אשלח לך לפני שקובעים.</p>'+
       '<div class="heard"><span class="label">מה שמעתי ממך</span><ul>'+s.map(function(x){return '<li>'+esc(x.a)+'</li>'}).join('')+'</ul></div>'+
       '<div class="ctas"><a class="btn" data-track="whatsapp" href="'+waLink('send')+'" target="_blank" rel="noopener">לשלוח לירון בוואטסאפ <span class="arr">←</span></a>'+
       '<a class="btn ghost" data-track="calendar" href="'+CAL+'" target="_blank" rel="noopener">או לקבוע פגישת היכרות ישירות <span class="arr">←</span></a>'+
