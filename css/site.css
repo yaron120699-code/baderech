@@ -743,3 +743,5 @@ nav.main a.cur::after{transform:none}
 .core-peek .toc li{padding:6px 0;font-size:13px}
 .core-peek .toc .hand{bottom:56px}
 @media (max-width:560px){ .core-peek .pages{height:362px} .core-peek .pg{height:334px} }
+/* תמונת הפתיחה החדשה (18.11, ערב): בטלפון הפנים כולן בתוך החיתוך */
+@media (max-width:960px){ .portrait img{object-position:center 32%} }
