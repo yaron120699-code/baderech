@@ -220,7 +220,7 @@ function renderResult(){
       '<p class="next"><b>השלב הבא:</b> שיחה קצרה בגוגל מיט, לראות שיש התאמה. אחריה פגישת היכרות פנים מול פנים, 350&nbsp;₪, שיורדים מסכום הליווי אם ממשיכים. את מחיר הליווי המלא אשלח לך לפני שקובעים.</p>'+
       '<div class="heard"><span class="label">מה שמעתי ממך</span><ul>'+s.map(function(x){return '<li>'+esc(x.a)+'</li>'}).join('')+'</ul></div>'+
       '<div class="ctas"><a class="btn" data-track="whatsapp" href="'+waLink('send')+'" target="_blank" rel="noopener">לשלוח לירון בוואטסאפ <span class="arr">←</span></a>'+
-      '<a class="btn ghost" data-track="calendar" href="'+CAL+'" target="_blank" rel="noopener">או לקבוע שיחה ישירות <span class="arr">←</span></a>'+
+      '<a class="btn ghost" data-track="calendar" href="'+CAL+'" target="_blank" rel="noopener">או לקבוע שיחה קצרה ישירות <span class="arr">←</span></a>'+
       '<p class="small">נפתחת הודעה קצרה בוואטסאפ. אפשר לשנות אותה לפני ששולחים.</p></div>';
   }
   html+='<form class="who" id="who" novalidate><label class="label" for="whoName">רוצה שאדע מי מילא? לא חובה.</label>'+

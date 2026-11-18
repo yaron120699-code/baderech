@@ -728,3 +728,18 @@ nav.main a.cur::after{transform:none}
 .core-peek .pages{height:270px;max-width:460px}
 .core-peek .pg{aspect-ratio:auto;height:240px;width:56%}
 @media (max-width:560px){ .core-peek .pages{height:250px} .core-peek .pg{height:225px;width:60%} }
+/* תוכן החוברת: ארבעה נושאים גלויים, והשאר מטושטשים. סקרנות, בלי להמציא תוכן */
+.core-peek .pages{height:330px}
+.core-peek .pg{height:300px}
+.core-peek .pg.b.toc{width:60%}
+.core-peek .toc ul{list-style:none;margin:2px 0 0;padding:0;display:flex;flex-direction:column}
+.core-peek .toc li{padding:7px 0;border-bottom:1px solid var(--line);font-size:13.5px;line-height:1.35;color:var(--ink)}
+.core-peek .toc li.hid{filter:blur(3.5px);opacity:.75;user-select:none}
+.core-peek .toc .hand{position:absolute;left:14px;bottom:40px;font-size:30px;transform:rotate(-6deg);background:var(--card);padding:0 6px}
+@media (max-width:560px){ .core-peek .pages{height:320px} .core-peek .pg{height:290px} .core-peek .pg.b.toc{width:66%} }
+.core-peek .pg{overflow:hidden}
+.core-peek .pages{height:372px}
+.core-peek .pg{height:344px}
+.core-peek .toc li{padding:6px 0;font-size:13px}
+.core-peek .toc .hand{bottom:56px}
+@media (max-width:560px){ .core-peek .pages{height:362px} .core-peek .pg{height:334px} }
